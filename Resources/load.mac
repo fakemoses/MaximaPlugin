@@ -1,0 +1,10 @@
+display2d:false$
+linel:700$
+load(abs_integrate)$
+load(vect)$
+load(mnewton)$
+simpsum:true$
+logsimp:true$
+logb(x,y):=log(x)/log(y)$el(x,y):=x[y]$
+el(x,[y]):=if equal(length(y),1) then x[y[1]] else x[y[1],y[2]]$
+keepfloat:true$

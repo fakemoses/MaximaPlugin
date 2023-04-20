@@ -1,0 +1,791 @@
+﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+
+using SMath.Manager;
+using SMath.Math;
+using SMath.Math.Numeric;
+
+
+namespace MaximaPlugin.MFunctions
+{
+    class DirectMaximaFunctions
+    {
+        public static int pictureCounter = 0;
+
+        /// <summary>
+        /// Implementation of the symbolic solve functions Solve(), LinSolve(), AlgSys()
+        /// </summary>
+        /// <param name="root">Name of the function (should be "Solve")</param>
+        /// <param name="args">List of argument expressions</param>
+        /// <param name="context">Context for preprocessing </param>
+        /// <param name="result">result expression</param>
+        /// <returns></returns>
+        public static bool SymbSolve(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            var arg1 = SharedFunctions.Proprocessing(args[0]); // 
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            // both arguments can be provided as matrix or lists. Internally, they are lists
+            arg1 = arg1.Replace("mat(", "sys(");
+            arg2 = arg2.Replace("mat(", "sys(");
+            // scalar arguments are converted to lists
+            if (! arg1.Contains("sys(")) arg1 = "sys(" + arg1 + ",1,1)";
+            if (! arg2.Contains("sys(")) arg2 = "sys(" + arg2 + ",1,1)";
+            // send string to Maxima
+            string stringToMaxima = root.Text.ToLower() + "(" + arg1 + "," + arg2 + ")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+
+
+        ///// <summary>
+        ///// Implementation of the Solve function
+        ///// </summary>
+        ///// <param name="root">Name of the function (should be "Solve")</param>
+        ///// <param name="args">List of argument expressions</param>
+        ///// <param name="context">Context for preprocessing </param>
+        ///// <param name="result">result expression</param>
+        ///// <returns></returns>
+        //public static bool SolveM(Term root, Term[][] args, ref Store context, ref Term[] result)
+        //{
+        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+        //    /*
+        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
+        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
+        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
+        //    // both arguments can be provided as matrix or lists. Internally, they are lists
+        //    arg1 = arg1.Replace("mat(", "sys(");
+        //    arg2 = arg2.Replace("mat(", "sys(");
+        //    // scalar arguments are converted to lists
+        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+        //    // send string to Maxima
+        //    string stringToMaxima = "solve(" + arg1 + "," + arg2 + ")";
+        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+        //    return true;
+        //}
+
+        //// TODO: MK 2017-07-16 Collect the solver functions into a single one
+
+        ///// <summary>
+        ///// Implementation of the LinSolve function
+        ///// </summary>
+        ///// <param name="root">Name of the function (should be "LinSolve")</param>
+        ///// <param name="args">List of argument expressions</param>
+        ///// <param name="context">Context for preprocessing </param>
+        ///// <param name="result">result expression</param>
+        ///// <returns></returns>
+        //public static bool LinSolveM(Term root, Term[][] args, ref Store context, ref Term[] result)
+        //{
+        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+        //    /*
+        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
+        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
+        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
+        //    // both arguments can be provided as matrix or lists. Internally, they are lists
+        //    arg1 = arg1.Replace("mat(", "sys(");
+        //    arg2 = arg2.Replace("mat(", "sys(");
+        //    // scalar arguments are converted to lists
+        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+        //    // send string to Maxima
+        //    string stringToMaxima = "linsolve(" + arg1 + "," + arg2 + ")";
+        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+        //    return true;
+        //}
+
+        ///// <summary>
+        ///// Implementation of the AlgSys function
+        ///// </summary>
+        ///// <param name="root">Name of the function (should be "AlgSys")</param>
+        ///// <param name="args">List of argument expressions</param>
+        ///// <param name="context">Context for preprocessing </param>
+        ///// <param name="result">result expression</param>
+        ///// <returns></returns>
+        //public static bool AlgsysM(Term root, Term[][] args, ref Store context, ref Term[] result)
+        //{
+        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+        //    /*
+        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
+        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
+        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
+        //    // both arguments can be provided as matrix or lists. Internally, they are lists
+        //    arg1 = arg1.Replace("mat(", "sys(");
+        //    arg2 = arg2.Replace("mat(", "sys(");
+        //    // scalar arguments are converted to lists
+        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+        //    // send string to Maxima
+        //    string stringToMaxima = "algsys(" + arg1 + "," + arg2 + ")";
+        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+        //    return true;
+        //}
+
+        /// <summary>
+        /// Implementation of the ODE.2 function.
+        /// </summary>
+        /// <param name="root">Name of the function (should be "ODE.2")</param>
+        /// <param name="args">List of argument expressions</param>
+        /// <param name="context">Context for preprocessing </param>
+        /// <param name="result">result expression</param>
+        /// <returns></returns>
+        public static bool Ode2M(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            var arg1 = TermsConverter.ToString(args[0]);
+            var arg2 = TermsConverter.ToString(args[1]);
+            var arg3 = TermsConverter.ToString(args[2]);
+            string stringToMaxima = "ode2(" + arg1 + "," + arg2 + "," + arg3 + ")";
+            // tag diff( as noun 
+            stringToMaxima = stringToMaxima.Replace("diff(", ControlObjects.Replacement.Noun + "diff(");
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+
+        /// <summary>
+        /// Implements the function mNewton.
+        /// </summary>
+        /// <param name="root">Name of the function (should be "mNewton")</param>
+        /// <param name="args">List of argument expressions</param>
+        /// <param name="context">Context for preprocessing </param>
+        /// <param name="result">result expression</param>
+        /// <returns></returns>
+        public static bool mNewton(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+            /*
+            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            var arg3 = SharedFunctions.Proprocessing(args[2]);
+            arg1 = arg1.Replace("mat(", "sys(");
+            arg2 = arg2.Replace("mat(", "sys(");
+            arg3 = arg3.Replace("mat(", "sys(");
+            if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+            if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+            if (!rxSys.IsMatch(arg3, 0)) arg3 = "sys(" + arg3 + ",1,1)";
+            string stringToMaxima = "mnewton(" + arg1 + "," + arg2 + "," + arg3 + ")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+        /// <summary>
+        /// Implements the function Fit.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool Fit(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+            /*
+            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            var arg3 = SharedFunctions.Proprocessing(args[2]);
+            var arg4 = SharedFunctions.Proprocessing(args[3]);
+            var arg5 = SharedFunctions.Proprocessing(args[4]);
+
+            // Make lists from matrices and scalars
+            arg2 = arg2.Replace("mat(", "sys(");
+            arg4 = arg4.Replace("mat(", "sys(");
+            arg5 = arg5.Replace("mat(", "sys(");
+            
+            if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+            if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
+            if (!rxSys.IsMatch(arg5, 0)) arg5 = "sys(" + arg5 + ",1,1)";
+
+            string stringToMaxima = "Fit(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5+")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+        /// <summary>
+        /// Implements the function Fit(6).
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool Fit6(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+            /*
+            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
+            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            var arg3 = SharedFunctions.Proprocessing(args[2]);
+            var arg4 = SharedFunctions.Proprocessing(args[3]);
+            var arg5 = SharedFunctions.Proprocessing(args[4]);
+            var arg6 = SharedFunctions.Proprocessing(args[5]);
+
+            // Make lists from matrices and scalars
+            arg2 = arg2.Replace("mat(", "sys(");
+            arg4 = arg4.Replace("mat(", "sys(");
+            arg5 = arg5.Replace("mat(", "sys(");
+
+            if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+            if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
+            if (!rxSys.IsMatch(arg5, 0)) arg5 = "sys(" + arg5 + ",1,1)";
+
+            string stringToMaxima = "Fit6(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5 + "," + arg6 + ")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+        /// <summary>
+        /// Implements the function MSE(3) and MSE(4).
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool MSE(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            var arg3 = SharedFunctions.Proprocessing(args[2]);
+            // Make lists from matrices and scalars
+            arg2 = arg2.Replace("mat(", "sys(");
+            if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+            string stringToMaxima = "MSE(" + arg1 + "," + arg2 + "," + arg3;
+
+            if (root.ArgsCount == 4) 
+            {
+                var arg4 = SharedFunctions.Proprocessing(args[3]);
+                if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
+                stringToMaxima = stringToMaxima + "," + arg4;
+            }
+
+            stringToMaxima = stringToMaxima + ")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+        /// <summary>
+        /// Implements the function Residuals(3) and Residuals(4).
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool Residuals(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
+            var arg3 = SharedFunctions.Proprocessing(args[2]);
+            // Make lists from matrices and scalars
+            arg2 = arg2.Replace("mat(", "sys(");
+            if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
+            string stringToMaxima = "Residuals(" + arg1 + "," + arg2 + "," + arg3;
+
+            if (root.ArgsCount == 4)
+            {
+                var arg4 = SharedFunctions.Proprocessing(args[3]);
+                if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
+                stringToMaxima = stringToMaxima + "," + arg4;
+            }
+
+            stringToMaxima = stringToMaxima + ")";
+            ControlObjects.TranslationModifiers.IsExpectedEquation = true;
+            result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+            return true;
+        }
+
+
+
+
+        ////Plotting
+        //public static bool findPre = false;
+
+        ///// <summary>
+        ///// Combine the standard and the user preamble in draw commands.
+        ///// </summary>
+        ///// <param name="text"></param>
+        ///// <param name="ipre"></param>
+        ///// <returns></returns>
+        //public static string PreambleReplace(string text, string ipre)
+        //{
+        //    findPre = false;
+        //    int bracketO = 0, bracketC = 0;
+        //    List<string> element = new List<string>();
+        //    int i = -1, start = 0, charCounter = 0;
+        //    int completeStart = 0;
+        //    bool flip = false;
+        //    int completeEnd = 0;
+        //    while (i < text.Length - 17)
+        //    {
+        //        i++;
+        //        //text.IndexOf("user_preamble≡sys(");
+        //        // TODO MK 2017 07 18 Check if that can't be reduced to a single comparison
+        //        if (
+        //            text[i + 0] == 'u' &&
+        //            text[i + 1] == 's' &&
+        //            text[i + 2] == 'e' &&
+        //            text[i + 3] == 'r' &&
+        //            text[i + 4] == '_' &&
+        //            text[i + 5] == 'p' &&
+        //            text[i + 6] == 'r' &&
+        //            text[i + 7] == 'e' &&
+        //            text[i + 8] == 'a' &&
+        //            text[i + 9] == 'm' &&
+        //            text[i + 10] == 'b' &&
+        //            text[i + 11] == 'l' &&
+        //            text[i + 12] == 'e' &&
+        //            text[i + 13] == '≡' &&
+        //            text[i + 14] == 's' &&
+        //            text[i + 15] == 'y' &&
+        //            text[i + 16] == 's' &&
+        //            text[i + 17] == '(')
+        //        {
+        //            //sys((user_preamble≡sys("set term svg noenhanced size 400,400 dynamic","set style fill transparent solid 0.5 border","set view 60, 30, 1.2, 1.2",3,1))
+        //            completeStart = i;
+        //            i += 17; 
+        //            bracketO++;
+        //            findPre = true;
+        //            while (i < text.Length && bracketO - bracketC > 0)
+        //            {
+        //                i++;
+        //                start = i;
+        //                charCounter = 0;
+        //                while (((text[i] != GlobalProfile.ArgumentsSeparatorStandard && text[i] != ')') || flip || bracketO - bracketC > 1) && i < text.Length)
+        //                {
+        //                    if (text[i] == '(')
+        //                        bracketO++;
+        //                    else if (text[i] == ')')
+        //                        bracketC++;
+        //                    if (text[i] == '"' && flip)
+        //                        flip = false;
+        //                    else if (text[i] == '"')
+        //                        flip = true;
+
+        //                    if (bracketO - bracketC > 0) charCounter++;
+        //                    i++;
+        //                }
+        //                if (charCounter > 0)
+        //                    element.Add(text.Substring(start, charCounter));
+
+        //                if (i < text.Length && text[i] == '(')
+        //                    bracketO++;
+        //                else if (i < text.Length && text[i] == ')')
+        //                    bracketC++;
+        //            }
+        //            completeEnd = i + 1;
+        //        }
+        //    }
+
+
+
+        //    if (findPre && element.Count > 0)
+        //    {
+        //        string tmp = "user_preamble≡sys(" + ipre + GlobalProfile.ArgumentsSeparatorStandard;
+        //        for (int k = 0; k < element.Count - 2; k++)
+        //        {
+        //            tmp = tmp + element[k];
+        //            if (k == element.Count - 3) tmp = tmp + GlobalProfile.ArgumentsSeparatorStandard + Convert.ToString(k + 3) + GlobalProfile.ArgumentsSeparatorStandard + "1)";
+        //            else tmp = tmp + GlobalProfile.ArgumentsSeparatorStandard;
+        //        }
+        //        return MakeString(text, tmp, completeStart, completeEnd);
+        //    }
+        //    else if (!findPre)
+        //    {
+        //        i = -1;
+        //        while (i < text.Length - 13)
+        //        {
+        //            i++;
+        //            if (
+        //                text[i + 0] == 'u' &&
+        //                text[i + 1] == 's' &&
+        //                text[i + 2] == 'e' &&
+        //                text[i + 3] == 'r' &&
+        //                text[i + 4] == '_' &&
+        //                text[i + 5] == 'p' &&
+        //                text[i + 6] == 'r' &&
+        //                text[i + 7] == 'e' &&
+        //                text[i + 8] == 'a' &&
+        //                text[i + 9] == 'm' &&
+        //                text[i + 10] == 'b' &&
+        //                text[i + 11] == 'l' &&
+        //                text[i + 12] == 'e' &&
+        //                text[i + 13] == '≡')
+        //            {
+        //                //sys((user_preamble≡sys("set term svg noenhanced size 400,400 dynamic","set style fill transparent solid 0.5 border","set view 60, 30, 1.2, 1.2",3,1))
+        //                completeStart = i;
+        //                i += 14;
+        //                findPre = true;
+        //                start = i;
+
+        //                while (((text[i] != GlobalProfile.ArgumentsSeparatorStandard) || flip || bracketO - bracketC > 0) && i < text.Length)
+        //                {
+        //                    if (text[i] == '(')
+        //                        bracketO++;
+        //                    else if (text[i] == ')')
+        //                        bracketC++;
+        //                    if (text[i] == '"' && flip)
+        //                        flip = false;
+        //                    else if (text[i] == '"')
+        //                        flip = true;
+
+        //                    charCounter++;
+        //                    i++;
+        //                }
+
+
+        //                if (charCounter > 0)
+        //                {
+        //                    if (bracketO - bracketC == -1) charCounter--;
+        //                    element.Add(text.Substring(start, charCounter));
+        //                    completeEnd = i;
+        //                }
+        //            }
+        //        }
+
+        //        if (findPre && element.Count == 1)
+        //        {
+        //            string tmp = "user_preamble≡sys(" + ipre + GlobalProfile.ArgumentsSeparatorStandard + element[0] + GlobalProfile.ArgumentsSeparatorStandard + "3" + GlobalProfile.ArgumentsSeparatorStandard + "1)";
+        //            return MakeString(text, tmp, completeStart, completeEnd).Replace("sys((user_preamble≡", "sys(user_preamble≡").Replace((GlobalProfile.ArgumentsSeparatorStandard + "(user_preamble≡"), (GlobalProfile.ArgumentsSeparatorStandard + "user_preamble≡"));
+        //        }
+        //    }
+
+        //    return text;
+        //}
+        //public static string MakeString(string input, string newArrayString, int arrayStart, int arrayEnd)
+        //{
+        //    string tmp1 = input.Substring(0, arrayStart);
+        //    string tmp2 = input.Substring(arrayEnd, input.Length - arrayEnd);
+        //    return tmp1 + newArrayString + tmp2;
+        //}
+
+
+
+        /// <summary>
+        /// Implements Draw2D() and Draw3D()
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool Draw(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            // nounify polar to avoid conflicts with variable names in Maxima
+            args[0] = Computation.Preprocessing(args[0], ref context);
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
+                {
+                    args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
+                }
+                
+            }
+            MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
+            bool CopyTempFile = false; // Do we have to copy the temp file to some destination?
+
+            // process first argument (draw commands and objects)
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+            Regex rxUnit = new Regex(@"(['][\w\d]+)", RegexOptions.None);
+            Regex rxSize = new Regex(@"sys\((\d+),(\d+),2,1\)");
+            string arg1 = SharedFunctions.Proprocessing(args[0]);
+            // enclose argument in list if it is scalar
+            if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+            // replace units by 1
+            arg1 = rxUnit.Replace(arg1, "1");
+            // Strings
+            MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
+            List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { arg1 });
+            // Matrices and Lists
+            esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
+            //esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, arg1);
+
+            // generate a random file TempFile in the session-specific directory
+            string TempPath = ControlObjects.Translator.GetMaxima().gnuPlotImageFolder;
+            System.IO.Directory.CreateDirectory(TempPath);
+            TempPath = Path.Combine(TempPath, System.IO.Path.GetRandomFileName());
+            TempPath = Path.ChangeExtension(TempPath, ".png");
+
+            // prepare size and filename
+            string arg2 = "";
+            Entry size = Entry.Create(TermsConverter.ToTerms("sys(8*'cm,6.4*'cm,2,1)"));
+            string sizeStringPart = "";
+            string term = "png"; // default terminal
+            string ipre = "";
+            string Target = "dummy.png";
+            string bgColor = "";
+
+            //if (File.Exists(context.FileName))
+            //    Environment.CurrentDirectory = Path.GetDirectoryName(context.FileName);
+
+            if (root.ArgsCount == 2) // Filename or size given
+            {
+                // preprocess second argument
+                arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+                if (! rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given
+                {
+                    CopyTempFile = true;
+                    Target = arg2.Replace("\"", "");
+                }
+                else // size is given
+                {
+                    size = Entry.Create(Computation.Preprocessing(args[1], ref context));
+                    CopyTempFile = false;
+                }
+            }
+            else if (root.ArgsCount == 3) // filename and size are given
+            {
+                // second argument is file name
+                arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+                Target = arg2.Replace("\"", "");
+                CopyTempFile = true;
+                // third argument is size
+                size = Entry.Create(Computation.Preprocessing(args[2], ref context));
+            }
+
+            // set term to svg if requested by file name
+            if (Target.EndsWith("svg"))
+            {
+                term = "svg";
+                if (Target == "svg") CopyTempFile = false; // just set the format, don't copy the file
+                TempPath = Path.ChangeExtension(TempPath, ".svg");
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
+                ipre = "set term svg fsize 8 fname 'Arial' enhanced dynamic size ";
+                bgColor = "set object 1 rectangle from screen -0,-0 to screen 1 ,1 fillcolor rgb'#ffffff' behind";
+            }
+            // set term to pdf if requested by file name
+            else if (Target.EndsWith("pdf"))
+            {
+                term = "pdf";
+                if (Target == "pdf") CopyTempFile = false;  // just set the format, don't copy the file
+                TempPath = Path.ChangeExtension(TempPath, ".pdf");
+                ipre = "set term pdfcairo font 'arial, 12' enhanced size ";
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Inch);
+                bgColor = "set object 1 rectangle from screen -0.01,-0.01 to screen 1.01 ,1.01 fillcolor rgb'#ffffff' behind";
+            }
+            else // use png otherwise
+            {
+                Target = Path.ChangeExtension(Target, ".png");
+                term = "png";
+                ipre = "set term pngcairo font ',8' enhanced size ";
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
+                bgColor = "set object 1 rectangle from screen -0.01,-0.01 to screen 1.01 ,1.01 fillcolor rgb'#ffffff' behind";
+            }
+
+            // build SMath list
+            ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard 
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
+                + Symbols.StringChar + bgColor + Symbols.StringChar; 
+            // the last argument is obsolet but required due to the signature.
+            ListHandle(esm, ipre, "terminal≡" + term, "file_name≡"
+                + Symbols.StringChar + Path.ChangeExtension(TempPath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
+            terminate(esm, ipre, "terminal≡" + term, "file_name≡"
+                + Symbols.StringChar + Path.ChangeExtension(TempPath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
+            // convert to Maxima
+            string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
+            sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
+            // send to Maxima
+            ControlObjects.TranslationModifiers.TimeOut = 5000;
+            ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
+            // check if file exists
+            if (! File.Exists(TempPath))
+            {
+                result = TermsConverter.ToTerms( "error(\"No file generated, see MaximaLog() for details\")");
+                return true;
+            }
+            if (CopyTempFile) // check if we have to copy the file
+            {
+                // if target path doesn't exist use current directory (where the SMath file is)
+                if (! Directory.Exists(Path.GetDirectoryName(Target)))
+                    Target = Path.Combine(Path.GetDirectoryName(context.FileName), Path.GetFileName(Target));
+                // copy the temp file to the requested destination. This loop is required because it can take some time
+                // until the source file is unlocked by the creator (gnuplot)
+                bool ready = false;
+                while (! ready)
+                {
+                    try
+                    {
+                        File.Copy(TempPath, Target, true);
+                        ready = true;
+                    }
+                    catch (Exception)
+                    {
+                        System.Threading.Thread.Sleep(500);
+                    }
+
+                }
+                // File.Copy(TempPath, Target, true);
+                result = TermsConverter.ToTerms(Symbols.StringChar + Target + Symbols.StringChar);
+            }
+            else 
+                // return the temp file name
+                result = TermsConverter.ToTerms(Symbols.StringChar + TempPath + Symbols.StringChar);
+            return true;
+        }
+
+
+        public static bool findPreL = false;
+
+        /// <summary>
+        /// List manipulation
+        /// </summary>
+        /// <param name="esm"></param>
+        /// <param name="pres"></param>
+        /// <param name="term"></param>
+        /// <param name="name"></param>
+        /// <param name="bgColor"></param>
+        public static void ListHandle(MaximaPlugin.Converter.ElementStoreManager esm, string pres, string term, string name, string bgColor)
+        {
+            Regex rxPreamble = new Regex(@"preamble");
+            for (int i = 0; i < esm.currentStore.items; i++)
+            {
+                for (int j = 0; j < esm.currentStore.itemData[i].Count; j++)
+                {
+                    if (esm.currentStore.itemData[i][j] == esm.layerMsg)
+                    {
+                        esm.nextElementStore();
+                        ListHandle(esm, pres, term, name, bgColor);
+                        esm.prevElementStore();
+                    }
+                    else if (rxPreamble.Match(esm.currentStore.itemData[i][0], 0).Success)
+                    {
+                        findPreL = true;
+                        if (esm.currentStore.itemData[i].Count > 1 && esm.currentStore.itemData[i][1] == esm.layerMsg)
+                        {
+                            bool tmp = false;
+                            if (esm.currentStore.itemData[i][0][0] == '(')
+                            {
+                                esm.currentStore.itemData[i][0] = "user_preamble≡";
+                                tmp = true;
+                            }
+                            esm.nextElementStore();
+                            esm.currentStore.itemData.Insert(0, new List<string> { pres });
+                            esm.currentStore.items++;
+                            esm.currentStore.rows = esm.currentStore.items;
+                            esm.currentStore.cols = esm.currentStore.items;
+                            esm.currentStore.refPointer = 0;
+                            esm.prevElementStore();
+                            if (tmp)
+                            {
+                                esm.currentStore.itemData[i].RemoveAt(2);
+                            }
+                        }
+                        else
+                        {
+                           // bool braket = false;
+                            string temp = esm.currentStore.itemData[i][0].Substring(14);
+                            if (temp[0] == '≡')
+                            {
+                                temp = temp.Substring(1);
+                             //   braket = true;
+                            }
+                            
+                            /*
+                            for(int z = 1; z < esm.currentStore.itemData[i].Count; z++)
+                            {
+                                temp = temp + esm.currentStore.itemData[i][z];
+                            }*/
+
+                            int open = 0, close = 0;
+                            for (int z = 0; z < temp.Length; z++)
+                            {
+                                if (temp[z] == '(') { open++; }
+                                else if (temp[z] == ')') { close++; }
+                            }
+                            if (open - close == -1) temp = temp.Substring(0, temp.Length - 1);
+                            esm.currentStore.itemData.RemoveAt(i);
+                            esm.currentStore.itemData.Insert(0, (new List<string>() { "user_preamble≡[" + pres + GlobalProfile.ArgumentsSeparatorStandard + temp + "]" }));
+                        }
+                        i++;
+                    }
+                }
+            }
+            esm.currentStore.refPointer = 0;
+        }
+        public static void terminate(MaximaPlugin.Converter.ElementStoreManager esm, string pres, string term, string name, string bgColor)
+        {
+            if (!findPreL)
+            {
+                esm.currentStore.itemData.Insert(0, new List<string> { "user_preamble≡[" + pres + "]" });
+                esm.currentStore.items++;
+                esm.currentStore.rows++;
+            }
+            esm.currentStore.itemData.Insert(0, new List<string> { term });
+            esm.currentStore.itemData.Insert(0, new List<string> { name });
+            esm.currentStore.itemData.Insert(0, new List<string> { bgColor });
+            esm.currentStore.items+=3;
+            esm.currentStore.rows = esm.currentStore.items;
+            esm.currentStore.cols = esm.currentStore.items;
+            esm.currentStore.refPointer = 0;
+            findPreL = false;
+            esm.gotoFirstElementStore();
+        }
+
+        public enum SizeUnit {Pixel, Inch };
+
+        /// <summary>
+        /// This returns a string for specification of the image size in Gnuplot.
+        /// </summary>
+        /// <param name="arg"></param>expression (list), size in meters or if without unit, in pixels
+        /// <param name="context"></param> 
+        /// <param name="unit"></param> unit for gnuplot
+        /// <returns></returns>
+        public static string GetSizeString(Entry arg, Store context, SizeUnit resultunit)
+        {
+            TNumber Inch = Computation.NumericCalculation(new Entry("'in"), context);
+            TNumber size = Computation.NumericCalculation(arg, context);
+            int digits = 2;
+            if (size.El(1).obj.Units.ContainsUnits() && size.El(2).obj.Units.ContainsUnits())
+            {
+                if (size.El(1).obj.Units.Text == "'m" && size.El(2).obj.Units.Text == "'m" )
+                {
+                    // compute the size string if given in m
+                    if (resultunit == SizeUnit.Pixel)
+                    {
+                        size = size / Inch * GlobalProfile.ContentDpi;
+                        digits = 0; // avoid fractional pixel values
+                   }
+                    else size = size / Inch;
+                }
+                else
+                {
+                    // complain about non-consistent units 
+                }
+            }
+            else
+            {
+                // compute size given as pixels
+                if (resultunit == SizeUnit.Inch) size = size /  GlobalProfile.ContentDpi;
+            }
+            // Extract list entries to string
+            return size.El(1).obj.ToString(digits, 10, FractionsType.Decimal, false,false,MidpointRounding.ToEven) + "," 
+                +  size.El(2).obj.ToString(digits, 10, FractionsType.Decimal, false,false,MidpointRounding.ToEven);
+        }
+
+    }
+}

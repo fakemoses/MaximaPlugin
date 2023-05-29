@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 using SMath.Controls;
@@ -33,7 +34,6 @@ namespace MaximaPlugin
 
     public class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion
     {
-
         #region Private fields
 
         DragAndDropFileType[] dragAndDropFileTypes;
@@ -376,7 +376,7 @@ namespace MaximaPlugin
         void MSettings(MenuButtonArgs args)
         {
             SharedFunctions.initializingOverMenue = true;
-            ControlObjects.Translator.GetMaxima();
+            MaximaSession m = ControlObjects.Translator.GetMaxima();
             MForms.SettingsForm sf = new MForms.SettingsForm();
 
             sf.Show();

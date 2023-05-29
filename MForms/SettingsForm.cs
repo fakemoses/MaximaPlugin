@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using MaximaPlugin.ControlObjects;
 
 namespace MaximaPlugin.MForms
 {
@@ -112,13 +113,15 @@ namespace MaximaPlugin.MForms
                 // make sure the path has a trailing directory separator
                 if (! path.EndsWith(Path.DirectorySeparatorChar.ToString()) ) path += Path.DirectorySeparatorChar;
                 // search for maxima.bat and save to config
-                string fileInfo = ControlObjects.Translator.GetMaxima().setNewPathToMaxima(path);
+                string fileInfo = ControlObjects.Translator.GetMaxima().SetNewPathToMaxima(path);
                 if (fileInfo != "CannotFind") // maxima.bat was found
                 {
                     textBox2.Text = Path.GetDirectoryName(ControlObjects.Translator.GetMaxima().GetPathToMaximabat());
                     DialogResult result1 = MessageBox.Show("Found \"" + fileInfo + "\".",
                     "Path to Maxima",
                     MessageBoxButtons.OK);
+                    if (result1 == DialogResult.OK)
+                        Close();
                 }
                 else
                 {
@@ -173,7 +176,7 @@ namespace MaximaPlugin.MForms
                 {
                     if (File.Exists(openFileDialog1.FileName))
                     {
-                        MaximaPlugin.ControlObjects.Translator.CreateMaxima().setNewPathToMaxima(openFileDialog1.FileName);
+                        MaximaPlugin.ControlObjects.Translator.CreateMaxima().SetNewPathToMaxima(openFileDialog1.FileName);
                     }
                 }
                 catch (Exception ex)

@@ -63,6 +63,7 @@ namespace MaximaPlugin.MFunctions
         public static bool MaximaControlF(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             MaximaSession session = ControlObjects.Translator.GetMaxima();
+            session.StartSession();
 
             // Restart
             string arg1 = TermsConverter.ToString(args[0]);
@@ -148,7 +149,7 @@ namespace MaximaPlugin.MFunctions
         /// <param name="result">message</param>
         /// <returns>true</returns>
         public static bool MaximaTakeoverF(Term[][] args, ref Store context, ref Term[] result)
-        {
+         {
             // List of available definitions
             String[] Functions = new String[]
             {
@@ -163,7 +164,8 @@ namespace MaximaPlugin.MFunctions
             };
 
             // Try to ensure maxima is running
-            ControlObjects.Translator.GetMaxima();
+            MaximaSession m = ControlObjects.Translator.GetMaxima();
+            m.StartSession();
             // Check if Maxima is running and complain otherwise
             if (ControlObjects.Translator.GetMaxima().GetState() != ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {

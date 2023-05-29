@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Threading;
+using System;
 
 namespace MaximaPlugin.MForms
 {
@@ -19,14 +20,14 @@ namespace MaximaPlugin.MForms
         public static bool formSMathCalc = false;
         public static bool formOpenState = false;
 
-      //  public static DebugForm debugf;
-      //  public static MaximaPluginForm controlf;
-      //  public static LogForm logf;
-      //  public static SettingsForm settingsf;
+        //  public static DebugForm debugf;
+        //  public static MaximaPluginForm controlf;
+        //  public static LogForm logf;
+        //  public static SettingsForm settingsf;
 
 
 
-
+        
         public static void openForm(string formName) 
         {
             if (!ThreadDebuggerProState && formName == "ThreadDebuggerPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
@@ -45,7 +46,14 @@ namespace MaximaPlugin.MForms
                 trd.IsBackground = true;
                 trd.Start();
             }
+            //else if (formName == "SettingsForm")
+            //{
+            //    Thread trd = new Thread(new ThreadStart(SettingsForm));
+            //    trd.IsBackground = true;
+            //    trd.Start();
+            //}
         }
+
         public static void SettingsForm()
         {
             SettingsFormState = true;

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using SMath.Manager;
+using System.Threading;
 
 namespace MaximaPlugin.ControlObjects
 {
@@ -77,8 +78,11 @@ namespace MaximaPlugin.ControlObjects
         /// <returns>Session object</returns>
         public static MaximaSession GetMaxima()
         {
+            //thread race when using direct code instead of GUI?
             if (!triedToCreate)
-            { triedToCreate = true; maxima = new MaximaSession();}
+            { triedToCreate = true;
+              maxima = new MaximaSession();
+            }
             return maxima;
         }
 
@@ -458,13 +462,15 @@ namespace MaximaPlugin.ControlObjects
         {
             GetMaxima();
             originalStrings=new List<string>();
-            List<string> termTextList = new List<string>() { termText }; 
+            List<string> termTextList = new List<string>() { termText };
+            int x = termTextList.Count;
             Log = Log + "\n\n# Start conversion (Maxima request number: [%" + (maximaOutNum+1)  + "]) #\n    SMath request (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termText;
             originalStrings.Clear();
             termTextList = GetStringsOutAndReplaceThem(termTextList);
             originalStrings = PrepareStringsForMaxima(originalStrings);
             termTextList = PrepareTermsForMaxima(termTextList);
             termTextList = PutOriginalStringsIn(termTextList);
+            int y = termTextList.Count;
             Log = Log + "\n    String given to Maxima (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termTextList[0];
             return termTextList[0];
         }

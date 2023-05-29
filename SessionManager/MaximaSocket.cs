@@ -124,7 +124,6 @@ namespace MaximaPlugin
         {
             return lastLog;
         }
-
         
 
         /// <summary>

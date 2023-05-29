@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{44011c1e-5d0d-4533-8e68-e32b5badce41}</ProjectGuid>
+    <ProjectGuid>{44011C1E-5D0D-4533-8E68-E32B5BADCE41}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MaximaPlugin</RootNamespace>
     <AssemblyName>MaximaPlugin</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,18 +29,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Relase -> SMath Release Manager -->
     <SMathDir Condition=" '$(SMathDir)' == '' AND '$(Configuration)' == 'Release' ">..\..\..\Main\SMathStudio\canvas\bin\Debug</SMathDir>
     <!-- Debug -> development -->
-     <SMathDir Condition=" '$(SMathDir)' == '' AND '$(Configuration)' == 'Debug' ">C:\Program Files (x86)\SMath Studio</SMathDir> 
+    <SMathDir Condition=" '$(SMathDir)' == '' AND '$(Configuration)' == 'Debug' ">C:\Program Files (x86)\SMath Studio</SMathDir>
     <!--<SMathDir Condition=" '$(SMathDir)' == '' AND '$(Configuration)' == 'Debug' ">C:\FHB\Software\SMath\SMath 99.6824</SMathDir>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <StartAction>Program</StartAction>
-    <StartProgram>$(SMathDir)\SMathStudio_Desktop.exe</StartProgram>
+    <StartProgram>$(SMathDir)\Solver.exe</StartProgram>
+    <!--<StartProgram>$(SMathDir)\SMathStudio_Desktop.exe</StartProgram>-->
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SMath.Controls">
@@ -84,8 +88,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlObjects\MaximaSocket.cs" />
-    <Compile Include="ControlObjects\AutoMaxima.cs" />
+    <Compile Include="SessionManager\MaximaSocket.cs" />
+    <Compile Include="SessionManager\MaximaSession.cs" />
     <Compile Include="ControlObjects\CommunicationInterface.cs" />
     <Compile Include="ControlObjects\XmlInterface.cs" />
     <Compile Include="Converter\ConvertToMaxima.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="MFunctions\MaximaAllround.cs" />
     <Compile Include="MFunctions\DirectMaximaFunctions.cs" />
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="lib\SharpVectors.Core.dll" />
     <None Include="lib\SharpVectors.Css.dll" />
     <None Include="lib\SharpVectors.Dom.dll" />

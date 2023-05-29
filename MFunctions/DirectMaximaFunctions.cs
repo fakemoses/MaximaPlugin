@@ -498,6 +498,7 @@ namespace MaximaPlugin.MFunctions
         {
             // nounify polar to avoid conflicts with variable names in Maxima
             args[0] = Computation.Preprocessing(args[0], ref context);
+            string t = SharedFunctions.Proprocessing(args[0]);
             for (int i = 0; i < args[0].Length; i++)
             {
                 if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)

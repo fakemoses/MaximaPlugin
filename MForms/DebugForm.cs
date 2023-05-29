@@ -17,10 +17,11 @@ namespace MaximaPlugin.MForms
         private void Form1_Load(object sender, EventArgs e)
         {
             maximaform=ControlObjects.Translator.GetMaxima();
+            //start session of not available
+            ControlObjects.Translator.GetMaxima().StartSession();
 
             checkBox3.Text = "SMath preprocessing (only for Maxima(expr"+GlobalProfile.ArgumentsSeparatorStandard+"\"debug\"))";
             label1.Text = "Please note:\r\nTo get a direct term string from SMath use Maxima(expr" + GlobalProfile.ArgumentsSeparatorStandard + "\"debug\").\r\nIf SMath does not continue, push „Continue SMath calculation“ or „Do all“ again.";
-            //maximaform = new AutoMaxima();
             if (FormControl.formSMathCalc)
             {
                 if (checkBox3.Checked) tbSmIn.Text = FormControl.formDataRePre;

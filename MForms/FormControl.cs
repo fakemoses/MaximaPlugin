@@ -30,9 +30,10 @@ namespace MaximaPlugin.MForms
         
         public static void openForm(string formName) 
         {
+            ControlObjects.Translator.GetMaxima().StartSession();
             if (!ThreadDebuggerProState && formName == "ThreadDebuggerPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {
-                ControlObjects.Translator.GetMaxima();
+                //ControlObjects.Translator.GetMaxima().StartSession();
 
                 Thread trd = new Thread(new ThreadStart(MForms.FormControl.ThreadDebuggerPro));
                 trd.IsBackground = true;
@@ -40,18 +41,12 @@ namespace MaximaPlugin.MForms
             }
             else if (!ThreadLogProState && formName == "ThreadLogPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {
-                ControlObjects.Translator.GetMaxima();
+                //ControlObjects.Translator.GetMaxima().StartSession();
 
                 Thread trd = new Thread(new ThreadStart(MForms.FormControl.ThreadLogPro));
                 trd.IsBackground = true;
                 trd.Start();
             }
-            //else if (formName == "SettingsForm")
-            //{
-            //    Thread trd = new Thread(new ThreadStart(SettingsForm));
-            //    trd.IsBackground = true;
-            //    trd.Start();
-            //}
         }
 
         public static void SettingsForm()

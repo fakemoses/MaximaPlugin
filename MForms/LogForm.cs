@@ -10,6 +10,7 @@ namespace MaximaPlugin.MForms
         {
             InitializeComponent();
             session = ControlObjects.Translator.GetMaxima();
+            ControlObjects.Translator.GetMaxima().StartSession();
         }
         private void tbLog_TextChanged(object sender, EventArgs e)
         {

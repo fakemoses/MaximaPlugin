@@ -376,7 +376,6 @@ namespace MaximaPlugin
         void MSettings(MenuButtonArgs args)
         {
             SharedFunctions.initializingOverMenue = true;
-            MaximaSession m = ControlObjects.Translator.GetMaxima();
             MForms.SettingsForm sf = new MForms.SettingsForm();
 
             sf.Show();

@@ -62,8 +62,7 @@ namespace MaximaPlugin.MFunctions
         /// <returns></returns>
         public static bool MaximaControlF(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            MaximaSession session = ControlObjects.Translator.GetMaxima();
-            session.StartSession();
+            ControlObjects.Translator.GetMaxima().StartSession();
 
             // Restart
             string arg1 = TermsConverter.ToString(args[0]);
@@ -74,7 +73,7 @@ namespace MaximaPlugin.MFunctions
 
             if (arg1 == "restart" || arg1 == Symbols.StringChar + "restart" + Symbols.StringChar)
             {
-                result = TermsConverter.ToTerms(session.RestartMaxima());
+                result = TermsConverter.ToTerms(ControlObjects.Translator.GetMaxima().RestartMaxima());
                 // Reset the takeover state
                 MaximaTakeoverF( TakeoverNone, ref context, ref tmp);
                 return true;
@@ -86,7 +85,7 @@ namespace MaximaPlugin.MFunctions
             }
             else if (arg1 == "cleanup" || arg1 == Symbols.StringChar + "cleanup" + Symbols.StringChar)
             {
-                result = TermsConverter.ToTerms(session.CleanupMaxima());
+                result = TermsConverter.ToTerms(ControlObjects.Translator.GetMaxima().CleanupMaxima());
                 // Reset the takeover state
                 MaximaTakeoverF(TakeoverNone, ref context, ref tmp);
                 return true;
@@ -108,10 +107,10 @@ namespace MaximaPlugin.MFunctions
             }
             else
             {
-                if (session.GetState() == session.GetMaximaStateRunning())
-                    result = TermsConverter.ToTerms(Symbols.StringChar + session.GetPathToMaximabat() + Symbols.StringChar);
+                if (ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
+                    result = TermsConverter.ToTerms(Symbols.StringChar + ControlObjects.Translator.GetMaxima().GetPathToMaximabat() + Symbols.StringChar);
                 else
-                    result = TermsConverter.ToTerms(session.GetState());
+                    result = TermsConverter.ToTerms(ControlObjects.Translator.GetMaxima().GetState());
 
                 return true;
             }
@@ -164,8 +163,8 @@ namespace MaximaPlugin.MFunctions
             };
 
             // Try to ensure maxima is running
-            MaximaSession m = ControlObjects.Translator.GetMaxima();
-            m.StartSession();
+            ControlObjects.Translator.GetMaxima().StartSession();
+            //m.StartSession();
             // Check if Maxima is running and complain otherwise
             if (ControlObjects.Translator.GetMaxima().GetState() != ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {

@@ -127,7 +127,9 @@ namespace MaximaPlugin.ControlObjects
         /// <param name="sendString">command</param>
         public static string Ask(string sendString)
         {
-
+            //init session if not available
+            GetMaxima().StartSession();
+            //check if maxima is there
             if (GetMaxima().GetState() == GetMaxima().GetMaximaStateRunning())
             {
                 time.Reset();
@@ -460,7 +462,8 @@ namespace MaximaPlugin.ControlObjects
         /// <returns></returns>
         public static string TranslateToMaxima(string termText)
         {
-            GetMaxima();
+            //start session of not available - used in some forms which has no initial maxima session
+            GetMaxima().StartSession();
             originalStrings=new List<string>();
             List<string> termTextList = new List<string>() { termText };
             int x = termTextList.Count;

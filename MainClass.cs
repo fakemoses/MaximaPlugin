@@ -363,13 +363,13 @@ namespace MaximaPlugin
         #region Buttons
         void MLog(MenuButtonArgs args)
         {
-            MForms.FormControl.openForm("ThreadLogPro");
+            MForms.FormControl.OpenForm("ThreadLogPro");
 
 			args.CurrentRegions = new RegionBase[0];
         }
         void MDebug(MenuButtonArgs args)
         {
-            MForms.FormControl.openForm("ThreadDebuggerPro");
+            MForms.FormControl.OpenForm("ThreadDebuggerPro");
 
 			args.CurrentRegions = new RegionBase[0];
         }

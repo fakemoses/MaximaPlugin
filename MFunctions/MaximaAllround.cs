@@ -29,7 +29,7 @@ namespace MaximaPlugin.MFunctions
                 //MForms.FormControl.formDataRePre = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
                 MForms.FormControl.formDataRe = TermsConverter.ToString(args[0]);
                 MForms.FormControl.formDataRePre = SharedFunctions.Proprocessing(args[0]);
-                MForms.FormControl.openForm("ThreadDebuggerPro");
+                MForms.FormControl.OpenForm("ThreadDebuggerPro");
                 MForms.FormControl.formSMathCalc = true;
                 do { System.Threading.Thread.Sleep(1000);} while (!MForms.FormControl.formReadyState && MForms.FormControl.formWaitFor);
                 result = TermsConverter.ToTerms(MForms.FormControl.formDataAn);
@@ -42,6 +42,7 @@ namespace MaximaPlugin.MFunctions
             {
                 // don't use debugger
                 // produce the input for maxima
+                // issue is here string to maxima
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
                 // send input and get result
                 result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
@@ -245,7 +246,7 @@ namespace MaximaPlugin.MFunctions
             }
             else if (arg1 == "big" || arg1 == Symbols.StringChar + "big" + Symbols.StringChar)
             {
-                MForms.FormControl.openForm("ThreadLogPro");
+                MForms.FormControl.OpenForm("ThreadLogPro");
                 result = TermsConverter.ToTerms(Symbols.StringChar + "Log window opened" + Symbols.StringChar);
                 return true;
             }

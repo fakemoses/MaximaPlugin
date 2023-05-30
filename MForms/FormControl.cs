@@ -28,7 +28,7 @@ namespace MaximaPlugin.MForms
 
 
         
-        public static void openForm(string formName) 
+        public static void OpenForm(string formName) 
         {
             ControlObjects.Translator.GetMaxima().StartSession();
             if (!ThreadDebuggerProState && formName == "ThreadDebuggerPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())

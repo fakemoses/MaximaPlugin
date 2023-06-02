@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using SMath.Manager;
 using SMath.Math;
+using System.Windows.Forms;
 
 namespace MaximaPlugin
 {
@@ -134,6 +135,25 @@ namespace MaximaPlugin
             //        xTerms.Add(termVar[j]);
             //    }
             //}
+
+            bool specialCase = false;
+
+            //check if term has the if() so that it can be preprocessed differently
+            foreach (Term item in term)
+            {
+                //If thing
+                if (item.Text == "if" && item.Type == SMath.Manager.TermType.Function)
+                {
+                    specialCase = true;
+                }
+
+            }
+
+            if(specialCase == true)
+            {
+                // do something
+            }
+
             string text = TermsConverter.ToString(term);
 
             return text;

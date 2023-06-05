@@ -49,7 +49,8 @@ namespace MaximaPlugin.PlotImage
                 textHolder = ControlObjects.Translator.Ask("draw2d(" + sl[0] + ") ");
             else
                 textHolder = ControlObjects.Translator.Ask("draw3d(" + sl[0] + ") ");
-            Regex rxError = new Regex(@"(syntax)|(error)", RegexOptions.None);
+            //Regex rxError = new Regex(@"(syntax)|(error)", RegexOptions.None);
+            Regex rxError = new Regex(@"\b(syntax|error)\b", RegexOptions.IgnoreCase);
             if (rxError.IsMatch(textHolder, 0))
             {
                 return textHolder;

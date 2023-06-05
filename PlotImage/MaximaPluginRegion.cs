@@ -100,6 +100,7 @@ namespace MaximaPlugin.PlotImage
         public override void OnMouseDown(MouseEventOptions e)
         {
             base.OnMouseDown(e);
+            
 
             // Store mouse location/state       
             mouseDown = true;
@@ -107,6 +108,11 @@ namespace MaximaPlugin.PlotImage
             mouseY = e.Y;
             dMouseX = e.X / canv.Size.Width;
             dMouseY = e.Y / canv.Size.Height;
+
+            if (!dblclicktimer.IsRunning)
+            {
+                dblclicktimer.Start();
+            }
 
             if (dblclicktimer.ElapsedMilliseconds > 500)
             {
@@ -122,6 +128,7 @@ namespace MaximaPlugin.PlotImage
             else
             {
                 // assume doubleclick
+                dblclicktimer.Stop();
                 dblclicktimer.Reset();
 
                 if (formOpen)
@@ -132,6 +139,7 @@ namespace MaximaPlugin.PlotImage
                     psf = new PlotSettings(this);
                     psf.Show();
                     formOpen = true;
+                    psf.Focus();
                 }
             }
             canv.plotApproval = true;

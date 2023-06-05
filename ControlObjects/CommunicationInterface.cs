@@ -410,7 +410,8 @@ namespace MaximaPlugin.ControlObjects
         /// <returns></returns>
         public static string TranslateToSMath(List<string> answers)
         {
-            //GetMaxima();
+            //some code to deal with if else output? probably some other unknown output too
+            
             string outputString = "";
             originalStrings = new List<string>();
             answers = GetStringsOutAndReplaceThem(answers);
@@ -464,7 +465,25 @@ namespace MaximaPlugin.ControlObjects
         {
             //start session of not available - used in some forms which has no initial maxima session
             GetMaxima().StartSession();
-            originalStrings=new List<string>();
+
+            // SMath if(condition,true,false) maybe use regex to find it
+            // in this case much easier than having to deal with 
+            string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+            Match match = Regex.Match(termText, pattern);
+
+            if (match.Success)
+            {
+                // Extract the condition, true result, and false result
+                string condition = match.Groups[1].Value.Trim();
+                string trueResult = match.Groups[2].Value.Trim();
+                string falseResult = match.Groups[3].Value.Trim();
+
+                string combineResult = $"if({condition}) then {trueResult} else {falseResult}";
+
+                return combineResult;
+            }
+
+            originalStrings =new List<string>();
             List<string> termTextList = new List<string>() { termText };
             int x = termTextList.Count;
             Log = Log + "\n\n# Start conversion (Maxima request number: [%" + (maximaOutNum+1)  + "]) #\n    SMath request (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termText;

@@ -151,6 +151,12 @@ namespace MaximaPlugin.Converter
                 { @"}", ")" },                                                                                      // brackets
 
         };
+
+        static KeyValueList<string, string> primeToRandom = new KeyValueList<string, string>
+        {
+            { @"([a-zA-Z]+)\s*'", "$1PRIME" },
+        };
+
         // MK 2018 09 03 \b marks the start of a word
         static KeyValueList<string, string> functionNamesToMaxima = new KeyValueList<string, string> 
         {
@@ -219,6 +225,7 @@ namespace MaximaPlugin.Converter
             //foreach (var pair in CharactersToAscii) text = (new Regex(pair.Key).Replace(text, pair.Value));
             //foreach (var pair in letters) text = (new Regex(pair.Key).Replace(text, pair.Value));
             foreach (var pair in constantsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
+            foreach (var pair in primeToRandom) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in seperatorsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in symbolsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in functionNamesToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);

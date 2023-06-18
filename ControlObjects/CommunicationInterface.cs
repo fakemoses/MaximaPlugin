@@ -490,6 +490,7 @@ namespace MaximaPlugin.ControlObjects
             originalStrings.Clear();
             termTextList = GetStringsOutAndReplaceThem(termTextList);
             originalStrings = PrepareStringsForMaxima(originalStrings);
+            //prime extractor here?
             termTextList = PrepareTermsForMaxima(termTextList);
             termTextList = PutOriginalStringsIn(termTextList);
             int y = termTextList.Count;

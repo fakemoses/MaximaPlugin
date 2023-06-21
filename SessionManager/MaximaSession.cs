@@ -177,7 +177,7 @@ namespace MaximaPlugin
 
                 //if failed show this
                 DialogResult result2 = MessageBox.Show(
-                "Cannot find maxima.bat. Do you want to enter a start search path now?",
+                "Cannot find maxima.bat. Do you want to install it or manually enter a start search path now?",
                 "Cannot find maxima.bat",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Information,
@@ -211,17 +211,20 @@ namespace MaximaPlugin
         public string SetNewPathToMaxima(string StartPath)
         {
             StartPath = Path.GetDirectoryName(StartPath);
-            string FoundPath = SharedFunctions.SearchFile(StartPath, MAXIMAname);
-            if (FoundPath != null && File.Exists(FoundPath))
+            if (StartPath != null)
             {
-                ReadConfig();
-                pathToMAXIMA = FoundPath;
-                pathToMAXIMArel = SharedFunctions.GetRelativePath(FoundPath, GlobalProfile.ApplicationPath);
-                SaveConfig();
-                CloseMaxima();
-                StartSession();
-                //StartAndConnectMaxima(1);
-                return pathToMAXIMArel;
+                string FoundPath = SharedFunctions.SearchFile(StartPath, MAXIMAname);
+                if (FoundPath != null && File.Exists(FoundPath))
+                {
+                    ReadConfig();
+                    pathToMAXIMA = FoundPath;
+                    pathToMAXIMArel = SharedFunctions.GetRelativePath(FoundPath, GlobalProfile.ApplicationPath);
+                    SaveConfig();
+                    CloseMaxima();
+                    StartSession();
+                    //StartAndConnectMaxima(1);
+                    return pathToMAXIMArel;
+                }
             }
             return "CannotFind";
         }

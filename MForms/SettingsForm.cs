@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO;
 using MaximaPlugin.ControlObjects;
+using MaximaPlugin.MInstaller;
 
 namespace MaximaPlugin.MForms
 {
@@ -187,5 +188,26 @@ namespace MaximaPlugin.MForms
 
         }
 
+        private async void  button2_Click(object sender, EventArgs e)
+        {
+            string url = "https://sourceforge.net/projects/maxima/best_release.json"; // Replace with your installer URL
+            //bool silent = false; // Set to true for silent installation, false for pop-up window
+            string installerPath = @"C:\Users\moses\Downloads\installer.exe";
+
+            JsonDataFetcher dataFetcher = new JsonDataFetcher();
+            string windowsUrl = await dataFetcher.GetWindowsReleaseUrl(url);
+
+            if (!string.IsNullOrEmpty(windowsUrl))
+            {
+                MessageBox.Show("Release URL: " + windowsUrl);
+                // Perform further actions with the URL, such as downloading the file
+                Installer.DownloadInstaller(windowsUrl, installerPath);
+                Installer.RequestAdminPrivileges(installerPath);
+            }
+            else
+            {
+                MessageBox.Show("Unable to extract the release URL from the JSON.");
+            }
+        }
     }
 }

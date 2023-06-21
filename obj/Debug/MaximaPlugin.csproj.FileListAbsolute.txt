@@ -90,3 +90,9 @@ C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.
 C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
 C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.dll
 C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.pdb
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\System.Management.Automation.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.Native.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\System.Management.Automation.xml

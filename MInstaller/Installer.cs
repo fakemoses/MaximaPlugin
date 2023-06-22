@@ -66,10 +66,12 @@ namespace MaximaPlugin.MInstaller
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "powershell.exe";
-            startInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\"";
+            startInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\" -WindowStyle hidden";
 
             try
             {
+                //some input for user when installing begins
+
                 Process.Start(startInfo);
             }
             catch (Exception ex)

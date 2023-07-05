@@ -39,6 +39,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -113,7 +114,7 @@
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(11, 87);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(453, 78);
             this.groupBox2.TabIndex = 3;
@@ -163,15 +164,25 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Location = new System.Drawing.Point(12, 96);
+            this.groupBox3.Location = new System.Drawing.Point(11, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(453, 54);
+            this.groupBox3.Size = new System.Drawing.Size(453, 69);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Install Maxima";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 53);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(341, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Maxima installation requires active internet connection and admin rights";
             // 
             // label4
             // 
@@ -242,5 +253,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label5;
     }
 }

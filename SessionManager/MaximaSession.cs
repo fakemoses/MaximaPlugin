@@ -190,9 +190,11 @@ namespace MaximaPlugin
                     // Running the form in STAthread so that it can run independently
                     Thread staThread = new Thread(() =>
                     {
-                        System.Windows.Forms.Application.EnableVisualStyles();
-                        System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-                        System.Windows.Forms.Application.Run(new MaximaPlugin.MForms.SettingsForm());
+                        using (var installerForm = new MaximaPlugin.MForms.InstallerForm())
+                        {
+                            // Show the installer form modally
+                            installerForm.ShowDialog();
+                        }
                     });
                     staThread.SetApartmentState(ApartmentState.STA);
                     staThread.Start();

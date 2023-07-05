@@ -8,19 +8,37 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MaximaPlugin.MInstaller
 {
     class Installer
     {
-        public static void DownloadInstaller(string url, string path)
+        public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb)
         {
             using (var client = new WebClient())
             {
+                client.DownloadProgressChanged += (sender, e) =>
+                {
+                    // Update the progress bar value based on the percentage downloaded
+                    pb.Value = e.ProgressPercentage;
+                };
+
+                client.DownloadFileCompleted += (sender, e) =>
+                {
+                    if (e.Error == null)
+                    {
+                        MessageBox.Show("Installer downloaded successfully.");
+                    }
+                    else
+                    {
+                         MessageBox.Show("Error downloading the installer: " + e.Error.Message);
+                    }
+                };
+
                 try
                 {
-                    client.DownloadFile(url, path);
-                    MessageBox.Show("Installer downloaded successfully.");
+                    await client.DownloadFileTaskAsync(new Uri(url), path);
                 }
                 catch (Exception ex)
                 {
@@ -29,21 +47,24 @@ namespace MaximaPlugin.MInstaller
             }
         }
 
-        public static void RequestAdminPrivileges(string installerPath)
+        public static int RequestAdminPrivileges(string installerPath)
         {
+            int pid = 0; // process ID
             // Check if the current user has administrative privileges
             if (IsUserAdmin())
             {
+                //delete this later - replace with something else
                 MessageBox.Show("The installation process has started."); // Show a message box
-                InstallSilently(installerPath);
-
+                // need to know when the installer is finished
+                pid = InstallSilently(installerPath);
+                
             }
             else
             {
                 // Restart the application with administrative privileges
-                RestartWithAdminPrivileges(installerPath);
+                pid = RestartWithAdminPrivileges(installerPath);
             }
-
+            return pid;
         }
 
         static bool IsUserAdmin()
@@ -53,7 +74,7 @@ namespace MaximaPlugin.MInstaller
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        static void RestartWithAdminPrivileges(string installerPath)
+        static int RestartWithAdminPrivileges(string installerPath)
         {
             string scriptPath = Path.Combine(Path.GetTempPath(), "InstallScript.ps1");
 
@@ -66,21 +87,25 @@ namespace MaximaPlugin.MInstaller
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "powershell.exe";
-            startInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\" -WindowStyle hidden";
+            startInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\"";
+            startInfo.WindowStyle = ProcessWindowStyle.Minimized;
 
             try
             {
-                //some input for user when installing begins
+                // Start the PowerShell process
+                Process process = Process.Start(startInfo);
 
-                Process.Start(startInfo);
+                // Return the process ID
+                return process.Id;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                return -1;
             }
         }
 
-        static void InstallSilently(string installerPath)
+        static int InstallSilently(string installerPath)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = installerPath;
@@ -88,11 +113,16 @@ namespace MaximaPlugin.MInstaller
 
             try
             {
-                Process.Start(startInfo);
+                // Start the PowerShell process
+                Process process = Process.Start(startInfo);
+
+                // Return the process ID
+                return process.Id;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                return -1;
             }
         }
     }

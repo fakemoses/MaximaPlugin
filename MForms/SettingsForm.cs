@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.IO;
 using MaximaPlugin.ControlObjects;
 using MaximaPlugin.MInstaller;
+using System.Threading;
 
 namespace MaximaPlugin.MForms
 {
@@ -163,56 +164,38 @@ namespace MaximaPlugin.MForms
                 //button3_Click(sender, e);
             }
 
-
-            /*
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = "c:\\";
-            openFileDialog1.Filter = "batch file (*.bat)|*.bat";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.RestoreDirectory = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    if (File.Exists(openFileDialog1.FileName))
-                    {
-                        MaximaPlugin.ControlObjects.Translator.CreateMaxima().SetNewPathToMaxima(openFileDialog1.FileName);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                }
-            }*/
-
         }
 
         //install button
-        private async void  button2_Click(object sender, EventArgs e)
+        private void  button2_Click(object sender, EventArgs e)
         {
-            string url = "https://sourceforge.net/projects/maxima/best_release.json"; // Replace with your installer URL
-            //bool silent = false; // Set to true for silent installation, false for pop-up window
-            string installerPath = Path.Combine(Path.GetTempPath(), "installer.exe");
+            DialogResult result2 = MessageBox.Show(
+                "Maxima installation require internet connection and admin right. Do you want to proceed?",
+                "Installation require Internet connection",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1
+                );
 
-            JsonDataFetcher dataFetcher = new JsonDataFetcher();
-            string windowsUrl = await dataFetcher.GetWindowsReleaseUrl(url);
-
-            if (!string.IsNullOrEmpty(windowsUrl))
+            if (result2 == DialogResult.Yes)
             {
-                MessageBox.Show("Latest Version Found!");
-                // Perform further actions with the URL, such as downloading the file
+                this.Close();
+                Thread staThread = new Thread(() =>
+                {
+                    using (var installerForm = new MaximaPlugin.MForms.InstallerForm())
+                    {
+                        // Show the installer form modally
+                        installerForm.ShowDialog();
+                        installerForm.TopMost = true;
+                    }
+                });
+                staThread.SetApartmentState(ApartmentState.STA);
+                staThread.Start();
+                staThread.Join();
 
-                Installer.DownloadInstaller(windowsUrl, installerPath);
-                Installer.RequestAdminPrivileges(installerPath);
-            }
-            else
-            {
-                MessageBox.Show("Unable to extract the release URL from the JSON.");
             }
         }
 
-        //cancel button
         private void button4_Click(object sender, EventArgs e)
         {
             Close();

@@ -86,6 +86,7 @@
       <HintPath>lib\SharpVectors.Rendering.Gdi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -96,6 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MForms\InstallerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MForms\InstallerForm.Designer.cs">
+      <DependentUpon>InstallerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MInstaller\JsonDataFetcher.cs" />
     <Compile Include="MInstaller\Installer.cs" />
     <Compile Include="SessionManager\MaximaSocket.cs" />
@@ -178,6 +185,9 @@
     <EmbeddedResource Include="MForms\DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MForms\InstallerForm.resx">
+      <DependentUpon>InstallerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MForms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>

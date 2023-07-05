@@ -96,3 +96,4 @@ C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Manageme
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.Native.dll
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Newtonsoft.Json.xml
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\System.Management.Automation.xml
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.InstallerForm.resources

@@ -10,6 +10,7 @@ namespace MaximaPlugin.MForms
         public static bool ThreadLogProState = false;
         public static bool SettingsFormState = false;
         public static bool MaximaFormState = false;
+        public static bool InstallerFormState = false;
 
 
         public static string formDataRe = "String from SMath";
@@ -30,10 +31,10 @@ namespace MaximaPlugin.MForms
         
         public static void OpenForm(string formName) 
         {
+
             ControlObjects.Translator.GetMaxima().StartSession();
             if (!ThreadDebuggerProState && formName == "ThreadDebuggerPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {
-                //ControlObjects.Translator.GetMaxima().StartSession();
 
                 Thread trd = new Thread(new ThreadStart(MForms.FormControl.ThreadDebuggerPro));
                 trd.IsBackground = true;
@@ -41,12 +42,19 @@ namespace MaximaPlugin.MForms
             }
             else if (!ThreadLogProState && formName == "ThreadLogPro" && ControlObjects.Translator.GetMaxima().GetState() == ControlObjects.Translator.GetMaxima().GetMaximaStateRunning())
             {
-                //ControlObjects.Translator.GetMaxima().StartSession();
 
                 Thread trd = new Thread(new ThreadStart(MForms.FormControl.ThreadLogPro));
                 trd.IsBackground = true;
                 trd.Start();
             }
+        }
+
+        public static void InstallerForm()
+        {
+            InstallerFormState = true;
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MaximaPlugin.MForms.InstallerForm());
         }
 
         public static void SettingsForm()

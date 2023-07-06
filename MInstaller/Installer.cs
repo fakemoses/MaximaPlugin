@@ -14,11 +14,8 @@ namespace MaximaPlugin.MInstaller
 {
     class Installer
     {
-        public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb, Form form)
+        public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb)
         {
-            int maxRetryAttempts = 3; // Set the maximum number of retry attempts
-            int retryDelaySeconds = 5; // Set the delay in seconds between retries
-
             using (var client = new WebClient())
             {
                 client.DownloadProgressChanged += (sender, e) =>
@@ -31,7 +28,7 @@ namespace MaximaPlugin.MInstaller
                 {
                     if (e.Error == null)
                     {
-                        MessageBox.Show("Installer downloaded successfully.");
+                        //MessageBox.Show("Installer downloaded successfully.");
                     }
                     else
                     {
@@ -39,28 +36,13 @@ namespace MaximaPlugin.MInstaller
                     }
                 };
 
-                int retryCount = 0;
-
-                while (retryCount < maxRetryAttempts)
+                try
                 {
-                    try
-                    {
-                        await client.DownloadFileTaskAsync(new Uri(url), path);
-                        // Download completed successfully, exit the loop
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        retryCount++;
-                        MessageBox.Show($"Error downloading the installer (Attempt {retryCount}): {ex.Message}");
-                        await Task.Delay(TimeSpan.FromSeconds(retryDelaySeconds));
-                    }
+                    await client.DownloadFileTaskAsync(new Uri(url), path);
                 }
-
-                if (retryCount >= maxRetryAttempts)
+                catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed to download the installer after {maxRetryAttempts} attempts.");
-                    form.Close();
+                    MessageBox.Show("Error downloading the installer: " + ex.Message);
                 }
             }
         }

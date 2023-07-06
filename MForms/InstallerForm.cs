@@ -21,8 +21,7 @@ namespace MaximaPlugin.MForms
         public async void ExtractUrlFromJson()
         {
             label4.Text = "Downloading installer..";
-            string url = "https://sourceforge.net/projects/maxima/best_release.json"; // Replace with your installer URL
-            //bool silent = false; // Set to true for silent installation, false for pop-up window
+            string url = "https://sourceforge.net/projects/maxima/best_release.json"; 
             string installerPath = Path.Combine(Path.GetTempPath(), "installer.exe");
 
             JsonDataFetcher dataFetcher = new JsonDataFetcher();
@@ -41,7 +40,7 @@ namespace MaximaPlugin.MForms
 
         public async Task InstallMaxima(string windowsUrl, string installerPath)
         {
-            await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1, this);
+            await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1);
             installerProcessId = Installer.RequestAdminPrivileges(installerPath);
             
             if(installerProcessId > 0)
@@ -73,6 +72,7 @@ namespace MaximaPlugin.MForms
         // Timer tick event handler to check if the installer process has exited
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //this part still not working as intended
             try
             {
                 Process installerProcess = Process.GetProcessById(installerProcessId);
@@ -88,7 +88,6 @@ namespace MaximaPlugin.MForms
                     Timer timer = (Timer)sender;
                     timer.Stop();
 
-                    // Clean up or perform other actions as needed
                 }
             }
             catch (ArgumentException)
@@ -96,20 +95,12 @@ namespace MaximaPlugin.MForms
   
                 label4.Text = "The installation has completed.";
                 button1.Enabled = true;
-                MessageBox.Show("The installation has completed.");
 
                 // Stop the timer
                 Timer timer = (Timer)sender;
                 timer.Stop();
-
-                // Clean up or perform other actions as needed
             }
         }
-
-        public void setValueLabel(string text)
-        {
-            label4.Text = text;
-        } 
     }
 
     

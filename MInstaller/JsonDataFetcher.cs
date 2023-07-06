@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
+using System.Windows.Forms;
 
 namespace MaximaPlugin.MInstaller
 {
@@ -15,14 +16,21 @@ namespace MaximaPlugin.MInstaller
             using (HttpClient client = new HttpClient())
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                HttpResponseMessage response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                string json = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    string json = await response.Content.ReadAsStringAsync();
 
-                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                string windowsUrl = data.platform_releases.windows.url;
-
-                return windowsUrl;
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                    string windowsUrl = data.platform_releases.windows.url;
+                    return windowsUrl;
+                } catch (Exception ex)
+                {
+                    
+                }
+                return null;
+                
             }
         }
     }

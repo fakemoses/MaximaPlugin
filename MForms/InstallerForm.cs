@@ -37,11 +37,11 @@ namespace MaximaPlugin.MForms
             if (!string.IsNullOrEmpty(windowsUrl))
             {
                 await InstallMaxima(windowsUrl, installerPath);
-
             }
             else
             {
-                MessageBox.Show("Unable to extract the release URL from the JSON.");
+                MessageBox.Show("Unable to extract the release URL from the JSON. Check your internet connection");
+                Close();
             }
         }
 
@@ -54,7 +54,7 @@ namespace MaximaPlugin.MForms
             {
                 // Start a timer to periodically check if the installer process has exited
                 Timer timer = new Timer();
-                timer.Interval = 1000; // Check every 1 second (adjust as needed)
+                timer.Interval = 1000; // Check every 1 second 
                 timer.Tick += Timer_Tick;
                 timer.Start();
                 label4.Text = "The installation is in progress...";

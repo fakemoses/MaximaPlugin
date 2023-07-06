@@ -49,6 +49,7 @@ namespace MaximaPlugin.MForms
         {
             await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1);
             installerProcessId = Installer.RequestAdminPrivileges(installerPath);
+            
             if(installerProcessId > 0)
             {
                 // Start a timer to periodically check if the installer process has exited

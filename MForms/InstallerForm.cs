@@ -1,13 +1,7 @@
 ﻿using MaximaPlugin.MInstaller;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -47,7 +41,7 @@ namespace MaximaPlugin.MForms
 
         public async Task InstallMaxima(string windowsUrl, string installerPath)
         {
-            await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1);
+            await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1, this);
             installerProcessId = Installer.RequestAdminPrivileges(installerPath);
             
             if(installerProcessId > 0)
@@ -88,7 +82,7 @@ namespace MaximaPlugin.MForms
                     // Perform actions or display a message to indicate completion
                     label4.Text = "The installation has completed.";
                     button1.Enabled = true;
-                    //MessageBox.Show("The installation has completed.");
+                    MessageBox.Show("The installation has completed.");
 
                     // Stop the timer
                     Timer timer = (Timer)sender;
@@ -102,6 +96,7 @@ namespace MaximaPlugin.MForms
   
                 label4.Text = "The installation has completed.";
                 button1.Enabled = true;
+                MessageBox.Show("The installation has completed.");
 
                 // Stop the timer
                 Timer timer = (Timer)sender;
@@ -110,6 +105,11 @@ namespace MaximaPlugin.MForms
                 // Clean up or perform other actions as needed
             }
         }
+
+        public void setValueLabel(string text)
+        {
+            label4.Text = text;
+        } 
     }
 
     

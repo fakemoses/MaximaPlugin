@@ -177,7 +177,7 @@ namespace MaximaPlugin
 
                 //if failed show this
                 DialogResult result2 = MessageBox.Show(
-                "Cannot find maxima.bat. Do you want to install it or manually enter a start search path now?",
+                "Cannot find maxima.bat. Do you want to install it automatically? \n\nInstalling will require active internet connection and admin right.",
                 "Cannot find maxima.bat",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Information,

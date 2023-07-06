@@ -14,8 +14,11 @@ namespace MaximaPlugin.MInstaller
 {
     class Installer
     {
-        public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb)
+        public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb, Form form)
         {
+            int maxRetryAttempts = 3; // Set the maximum number of retry attempts
+            int retryDelaySeconds = 5; // Set the delay in seconds between retries
+
             using (var client = new WebClient())
             {
                 client.DownloadProgressChanged += (sender, e) =>
@@ -36,13 +39,28 @@ namespace MaximaPlugin.MInstaller
                     }
                 };
 
-                try
+                int retryCount = 0;
+
+                while (retryCount < maxRetryAttempts)
                 {
-                    await client.DownloadFileTaskAsync(new Uri(url), path);
+                    try
+                    {
+                        await client.DownloadFileTaskAsync(new Uri(url), path);
+                        // Download completed successfully, exit the loop
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        retryCount++;
+                        MessageBox.Show($"Error downloading the installer (Attempt {retryCount}): {ex.Message}");
+                        await Task.Delay(TimeSpan.FromSeconds(retryDelaySeconds));
+                    }
                 }
-                catch (Exception ex)
+
+                if (retryCount >= maxRetryAttempts)
                 {
-                    MessageBox.Show("Error downloading the installer: " + ex.Message);
+                    MessageBox.Show($"Failed to download the installer after {maxRetryAttempts} attempts.");
+                    form.Close();
                 }
             }
         }

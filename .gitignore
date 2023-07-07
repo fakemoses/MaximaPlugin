@@ -211,3 +211,4 @@ project.lock.json
 
 # UWP Projects
 AppPackages/
+.vs/MaximaPlugin/v17/.suo

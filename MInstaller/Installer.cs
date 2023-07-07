@@ -35,7 +35,7 @@ namespace MaximaPlugin.MInstaller
                          MessageBox.Show("Error downloading the installer: " + e.Error.Message);
                     }
                 };
-
+                 
                 try
                 {
                     await client.DownloadFileTaskAsync(new Uri(url), path);

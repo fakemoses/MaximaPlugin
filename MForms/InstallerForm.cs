@@ -21,8 +21,10 @@ namespace MaximaPlugin.MForms
         public async void ExtractUrlFromJson()
         {
             label4.Text = "Downloading installer..";
-            string url = "https://sourceforge.net/projects/maxima/best_release.json"; 
-            string installerPath = Path.Combine(Path.GetTempPath(), "installer.exe");
+            string url = "https://sourceforge.net/projects/maxima/best_release.json";
+            string randomFileName = Path.GetRandomFileName();
+            string installerFileName = $"installer_{randomFileName}.exe";
+            string installerPath = Path.Combine(Path.GetTempPath(), installerFileName);
 
             JsonDataFetcher dataFetcher = new JsonDataFetcher();
             string windowsUrl = await dataFetcher.GetWindowsReleaseUrl(url);

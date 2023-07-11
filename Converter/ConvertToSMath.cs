@@ -375,8 +375,17 @@ namespace MaximaPlugin.Converter
             if (rxMulti.IsMatch(text,0))
                 text = MaximaPlugin.Converter.MatrixAndListFromMaximaToSMath.MultiListConvert(text);
 
+            //replace any variable with subscript a[1] a[2] with random text 
+            text= Regex.Replace(text, @"([a-zA-Z]+)\[(\d+)\]", "$1INDEX$2");
+
             // convert lists
             text = MaximaPlugin.Converter.MatrixAndListFromMaximaToSMath.ListConvert(text);
+
+            //put back the indexes
+            text = Regex.Replace(text, @"([a-zA-Z]+)INDEX(\d+)", "$1[$2]");
+
+            //convert into smath -> a[1] => el(a,1)
+            text = Regex.Replace(text, @"(\w+)\[(\d+)\]", "el($1,$2)");
 
             // reset the matrix converter flag
             MaximaPlugin.Converter.MatrixAndListFromMaximaToSMath.solveFunction = false;

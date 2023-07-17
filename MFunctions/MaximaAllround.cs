@@ -46,6 +46,7 @@ namespace MaximaPlugin.MFunctions
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
                 // send input and get result
                 result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+                
                 return true;
             }
         }

@@ -98,18 +98,23 @@
             this.textWidth = new System.Windows.Forms.TextBox();
             this.tabVariables = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.checkZContext = new System.Windows.Forms.CheckBox();
             this.textVarNameZmin = new System.Windows.Forms.TextBox();
             this.textVarNameZmax = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkYContext = new System.Windows.Forms.CheckBox();
             this.textVarNameYmin = new System.Windows.Forms.TextBox();
             this.textVarNameYmax = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkXContext = new System.Windows.Forms.CheckBox();
             this.textVarNameXmin = new System.Windows.Forms.TextBox();
             this.textVarNameXmax = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkOrbitContext = new System.Windows.Forms.CheckBox();
             this.textZenithRedirecting = new System.Windows.Forms.TextBox();
             this.textAzimuthRedirecting = new System.Windows.Forms.TextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.checkMouseContext = new System.Windows.Forms.CheckBox();
             this.textVarNameMw = new System.Windows.Forms.TextBox();
             this.textVarNameMy = new System.Windows.Forms.TextBox();
             this.textVarNameMx = new System.Windows.Forms.TextBox();
@@ -124,11 +129,6 @@
             this.button_Refresh = new System.Windows.Forms.Button();
             this.button_Cancel_all = new System.Windows.Forms.Button();
             this.button_ShowCommandlist = new System.Windows.Forms.Button();
-            this.checkMouseContext = new System.Windows.Forms.CheckBox();
-            this.checkXContext = new System.Windows.Forms.CheckBox();
-            this.checkYContext = new System.Windows.Forms.CheckBox();
-            this.checkZContext = new System.Windows.Forms.CheckBox();
-            this.checkOrbitContext = new System.Windows.Forms.CheckBox();
             this.tabControls.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox26.SuspendLayout();
@@ -959,6 +959,16 @@
             this.groupBox6.Text = "Axis range Z [ min / max ]";
             this.groupBox6.Visible = false;
             // 
+            // checkZContext
+            // 
+            this.checkZContext.AutoSize = true;
+            this.checkZContext.Location = new System.Drawing.Point(7, 22);
+            this.checkZContext.Name = "checkZContext";
+            this.checkZContext.Size = new System.Drawing.Size(15, 14);
+            this.checkZContext.TabIndex = 19;
+            this.checkZContext.UseVisualStyleBackColor = true;
+            this.checkZContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
+            // 
             // textVarNameZmin
             // 
             this.textVarNameZmin.Location = new System.Drawing.Point(27, 19);
@@ -986,6 +996,16 @@
             this.groupBox5.TabIndex = 15;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Axis range Y [ min / max ]";
+            // 
+            // checkYContext
+            // 
+            this.checkYContext.AutoSize = true;
+            this.checkYContext.Location = new System.Drawing.Point(6, 22);
+            this.checkYContext.Name = "checkYContext";
+            this.checkYContext.Size = new System.Drawing.Size(15, 14);
+            this.checkYContext.TabIndex = 7;
+            this.checkYContext.UseVisualStyleBackColor = true;
+            this.checkYContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
             // textVarNameYmin
             // 
@@ -1015,6 +1035,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Axis range X [ min / max ]";
             // 
+            // checkXContext
+            // 
+            this.checkXContext.AutoSize = true;
+            this.checkXContext.Location = new System.Drawing.Point(6, 22);
+            this.checkXContext.Name = "checkXContext";
+            this.checkXContext.Size = new System.Drawing.Size(15, 14);
+            this.checkXContext.TabIndex = 7;
+            this.checkXContext.UseVisualStyleBackColor = true;
+            this.checkXContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
+            // 
             // textVarNameXmin
             // 
             this.textVarNameXmin.Location = new System.Drawing.Point(27, 19);
@@ -1043,6 +1073,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "View zenit / azimut";
             this.groupBox4.Visible = false;
+            // 
+            // checkOrbitContext
+            // 
+            this.checkOrbitContext.AutoSize = true;
+            this.checkOrbitContext.Location = new System.Drawing.Point(7, 22);
+            this.checkOrbitContext.Name = "checkOrbitContext";
+            this.checkOrbitContext.Size = new System.Drawing.Size(15, 14);
+            this.checkOrbitContext.TabIndex = 19;
+            this.checkOrbitContext.UseVisualStyleBackColor = true;
             // 
             // textZenithRedirecting
             // 
@@ -1076,6 +1115,16 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Mouseactions [ x / y / wheel ]";
             this.groupBox10.Enter += new System.EventHandler(this.groupBox10_Enter);
+            // 
+            // checkMouseContext
+            // 
+            this.checkMouseContext.AutoSize = true;
+            this.checkMouseContext.Location = new System.Drawing.Point(7, 20);
+            this.checkMouseContext.Name = "checkMouseContext";
+            this.checkMouseContext.Size = new System.Drawing.Size(15, 14);
+            this.checkMouseContext.TabIndex = 17;
+            this.checkMouseContext.UseVisualStyleBackColor = true;
+            this.checkMouseContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
             // textVarNameMw
             // 
@@ -1216,55 +1265,6 @@
             this.button_ShowCommandlist.Text = "Show commands";
             this.button_ShowCommandlist.UseVisualStyleBackColor = true;
             this.button_ShowCommandlist.Click += new System.EventHandler(this.ShowCommandlist_Click);
-            // 
-            // checkMouseContext
-            // 
-            this.checkMouseContext.AutoSize = true;
-            this.checkMouseContext.Location = new System.Drawing.Point(7, 20);
-            this.checkMouseContext.Name = "checkMouseContext";
-            this.checkMouseContext.Size = new System.Drawing.Size(15, 14);
-            this.checkMouseContext.TabIndex = 17;
-            this.checkMouseContext.UseVisualStyleBackColor = true;
-            this.checkMouseContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
-            // 
-            // checkXContext
-            // 
-            this.checkXContext.AutoSize = true;
-            this.checkXContext.Location = new System.Drawing.Point(6, 22);
-            this.checkXContext.Name = "checkXContext";
-            this.checkXContext.Size = new System.Drawing.Size(15, 14);
-            this.checkXContext.TabIndex = 7;
-            this.checkXContext.UseVisualStyleBackColor = true;
-            this.checkXContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
-            // 
-            // checkYContext
-            // 
-            this.checkYContext.AutoSize = true;
-            this.checkYContext.Location = new System.Drawing.Point(6, 22);
-            this.checkYContext.Name = "checkYContext";
-            this.checkYContext.Size = new System.Drawing.Size(15, 14);
-            this.checkYContext.TabIndex = 7;
-            this.checkYContext.UseVisualStyleBackColor = true;
-            this.checkYContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
-            // 
-            // checkZContext
-            // 
-            this.checkZContext.AutoSize = true;
-            this.checkZContext.Location = new System.Drawing.Point(7, 22);
-            this.checkZContext.Name = "checkZContext";
-            this.checkZContext.Size = new System.Drawing.Size(15, 14);
-            this.checkZContext.TabIndex = 19;
-            this.checkZContext.UseVisualStyleBackColor = true;
-            this.checkZContext.CheckedChanged += new System.EventHandler(this.AnyChanges);
-            // 
-            // checkOrbitContext
-            // 
-            this.checkOrbitContext.AutoSize = true;
-            this.checkOrbitContext.Location = new System.Drawing.Point(7, 22);
-            this.checkOrbitContext.Name = "checkOrbitContext";
-            this.checkOrbitContext.Size = new System.Drawing.Size(15, 14);
-            this.checkOrbitContext.TabIndex = 19;
-            this.checkOrbitContext.UseVisualStyleBackColor = true;
             // 
             // PlotSettings
             // 

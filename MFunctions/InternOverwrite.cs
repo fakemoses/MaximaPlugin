@@ -77,6 +77,7 @@ namespace MaximaPlugin.MFunctions
             stringToMaxima = "limit(" + arg1 + "," + arg2 + "," + arg3 + ")";
 
             string answerFromMaxima = ControlObjects.Translator.Ask(stringToMaxima);
+
  
             // TODO MK 2017 07 28:This seems to handle limit(4) in results but it doesn't
             if ((new Regex(String.Format(@"(limit\([^{0}]+{0}[^{0}]+{0}[^{0}]+{0}[^{0}]+\))", GlobalProfile.ArgumentsSeparatorStandard))).IsMatch(answerFromMaxima))

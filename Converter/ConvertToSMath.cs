@@ -351,8 +351,6 @@ namespace MaximaPlugin.Converter
             //TODO MK 2017 07 26: can this be done in term form?         
             text = text.Replace("VXAXRi","i");
 
-            text = text.Replace("PRIME", "'");
-
             // translate logical operators
             foreach (var pair in logicToSMath) text = (new Regex(pair.Key)).Replace(text, pair.Value);
 
@@ -424,6 +422,9 @@ namespace MaximaPlugin.Converter
                
                 text = (new Regex(String.Format(eRx, GlobalProfile.ArgumentsSeparatorStandard, GlobalProfile.DecimalSymbolStandard))).Replace(text, (String.Format(eRe, GlobalProfile.ArgumentsSeparatorStandard, GlobalProfile.DecimalSymbolStandard)));
             }
+
+            text = text.Replace("PRIME", "'");
+
             return text;
         }
     }

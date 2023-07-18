@@ -1,0 +1,106 @@
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.AssemblyReference.cache
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.DebugForm.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LoadingForm.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LogForm.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.PlotImage.PlotSettings.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.SettingsForm.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.Resource1.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.Properties.Resources.resources
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.GenerateResource.cache
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CoreCompileInputs.cache
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.config
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.pdb
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.CodeAnalysisLog.xml
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.lastcodeanalysissucceeded
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Core.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Css.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Dom.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Model.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Rendering.Gdi.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.pdb
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.config
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.pdb
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.CodeAnalysisLog.xml
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\MaximaPlugin.dll.lastcodeanalysissucceeded
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Core.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Css.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Dom.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Model.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\bin\Debug\SharpVectors.Rendering.Gdi.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.AssemblyReference.cache
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.DebugForm.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LoadingForm.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LogForm.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.PlotImage.PlotSettings.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.SettingsForm.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.Resource1.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.Properties.Resources.resources
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.GenerateResource.cache
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CoreCompileInputs.cache
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\Master ENEF Development\MA SMath Maxima\MaximaPlugin\MaximaPlugin\obj\Debug\MaximaPlugin.pdb
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\MaximaPlugin.dll.config
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\MaximaPlugin.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\MaximaPlugin.pdb
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\MaximaPlugin.dll.CodeAnalysisLog.xml
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\MaximaPlugin.dll.lastcodeanalysissucceeded
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\SharpVectors.Core.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\SharpVectors.Css.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\SharpVectors.Dom.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\SharpVectors.Model.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\SharpVectors.Rendering.Gdi.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.AssemblyReference.cache
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.DebugForm.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LoadingForm.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LogForm.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.PlotImage.PlotSettings.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.SettingsForm.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.Resource1.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.Properties.Resources.resources
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.GenerateResource.cache
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CoreCompileInputs.cache
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.pdb
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\System.Management.Automation.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.Native.dll
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\bin\Debug\System.Management.Automation.xml
+C:\Users\me\Desktop\THB Github Stuff\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.InstallerForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\MaximaPlugin.dll.config
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\MaximaPlugin.pdb
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\MaximaPlugin.dll.CodeAnalysisLog.xml
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\MaximaPlugin.dll.lastcodeanalysissucceeded
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\SharpVectors.Core.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\SharpVectors.Css.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\SharpVectors.Dom.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\SharpVectors.Model.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\SharpVectors.Rendering.Gdi.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\System.Management.Automation.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Microsoft.Management.Infrastructure.Native.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\bin\Debug\System.Management.Automation.xml
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.AssemblyReference.cache
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.DebugForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.InstallerForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LoadingForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LogForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.PlotImage.PlotSettings.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.SettingsForm.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.Resource1.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.Properties.Resources.resources
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.GenerateResource.cache
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CoreCompileInputs.cache
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.dll
+C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.pdb

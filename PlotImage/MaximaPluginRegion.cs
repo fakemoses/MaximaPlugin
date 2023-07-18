@@ -514,19 +514,31 @@ namespace MaximaPlugin.PlotImage
             //MOUSE
             if (canv.plotStore.mouseRedirecting == PlotStore.State.Enable)
             {
+<<<<<<< HEAD
                 store.AddDefinition(canv.plotStore.varNameMouseX, new Entry(dMouseX.ToString("0.00",nfi)));
                 store.AddDefinition(canv.plotStore.varNameMouseY, new Entry(dMouseY.ToString("0.00", nfi)));
                 store.AddDefinition(canv.plotStore.varNameMouseWheel, new Entry(dMouseW.ToString("0.00", nfi)));
+=======
+                store.AddDefinition(canv.plotStore.varNameMouseX, new Entry(dMouseX.ToString("0.0000",nfi)));
+                store.AddDefinition(canv.plotStore.varNameMouseY, new Entry(dMouseY.ToString("0.0000", nfi)));
+                store.AddDefinition(canv.plotStore.varNameMouseWheel, new Entry(dMouseW.ToString("0.0000", nfi)));
+>>>>>>> parent of ce4880e (Reset Git cache for ignored files)
             }
             //VIEW
             if (canv.plotStore.viewRedirecting == PlotStore.State.Enable)
             {
+<<<<<<< HEAD
                 store.AddDefinition(canv.plotStore.varNameZenith, new Entry(canv.plotStore.zenith.ToString("0.00", nfi)));
                 store.AddDefinition(canv.plotStore.varNameAzimuth, new Entry(canv.plotStore.azimuth.ToString("0.00", nfi)));
+=======
+                store.AddDefinition(canv.plotStore.varNameZenith, new Entry(canv.plotStore.zenith.ToString("0.0000", nfi)));
+                store.AddDefinition(canv.plotStore.varNameAzimuth, new Entry(canv.plotStore.azimuth.ToString("0.0000", nfi)));
+>>>>>>> parent of ce4880e (Reset Git cache for ignored files)
             }
             //AXIS
             if (canv.plotStore.xRedirecting == PlotStore.State.Enable)
             {
+<<<<<<< HEAD
                 store.AddDefinition(canv.plotStore.varNameXmin, new Entry(canv.plotStore.xMinRange.ToString("0.00", nfi)));
                 store.AddDefinition(canv.plotStore.varNameXmax, new Entry(canv.plotStore.xMaxRange.ToString("0.00", nfi)));
             }
@@ -539,6 +551,20 @@ namespace MaximaPlugin.PlotImage
             {
                 store.AddDefinition(canv.plotStore.varNameZmin, new Entry(canv.plotStore.zMinRange.ToString("0.00", nfi)));
                 store.AddDefinition(canv.plotStore.varNameZmax, new Entry(canv.plotStore.zMaxRange.ToString("0.00", nfi)));
+=======
+                store.AddDefinition(canv.plotStore.varNameXmin, new Entry(canv.plotStore.xMinRange.ToString("0.0000", nfi)));
+                store.AddDefinition(canv.plotStore.varNameXmax, new Entry(canv.plotStore.xMaxRange.ToString("0.0000", nfi)));
+            }
+            if (canv.plotStore.yRedirecting == PlotStore.State.Enable)
+            {
+                store.AddDefinition(canv.plotStore.varNameYmin, new Entry(canv.plotStore.yMinRange.ToString("0.0000", nfi)));
+                store.AddDefinition(canv.plotStore.varNameYmax, new Entry(canv.plotStore.yMaxRange.ToString("0.0000", nfi)));
+            }
+            if (canv.plotStore.zRedirecting == PlotStore.State.Enable)
+            {
+                store.AddDefinition(canv.plotStore.varNameZmin, new Entry(canv.plotStore.zMinRange.ToString("0.0000", nfi)));
+                store.AddDefinition(canv.plotStore.varNameZmax, new Entry(canv.plotStore.zMaxRange.ToString("0.0000", nfi)));
+>>>>>>> parent of ce4880e (Reset Git cache for ignored files)
             }
 
 

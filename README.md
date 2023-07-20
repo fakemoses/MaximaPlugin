@@ -22,7 +22,7 @@
 ```
 git clone https://github.com/fakemoses/MaximaPlugin
 ```
-3. Open the project file (MaximaPlugin.csproj) using Visual Studio. You will get the following window (image).
+3. Open the project file (MaximaPlugin.csproj) using Visual Studio.
 
 4. If you have installed SMath in a different directory than C:\\ drive, unload the project by right-clicking on the MaximaPlugin in the Solution Explorer followed by "Unload Project". The MaximaPlugin.csproj will be opened, and it contains the XML file of the project that needs to be changed. Locate the following line and change the directory `C:\Program Files (x86)\SMath Studio` to wherever you have installed your SMath.
 

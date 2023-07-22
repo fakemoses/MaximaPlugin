@@ -78,6 +78,11 @@ namespace MaximaPlugin
                 new TermInfo ("Draw2D", TermType.Function, "Draw2D(obj [" + sessionProfile.ArgumentsSeparator + " name] [" + sessionProfile.ArgumentsSeparator + " size]) creates a 2D plot using Maxima draw2d(). obj is a list of graphics objects (functions) or options (boolean equations option=value). Returns the file name for display in an Image region. If name is given, it is relative to the current document directory. Format is specified by file name extension: PNG (default), PDF or SVG. If no name (or just the extension for format specification) is given, a unique random temporary name is used. size is an optional list with (xpix, ypix). Size defaults to 300 x 240 pixels.", FunctionSections.Unknown , true),
                 new TermInfo ("Draw3D", TermType.Function, String.Format("Draw3D(obj [" + sessionProfile.ArgumentsSeparator + " name] [" + sessionProfile.ArgumentsSeparator + " size]) creates a 3D plot using Maxima draw3d(). obj is a list of graphics objects (functions) or options (boolean equations option=value).  Returns the file name for display in an Image region. If name is given, it is relative to the current document directory. Format is specified by file name extension: PNG (default), PDF or SVG. If no name (or just the extension for format specification) is given, a unique random temporary name is used. size is an optional list with (xpix, ypix). Size defaults to 300 x 240 pixels.",sessionProfile.DecimalSymbol) , FunctionSections.Unknown , true),
 
+                // new plot functions
+                new TermInfo ("draw2D", TermType.Function, "draw2D(obj" + sessionProfile.ArgumentsSeparator + " name" + sessionProfile.ArgumentsSeparator + " size) creates a 2D plot using Maxima draw2d(). obj is a list of graphics objects (functions) or options (boolean equations option=value). Returns the file name for display in an Image region. If name is given, it is relative to the current document directory. Format is specified by file name extension: PDF (default), PNG or SVG. If no name (or just the extension for format specification) is given, a unique random temporary name is used. size is an optional list with (xpix, ypix). Size defaults to 300 x 240 pixels.", FunctionSections.Unknown , true),
+                new TermInfo ("draw3D", TermType.Function, String.Format("draw3D(obj" + sessionProfile.ArgumentsSeparator + " name" + sessionProfile.ArgumentsSeparator + " size) creates a 3D plot using Maxima draw3d(). obj is a list of graphics objects (functions) or options (boolean equations option=value).  Returns the file name for display in an Image region. If name is given, it is relative to the current document directory. Format is specified by file name extension: PDF (default), PNG or SVG. If no name (or just the extension for format specification) is given, a unique random temporary name is used. size is an optional list with (xpix, ypix). Size defaults to 300 x 240 pixels.",sessionProfile.DecimalSymbol) , FunctionSections.Unknown , true),
+
+
                 //maxima control
                 new TermInfo ("Maxima", TermType.Function,"Maxima(expr [" + sessionProfile.ArgumentsSeparator + "debug]): Process expr in Maxima. If the flag  debug is given, the processing steps (SMath preprocessing, translation to Maxima, Maxima result, translation to SMath) can be inspected and modified  in the debug window. Alternatively, use MaximaLog() to see what is done on Maxima side." , FunctionSections.Unknown , true){ IsUndefinedArgumentsSupported = true },
                 new TermInfo ("MaximaDefine", TermType.Function,"MaximaDefine(name [" + sessionProfile.ArgumentsSeparator + " expr]) Definition of name using expr in Maxima or define name in Maxima using it's current SMath value." , FunctionSections.Unknown , true){ IsUndefinedArgumentsSupported = true },
@@ -218,6 +223,11 @@ namespace MaximaPlugin
                 else if (root.Type == TermType.Function && (root.Text == "Draw2D" || root.Text == "Draw3D"))
                 {
                     return MFunctions.DirectMaximaFunctions.Draw(root, args, ref context, ref result);
+                }
+                //new plotting functions
+                else if (root.Type == TermType.Function && (root.Text == "draw2D" || root.Text == "draw3D"))
+                {
+                    return MFunctions.DirectMaximaFunctions.NewDraw(root, args, ref context, ref result);
                 }
                 else
                 {

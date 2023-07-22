@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using SMath.Manager;
 using SMath.Math;
 using SMath.Math.Numeric;
-
+using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace MaximaPlugin.MFunctions
 {
@@ -30,8 +31,8 @@ namespace MaximaPlugin.MFunctions
             arg1 = arg1.Replace("mat(", "sys(");
             arg2 = arg2.Replace("mat(", "sys(");
             // scalar arguments are converted to lists
-            if (! arg1.Contains("sys(")) arg1 = "sys(" + arg1 + ",1,1)";
-            if (! arg2.Contains("sys(")) arg2 = "sys(" + arg2 + ",1,1)";
+            if (!arg1.Contains("sys(")) arg1 = "sys(" + arg1 + ",1,1)";
+            if (!arg2.Contains("sys(")) arg2 = "sys(" + arg2 + ",1,1)";
             // send string to Maxima
             string stringToMaxima = root.Text.ToLower() + "(" + arg1 + "," + arg2 + ")";
             ControlObjects.TranslationModifiers.IsExpectedEquation = true;
@@ -206,12 +207,12 @@ namespace MaximaPlugin.MFunctions
             arg2 = arg2.Replace("mat(", "sys(");
             arg4 = arg4.Replace("mat(", "sys(");
             arg5 = arg5.Replace("mat(", "sys(");
-            
+
             if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
             if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
             if (!rxSys.IsMatch(arg5, 0)) arg5 = "sys(" + arg5 + ",1,1)";
 
-            string stringToMaxima = "Fit(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5+")";
+            string stringToMaxima = "Fit(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5 + ")";
             ControlObjects.TranslationModifiers.IsExpectedEquation = true;
             result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
             return true;
@@ -274,7 +275,7 @@ namespace MaximaPlugin.MFunctions
             if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
             string stringToMaxima = "MSE(" + arg1 + "," + arg2 + "," + arg3;
 
-            if (root.ArgsCount == 4) 
+            if (root.ArgsCount == 4)
             {
                 var arg4 = SharedFunctions.Proprocessing(args[3]);
                 if (!rxSys.IsMatch(arg4, 0)) arg4 = "sys(" + arg4 + ",1,1)";
@@ -505,7 +506,7 @@ namespace MaximaPlugin.MFunctions
                 {
                     args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
                 }
-                
+
             }
             MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
             bool CopyTempFile = false; // Do we have to copy the temp file to some destination?
@@ -541,14 +542,11 @@ namespace MaximaPlugin.MFunctions
             string Target = "dummy.png";
             string bgColor = "";
 
-            //if (File.Exists(context.FileName))
-            //    Environment.CurrentDirectory = Path.GetDirectoryName(context.FileName);
-
             if (root.ArgsCount == 2) // Filename or size given
             {
                 // preprocess second argument
                 arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-                if (! rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given
+                if (!rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given
                 {
                     CopyTempFile = true;
                     Target = arg2.Replace("\"", "");
@@ -599,9 +597,9 @@ namespace MaximaPlugin.MFunctions
             }
 
             // build SMath list
-            ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard 
+            ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
                 + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + bgColor + Symbols.StringChar; 
+                + Symbols.StringChar + bgColor + Symbols.StringChar;
             // the last argument is obsolet but required due to the signature.
             ListHandle(esm, ipre, "terminal≡" + term, "file_name≡"
                 + Symbols.StringChar + Path.ChangeExtension(TempPath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
@@ -614,20 +612,20 @@ namespace MaximaPlugin.MFunctions
             ControlObjects.TranslationModifiers.TimeOut = 5000;
             ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
             // check if file exists
-            if (! File.Exists(TempPath))
+            if (!File.Exists(TempPath))
             {
-                result = TermsConverter.ToTerms( "error(\"No file generated, see MaximaLog() for details\")");
+                result = TermsConverter.ToTerms("error(\"No file generated, see MaximaLog() for details\")");
                 return true;
             }
             if (CopyTempFile) // check if we have to copy the file
             {
                 // if target path doesn't exist use current directory (where the SMath file is)
-                if (! Directory.Exists(Path.GetDirectoryName(Target)))
+                if (!Directory.Exists(Path.GetDirectoryName(Target)))
                     Target = Path.Combine(Path.GetDirectoryName(context.FileName), Path.GetFileName(Target));
                 // copy the temp file to the requested destination. This loop is required because it can take some time
                 // until the source file is unlocked by the creator (gnuplot)
                 bool ready = false;
-                while (! ready)
+                while (!ready)
                 {
                     try
                     {
@@ -643,11 +641,252 @@ namespace MaximaPlugin.MFunctions
                 // File.Copy(TempPath, Target, true);
                 result = TermsConverter.ToTerms(Symbols.StringChar + Target + Symbols.StringChar);
             }
-            else 
+            else
                 // return the temp file name
                 result = TermsConverter.ToTerms(Symbols.StringChar + TempPath + Symbols.StringChar);
             return true;
         }
+
+
+        static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        static string ReplaceUnicodeEscapeSequences(string input)
+        {
+            // Replace specific Unicode escape sequences with their corresponding characters
+            input = input.Replace("\\005F", "_");
+            input = input.Replace("\\002E", ".");
+            return input;
+        }
+
+        static int FindCommaBeforeSecondLastIndex(string input, int startIndex)
+        {
+            int count = 0;
+            int index = startIndex;
+
+            while (count < 2 && index >= 0)
+            {
+                if (input[index] == ',')
+                {
+                    count++;
+                    if (count == 2)
+                    {
+                        return index - 1; // Return the position of the comma just before the second-to-last item
+                    }
+                }
+
+                index--;
+            }
+
+            return -1; // If there's no second-to-last item, return -1
+        }
+
+        static string AddItemsAndAdjustValues(string input, string itemsToAdd, int numberofItems)
+        {
+            // Use regex to find the last two numbers in the input string
+            MatchCollection matches = Regex.Matches(input, @"\d+");
+            int secondLastNumber = int.Parse(matches[matches.Count - 2].Value);
+            int lastNumber = int.Parse(matches[matches.Count - 1].Value);
+
+            // Calculate the updated values based on the rule (adding 2 to the second-to-last number)
+            int updatedSecondLastNumber = secondLastNumber + numberofItems;
+
+            // Find the position after "sys("
+            int insertIndex = input.IndexOf("sys(") + 4;
+
+            // Find the position of the comma just before the second-to-last number
+            int commaBeforeSecondLastIndex = FindCommaBeforeSecondLastIndex(input, insertIndex);
+
+            // Adjust the substring length if the second-to-last item is not present
+            string originalItems;
+            if (commaBeforeSecondLastIndex >= 0)
+            {
+                originalItems = input.Substring(insertIndex, commaBeforeSecondLastIndex - insertIndex);
+            }
+            else
+            {
+                originalItems = input.Substring(insertIndex);
+            }
+
+            // Construct the new output string by adding the new items and the updated values
+            string newOutput = "sys(" + itemsToAdd + "," + originalItems.TrimEnd() + "," + updatedSecondLastNumber + "," + lastNumber + ")";
+
+
+            return newOutput;
+        }
+
+        // new draw method based
+        public static bool NewDraw(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            // nounify polar to avoid conflicts with variable names in Maxima
+            args[0] = Computation.Preprocessing(args[0], ref context);
+            string t = SharedFunctions.Proprocessing(args[0]);
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
+                {
+                    args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
+                }
+
+            }
+            MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
+            bool CopyTempFile = false; // Do we have to copy the temp file to some destination?
+
+            // process first argument (draw commands and objects)
+            Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
+            Regex rxUnit = new Regex(@"(['][\w\d]+)", RegexOptions.None);
+            Regex rxSize = new Regex(@"sys\((\d+),(\d+),2,1\)");
+            string arg1 = SharedFunctions.Proprocessing(args[0]);
+            // enclose argument in list if it is scalar
+            if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
+
+            //add the remaining settings for draw3d
+            if(root.Text == "draw3D")
+            {
+                string drawSettings = "enhanced3d≡true, xu_grid≡100, yv_grid≡100, palette≡sys(violet,blue,green,yellow,red,5,1),xlabel≡\"x\", ylabel≡\"y\"";
+                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 6);
+            }
+
+            // replace units by 1
+            arg1 = rxUnit.Replace(arg1, "1");
+            // Strings
+            MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
+            List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { arg1 });
+            // Matrices and Lists
+            esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
+
+            // Create Temp path in SMath Working folder
+            string TempPath = ControlObjects.Translator.GetMaxima().gnuPlotImageFolder;
+            System.IO.Directory.CreateDirectory(TempPath);
+
+            string RandomFileName = GenerateRandomString(8);
+            string FilePath = Path.Combine(TempPath, RandomFileName);
+
+            // prepare size and filename
+            string arg2 = "";
+            Entry size = Entry.Create(TermsConverter.ToTerms("sys(500,500,2,1)")); //size in px
+            string sizeStringPart = "";
+            string term = "pdf"; // default terminal
+            string ipre = "";
+            string Target = "dummy.pdf";
+            string bgColor = "";
+
+
+            if (root.ArgsCount == 2) // Filename or size given
+            {
+                // preprocess second argument
+                arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+                if (!rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given
+                {
+                    CopyTempFile = true;
+
+                    Target = arg2.Replace("\"", "");
+
+                    // Replace specific Unicode escape sequences with their corresponding characters
+                    string convertedString = ReplaceUnicodeEscapeSequences(Target);
+
+                    convertedString = convertedString.Replace("\\", "");
+
+                    FilePath = Path.Combine(TempPath, convertedString);
+                }
+                else // size is given
+                {
+                    size = Entry.Create(Computation.Preprocessing(args[1], ref context));
+                    CopyTempFile = false;
+                }
+            }
+            else if (root.ArgsCount == 3) // filename and size are given
+            {
+                // second argument is file name
+                arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
+
+                Target = arg2.Replace("\"", "");
+
+                // Replace specific Unicode escape sequences with their corresponding characters
+                string convertedString = ReplaceUnicodeEscapeSequences(Target);
+
+                convertedString = convertedString.Replace("\\","");
+
+                FilePath = Path.Combine(TempPath, convertedString);
+
+                CopyTempFile = true;
+                // third argument is size
+                size = Entry.Create(Computation.Preprocessing(args[2], ref context));
+            }
+
+
+            // set term to svg if requested by file name
+            if (Target.EndsWith("svg"))
+            {
+                term = "svg";
+                //if (Target == "svg") CopyTempFile = false; // just set the format, don't copy the file
+                //TempPath = Path.ChangeExtension(TempPath, ".svg");
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
+                ipre = "set term svg enhanced size ";
+                bgColor = "set object 1 rectangle from screen -0,-0 to screen 1 ,1 fillcolor rgb'#ffffff' behind";
+            }
+            // set term to pdf if requested by file name
+            else if (Target.EndsWith("png"))
+            {
+                //Target = Path.ChangeExtension(Target, ".png");
+                term = "png";
+                ipre = "set term pngcairo font ',8' enhanced size ";
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
+                bgColor = "set object 1 rectangle from screen -0.01,-0.01 to screen 1.01 ,1.01 fillcolor rgb'#ffffff' behind";
+            }
+            else // use pdf otherwise
+            {
+                term = "pdf";
+                //if (Target == "pdf") CopyTempFile = false;  // just set the format, don't copy the file
+                //TempPath = Path.ChangeExtension(TempPath, ".pdf");
+                ipre = "set term pdfcairo font 'arial, 12' enhanced size ";
+                sizeStringPart = GetSizeString(size, context, SizeUnit.Inch);
+                bgColor = "#fefefe";
+            }
+
+            string fullFilePath = FilePath;
+
+
+            // build SMath list
+            if(root.Text == "draw3D")
+            {
+                ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
+                + Symbols.StringChar + bgColor + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar +  "set pm3d lighting" + Symbols.StringChar;
+            }
+            else
+            {
+                ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
+                + Symbols.StringChar + bgColor + Symbols.StringChar;
+            }
+            // the last argument is obsolet but required due to the signature.
+            ListHandle(esm, ipre, "terminal≡" + term, "file_name≡"
+                + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
+            terminate(esm, ipre, "terminal≡" + term, "file_name≡"
+                + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
+            // convert to Maxima
+            string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
+            sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
+            // send to Maxima
+            ControlObjects.TranslationModifiers.TimeOut = 5000;
+            ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
+            // check if file exists
+            if (!File.Exists(fullFilePath))
+            {
+                result = TermsConverter.ToTerms("error(\"No file generated, see MaximaLog() for details\")");
+                return true;
+            }
+
+            result = TermsConverter.ToTerms(Symbols.StringChar + fullFilePath + Symbols.StringChar);
+            return true;
+        }
+
 
 
         public static bool findPreL = false;
@@ -698,14 +937,14 @@ namespace MaximaPlugin.MFunctions
                         }
                         else
                         {
-                           // bool braket = false;
+                            // bool braket = false;
                             string temp = esm.currentStore.itemData[i][0].Substring(14);
                             if (temp[0] == '≡')
                             {
                                 temp = temp.Substring(1);
-                             //   braket = true;
+                                //   braket = true;
                             }
-                            
+
                             /*
                             for(int z = 1; z < esm.currentStore.itemData[i].Count; z++)
                             {
@@ -739,7 +978,7 @@ namespace MaximaPlugin.MFunctions
             esm.currentStore.itemData.Insert(0, new List<string> { term });
             esm.currentStore.itemData.Insert(0, new List<string> { name });
             esm.currentStore.itemData.Insert(0, new List<string> { bgColor });
-            esm.currentStore.items+=3;
+            esm.currentStore.items += 3;
             esm.currentStore.rows = esm.currentStore.items;
             esm.currentStore.cols = esm.currentStore.items;
             esm.currentStore.refPointer = 0;
@@ -747,7 +986,7 @@ namespace MaximaPlugin.MFunctions
             esm.gotoFirstElementStore();
         }
 
-        public enum SizeUnit {Pixel, Inch };
+        public enum SizeUnit { Pixel, Inch };
 
         /// <summary>
         /// This returns a string for specification of the image size in Gnuplot.
@@ -763,14 +1002,14 @@ namespace MaximaPlugin.MFunctions
             int digits = 2;
             if (size.El(1).obj.Units.ContainsUnits() && size.El(2).obj.Units.ContainsUnits())
             {
-                if (size.El(1).obj.Units.Text == "'m" && size.El(2).obj.Units.Text == "'m" )
+                if (size.El(1).obj.Units.Text == "'m" && size.El(2).obj.Units.Text == "'m")
                 {
                     // compute the size string if given in m
                     if (resultunit == SizeUnit.Pixel)
                     {
                         size = size / Inch * GlobalProfile.ContentDpi;
                         digits = 0; // avoid fractional pixel values
-                   }
+                    }
                     else size = size / Inch;
                 }
                 else
@@ -781,11 +1020,11 @@ namespace MaximaPlugin.MFunctions
             else
             {
                 // compute size given as pixels
-                if (resultunit == SizeUnit.Inch) size = size /  GlobalProfile.ContentDpi;
+                if (resultunit == SizeUnit.Inch) size = size / GlobalProfile.ContentDpi;
             }
             // Extract list entries to string
-            return size.El(1).obj.ToString(digits, 10, FractionsType.Decimal, false,false,MidpointRounding.ToEven) + "," 
-                +  size.El(2).obj.ToString(digits, 10, FractionsType.Decimal, false,false,MidpointRounding.ToEven);
+            return size.El(1).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven) + ","
+                + size.El(2).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven);
         }
 
     }

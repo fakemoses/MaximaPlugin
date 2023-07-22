@@ -16,13 +16,13 @@
 
 1. Download and install both of the required software into your computer. For Visual Studio, select the **.NET desktop development** under **Desktop & Mobile option**. 
 
-![Options during installation](documentation/options.png)
+![Options during installation](documentations/options.png)
 
 2. Clone the MaximaPlugin project from GitHub by running the following command or you can download the project as a zip and extract it in any folder:
 ```
 git clone https://github.com/fakemoses/MaximaPlugin
 ```
-3. Open the project file (MaximaPlugin.csproj) using Visual Studio. You will get the following window (image).
+3. Open the project file (MaximaPlugin.csproj) using Visual Studio.
 
 4. If you have installed SMath in a different directory than C:\\ drive, unload the project by right-clicking on the MaximaPlugin in the Solution Explorer followed by "Unload Project". The MaximaPlugin.csproj will be opened, and it contains the XML file of the project that needs to be changed. Locate the following line and change the directory `C:\Program Files (x86)\SMath Studio` to wherever you have installed your SMath.
 
@@ -37,6 +37,6 @@ git clone https://github.com/fakemoses/MaximaPlugin
 
 9. Now you can use the debug feature by clicking on the start button.
 
-![Debug](documentation/debug.png)
+![Debug](documentations/debug.png)
 
 10. It is good to always rebuild the solution when ever you pulled the latest code from github.

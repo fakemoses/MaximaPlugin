@@ -769,13 +769,19 @@ namespace MaximaPlugin.MFunctions
 
             // prepare size and filename
             string arg2 = "";
-            Entry size = Entry.Create(TermsConverter.ToTerms("sys(500,500,2,1)")); //size in px
+            Entry size = Entry.Create(TermsConverter.ToTerms("sys(300,300,2,1)")); //size in px
             string sizeStringPart = "";
             string term = "pdf"; // default terminal
             string ipre = "";
             string Target = "dummy.pdf";
             string bgColor = "";
 
+
+            // use random file name when only one arguments -> only lists of settings
+            if(root.ArgsCount == 1)
+            {
+                FilePath = FilePath + "." + term;
+            }
 
             if (root.ArgsCount == 2) // Filename or size given
             {

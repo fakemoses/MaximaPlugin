@@ -804,6 +804,9 @@ namespace MaximaPlugin.MFunctions
                 {
                     size = Entry.Create(Computation.Preprocessing(args[1], ref context));
                     CopyTempFile = false;
+
+                    //file path
+                    FilePath = FilePath + "." + term;
                 }
             }
             else if (root.ArgsCount == 3) // filename and size are given
@@ -883,9 +886,17 @@ namespace MaximaPlugin.MFunctions
             ControlObjects.TranslationModifiers.TimeOut = 5000;
             ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
             // check if file exists
+
+            //check if file exists, if yes check if it has content. No content means there is error.
+            long fileSize = new FileInfo(fullFilePath).Length;
+
             if (!File.Exists(fullFilePath))
             {
                 result = TermsConverter.ToTerms("error(\"No file generated, see MaximaLog() for details\")");
+                return true;
+            } else if (fileSize == 0)
+            {
+                result = TermsConverter.ToTerms("error(\"Check the input!\")");
                 return true;
             }
 

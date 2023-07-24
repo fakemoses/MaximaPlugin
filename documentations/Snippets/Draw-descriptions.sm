@@ -1,0 +1,2810 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="96">
+    <shortcut>Draw</shortcut>
+    <identity>
+      <id>6c6008e9-c104-4c90-a318-a707b8ac82b1</id>
+      <revision>177</revision>
+    </identity>
+    <metadata lang="ger">
+      <title>Draw-Descriptions (Maxima)</title>
+      <author>Martin Kraska</author>
+      <description>Macht der dynamischen Hilfe Objekte und Optionen für Draw2D() und Draw3D() bekannt.</description>
+      <company>FHB (www.fh-brandenburg.de)</company>
+    </metadata>
+    <metadata lang="eng">
+      <title>Draw-Descriptions (Maxima)</title>
+      <author>Martin Kraska</author>
+      <translator>FHB (www.fh-brandenburg.de)</translator>
+      <description>Makes Maxima Draw objects and options known to the dynamic assistant </description>
+    </metadata>
+    <calculation>
+      <precision>4</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>false</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="true" viewMode="0" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="1" orientation="Portrait" width="850" height="1100" />
+      <margins left="39" right="39" top="39" bottom="39" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+      <assembly name="TextRegion" version="1.11.8348.30405" guid="485d28c5-349a-48b6-93be-12a35a1c1e39" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="18" top="18" width="86" height="23" color="#000000" fontSize="10" isBreakable="false">
+      <text lang="ger" fontFamily="Arial Black" fontSize="10">
+        <content>
+          <p style="font-weight: bold; font-family: Courier New;">Optionen </p>
+        </content>
+      </text>
+      <text lang="eng" fontFamily="Arial Black" fontSize="10">
+        <content>
+          <p style="font-weight: bold; font-family: Courier New;">Options</p>
+        </content>
+      </text>
+    </region>
+    <region left="18" top="63" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] adapt_depth (=10): maximale Teilungstiefe der adaptive Kurvenabtastung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] adapt_depth (=10) maximum number of adaptive interval splits when drawing curves</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">adapt_depth</e>
+          <e type="operand">adapt_depth</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="117" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] axis_3d (=true): Achsen im 3D zeichnen, false: keine Achsen zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] axis_3d (=true): draw 3D axes, false: don't draw axes</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">axis_3d</e>
+          <e type="operand">axis_3d</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="171" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  axis_bottom (=true): untere Achse im 2D zeichnen, false: Achse nicht zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  axis_bottom (=true): draw bottom axis in 2D, false: don't draw axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">axis_bottom</e>
+          <e type="operand">axis_bottom</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="225" width="160" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] axis_top (=true): obere Achse im 2D zeichnen, false: Achse nicht zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] axis_top (=true): draw top axis in 2D, false: don't draw axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">axis_top</e>
+          <e type="operand">axis_top</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="279" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] axis_left (=true): linke Achse im 2D zeichnen, false: Achse nicht zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] axis_left (=true): draw left axis in 2D, false: don't draw axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">axis_left</e>
+          <e type="operand">axis_left</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="333" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] axis_right (=true): rechte Achse im 2D zeichnen, false: Achse nicht zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] axis_right (=true): draw right axis in 2D, false: don't draw axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">axis_right</e>
+          <e type="operand">axis_right</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="387" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] background_color (=white): Hintergrundfarbe des Diagramms</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] background_color (=white): background color of the plot</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">background_color</e>
+          <e type="operand">background_color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="441" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] border (=true): Ränder von polygon(), ellipse() oder rectangle() zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] border (=true): draw borders of polygon(), ellipse() or rectangle() objects</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">border</e>
+          <e type="operand">border</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="495" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] capping(=false): Endflächen an tube()-Objekten, false, true oder Liste mit zwei Werten.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] capping (=false): indicates if extremes of the tube object remain open (false) or <br />are closed (true). If only one end is to be closed, provide a list with two entries.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">capping</e>
+          <e type="operand">capping</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="567" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] cbrange (=auto): Farbbereich (Liste min,max)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] cbrange (=auto): color bar range (list min,max)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">cbrange</e>
+          <e type="operand">cbrange</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="621" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] cbtics (=auto): Marken an der Farblegende</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] cbtics (=auto): color bar tick marks</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">cbtics</e>
+          <e type="operand">cbtics</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="675" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] color (=blue): Farbe für Linien, Punkte, Kanten und Text, als Namen oder hexadezimal in der Form  "#rrggbb"</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] color (=blue): color for lines, points, borders and text, given as name or as "#rrggbb"</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">color</e>
+          <e type="operand">color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="738" width="160" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] colorbox (=true): Farblegende ohne Beschriftung zeichnen, false: keine Farblegende <br />zeichnen, text: Farblegende mit text als Beschriftung zeichnen.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] colorbox (=true): draw color scale without label, false: no colorbar, <br />string: draw colorbar with string as label.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">colorbox</e>
+          <e type="operand">colorbox</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="801" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] contour (=none): Art der Höhenlinien. none: keine, base: auf der xy-Ebene, surface: auf der 3D-Fläche, both: auf xy-Ebene und Fläche, map: auf xy-Ebene und Blickrichtung senkrecht.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] contour (=none): contour lines. none: no contours, base: on xy plane, <br />surface: on 3D surface, both: on xy plane and surface, map: on xy plane plus vertical view.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">contour</e>
+          <e type="operand">contour</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="873" width="256" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  contour_levels (=5): Werte für die Höhenlinien. Anzahl oder Liste  (min, Δ, max), oder<br />set(L1, L2,...) mit Werten</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  contour_levels (=5): contour levels. number oder list  (min, Δ, max), or<br />set(L1, L2,...) of values</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">contour_levels</e>
+          <e type="operand">contour_levels</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="936" width="256" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  data_file_name (="data.gnuplot"): Kurvendaten für Gnuplot</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  data_file_name (="data.gnuplot"): internal data file name for gnuplot</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">data_file_name</e>
+          <e type="operand">data_file_name</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="990" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  delay (=5) Zeitschritt in animierten gif-Dateien</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  delay (=5): time step in animated gif files</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">delay</e>
+          <e type="operand">delay</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1044" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  dimensions (= 600 x 500): Liste [Breite,Höhe]</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  dimensions (= 300 x 240 for 2D, 300 x 300 for 3D) list [width, height]</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">dimensions</e>
+          <e type="operand">dimensions</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1098" width="240" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  draw_realpart (=true) Realteil zur Darstellung komplexer Werte verwenden</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  draw_realpart (=true) use real part for plotting complex values</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">draw_realpart</e>
+          <e type="operand">draw_realpart</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1152" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  enhanced3d (=true) Farbpalette, none: 3D Flächen als Gitter zeichnen  <br />(Steuerung mit color und surface_hide), true: Farbe anhand des z-Werts, <br />Liste  [f(x,y,z), x, y, z]: Farbe anhand der Funktion f,  <br />Liste [f(u,v),u,v]: Farbe anhand der Flächenparameter oder Liste [f(k), k ]: <br />Farbe anhand der Punktnummer in points() Objekten</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw]  enhanced3d (=true) don't use color palette, draw 3D surfaces as grid <br />(control using color und surface_hide), true: coloring of surfaces by z-value, <br />or  list  [f(x,y,z), x, y, z]: coloring according to function f or <br />list [f(u,v),u,v]  or list [f(k), k ] (k being the point counter in points() objects)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">enhanced3d</e>
+          <e type="operand">enhanced3d</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1260" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] error_type (=y) Art der Fehlerbalken in errors():  x, y, xy oder boxes</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] error_type (=y) type of error bars in errors():  x, y, xy or boxes</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">error_type</e>
+          <e type="operand">error_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1314" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] file_name (="maxima_out") Grafik-Ausgabedatei, Endung wird gemäß Ausgabeformat ergänzt</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] file_name (="maxima_out") output file, extension is set according to format</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">file_name</e>
+          <e type="operand">file_name</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1368" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] fill_color (=red) Füllfarbe für Objejte polygon() und  explicit() in 2D </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] fill_color (=red) fill color for polygons and explicit functions y(x) in 2D </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">fill_color</e>
+          <e type="operand">fill_color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1422" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] fill_density (=0) Deckungsgrad der Füllfarbe in bars()-Objekten, zwischen 0 und 1</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] fill_density (=0) opacity of the fill color in bars()-objects, 0..1</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">fill_density</e>
+          <e type="operand">fill_density</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1476" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] filled_func (=false): explizite Funktionen y(x) werden nicht gefüllt,<br />true: Füllung bis zur Unterkante des Diagramms, g(x): Füllung zwischen g(x)<br /> und y(x)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] filled_func (=false): don't fill explicit functions y(x),<br />true: fill between the next explicit() object and the bottom border of the diagram, g(x): fill<br />between g(x) and the next explicit() object</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">filled_func</e>
+          <e type="operand">filled_func</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1557" width="304" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] gnuplot_file_name (="maxout.gnuplot"): Kommandodatei für Gnuplot</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] gnuplot_file_name (="maxout.gnuplot"): name of the temporary gnuplot command file</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">gnuplot_file_name</e>
+          <e type="operand">gnuplot_file_name</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1611" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] gnuplot_term (): Ausgabe-Format-Spezifikation (Text nach "set terminal")</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] gnuplot_term (): gnuplot terminal options (arguments of "set terminal")</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">gnuplot_term</e>
+          <e type="operand">gnuplot_term</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1665" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] gnuplot_out_file (=maxplot.xxx) Ausgabedateiname (xxx abhängig vom Format)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] gnuplot_out_file (=maxplot.xxx) output file name (xxx depends on terminal)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">gnuplot_out_file</e>
+          <e type="operand">gnuplot_out_file</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1719" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] grid (=true): false: kein Gitterraster zeichnen, true: Gitter zeichnen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] grid (=true): draw grid, remove grid by user_preamble="unset grid"</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">grid</e>
+          <e type="operand">grid</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1773" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] head_angle (=45) Pfeilwinkel an vector()-Objekten (halber Öffnungswinkel in °)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] head_angle (=45): head angle of vector()-Objekten (angle between border and vector <br /> direction in °)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">head_angle</e>
+          <e type="operand">head_angle</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1827" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] head_both (=false) oder true: ob bei vector()-Objekten zwei Pfeilspitzen gezeichnet werden.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] head_both (=false): don't draw a second head of vector() objects,<br /> true: draw a second head</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">head_both</e>
+          <e type="operand">head_both</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1881" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] head_length (=2) Länge der Pfeilspitze  bei vector()-Objekten in Einheiten der x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] head_length (=2): head length of vector() objects in units of the x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">head_length</e>
+          <e type="operand">head_length</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1935" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] head_type (=filled) Spitzenform bei vector()-Objekten:  filled, empty  oder nonfilled</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] head_type (=filled) head type of vector() objects:  filled, empty  or nonfilled</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">head_type</e>
+          <e type="operand">head_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="1989" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ip_grid (={50, 50): Primäres Gitter für die Darstellung impliziter Funktionen,<br />als Liste angeben</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ip_grid (={50, 50): primary grid for sampling of implicit functions, two-element list</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ip_grid</e>
+          <e type="operand">ip_grid</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2052" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ip_grid_in (={5, 5 ): Sekundäres Gitter für die Darstellung impliziter Funktionen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ip_grid_in (={5, 5 ): secondary grid for sampling of implicit functions</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ip_grid_in</e>
+          <e type="operand">ip_grid_in</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2106" width="80" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] key (=""): Legendeneintrag für das nachfolgende Grafikobjekt.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] key (=""): legend key for subsequent graphics object.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">key</e>
+          <e type="operand">key</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2160" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] key_pos (="", entspricht top_right): Legendenposition. Gültige Werte: top_left, top_center, top_right, <br />center_left, center, center_right, bottom_left, bottom_center, bottom_right</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] key_pos (="", equivalent to top_right): position of the legend. Valid options: top_left, top_center, top_right, <br />center_left, center, center_right, bottom_left, bottom_center, bottom_right</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">key_pos</e>
+          <e type="operand">key_pos</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2232" width="272" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] label_alignment (=center), left oder right: horizontale Ausrichtung von Beschriftungen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] label_alignment (=center), left or right: alignment of text labels</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">label_alignment</e>
+          <e type="operand">label_alignment</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2286" width="304" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] label_orientation (=horizontal) oder vertical: Ausrichtung von Texten</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] label_orientation (=horizontal) or vertical: orientation of text labels</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">label_orientation</e>
+          <e type="operand">label_orientation</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2340" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] line_type (=solid) Linienart. Alternativen: dots (für alle Formate) oder wenn von<br />Gnuplot unterstützt: dashes, short_dashes, short_long_dashes, short_short_long_dashes </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] line_type (=solid) line type. Other options: dots (for all formats) or if supported by<br />Gnuplot: dashes, short_dashes, short_long_dashes, short_short_long_dashes </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">line_type</e>
+          <e type="operand">line_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2412" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] line_width (=1) , &gt;0 </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">line_width</e>
+          <e type="operand">line_width</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2466" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logcb (=false) oder true: logarithmische Farbskale</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logcb (=false) or true: log scale of the colorbar</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logcb</e>
+          <e type="operand">logcb</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2520" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logx (=false) oder true: logarithmische x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logx (=false) or true: log scale of x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logx</e>
+          <e type="operand">logx</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2565" width="256" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logx_secondary (=false) oder true: logarithmische zweite x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logx_secondary (=false) or true: log scale of secondary x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logx_secondary</e>
+          <e type="operand">logx_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2619" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logy (=false) oder true: logarithmische y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logy (=false) or true: log scale of y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logy</e>
+          <e type="operand">logy</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2673" width="256" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logy_secondary (=false) oder true: logarithmische zweite y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logy_secondary (=false) or true: log scale of secondary y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logy_secondary</e>
+          <e type="operand">logy_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2727" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] logz (=false) oder true: logarithmische z-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] logz (=false) or true: log scale of z-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">logz</e>
+          <e type="operand">logz</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2781" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] nticks (=29): Punktezahl für die Kurvenabtastung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] nticks (=29): number of points for curve sampling (explicit and parametric)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">nticks</e>
+          <e type="operand">nticks</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2835" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] palette (=[violet, blue, green, yellow, re]) color: Standard-Farbpalette, gray: Graustufen, Liste [ Farbe1, Farbe2... ] oder false: Flächen nicht färben </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] palette (=[violet, blue, green, yellow, red]) color palette, color: standard color palette (black, violet, red, yellow), gray: gray levels, list  [color1, color2... ] or false: don't color 3D objects </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">palette</e>
+          <e type="operand">palette</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2907" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] point_size (=1) Größe von points()-Symbolen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] point_size (=1) size of points()-symbols</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">point_size</e>
+          <e type="operand">point_size</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="2961" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] point_type (=1) Symbol für points()-Objekte, Name oder Kennzahl: <br />none -1, dot 0, plus 1, multiply 2, asterisk 3, square 4, filled_square 5, <br />circle 6, filled_circle 7, up_triangle 8, filled_up_triangle 9, down_triangle 10, <br />filled_dwn_triangle 11, diamant 12, filled_diamant 13</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] point_type (=1) type of points() objects, name or key number:<br />none -1, dot 0, plus 1, multiply 2, asterisk 3, square 4, filled_square 5, <br />circle 6, filled_circle 7, up_triangle 8, filled_up_triangle 9, down_triangle 10, <br />filled_down_triangle 11, diamant 12, filled_diamant 13</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">point_type</e>
+          <e type="operand">point_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3069" width="240" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] points_joined (=false), true oder impulses: Verbindungsart von points()-Objekten</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] points_joined (=false), true or impulses: how to join points</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">points_joined</e>
+          <e type="operand">points_joined</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3123" width="304" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] proportional_axes (=none), xy oder xyz: Achsen mit gleicher Skalierung)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] proportional_axes (=none), xy or xyz: set axes of equal scaling)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">proportional_axes</e>
+          <e type="operand">proportional_axes</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3177" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] surface_hide (=false) oder true: Ausblendung verdeckter Flächen bei Linienrasterdarstellung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] surface_hide (=false) or true: handling of hidden lines in surface grids</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">surface_hide</e>
+          <e type="operand">surface_hide</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3231" width="160" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] terminal (=screen) separate interactive terminal window,  png, jpg, gif, eps, svg, pdf, <br />animated_gif: gnuplot output format</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">terminal</e>
+          <e type="operand">terminal</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3285" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] title (="") Überschrift für das Diagramm</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] title (="") headline for the plot</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">title</e>
+          <e type="operand">title</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3339" width="176" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] transform (=none) Koordinatentransformation, für 2D als Liste {f1(x,y), f2(x,y), x, y, für 3D<br />als Liste {f1(x,y), f2(x,y), f3(x, y, z), x, y, z</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] transform (=none) co-ordinate transformation, for 2D as list {f1(x,y), f2(x,y), x, y, for 3D<br />as list {f1(x,y), f2(x,y), f3(x, y, z), x, y, z</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">transform</e>
+          <e type="operand">transform</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3411" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] transparent (=false) oder true: ob Rechtecke, Polygone oder Ellipsen transparent sein sollen <br />(bei false werden sie gefüllt)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] transparent (=false) fill objects with border, true: don't fill (make them transparent)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">transparent</e>
+          <e type="operand">transparent</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3483" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] unit_vectors (=false) oder true: Vektoren in originaler Länge oder als Einheitsvektoren zeichnen.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] unit_vectors (=false) draw vectors in original length, true: draw unit vectors.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">unit_vectors</e>
+          <e type="operand">unit_vectors</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3537" width="240" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] user_preamble (="") Zeichenkette oder Liste von Zeichenketten, die unmittelbar vor dem eigentlichen <br />Diagrammbefehl an Gnuplot übergeben werden.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] user_preamble (="") string or list of strings, gnuplot commands placed  immediately before the plot commands</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">user_preamble</e>
+          <e type="operand">user_preamble</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3609" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] view (=(60,30)) view direction</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">view</e>
+          <e type="operand">view</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3663" width="240" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] wired_surface (=false) oder true: Gitternetz auf eingefärbten Flächen anzeigen oder nicht.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] wired_surface (=false) no grid on colored surfaces, true: draw grid on surfaces</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">wired_surface</e>
+          <e type="operand">wired_surface</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3717" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] x_voxel (=10) x-Bereichsteilung für den  Marching-Cubes-Algorithmus bei implizit gegebenen Flächen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] x_voxel (=10) number of x steps for the Marching Cube algorithm (for implicit 3D functions)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">x_voxel</e>
+          <e type="operand">x_voxel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3771" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] y_voxel (=10) y-Bereichsteilung für den  Marching-Cubes-Algorithmus bei implizit gegebenen Flächen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] y_voxel (=10) number of y steps for the Marching Cube algorithm (for implicit 3D functions)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">y_voxel</e>
+          <e type="operand">y_voxel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3825" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] z_voxel (=10) z-Bereichsteilung für den  Marching-Cubes-Algorithmus bei implizit gegebenen Flächen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] z_voxel (=10) number of z steps for the Marching Cube algorithm (for implicit 3D functions)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">z_voxel</e>
+          <e type="operand">z_voxel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3879" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xaxis (=true) oder false: Anzeige der x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xaxis (=true) false: don't draw x-axis or true: draw x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xaxis</e>
+          <e type="operand">xaxis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3933" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yaxis (=true) oder false: Anzeige der y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yaxis (=true) false: don't draw x-axis or true: draw y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yaxis</e>
+          <e type="operand">yaxis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="3987" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zaxis (=true) oder false: Anzeige der z-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zaxis (=false) or true: draw z-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zaxis</e>
+          <e type="operand">zaxis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4041" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xaxis_color (=black) Farbe x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xaxis_color (=black) color of the x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xaxis_color</e>
+          <e type="operand">xaxis_color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4095" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yaxis_color (=black) Farbe y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yaxis_color (=black) color of the y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yaxis_color</e>
+          <e type="operand">yaxis_color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4149" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zaxis_color (=black) Farbe z-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zaxis_color (=black) color of the z-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zaxis_color</e>
+          <e type="operand">zaxis_color</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4203" width="272" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xaxis_secondary (=false) oder true: Nutzung einer zweiten x-Achse (oben) für die nachfolgenden Objekte</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xaxis_secondary (=false) or true: use the secondary x-axis (top) for subsequent objects</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xaxis_secondary</e>
+          <e type="operand">xaxis_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4266" width="272" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yaxis_secondary (=false) oder true: Nutzung einer zweiten y-Achse (rechts) für die nachfolgenden Objekte</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yaxis_secondary (=false) or true: use the secondary y-axis (right) for subsequent objects</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yaxis_secondary</e>
+          <e type="operand">yaxis_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4329" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xaxis_type (=solid) oder dots: Linienart der x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xaxis_type (=solid) or dots</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xaxis_type</e>
+          <e type="operand">xaxis_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4383" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yaxis_type (=solid) oder dots: Linienart der y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yaxis_type (=solid) or dots</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yaxis_type</e>
+          <e type="operand">yaxis_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4437" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zaxis_type (=dots) oder solid: Linienart der z-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zaxis_type (=dots) or solid</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zaxis_type</e>
+          <e type="operand">zaxis_type</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4491" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xaxis_width (=1) Linienbreite der x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xaxis_width (=1)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xaxis_width</e>
+          <e type="operand">xaxis_width</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4545" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yaxis_width (=1) Linienbreite der y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yaxis_width (=1)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yaxis_width</e>
+          <e type="operand">yaxis_width</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4599" width="208" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zaxis_width (=1) Linienbreite der z-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zaxis_width (=1)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zaxis_width</e>
+          <e type="operand">zaxis_width</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4653" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xlabel (="") x-Achsenbeschriftung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xlabel (="x") label of the x-axis, remove using ""</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xlabel</e>
+          <e type="operand">xlabel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4707" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ylabel(="") y-Achsenbeschriftung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ylabel (="y") label of the y-axis, remove using ""</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ylabel</e>
+          <e type="operand">ylabel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4761" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zlabel (="") z-Achsenbeschriftung</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zlabel (="") label of the z-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zlabel</e>
+          <e type="operand">zlabel</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4806" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xlabel_secondary (="") Beschriftung der zweiten x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xlabel_secondary (="") label of the secondary x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xlabel_secondary</e>
+          <e type="operand">xlabel_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4851" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ylabel_secondary (="") Beschriftung der zweiten y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ylabel_secondary (="") label of the secondary y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ylabel_secondary</e>
+          <e type="operand">ylabel_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4905" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xrange (=auto) oder Liste {min,max: x-Achsenbereich</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xrange (=auto) or list {min,max: range of the x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xrange</e>
+          <e type="operand">xrange</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="4959" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yrange (=auto) oder Liste {min,max: y-Achsenbereich</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yrange (=auto) or list {min,max: range of the y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yrange</e>
+          <e type="operand">yrange</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5013" width="128" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] zrange (=auto) oder Liste {min,max: z-Achsenbereich</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] zrange (=auto) or list {min,max: range of the z-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">zrange</e>
+          <e type="operand">zrange</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5067" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xrange_secondary (=auto) oder Liste {min,max: Bereich der zweiten (oberen) x-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xrange_secondary (=auto) or list {min,max: range of the secondary (top) x-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xrange_secondary</e>
+          <e type="operand">xrange_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5121" width="288" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yrange_secondary (=auto) oder Liste {min,max: Bereich der zweiten (rechten) y-Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yrange_secondary (=auto) or list {min,max: range of the secondary (right) y-axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yrange_secondary</e>
+          <e type="operand">yrange_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5175" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics (=auto): automatische x-Achsmarken, none: keine, Zahl: Schrittweite, <br />Liste mit {min, Schritt, max, oder set() von Zahlen: explizite Vorgabe der Zahlenwerte, oder set() <br />von Listen ("text",pos) mit Vorgabe von Beschriftung und Position.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics (=auto): automatic x ticks, none: no x ticks, number: tick interval,  <br />list of {min, step, max, or set() of numbers: explicit tick values, or set() of lists<br />("text",pos) for spec of position and text.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics</e>
+          <e type="operand">xtics</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5256" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics (=auto): automatische y-Achsmarken, none: keine, Zahl: Schrittweite, <br />Liste mit {min, Schritt, max, oder set() von Zahlen: explizite Vorgabe der Zahlenwerte, oder set() <br />von Listen {"text",pos mit Vorgabe von Beschriftung und Position.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics (=auto): automatic y ticks, none: no y ticks, number: tick interval,  <br />list of {min, step, max, or set() of numbers: explicit tick values, or set() of lists<br />("text",pos) for spec of position and text.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics</e>
+          <e type="operand">ytics</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5346" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ztics (=auto): automatische z-Achsmarken, none: keine, Zahl: Schrittweite, <br />Liste mit {min, Schritt, max, oder set() von Zahlen: explizite Vorgabe der Zahlenwerte, oder set() <br />von Listen {"text",pos mit Vorgabe von Beschriftung und Position.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ztics (=auto): automatic z ticks, none: no x ticks, number: tick interval,  <br />list of {min, step, max, or set() of numbers: explicit tick values, or set() of lists<br />("text",pos) for spec of position and text.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ztics</e>
+          <e type="operand">ztics</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5436" width="272" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics_secondary (=auto): automatische Marken an der sekundären (oberen) x-Achse, none: keine, <br />Zahl: Schrittweite, <br />Liste mit {min, Schritt, max, oder set() von Zahlen: explizite Vorgabe der Zahlenwerte, oder set() <br />von Listen {"text",pos mit Vorgabe von Beschriftung und Position.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics_secondary (=auto): automatic ticks on the secondary (top) x-axis, none: no ticks, number: tick interval,  <br />list of {min, step, max, or set() of numbers: explicit tick values, or set() of lists<br />("text",pos) for spec of position and text.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics_secondary</e>
+          <e type="operand">xtics_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5535" width="272" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics_secondary (=auto): automatische Marken an der sekundären (rechten) y-Achse, none: keine, <br />Zahl: Schrittweite, <br />Liste mit {min, Schritt, max, oder set() von Zahlen: explizite Vorgabe der Zahlenwerte, oder set() <br />von Listen {"text",pos mit Vorgabe von Beschriftung und Position.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics_secondary (=auto): automatic ticks on the secondary (right) y-axis, none: no ticks, number: tick interval,  <br />list of {min, step, max, or set() of numbers: explicit tick values, or set() of lists<br />("text",pos) for spec of position and text.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics_secondary</e>
+          <e type="operand">ytics_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5634" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics_axis (=false): x-Achsmarken am Rand, true: an der Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics_axis (=false): ticks on the boundary, true: ticks on the axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics_axis</e>
+          <e type="operand">xtics_axis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5688" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics_axis (=false): y-Achsmarken am Rand, true: an der Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics_axis (=false): ticks on the boundary, true: ticks on the axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics_axis</e>
+          <e type="operand">ytics_axis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5742" width="192" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ztics_axis (=false): z-Achsmarken am Rand, true: an der Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ztics_axis (=false): ticks on the boundary, true: ticks on the axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ztics_axis</e>
+          <e type="operand">ztics_axis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5796" width="352" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics_secondary_axis (=false): Marken an der sekundaren (oberen) x-Achse am Rand, true: an der Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics_secondary_axis (=false): ticks on the secondary (top) boundary, true: ticks on the axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics_secondary_axis</e>
+          <e type="operand">xtics_secondary_axis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5850" width="352" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics_secondary_axis (=false): Marken an der sekundaren (rechten) y-Achse am Rand, true: an der Achse</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics_secondary_axis (=false): ticks on the secondary (right) boundary, true: ticks on the axis</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics_secondary_axis</e>
+          <e type="operand">ytics_secondary_axis</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5904" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics_rotate (=false): x-Achsmarken nicht drehen, true: um 90° drehen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics_rotate (=false): horizontal tick labels, true: vertical tick labels</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics_rotate</e>
+          <e type="operand">xtics_rotate</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="5958" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics_rotate (=false): y-Achsmarken nicht drehen, true: um 90° drehen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics_rotate (=false): horizontal tick labels, true: vertical tick labels</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics_rotate</e>
+          <e type="operand">ytics_rotate</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6012" width="224" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ztics_rotate (=false): z-Achsmarken nicht drehen, true: um 90° drehen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ztics_rotate (=false): horizontal tick labels, true: vertical tick labels</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ztics_rotate</e>
+          <e type="operand">ztics_rotate</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6066" width="384" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xtics_rotate_secondary (=false): Marken an der sekundären (oberen) x-Achse nicht drehen, true: um 90° drehen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xtics_rotate_secondary (=false): don't rotate ticks of the secondary (top) x-axis, true: rotate about 90°</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xtics_rotate_secondary</e>
+          <e type="operand">xtics_rotate_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6120" width="384" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] ytics_rotate_secondary (=false): Marken an der sekundären (rechten) y-Achse nicht drehen, true: um 90° drehen</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] ytics_rotate_secondary (=false): don't rotate ticks of the secondary (right) y-axis, true: rotate about 90°</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">ytics_rotate_secondary</e>
+          <e type="operand">ytics_rotate_secondary</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6174" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] xu_grid (=30) Abtastpunkte in x- oder u-Richtung </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] xu_grid (=30) sampling points in x- or u-direction </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xu_grid</e>
+          <e type="operand">xu_grid</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6228" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw] yv_grid (=30) Abtastpunkte in y- oder v-Richtung </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw] yv_grid (=30) sampling points in y- or v-direction </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">yv_grid</e>
+          <e type="operand">yv_grid</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6282" width="144" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw]  xyplane (=false):  xy-Koordinatenebene automatisch anordnen, Zahl: z-Koordinate</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D]  xyplane (=false):  automatic allocation of the xy-plane, reak number: xy-plane intersects the z-axis at this level</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">xyplane</e>
+          <e type="operand">xyplane</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6336" width="78" height="23" color="#000000" fontSize="10" isBreakable="false">
+      <text lang="ger" fontFamily="Arial Black" fontSize="10">
+        <content>
+          <p style="font-weight: bold; font-family: Courier New;">Objekte </p>
+        </content>
+      </text>
+    </region>
+    <region left="18" top="6363" width="147" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] bars(b1,b2...) Säulendiagramm, Säulen gegeben durch Listen (x,h,w). Optionen: key, color, fill_color, fill_density and line_</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] bars(b1,b2...) vertical bars, given as lists (x,h,w). Options: key, color, fill_color, fill_density and line_width</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_</e>
+          <e type="function" args="1">bars</e>
+          <e type="operand">_</e>
+          <e type="function" args="1">bars</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6417" width="563" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D] elevation_grid(Matrix,x0,y0,w,h) Stellt eine Matrix in 3D dar. M_11 bei x=x0,y=y0+h,<br />M_mn bei x=x0+w,y=y0. Optionem:  xu_grid, yv_grid, line_type, key, wired_surface, enhanced3d and color</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D] elevation_grid(Matrix,x0,y0,w,h) Draws a m x n-matrix in 3D. M_11 at x=x0,y=y0+h,<br />M_mn at x=x0+w,y=y0. Options:  xu_grid, yv_grid, line_type, key, wired_surface, enhanced3d and color</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_1</e>
+          <e type="operand">_2</e>
+          <e type="operand">_3</e>
+          <e type="operand">_4</e>
+          <e type="operand">_5</e>
+          <e type="function" args="5">elevation_grid</e>
+          <e type="operand">_1</e>
+          <e type="operand">_2</e>
+          <e type="operand">_3</e>
+          <e type="operand">_4</e>
+          <e type="operand">_5</e>
+          <e type="function" args="5">elevation_grid</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6480" width="511" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] ellipse(xc,yc,a,b,φ1,φ2) Ellipse, zentriert bei xc, yc mit den Halbachsen a und b, von Winkel φ1 bis <br />Winkel φ2. Optionen nticks, transparent, fill_color, border, line_width, line_type, key and color. </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] ellipse(xc,yc,a,b,φ1,φ2) plots an ellipse centered at [xc, yc] with horizontal and vertical semi axis a and b, respectively, <br />starting at angle ang1 with an amplitude equal to angle ang2. Options: nticks, transparent, fill_color, border, line_width, line_type, key and color. </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="function" args="6">ellipse</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="function" args="6">ellipse</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6579" width="179" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] errors(e1,e2...) Punkte mit Fehlerbalken, horizontal, vertical oder beide, abhängig von der Option error_type. <br />Argumente für error_type = x: Listen [x, y, xdelta] oder [x, y, xlow, xhigh]. Argumente für error_type = y; Listen [x, y, ydelta] oder [x, y, ylow, yhigh].<br /> Argumente für error_type = xy oder error_type = boxes: Listen [x, y, xdelta, ydelta] oder [x, y, xlow, xhigh, ylow, yhigh].  <br />Optionen: error_type, points_joined, line_width, key, line_type, color, fill_density, xaxis_secondary, and yaxis_secondary </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] errors(e1,e2...) Draws points with error bars, horizontally, vertically or both, depending on the value of option error_type. <br />If error_type = x, arguments are lists [x, y, xdelta] or [x, y, xlow, xhigh]. If error_type = y, arguments are lists [x, y, ydelta] or [x, y, ylow, yhigh].<br /> If error_type = xy or error_type = boxes, arguments are lists [x, y, xdelta, ydelta] or [x, y, xlow, xhigh, ylow, yhigh].  <br />Options: error_type, points_joined, line_width, key, line_type, color, fill_density, xaxis_secondary, and yaxis_secondary</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_</e>
+          <e type="function" args="1">errors</e>
+          <e type="operand">_</e>
+          <e type="function" args="1">errors</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6732" width="407" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] explicit(f,x,xmin,xmax) zeichnet eine Funktion f von x von xmin bis xmax. <br />Optionen: nticks, adapt_depth, draw_realpart, line_width, line_type, key, filled_func, fill_color und color</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] explicit(f,x,xmin,xmax) plots explicit function f, with variable x taking values from xmin to xmax. <br />Options: nticks, adapt_depth, draw_realpart, line_width, line_type, key, filled_func, fill_color and color</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_1</e>
+          <e type="operand">_2</e>
+          <e type="operand">_3</e>
+          <e type="operand">_4</e>
+          <e type="function" args="4">explicit</e>
+          <e type="operand">_1</e>
+          <e type="operand">_2</e>
+          <e type="operand">_3</e>
+          <e type="operand">_4</e>
+          <e type="function" args="4">explicit</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6831" width="587" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D] explicit(f,x,xmin,xmax,y,ymin,ymax) zeichnet eine Funktion f von x und y im Bereich xmin bis xmax und ymin bis ymax <br />Optionen: draw_realpart, xu_grid, yv_grid, line_type, line_width, key, wired_surface, enhanced3d und color. </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D] explicit(f,x,xmin,xmax,y,ymin,ymax) plots the explicit function f, with variable x taking values from xmin to xmax and variable y <br />taking values from yminto ymax. Options: draw_realpart, xu_grid, yv_grid, line_type, line_width, key, wired_surface, enhanced3d, and color. </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">explicit</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">explicit</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="6930" width="419" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] image(Matrix,x0,y0,w,h)  Farbdarstellung einer m x n Matrix entsprechend der Option palette</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] image(matrix,x0,y0,w,h)  plots matrix in the rectangular region from vertex (x0,y0) to (x0+w,y0+h) according<br />to option palette.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="function" args="5">image</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="function" args="5">image</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7011" width="587" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] implicit(f,x,xmin,xmax,y,ymin,ymax)  2D Darstellung einer implizit gegebenen Funktion im angegebenen<br />Variablenbereich  (marching squares Algorithmus). Optionen: ip_grid, ip_grid_in, line_width, <br />line_type, key, color</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] implicit(f,x,xmin,xmax,y,ymin,ymax) plots the implicit function defined by f, <br />with variable x taking values from xmin to xmax, and variable y taking values from ymin to ymax. Options: ip_grid, ip_grid_in, line_width, <br />line_type, key, color</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">implicit</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">implicit</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7101" width="783" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D] implicit(f,x,xmin,xmax,y,ymin,ymax,z,zmin,zmax)  3D Darstellung einer implizit gegebenen Funktion im<br /> angegebenen Variablenbereich (Marching Cubes Algorithmus). Optionen: x_voxel, y_voxel, z_voxel,  <br />ip_grid_in, line_width, line_type, wired_surface, enhanced3D, color [Maxima Draw]</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D] implicit(f,x,xmin,xmax,y,ymin,ymax,z,zmin,zmax) plots the implicit surface defined by f,<br /> with variable x taking values from xmin to xmax, variable y taking values from ymin to ymax and variable z taking values from zmin to zmax. <br />This object implements the marching cubes algorithm. Options: x_voxel, y_voxel, z_voxel, line_width, line_type, key, wired_surface, enhanced3d,and color</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="operand">#8</e>
+          <e type="operand">#9</e>
+          <e type="operand">#10</e>
+          <e type="function" args="10">implicit</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="operand">#8</e>
+          <e type="operand">#9</e>
+          <e type="operand">#10</e>
+          <e type="function" args="10">implicit</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7209" width="163" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D and 3D] label(list) Beschriftung, im 2D gegeben als Liste (text,x,y), im 3D als Liste (text,x,y,z),<br />spezielle Optionen: color, label_alignment, label_orientation</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D and 3D] label(list) text label  specified in 2D as list [text,x,y], in 3D as list [text,x,y,z],<br />Options: color, label_alignment, label_orientation</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_</e>
+          <e type="function" args="1">label</e>
+          <e type="operand">_</e>
+          <e type="function" args="1">label</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7290" width="499" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] parametric(fx,fy,p,pmin,pmax) parametrisch gegebenen Funktion. Optionen: <br />nticks, line_width, line_type, key, color, enhanced3d</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] parametric(fx,fy,p,pmin,pmax) plots the parametric function fx, fy  with parameter p taking values from pmin to pmax. Options <br />nticks, line_width, line_type, key, color, enhanced3d</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="function" args="5">parametric</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="function" args="5">parametric</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7371" width="559" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D] parametric(fx,fy,fz,p,pmin,pmax) parametrisch gegebene Kurve. Optionen: <br />nticks, line_width, line_type, key, color, enhanced3d</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="function" args="6">parametric</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="function" args="6">parametric</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7443" width="195" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>points(matrix) Punkte, zeilenweise gegeben als n x 2 (2D) oder  n x 3 (3D)-Matrix.<br />Spezielle Optionen: points_joined, point_type, point_size [Maxima Draw2D/3D] </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D and 3D] points(matrix) 2D: n x 2, 3D: n x 3, plots points, given as the rows in a matrix.<br />special options: points_joined, point_type, point_size</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="function" args="1">points</e>
+          <e type="operand">#1</e>
+          <e type="function" args="1">points</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7506" width="255" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>points(vx,vy) Punkte, gegeben durch Vektoren der x- und y-Koordinaten.<br /> Spezielle Optionen: points_joined, point_type, point_size [Maxima Draw2D] </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] points(vx,vy) points given by two vectors, special options: points_joined, <br />point_type, point_size</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">points</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">points</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7578" width="315" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D] points(vx,vy,vz) zeichnet Punkte, gegeben durch drei Vektoren, spezielle Optionen: points_joined, <br />point_type, point_size</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D] points(vx,vy,vz) points given by three vectors, special options: points_joined, <br />point_type, point_size</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="function" args="3">points</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="function" args="3">points</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7650" width="359" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] polar(r,φ,φmin,φmax) zeichnet Funktionen, die in Polarkoordinaten gegeben<br />sind (Radius r als Funktion des Winkels φ). Spezielle Optionen: key, nticks, line_width, line_type, color</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] polar(r,φ,φmin,φmax) draws functions given in polar co-ordinates <br />(radius r as function of angle φ). Special options: key, nticks, line_width, line_type, color</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="function" args="4">polar</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="function" args="4">polar</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7722" width="211" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] polygon(matrix)  Polygon durch die als n x 2 Matrix gegebenen Punkte.<br />Spezielle Optionen: transparent, fill_color, border, line_width, key, line_type color </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] polygon(matrix)  polygon defined by matrix (each row one point).<br />Special options: transparent, fill_color, border, line_width, key, line_type color </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="function" args="1">polygon</e>
+          <e type="operand">#1</e>
+          <e type="function" args="1">polygon</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7803" width="271" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D]  polygon(vx,vy)  Zeichnet ein Polygon durch die als x- und y-Vektoren gegebenen Punkte.<br />Spezielle Optionen: transparent, fill_color, border, line_width, key, line_type color </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D]  polygon(vx,vy)  polygon defined by two vectors. Special options:<br /> transparent, fill_color, border, line_width, key, line_type color </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">polygon</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">polygon</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7893" width="487" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D/3D] quadrilateral(l1,l2,l3,l4)  Viereck, gegeben durch Listen der Eckkoordinaten 2D: (x,y) oder <br />3D: (x,y,z). Spezielle Optionen: transparent, fill_color, border, line_width, key, line_type, color, <br />enhanced3D (nur 3D)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D/3D] quadrilateral(l1,l2,l3,l4)  quadrilateral given by lists  of vertex coordinates: [x,y] in 2D or [x,y,z] in 3D.<br />Special options: transparent, fill_color, border, line_width, key, line_type, color, enhanced3D (3D only)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="function" args="4">quadrilateral</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="function" args="4">quadrilateral</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="7983" width="303" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D]  rectangle(l1,l2)  Rechteck gegeben durch Koordinatenlisten (x,y) gegenüberliegender Ecken.<br />Spezielle Optionen: transparent, fill_color, border, line_width, key, line_type, color </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D]  rectangle(l1,l2)  specified by lists (x,y) of opposite corners.<br />Special options: transparent, fill_color, border, line_width, key, line_type, color </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">rectangle</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">rectangle</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8055" width="555" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D] region(expr,x,xmin,xmax,y,ymin,ymax) Füllt das Gebiet wo expr wahr (true) ist im<br />Bereich von xmin, xmax, ymin, ymax. Optionen: fill_color, key, x_voxel, y_voxel</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D] region(expr,x,xmin,xmax,y,ymin,ymax) Fills the region where expr is true in the<br />domain given by xmin, xmax, ymin, ymax. Options: fill_color, key, x_voxel, y_voxel</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">region</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">region</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8127" width="254" height="23" color="#000000" fontSize="10" isBreakable="false">
+      <text lang="ger" fontFamily="Arial Black" fontSize="10">
+        <content>
+          <p style="font-family: Courier New;">spherical() funktioniert nicht</p>
+        </content>
+      </text>
+    </region>
+    <region left="18" top="8154" width="347" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D/3D] triangle(l1,l2,l3)  Dreieck, gegeben durch Koordinatenlisten (x,y) (2D) oder (x,y,z) (3D) der Ecken.<br />Spezielle Optionen: transparent, fill_color, border, line_width, key, line_type, color </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D/3D] triangle(l1,l2,l3)  given by co-ordinate lists (x,y) (2D) or (x,y,z) (3D) of the corners<br />Special options: transparent, fill_color, border, line_width, key, line_type, color </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="function" args="3">triangle</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="function" args="3">triangle</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8244" width="523" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw3D]  tube(fx,fy,fz,fr,p,pmin,pmax)  Röhre, gegeben durch Mittellinie mit fx,fy,fz und den Radius fr<br />als Funktionen des Parameters p.<br />Spezielle Optionen:  xu_grid, yv_grid, line_type, line_width, key, wired_surface, enhanced3d, <br />color, capping.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw3D]  tube(fx,fy,fz,fr,p,pmin,pmax)  tube, given by functions fx,fy,fz of the centerline and radius function fr<br />pf parameters p.<br />Special options:  xu_grid, yv_grid, line_type, line_width, key, wired_surface, enhanced3d, <br />color, capping.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">tube</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="operand">#3</e>
+          <e type="operand">#4</e>
+          <e type="operand">#5</e>
+          <e type="operand">#6</e>
+          <e type="operand">#7</e>
+          <e type="function" args="7">tube</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8352" width="255" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima Draw2D/3D]  vector(l1,l2)  Pfeil,  gegeben durch Koordinatenlisten (x,y) (2D) oder (x,y,z) (3D) der Endpunkte.<br />Spezielle Optionen:  head_both, head_length, head_angle, head_type, line_width, line_type, key <br />color.</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima Draw2D/3D]  vector(l1,l2)  given by co-ordinate lists (x,y) (2D) or (x,y,z) (3D) of the end points.<br />Spezielle Optionen:  head_both, head_length, head_angle, head_type, line_width, line_type, key <br />color.</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">vector</e>
+          <e type="operand">#1</e>
+          <e type="operand">#2</e>
+          <e type="function" args="2">vector</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8478" width="131" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima]  set(e1, e2,...) Maxima set (Liste in geschweiften Klammern)</p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima]  set(e1, e2,...) Maxima set (in Maxima this is a list in curly braces)</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_</e>
+          <e type="function" args="1">set</e>
+          <e type="operand">_</e>
+          <e type="function" args="1">set</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8532" width="147" height="26" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima] args(expr) Liste der Argumente von expr </p>
+          </content>
+        </description>
+        <description active="true" position="Top" lang="eng">
+          <content>
+            <p>[Maxima] args(expr) list of the top level arguments of expr</p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">_</e>
+          <e type="function" args="1">args</e>
+          <e type="operand">_</e>
+          <e type="function" args="1">args</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="18" top="8586" width="78" height="23" color="#000000" fontSize="10" isBreakable="false">
+      <text lang="ger" fontFamily="Arial Black" fontSize="10">
+        <content>
+          <p style="font-weight: bold; font-family: Courier New;">Sonstige</p>
+        </content>
+      </text>
+    </region>
+    <region left="18" top="8622" width="96" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima] </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">true</e>
+          <e type="operand">true</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="117" top="8622" width="112" height="24" color="#000000" fontSize="10">
+      <math>
+        <description active="true" position="Top" lang="ger">
+          <content>
+            <p>[Maxima] </p>
+          </content>
+        </description>
+        <input>
+          <e type="operand">false</e>
+          <e type="operand">false</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+  </regions>
+</worksheet>

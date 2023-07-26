@@ -10,12 +10,27 @@ namespace MaximaPlugin.MForms
     public partial class InstallerForm : Form
     {
         private int installerProcessId;
+        private Timer timer;
 
         public InstallerForm()
         {
             InitializeComponent();
-            ExtractUrlFromJson();
-            button1.Enabled = false;
+
+            // form panel thing
+            panel1.Visible = false;
+            panel2.Visible = true;
+
+            radioButton1.Checked = true;
+            radioButton2.Checked = false;
+
+            // Attach event handlers for radio buttons and Next button
+            radioButton1.CheckedChanged += RadioButtonOption_CheckedChanged;
+            radioButton2.CheckedChanged += RadioButtonOption_CheckedChanged;
+
+            this.Size = new System.Drawing.Size(520, 260);
+
+            //move panel 2 to panel 1 location
+            panel2.Location = panel1.Location;
         }
 
         public async void ExtractUrlFromJson()
@@ -23,7 +38,7 @@ namespace MaximaPlugin.MForms
             label4.Text = "Downloading installer..";
             string url = "https://sourceforge.net/projects/maxima/best_release.json";
             string randomFileName = Path.GetRandomFileName();
-            string installerFileName = $"installer_{randomFileName}.exe";
+            string installerFileName = $"Maxima_installer_{randomFileName}.exe";
             string installerPath = Path.Combine(Path.GetTempPath(), installerFileName);
 
             JsonDataFetcher dataFetcher = new JsonDataFetcher();
@@ -42,15 +57,26 @@ namespace MaximaPlugin.MForms
 
         public async Task InstallMaxima(string windowsUrl, string installerPath)
         {
+
+            //async download
             await Installer.DownloadInstaller(windowsUrl, installerPath, progressBar1);
-            installerProcessId = Installer.RequestAdminPrivileges(installerPath);
-            
-            if(installerProcessId > 0)
+
+            //check for silent installation
+            bool silentInstall;
+            if (radioButton1.Checked == true)
+                silentInstall = true;
+            else
+                silentInstall = false;
+
+            //start installation
+            installerProcessId = Installer.RequestAdminPrivileges(installerPath, silentInstall);
+
+            //disable cancel button at this point
+            button2.Enabled = false;
+
+            if (installerProcessId > 0)
             {
-                // Start a timer to periodically check if the installer process has exited
-                Timer timer = new Timer();
-                timer.Interval = 1000; // Check every 1 second 
-                timer.Tick += Timer_Tick;
+                //start timer to track progress
                 timer.Start();
                 label4.Text = "The installation is in progress...";
             }
@@ -74,7 +100,6 @@ namespace MaximaPlugin.MForms
         // Timer tick event handler to check if the installer process has exited
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //this part still not working as intended
             try
             {
                 Process installerProcess = Process.GetProcessById(installerProcessId);
@@ -83,19 +108,30 @@ namespace MaximaPlugin.MForms
                     // The installer process has exited
                     // Perform actions or display a message to indicate completion
                     label4.Text = "The installation has completed.";
+                    progressBar2.Value = 100;
                     button1.Enabled = true;
-                    MessageBox.Show("The installation has completed.");
 
                     // Stop the timer
                     Timer timer = (Timer)sender;
                     timer.Stop();
 
                 }
+                else
+                {
+                    // The installer process is still running, update the progress bar
+                    // based on the time elapsed (assuming a maximum of 1 minutes)
+                    double elapsedTime = (DateTime.Now - installerProcess.StartTime).TotalSeconds;
+                    int progressValue = (int)(elapsedTime / 60 * 100); // Calculate the progress percentage
+                    progressBar2.Value = Math.Min(progressValue, 80); // Cap at 80% if still running after 2 minutes
+                }
             }
             catch (ArgumentException)
             {
-  
+                // most of the time the exit of the PID is not really trackable due to the timer
+                // hence it will catch exception but the exit is still fine
+
                 label4.Text = "The installation has completed.";
+                progressBar2.Value = 100;
                 button1.Enabled = true;
 
                 // Stop the timer
@@ -103,7 +139,55 @@ namespace MaximaPlugin.MForms
                 timer.Stop();
             }
         }
+        private void RadioButtonOption_CheckedChanged(object sender, EventArgs e)
+        {
+            // Only one radio button allowed
+            if (sender == radioButton1 && radioButton1.Checked)
+            {
+                radioButton2.Checked = false;
+            }
+            else if (sender == radioButton2 && radioButton2.Checked)
+            {
+                radioButton1.Checked = false;
+            }
+        }
+
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            progressBar2.Maximum = 100; // Set the maximum value of the progress bar
+            progressBar2.Value = 0;
+            timer = new Timer();
+            timer.Interval = 1000; // Check every 1 second 
+            timer.Tick += Timer_Tick;
+
+
+            // Handle radio button changes here
+            if (radioButton1.Checked)
+            {
+                this.Size = new System.Drawing.Size(520, 260);
+            }
+            else if (radioButton2.Checked)
+            {
+                this.Size = new System.Drawing.Size(520, 200);
+                label3.Location = new System.Drawing.Point(0, 76);
+                label4.Location = new System.Drawing.Point(46, 123);
+                label5.Location = new System.Drawing.Point(0, 123);
+                button2.Location = new System.Drawing.Point(302, 103);
+                button1.Location = new System.Drawing.Point(383, 103);
+
+                label2.Visible = false;
+                progressBar2.Visible = false;
+            }
+
+            // form panel related init
+            panel1.Visible = true;
+            panel2.Visible = false;
+
+            ExtractUrlFromJson();
+            button1.Enabled = false;
+        }
     }
 
-    
+
 }

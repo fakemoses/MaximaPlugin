@@ -28,14 +28,14 @@ namespace MaximaPlugin.MInstaller
                 {
                     if (e.Error == null)
                     {
-                        //MessageBox.Show("Installer downloaded successfully.");
+
                     }
                     else
                     {
-                         MessageBox.Show("Error downloading the installer: " + e.Error.Message);
+                        MessageBox.Show("Error downloading the installer: " + e.Error.Message);
                     }
                 };
-                 
+
                 try
                 {
                     await client.DownloadFileTaskAsync(new Uri(url), path);
@@ -47,22 +47,21 @@ namespace MaximaPlugin.MInstaller
             }
         }
 
-        public static int RequestAdminPrivileges(string installerPath)
+        public static int RequestAdminPrivileges(string installerPath, bool silentInstall)
         {
             int pid = 0; // process ID
             // Check if the current user has administrative privileges
             if (IsUserAdmin())
             {
-                //delete this later - replace with something else
-                MessageBox.Show("The installation process has started."); // Show a message box
-                // need to know when the installer is finished
+
                 pid = InstallSilently(installerPath);
-                
+
             }
             else
             {
-                // Restart the application with administrative privileges
-                pid = RestartWithAdminPrivileges(installerPath);
+
+                pid = RestartWithAdminPrivileges(installerPath, silentInstall);
+
             }
             return pid;
         }
@@ -74,21 +73,32 @@ namespace MaximaPlugin.MInstaller
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        static int RestartWithAdminPrivileges(string installerPath)
+        static int RestartWithAdminPrivileges(string installerPath, bool silentInstall)
         {
             string scriptPath = Path.Combine(Path.GetTempPath(), "InstallScript.ps1");
+            string scriptContent = "";
 
             // Create a PowerShell script file that will be executed with admin rights
-            string scriptContent = $@"
+            if (silentInstall)
+            {
+                scriptContent = $@"
             Start-Process '{installerPath}' -ArgumentList '/S' -Verb RunAs -Wait
             Remove-Item -Path '{scriptPath}' -Force";
+            }
+            else
+            {
+                scriptContent = $@"
+            Start-Process '{installerPath}' -Verb RunAs -Wait
+            Remove-Item -Path '{scriptPath}' -Force";
+            }
+
 
             File.WriteAllText(scriptPath, scriptContent);
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "powershell.exe";
             startInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\"";
-            startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
             {

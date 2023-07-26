@@ -761,7 +761,7 @@ namespace MaximaPlugin
 
             return fullPath;
         }
-        private static List<string> GetDirectories(string path, string searchPattern = "*",
+        public static List<string> GetDirectories(string path, string searchPattern = "*",
             SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             if (searchOption == SearchOption.TopDirectoryOnly)

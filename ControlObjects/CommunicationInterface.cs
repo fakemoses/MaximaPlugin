@@ -99,6 +99,7 @@ namespace MaximaPlugin.ControlObjects
                 {
                     try
                     {
+                        //TODO HERE for the 2023 new delete strategy
                         System.IO.Directory.Delete(maxima.gnuPlotImageFolder, true);
                     }
                     catch //(System.IO.IOException e)

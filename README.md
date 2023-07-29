@@ -33,10 +33,15 @@ git clone https://github.com/fakemoses/MaximaPlugin
 
 7. Right-click on the MaximaPlugin on the solution explorer again and click on reload project. 
 
-8. Build the solution by clicking the build option on the top bar `Build > Build Solution` or by using the hotkey `Ctrl+Shift+B`
+8. Install the following required packages from NuGet Package manager:
+- Newtonsoft.Json
+- Microsoft.CSharp
+- Microsoft.PowerShell.5.1.ReferenceAssemblies.1.0.0
 
-9. Now you can use the debug feature by clicking on the start button.
+9. Build the solution by clicking the build option on the top bar `Build > Build Solution` or by using the hotkey `Ctrl+Shift+B`
+
+10. Now you can use the debug feature by clicking on the start button.
 
 ![Debug](documentations/debug.png)
 
-10. It is good to always rebuild the solution when ever you pulled the latest code from github.
+11. It is good to always rebuild the solution when ever you pulled the latest code from github.

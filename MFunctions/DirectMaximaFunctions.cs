@@ -720,6 +720,59 @@ namespace MaximaPlugin.MFunctions
             return newOutput;
         }
 
+        public static string ExtractUserPreamble(string input, out string userPreamble)
+        {
+            // Regular expression pattern to match user_preamble components
+            string pattern = @"user_preamble\s*≡\s*(sys\s*\([^)]+\)|\""[^""]+\""),?";
+
+            // Find the first match using regex
+            Match match = Regex.Match(input, pattern);
+
+            if (match.Success)
+            {
+                // Extract the user_preamble component from the match
+                userPreamble = match.Groups[1].Value;
+
+                // Remove the user_preamble from the input string along with the trailing comma
+                string postProcessedInput = Regex.Replace(input, pattern, "");
+
+                return postProcessedInput;
+            }
+
+            // If no user_preamble found, return the original input string
+            userPreamble = string.Empty;
+            return input;
+        }
+
+        public static string RemoveSysFromPreamble(string preamble)
+        {
+            // Check if the preamble contains sys(...)
+            int sysStartIndex = preamble.IndexOf("sys(", StringComparison.Ordinal);
+            if (sysStartIndex >= 0)
+            {
+                // Find the position of the closing bracket of sys(...)
+                int sysEndIndex = preamble.IndexOf(')', sysStartIndex);
+
+                // Find the position of the second last comma
+                int secondLastCommaIndex = FindCommaBeforeSecondLastIndex(preamble, sysEndIndex);
+
+                // Remove the content between the second last comma and sys(...), including the comma
+                preamble = preamble.Substring(0, secondLastCommaIndex + 2);
+            }
+
+            // Remove the entire sys(...) from the preamble
+            preamble = preamble.Replace("sys(", "").TrimEnd(')').TrimEnd(',');
+
+            // Add a quotation mark at the end if it's not already there
+            if (!preamble.EndsWith("\""))
+            {
+                preamble += "\"";
+            }
+
+            return preamble;
+        }
+
+
         // new draw method based
         public static bool NewDraw(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
@@ -745,11 +798,23 @@ namespace MaximaPlugin.MFunctions
             // enclose argument in list if it is scalar
             if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
 
-            //add the remaining settings for draw3d
-            if(root.Text == "draw3D")
+            //user_preamble extraction here
+            string preamble;
+            arg1 = ExtractUserPreamble(arg1,out preamble);
+            if(preamble != "")
+                preamble = RemoveSysFromPreamble(preamble);
+
+            //add the default settings at the beginning of the thing
+            if (root.Text == "draw3D")
             {
-                string drawSettings = "enhanced3d≡true, xu_grid≡100, yv_grid≡100, palette≡sys(violet,blue,green,yellow,red,5,1),xlabel≡\"x\", ylabel≡\"y\"";
-                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 6);
+                string drawSettings = "enhanced3d≡true,background_color≡\"#fefefe\", xu_grid≡100, yv_grid≡100, palette≡color,xlabel≡\"x\", ylabel≡\"y\"";
+                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 7);
+            }
+            else
+            {
+                string drawSettings = "enhanced3d≡true, background_color≡\"#fefefe\", xlabel≡\"x\", ylabel≡\"y\",xaxis_type≡solid, xaxis≡true, xaxis_color≡black, xaxis_width≡1, " +
+                    "yaxis_type≡solid, yaxis≡true, yaxis_color≡black, yaxis_width≡1";
+                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 12);
             }
 
             // replace units by 1
@@ -833,48 +898,69 @@ namespace MaximaPlugin.MFunctions
             if (Target.EndsWith("svg"))
             {
                 term = "svg";
-                //if (Target == "svg") CopyTempFile = false; // just set the format, don't copy the file
-                //TempPath = Path.ChangeExtension(TempPath, ".svg");
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
                 ipre = "set term svg enhanced size ";
-                bgColor = "set object 1 rectangle from screen -0,-0 to screen 1 ,1 fillcolor rgb'#ffffff' behind";
             }
             // set term to pdf if requested by file name
             else if (Target.EndsWith("png"))
             {
-                //Target = Path.ChangeExtension(Target, ".png");
                 term = "png";
-                ipre = "set term pngcairo font ',8' enhanced size ";
+                ipre = "set term pngcairo font 'arial,8' enhanced size ";
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
-                bgColor = "set object 1 rectangle from screen -0.01,-0.01 to screen 1.01 ,1.01 fillcolor rgb'#ffffff' behind";
             }
             else // use pdf otherwise
             {
                 term = "pdf";
-                //if (Target == "pdf") CopyTempFile = false;  // just set the format, don't copy the file
-                //TempPath = Path.ChangeExtension(TempPath, ".pdf");
-                ipre = "set term pdfcairo font 'arial, 12' enhanced size ";
+                ipre = "set term pdfcairo enhanced size ";
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Inch);
-                bgColor = "#fefefe";
             }
 
             string fullFilePath = FilePath;
 
 
-            // build SMath list
+            // build SMath list - User preamble part
             if(root.Text == "draw3D")
             {
                 ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + bgColor + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar +  "set pm3d lighting" + Symbols.StringChar;
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar +  "set pm3d lighting depthorder base" + Symbols.StringChar;
             }
             else
             {
                 ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + bgColor + Symbols.StringChar;
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set style line 100 lc rgb 'grey' lt -1 lw 0" 
+                + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set grid ls 100" + Symbols.StringChar;
             }
+
+            //somehow the preamble can contain "\"" which might be caused by one of the function
+            if(preamble != "")
+            {
+                // Check if the preamble contains more than one part
+                int numSeparatorOccurrences = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.None).Length - 1;
+                if (numSeparatorOccurrences > 0)
+                {
+                    // Split the preamble using the separator (',') into multiple parts
+                    string[] preambleParts = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.RemoveEmptyEntries);
+
+                    // Join the preamble parts with the separator and include them in the 'ipre' string
+                    ipre += GlobalProfile.ArgumentsSeparatorStandard.ToString();
+                    for (int i = 0; i < preambleParts.Length; i++)
+                    {
+                        ipre += preambleParts[i];
+                        if (i < preambleParts.Length - 1)
+                        {
+                            ipre += GlobalProfile.ArgumentsSeparatorStandard;
+                        }
+                    }
+                }
+                else
+                {
+                    ipre += GlobalProfile.ArgumentsSeparatorStandard + preamble;
+                }
+
+            }
+
             // the last argument is obsolet but required due to the signature.
+            // These listhandle and terminate has to be reworked! Currently regex is used to fix the output of these methods
             ListHandle(esm, ipre, "terminal≡" + term, "file_name≡"
                 + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
             terminate(esm, ipre, "terminal≡" + term, "file_name≡"
@@ -885,6 +971,10 @@ namespace MaximaPlugin.MFunctions
             // send to Maxima
             ControlObjects.TranslationModifiers.TimeOut = 5000;
             ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
+            
+            //maybe do the user_preamble here?
+
+            
             // check if file exists
 
             //check if file exists, if yes check if it has content. No content means there is error.

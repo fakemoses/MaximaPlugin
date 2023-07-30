@@ -106,6 +106,20 @@ namespace MaximaPlugin.MFunctions
             {
                 result = TermsConverter.ToTerms("\"This option is obsolete. Please use MaximaTakeover().\"");
                 return true;
+            } if(arg1 == "cleanupFolder" || arg1 == Symbols.StringChar + "cleanupFolder" + Symbols.StringChar)
+            {
+                //folder deletion
+                try
+                {
+                    System.IO.Directory.Delete(ControlObjects.Translator.GetMaxima().namedDrawImageFolder, true);
+                    result = TermsConverter.ToTerms("\"Deletetion successful.\"");
+                    return true;
+                }
+                catch //(System.IO.IOException e)
+                {
+                    result = TermsConverter.ToTerms("\"Error: Unable to delete the folder. Please close any application that uses the files in the folder.\"");
+                    return true;
+                }
             }
             else
             {

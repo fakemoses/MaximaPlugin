@@ -22,6 +22,7 @@ namespace MaximaPlugin
         private string assemblyFolder = "";
         private string workingFolder = "";
         public string gnuPlotImageFolder = "";
+        public string namedDrawImageFolder = "";
         private string ConfigFileName = "";
 
         string XMLname = "maxima.xml";
@@ -73,6 +74,7 @@ namespace MaximaPlugin
             assemblyFolder = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41";
             gnuPlotImageFolder = System.IO.Path.Combine(workingFolder, "GnuPlot");
+            namedDrawImageFolder = System.IO.Path.Combine(workingFolder, "Images");
             ConfigFileName = System.IO.Path.Combine(workingFolder, XMLname);
 
         }

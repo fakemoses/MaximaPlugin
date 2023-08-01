@@ -8,6 +8,9 @@ using SMath.Math;
 using SMath.Math.Numeric;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace MaximaPlugin.MFunctions
 {
@@ -772,6 +775,83 @@ namespace MaximaPlugin.MFunctions
             return preamble;
         }
 
+        // error text as image to show to the user
+        static void GenerateErrorMsgAsImage(string text, string filePath)
+        {
+            // Create a new Bitmap with the desired width and height based on the text size
+            using (Bitmap bitmap = CreateBitmapFromText(text))
+            {
+                using (Graphics graphics = Graphics.FromImage(bitmap))
+                {
+                    // Set the background color and clear the bitmap
+                    graphics.Clear(Color.White);
+
+                    // Set the font and brush for the text
+                    Font font = new Font("Arial", 8, FontStyle.Regular);
+                    Brush brush = new SolidBrush(Color.Black);
+
+                    // Draw the text on the bitmap
+                    graphics.DrawString(text, font, brush, new PointF(10, 10));
+
+                    // Save the bitmap as an image file
+                    bitmap.Save(filePath, ImageFormat.Png);
+                }
+            }
+        }
+
+        private static Bitmap CreateBitmapFromText(string text)
+        {
+            using (Font font = new Font("Arial", 8, FontStyle.Regular))
+            {
+                using (Bitmap tempBitmap = new Bitmap(1, 1))
+                {
+                    using (Graphics tempGraphics = Graphics.FromImage(tempBitmap))
+                    {
+                        // Measure the size of the text
+                        SizeF textSize = tempGraphics.MeasureString(text, font);
+
+                        // Adjust the bitmap size based on the text size
+                        int width = (int)textSize.Width + 20; // Add extra padding
+                        int height = (int)textSize.Height + 20; // Add extra padding
+
+                        // Create the bitmap with the adjusted size
+                        return new Bitmap(width, height);
+                    }
+                }
+            }
+        }
+
+        static string CreateBackupFilePath(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                // File does not exist, return the original path
+                return filePath;
+            }
+
+            // File exists, add "_bck" to the filename before the extension
+            string directory = Path.GetDirectoryName(filePath);
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+            string extension = Path.GetExtension(filePath);
+
+            string backupFileName = $"{filenameWithoutExtension}_bck{extension}";
+            string backupFilePath = Path.Combine(directory, backupFileName);
+
+            if (!File.Exists(backupFilePath))
+            {
+                // File exists, rename it to the backup file name
+                File.Move(filePath, backupFilePath);
+            }
+            else
+            {
+                // previous backup file exists. Replace them
+                // File exists, rename it to the backup file name
+                File.Replace(filePath, backupFilePath, null);
+            }
+
+            return backupFilePath;
+        }
+
 
         // new draw method based
         public static bool NewDraw(Term root, Term[][] args, ref Store context, ref Term[] result)
@@ -829,6 +909,14 @@ namespace MaximaPlugin.MFunctions
             string TempPath = ControlObjects.Translator.GetMaxima().gnuPlotImageFolder;
             System.IO.Directory.CreateDirectory(TempPath);
 
+            //create the image path if not exist
+            string permPath = ControlObjects.Translator.GetMaxima().namedDrawImageFolder;
+            if (!Directory.Exists(permPath))
+            {
+                Directory.CreateDirectory(permPath);
+            }
+
+            //by default this is the path unless name is given
             string RandomFileName = GenerateRandomString(8);
             string FilePath = Path.Combine(TempPath, RandomFileName);
 
@@ -840,6 +928,7 @@ namespace MaximaPlugin.MFunctions
             string ipre = "";
             string Target = "dummy.pdf";
             string bgColor = "";
+            string backupFile = "";
 
 
             // use random file name when only one arguments -> only lists of settings
@@ -863,7 +952,10 @@ namespace MaximaPlugin.MFunctions
 
                     convertedString = convertedString.Replace("\\", "");
 
-                    FilePath = Path.Combine(TempPath, convertedString);
+                    FilePath = Path.Combine(permPath, convertedString);
+
+                    //check if file exists. If yes, convert to bck.
+                    backupFile = CreateBackupFilePath(FilePath);
                 }
                 else // size is given
                 {
@@ -886,7 +978,10 @@ namespace MaximaPlugin.MFunctions
 
                 convertedString = convertedString.Replace("\\","");
 
-                FilePath = Path.Combine(TempPath, convertedString);
+                FilePath = Path.Combine(permPath, convertedString);
+
+                //check if file exists. If yes, convert to bck.
+                backupFile = CreateBackupFilePath(FilePath);
 
                 CopyTempFile = true;
                 // third argument is size
@@ -931,7 +1026,6 @@ namespace MaximaPlugin.MFunctions
                 + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set grid ls 100" + Symbols.StringChar;
             }
 
-            //somehow the preamble can contain "\"" which might be caused by one of the function
             if(preamble != "")
             {
                 // Check if the preamble contains more than one part
@@ -965,33 +1059,46 @@ namespace MaximaPlugin.MFunctions
                 + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
             terminate(esm, ipre, "terminal≡" + term, "file_name≡"
                 + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
+            
             // convert to Maxima
             string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
             sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
             // send to Maxima
             ControlObjects.TranslationModifiers.TimeOut = 5000;
-            ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
-            
-            //maybe do the user_preamble here?
+            string res = ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
 
-            
-            // check if file exists
 
             //check if file exists, if yes check if it has content. No content means there is error.
-            long fileSize = new FileInfo(fullFilePath).Length;
+
+            string errorImg = Path.ChangeExtension(fullFilePath, "png");
+            string errormsg = "";
 
             if (!File.Exists(fullFilePath))
             {
-                result = TermsConverter.ToTerms("error(\"No file generated, see MaximaLog() for details\")");
+                //error
+                if (backupFile != "")
+                    errormsg = "Error: " + res + "\n" + "Backup file can be found at: " + backupFile;
+                else
+                    errormsg = "Error: " + res;
+                GenerateErrorMsgAsImage(errormsg, errorImg);
+                result = TermsConverter.ToTerms(Symbols.StringChar + errorImg + Symbols.StringChar);
                 return true;
-            } else if (fileSize == 0)
+            } else
             {
-                result = TermsConverter.ToTerms("error(\"Check the input!\")");
+                long fileSize = new FileInfo(fullFilePath).Length;
+                if(fileSize< 0)
+                {
+                    if(backupFile  != "")
+                        errormsg = "Error: " + res + "\n" + "Backup file can be found at: " + backupFile;
+                    else
+                        errormsg = "Error: " + res;
+                    GenerateErrorMsgAsImage(errormsg, errorImg);
+                    result = TermsConverter.ToTerms(Symbols.StringChar + errorImg + Symbols.StringChar);
+                    return true;
+                }
+                result = TermsConverter.ToTerms(Symbols.StringChar + fullFilePath + Symbols.StringChar);
                 return true;
             }
-
-            result = TermsConverter.ToTerms(Symbols.StringChar + fullFilePath + Symbols.StringChar);
-            return true;
         }
 
 

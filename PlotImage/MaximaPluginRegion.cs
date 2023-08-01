@@ -100,7 +100,6 @@ namespace MaximaPlugin.PlotImage
         public override void OnMouseDown(MouseEventOptions e)
         {
             base.OnMouseDown(e);
-            
 
             // Store mouse location/state       
             mouseDown = true;
@@ -113,37 +112,38 @@ namespace MaximaPlugin.PlotImage
             {
                 dblclicktimer.Start();
             }
-
-            if (dblclicktimer.ElapsedMilliseconds > 500)
-            {
-                // assume a single click
-                dblclicktimer.Reset();
-                if (canv.plotStore.viewRedirecting == PlotStore.State.Enable ||
-                    canv.plotStore.mouseRedirecting == PlotStore.State.Enable ||
-                    canv.plotStore.xRedirecting == PlotStore.State.Enable ||
-                    canv.plotStore.yRedirecting == PlotStore.State.Enable ||
-                    canv.plotStore.zRedirecting == PlotStore.State.Enable)
-                    this.RequestEvaluation();
-            }
             else
             {
-                // assume doubleclick
                 dblclicktimer.Stop();
-                dblclicktimer.Reset();
-
-                if (formOpen)
-                    psf.Focus();
-                else
+                if (dblclicktimer.ElapsedMilliseconds < 500)
                 {
-                    canv.oldPlotStore = canv.plotStore.Clone() as PlotStore;
-                    psf = new PlotSettings(this);
-                    psf.Show();
-                    formOpen = true;
-                    psf.Focus();
+                    // Double-click logic here
+                    if (canv.plotStore.viewRedirecting == PlotStore.State.Enable ||
+                        canv.plotStore.mouseRedirecting == PlotStore.State.Enable ||
+                        canv.plotStore.xRedirecting == PlotStore.State.Enable ||
+                        canv.plotStore.yRedirecting == PlotStore.State.Enable ||
+                        canv.plotStore.zRedirecting == PlotStore.State.Enable)
+                    {
+                        this.RequestEvaluation();
+                    }
+                    else
+                    {
+                        if (formOpen)
+                            psf.Focus();
+                        else
+                        {
+                            canv.oldPlotStore = canv.plotStore.Clone() as PlotStore;
+                            psf = new PlotSettings(this);
+                            psf.Show();
+                            formOpen = true;
+                            psf.Focus();
+                        }
+                    }
+                    canv.plotApproval = true;
+                    this.Invalidate();
                 }
+                dblclicktimer.Reset();
             }
-            canv.plotApproval = true;
-            this.Invalidate();
         }
         /// <summary>
         /// Actions on mouse drag (pan, orbit)

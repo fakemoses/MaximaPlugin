@@ -651,208 +651,6 @@ namespace MaximaPlugin.MFunctions
         }
 
 
-        static string GenerateRandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            Random random = new Random();
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-
-        static string ReplaceUnicodeEscapeSequences(string input)
-        {
-            // Replace specific Unicode escape sequences with their corresponding characters
-            input = input.Replace("\\005F", "_");
-            input = input.Replace("\\002E", ".");
-            return input;
-        }
-
-        static int FindCommaBeforeSecondLastIndex(string input, int startIndex)
-        {
-            int count = 0;
-            int index = startIndex;
-
-            while (count < 2 && index >= 0)
-            {
-                if (input[index] == ',')
-                {
-                    count++;
-                    if (count == 2)
-                    {
-                        return index - 1; // Return the position of the comma just before the second-to-last item
-                    }
-                }
-
-                index--;
-            }
-
-            return -1; // If there's no second-to-last item, return -1
-        }
-
-        static string AddItemsAndAdjustValues(string input, string itemsToAdd, int numberofItems)
-        {
-            // Use regex to find the last two numbers in the input string
-            MatchCollection matches = Regex.Matches(input, @"\d+");
-            int secondLastNumber = int.Parse(matches[matches.Count - 2].Value);
-            int lastNumber = int.Parse(matches[matches.Count - 1].Value);
-
-            // Calculate the updated values based on the rule (adding 2 to the second-to-last number)
-            int updatedSecondLastNumber = secondLastNumber + numberofItems;
-
-            // Find the position after "sys("
-            int insertIndex = input.IndexOf("sys(") + 4;
-
-            // Find the position of the comma just before the second-to-last number
-            int commaBeforeSecondLastIndex = FindCommaBeforeSecondLastIndex(input, insertIndex);
-
-            // Adjust the substring length if the second-to-last item is not present
-            string originalItems;
-            if (commaBeforeSecondLastIndex >= 0)
-            {
-                originalItems = input.Substring(insertIndex, commaBeforeSecondLastIndex - insertIndex);
-            }
-            else
-            {
-                originalItems = input.Substring(insertIndex);
-            }
-
-            // Construct the new output string by adding the new items and the updated values
-            string newOutput = "sys(" + itemsToAdd + "," + originalItems.TrimEnd() + "," + updatedSecondLastNumber + "," + lastNumber + ")";
-
-
-            return newOutput;
-        }
-
-        public static string ExtractUserPreamble(string input, out string userPreamble)
-        {
-            // Regular expression pattern to match user_preamble components
-            string pattern = @"user_preamble\s*≡\s*(sys\s*\([^)]+\)|\""[^""]+\""),?";
-
-            // Find the first match using regex
-            Match match = Regex.Match(input, pattern);
-
-            if (match.Success)
-            {
-                // Extract the user_preamble component from the match
-                userPreamble = match.Groups[1].Value;
-
-                // Remove the user_preamble from the input string along with the trailing comma
-                string postProcessedInput = Regex.Replace(input, pattern, "");
-
-                return postProcessedInput;
-            }
-
-            // If no user_preamble found, return the original input string
-            userPreamble = string.Empty;
-            return input;
-        }
-
-        public static string RemoveSysFromPreamble(string preamble)
-        {
-            // Check if the preamble contains sys(...)
-            int sysStartIndex = preamble.IndexOf("sys(", StringComparison.Ordinal);
-            if (sysStartIndex >= 0)
-            {
-                // Find the position of the closing bracket of sys(...)
-                int sysEndIndex = preamble.IndexOf(')', sysStartIndex);
-
-                // Find the position of the second last comma
-                int secondLastCommaIndex = FindCommaBeforeSecondLastIndex(preamble, sysEndIndex);
-
-                // Remove the content between the second last comma and sys(...), including the comma
-                preamble = preamble.Substring(0, secondLastCommaIndex + 2);
-            }
-
-            // Remove the entire sys(...) from the preamble
-            preamble = preamble.Replace("sys(", "").TrimEnd(')').TrimEnd(',');
-
-            // Add a quotation mark at the end if it's not already there
-            if (!preamble.EndsWith("\""))
-            {
-                preamble += "\"";
-            }
-
-            return preamble;
-        }
-
-        // error text as image to show to the user
-        static void GenerateErrorMsgAsImage(string text, string filePath)
-        {
-            // Create a new Bitmap with the desired width and height based on the text size
-            using (Bitmap bitmap = CreateBitmapFromText(text))
-            {
-                using (Graphics graphics = Graphics.FromImage(bitmap))
-                {
-                    // Set the background color and clear the bitmap
-                    graphics.Clear(Color.White);
-
-                    // Set the font and brush for the text
-                    Font font = new Font("Arial", 8, FontStyle.Regular);
-                    Brush brush = new SolidBrush(Color.Black);
-
-                    // Draw the text on the bitmap
-                    graphics.DrawString(text, font, brush, new PointF(10, 10));
-
-                    // Save the bitmap as an image file
-                    bitmap.Save(filePath, ImageFormat.Png);
-                }
-            }
-        }
-
-        private static Bitmap CreateBitmapFromText(string text)
-        {
-            using (Font font = new Font("Arial", 8, FontStyle.Regular))
-            {
-                using (Bitmap tempBitmap = new Bitmap(1, 1))
-                {
-                    using (Graphics tempGraphics = Graphics.FromImage(tempBitmap))
-                    {
-                        // Measure the size of the text
-                        SizeF textSize = tempGraphics.MeasureString(text, font);
-
-                        // Adjust the bitmap size based on the text size
-                        int width = (int)textSize.Width + 20; // Add extra padding
-                        int height = (int)textSize.Height + 20; // Add extra padding
-
-                        // Create the bitmap with the adjusted size
-                        return new Bitmap(width, height);
-                    }
-                }
-            }
-        }
-
-        static string CreateBackupFilePath(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                // File does not exist, return the original path
-                return filePath;
-            }
-
-            // File exists, add "_bck" to the filename before the extension
-            string directory = Path.GetDirectoryName(filePath);
-            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
-            string extension = Path.GetExtension(filePath);
-
-            string backupFileName = $"{filenameWithoutExtension}_bck{extension}";
-            string backupFilePath = Path.Combine(directory, backupFileName);
-
-            if (!File.Exists(backupFilePath))
-            {
-                // File exists, rename it to the backup file name
-                File.Move(filePath, backupFilePath);
-            }
-            else
-            {
-                // previous backup file exists. Replace them
-                // File exists, rename it to the backup file name
-                File.Replace(filePath, backupFilePath, null);
-            }
-
-            return backupFilePath;
-        }
-
-
         // new draw method based
         public static bool NewDraw(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
@@ -941,11 +739,11 @@ namespace MaximaPlugin.MFunctions
             {
                 // preprocess second argument
                 arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-                if (!rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given
+                Target = arg2.Replace("\"", "");
+
+                if (!rxSys.IsMatch(arg2) && (Target != "pdf" && Target != "png" && Target != "svg")) // argument is not a list, i.e. filename is given and not only file extension 
                 {
                     CopyTempFile = true;
-
-                    Target = arg2.Replace("\"", "");
 
                     // Replace specific Unicode escape sequences with their corresponding characters
                     string convertedString = ReplaceUnicodeEscapeSequences(Target);
@@ -970,18 +768,24 @@ namespace MaximaPlugin.MFunctions
             {
                 // second argument is file name
                 arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-
                 Target = arg2.Replace("\"", "");
 
-                // Replace specific Unicode escape sequences with their corresponding characters
-                string convertedString = ReplaceUnicodeEscapeSequences(Target);
+                if (Target != "pdf" && Target != "svg" && Target != "png")
+                {
+                    // Replace specific Unicode escape sequences with their corresponding characters
+                    string convertedString = ReplaceUnicodeEscapeSequences(Target);
 
-                convertedString = convertedString.Replace("\\","");
+                    convertedString = convertedString.Replace("\\","");
 
-                FilePath = Path.Combine(permPath, convertedString);
+                    FilePath = Path.Combine(permPath, convertedString);
 
-                //check if file exists. If yes, convert to bck.
-                backupFile = CreateBackupFilePath(FilePath);
+                    //check if file exists. If yes, convert to bck.
+                    backupFile = CreateBackupFilePath(FilePath);
+                }
+                else
+                {
+                    FilePath = FilePath + "." + term;
+                }
 
                 CopyTempFile = true;
                 // third argument is size
@@ -1239,6 +1043,207 @@ namespace MaximaPlugin.MFunctions
             // Extract list entries to string
             return size.El(1).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven) + ","
                 + size.El(2).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven);
+        }
+
+        static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        static string ReplaceUnicodeEscapeSequences(string input)
+        {
+            // Replace specific Unicode escape sequences with their corresponding characters
+            input = input.Replace("\\005F", "_");
+            input = input.Replace("\\002E", ".");
+            return input;
+        }
+
+        static int FindCommaBeforeSecondLastIndex(string input, int startIndex)
+        {
+            int count = 0;
+            int index = startIndex;
+
+            while (count < 2 && index >= 0)
+            {
+                if (input[index] == ',')
+                {
+                    count++;
+                    if (count == 2)
+                    {
+                        return index - 1; // Return the position of the comma just before the second-to-last item
+                    }
+                }
+
+                index--;
+            }
+
+            return -1; // If there's no second-to-last item, return -1
+        }
+
+        static string AddItemsAndAdjustValues(string input, string itemsToAdd, int numberofItems)
+        {
+            // Use regex to find the last two numbers in the input string
+            MatchCollection matches = Regex.Matches(input, @"\d+");
+            int secondLastNumber = int.Parse(matches[matches.Count - 2].Value);
+            int lastNumber = int.Parse(matches[matches.Count - 1].Value);
+
+            // Calculate the updated values based on the rule (adding 2 to the second-to-last number)
+            int updatedSecondLastNumber = secondLastNumber + numberofItems;
+
+            // Find the position after "sys("
+            int insertIndex = input.IndexOf("sys(") + 4;
+
+            // Find the position of the comma just before the second-to-last number
+            int commaBeforeSecondLastIndex = FindCommaBeforeSecondLastIndex(input, insertIndex);
+
+            // Adjust the substring length if the second-to-last item is not present
+            string originalItems;
+            if (commaBeforeSecondLastIndex >= 0)
+            {
+                originalItems = input.Substring(insertIndex, commaBeforeSecondLastIndex - insertIndex);
+            }
+            else
+            {
+                originalItems = input.Substring(insertIndex);
+            }
+
+            // Construct the new output string by adding the new items and the updated values
+            string newOutput = "sys(" + itemsToAdd + "," + originalItems.TrimEnd() + "," + updatedSecondLastNumber + "," + lastNumber + ")";
+
+
+            return newOutput;
+        }
+
+        public static string ExtractUserPreamble(string input, out string userPreamble)
+        {
+            // Regular expression pattern to match user_preamble components
+            string pattern = @"user_preamble\s*≡\s*(sys\s*\([^)]+\)|\""[^""]+\""),?";
+
+            // Find the first match using regex
+            Match match = Regex.Match(input, pattern);
+
+            if (match.Success)
+            {
+                // Extract the user_preamble component from the match
+                userPreamble = match.Groups[1].Value;
+
+                // Remove the user_preamble from the input string along with the trailing comma
+                string postProcessedInput = Regex.Replace(input, pattern, "");
+
+                return postProcessedInput;
+            }
+
+            // If no user_preamble found, return the original input string
+            userPreamble = string.Empty;
+            return input;
+        }
+
+        public static string RemoveSysFromPreamble(string preamble)
+        {
+            // Check if the preamble contains sys(...)
+            int sysStartIndex = preamble.IndexOf("sys(", StringComparison.Ordinal);
+            if (sysStartIndex >= 0)
+            {
+                // Find the position of the closing bracket of sys(...)
+                int sysEndIndex = preamble.IndexOf(')', sysStartIndex);
+
+                // Find the position of the second last comma
+                int secondLastCommaIndex = FindCommaBeforeSecondLastIndex(preamble, sysEndIndex);
+
+                // Remove the content between the second last comma and sys(...), including the comma
+                preamble = preamble.Substring(0, secondLastCommaIndex + 2);
+            }
+
+            // Remove the entire sys(...) from the preamble
+            preamble = preamble.Replace("sys(", "").TrimEnd(')').TrimEnd(',');
+
+            // Add a quotation mark at the end if it's not already there
+            if (!preamble.EndsWith("\""))
+            {
+                preamble += "\"";
+            }
+
+            return preamble;
+        }
+
+        // error text as image to show to the user
+        static void GenerateErrorMsgAsImage(string text, string filePath)
+        {
+            // Create a new Bitmap with the desired width and height based on the text size
+            using (Bitmap bitmap = CreateBitmapFromText(text))
+            {
+                using (Graphics graphics = Graphics.FromImage(bitmap))
+                {
+                    // Set the background color and clear the bitmap
+                    graphics.Clear(Color.White);
+
+                    // Set the font and brush for the text
+                    Font font = new Font("Arial", 8, FontStyle.Regular);
+                    Brush brush = new SolidBrush(Color.Black);
+
+                    // Draw the text on the bitmap
+                    graphics.DrawString(text, font, brush, new PointF(10, 10));
+
+                    // Save the bitmap as an image file
+                    bitmap.Save(filePath, ImageFormat.Png);
+                }
+            }
+        }
+
+        private static Bitmap CreateBitmapFromText(string text)
+        {
+            using (Font font = new Font("Arial", 8, FontStyle.Regular))
+            {
+                using (Bitmap tempBitmap = new Bitmap(1, 1))
+                {
+                    using (Graphics tempGraphics = Graphics.FromImage(tempBitmap))
+                    {
+                        // Measure the size of the text
+                        SizeF textSize = tempGraphics.MeasureString(text, font);
+
+                        // Adjust the bitmap size based on the text size
+                        int width = (int)textSize.Width + 20; // Add extra padding
+                        int height = (int)textSize.Height + 20; // Add extra padding
+
+                        // Create the bitmap with the adjusted size
+                        return new Bitmap(width, height);
+                    }
+                }
+            }
+        }
+
+        static string CreateBackupFilePath(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                // File does not exist, return the original path
+                return filePath;
+            }
+
+            // File exists, add "_bck" to the filename before the extension
+            string directory = Path.GetDirectoryName(filePath);
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+            string extension = Path.GetExtension(filePath);
+
+            string backupFileName = $"{filenameWithoutExtension}_bck{extension}";
+            string backupFilePath = Path.Combine(directory, backupFileName);
+
+            if (!File.Exists(backupFilePath))
+            {
+                // File exists, rename it to the backup file name
+                File.Move(filePath, backupFilePath);
+            }
+            else
+            {
+                // previous backup file exists. Replace them
+                // File exists, rename it to the backup file name
+                File.Replace(filePath, backupFilePath, null);
+            }
+
+            return backupFilePath;
         }
 
     }

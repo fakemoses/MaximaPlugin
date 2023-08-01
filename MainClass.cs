@@ -322,22 +322,7 @@ namespace MaximaPlugin
             {
                 args.CurrentRegion = new PlotImage.MaximaPluginRegion(sessionProfile, PlotImage.PlotStore.PlotType.plot3D);
             }  ));
-            /*
-            MenuButton menubutton2 = new MenuButton("Image Edit");
-                        menubutton2.AppendChild(new MenuButton("New editable", delegate(MenuButtonArgs args)
-            {
-                    args.CurrentRegion = new PlotImage.MaximaPluginRegion(imageTyp.editing);
-            }
-                ));
-            menubutton2.AppendChild(new MenuButton("From file", delegate(MenuButtonArgs args)
-            {
-                args.CurrentRegion = new PlotImage.MaximaPluginRegion(imageTyp.fromFile);
-            }
-                ));
 
-             */
-            //SharedFunctions.pathToSMath = GlobalProfile.SettingsDirectory;
-            //SharedFunctions.pathToSMath = GlobalProfile.ApplicationPath;
             return new MenuButton[] { menubutton };
         }
         string IPluginCustomRegion.TagName

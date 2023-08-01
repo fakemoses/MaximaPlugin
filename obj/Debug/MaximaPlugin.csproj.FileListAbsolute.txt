@@ -104,3 +104,29 @@ C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.cspro
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.dll
 C:\Users\moses\Desktop\Repo All Github\MaximaPlugin\obj\Debug\MaximaPlugin.pdb
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\MaximaPlugin.dll.config
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\MaximaPlugin.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\MaximaPlugin.pdb
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\MaximaPlugin.dll.CodeAnalysisLog.xml
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\MaximaPlugin.dll.lastcodeanalysissucceeded
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\SharpVectors.Core.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\SharpVectors.Css.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\SharpVectors.Dom.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\SharpVectors.Model.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\SharpVectors.Rendering.Gdi.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.AssemblyReference.cache
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.DebugForm.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.InstallerForm.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LoadingForm.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.LogForm.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.PlotImage.PlotSettings.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.MForms.SettingsForm.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.Resource1.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.Properties.Resources.resources
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.GenerateResource.cache
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CoreCompileInputs.cache
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.csproj.CopyComplete
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.dll
+C:\Users\kraska\Documents\GitHub\MaximaPlugin\obj\Debug\MaximaPlugin.pdb

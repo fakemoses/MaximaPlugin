@@ -657,6 +657,7 @@ namespace MaximaPlugin.MFunctions
             // nounify polar to avoid conflicts with variable names in Maxima
             args[0] = Computation.Preprocessing(args[0], ref context);
             string t = SharedFunctions.Proprocessing(args[0]);
+
             for (int i = 0; i < args[0].Length; i++)
             {
                 if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
@@ -665,6 +666,24 @@ namespace MaximaPlugin.MFunctions
                 }
 
             }
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i].Text == "spherical" && args[0][i].Type == TermType.Function)
+                {
+                    args[0][i].Text = ControlObjects.Replacement.Noun + "spherical";
+                }
+
+            }
+
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i].Text == "cylindrical" && args[0][i].Type == TermType.Function)
+                {
+                    args[0][i].Text = ControlObjects.Replacement.Noun + "cylindrical";
+                }
+
+            }
+
             MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
             bool CopyTempFile = false; // Do we have to copy the temp file to some destination?
 

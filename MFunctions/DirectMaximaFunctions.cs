@@ -794,14 +794,14 @@ namespace MaximaPlugin.MFunctions
 
 
             // set term to svg if requested by file name
-            if (Target.EndsWith("svg"))
+            if (Target.EndsWith("svg") && Target.Length > 3)
             {
                 term = "svg";
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
                 ipre = "set term svg enhanced size ";
             }
             // set term to pdf if requested by file name
-            else if (Target.EndsWith("png"))
+            else if (Target.EndsWith("png") && Target.Length > 3)
             {
                 term = "png";
                 ipre = "set term pngcairo font 'arial,8' enhanced size ";

@@ -12,7 +12,7 @@ namespace MaximaPlugin.PlotImage
         public List<string> commandList;
         public List<string> prambleList;
 
-        public const double logMinDefault= 0.001;
+        public const double logMinDefault = 0.001;
         public const double logMaxDfault = 10;
 
         public PlotStore()
@@ -36,6 +36,10 @@ namespace MaximaPlugin.PlotImage
             //3D
             pm3d = State.Custom;
             pm3dpalette = "[blue,red,green]";
+
+            //BACKGROUND COLOR
+            bgColor = "#fefefe";
+
             //CONTOUR
             contour = State.Custom;
             contourLevels = 5;
@@ -47,17 +51,31 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             #region PICTURE
-            width = 250;
-            height = 250;
+            //size in inch for some reasons but this is it
+            width = 300;
+            height = 300;
             pictureSizeState = State.Interactive;
             termType = TermType.png;
-            filename = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(),null);
+            filename = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), null);
             #endregion
 
             #region AXIS NAMES
             xName = "x";
             yName = "y";
             zName = "z";
+            #endregion
+
+            #region AXIS TYPES
+            xAxisType = "solid";
+            yAxisType = "solid";
+            #endregion
+
+            #region AXIS CONFIG
+            xAxisColor = "black";
+            yAxisColor = "black";
+
+            xaxisWidth = 1;
+            yaxisWidth = 1;
             #endregion
 
             #region AXIS NAMES STATE
@@ -73,13 +91,13 @@ namespace MaximaPlugin.PlotImage
             yMaxRange = 5;
             zMinRange = -5;
             zMaxRange = 5;
-            
+
             #endregion
 
             #region AXIS RANGE STATE
-            xRangeS = State.Interactive;
-            yRangeS = State.Interactive;
-            zRangeS = State.Interactive;
+            xRangeS = State.Disable;
+            yRangeS = State.Disable;
+            zRangeS = State.Disable;
             #endregion
 
             #region AXIS GRID STATE
@@ -143,32 +161,44 @@ namespace MaximaPlugin.PlotImage
         {
             commandList.Clear();
             prambleList.Clear();
-
+            float dpi = GlobalProfile.ContentDpi;
             #region PICTURE AND SETTINGS
 
             if (textSizeState == State.Disable)
                 textSize = 8;
 
+            //string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",",".");
+            //string convertedHeightforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",", ".");
+
+            string convertedWidth = width.ToString();
+            string convertedHeight = height.ToString();
+
             if (termType == TermType.svg)
             {
                 commandList.Add("terminal=svg");
-                prambleList.Add("\"set term svg fsize " + textSize.ToString() + " fname '" + textFont + "' noenhanced dynamic size " + width + ", " + height + Symbols.StringChar);
-                prambleList.Add("\"set object 1 rectangle from screen -0.1,-0.1 to screen 1.1 ,1.1 fillcolor rgb'#ffffff' behind\"");
+                prambleList.Add("\"set term svg noenhanced size " + convertedWidth + ", " + convertedHeight + Symbols.StringChar);
+
             }
-            else
+            else //if (termType == TermType.png)
             {
                 commandList.Add("terminal=pngcairo");
-                prambleList.Add("\"set term pngcairo font '," + textSize.ToString() + "' enhanced size " + width + ", " + height + Symbols.StringChar);
-                prambleList.Add("\"set object 1 rectangle from screen -0.1,-0.1 to screen 1.1 ,1.1 fillcolor rgb'#ffffff' behind\"");
+                prambleList.Add("\"set term pngcairo enhanced size " + convertedWidth + ", " + convertedHeight + Symbols.StringChar);
+
             }
+            //else
+            //{
+            //    commandList.Add("terminal=pdfcairo");
+            //    prambleList.Add("\"set term pdfcairo enhanced size " + convertedWidthforPDF + ", " + convertedHeightforPDF + Symbols.StringChar);
+            //}
+
             commandList.Add("file_name=\"" + filename + "\"");
-            commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
+            //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
             commandList.Add("font=\"" + textFont + "\"");
             commandList.Add("font_size=" + textSize);
 
             prambleList.Add("\"set encoding utf8\"");
-            if(titleState==State.Custom)
-                commandList.Add("title=\""+title+"\"");
+            if (titleState == State.Custom)
+                commandList.Add("title=\"" + title + "\"");
             if (titleState == State.Default)
                 commandList.Add("title=\"" + titleDefault + "\"");
             #endregion
@@ -180,11 +210,35 @@ namespace MaximaPlugin.PlotImage
                 commandList.Add("contour_levels=" + Convert.ToString(contourLevels));
                 commandList.Add("contour=" + contourType);
             }
+
+            //BACKGROUND STYLE
+            commandList.Add("background_color=\"" + bgColor + "\"");
+
+            //AXIS SYTLES for 2d
+            if (plotType == PlotType.plot2D)
+            {
+                commandList.Add("xaxis_type=" + xAxisType);
+                commandList.Add("xaxis_color=" + xAxisColor);
+                commandList.Add("xaxis_width=" + xaxisWidth);
+
+                commandList.Add("yaxis_type=" + yAxisType);
+                commandList.Add("yaxis_color=" + yAxisColor);
+                commandList.Add("yaxis_width=" + yaxisWidth);
+
+                prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0\"");
+                prambleList.Add("\"set grid ls 100\"");
+            }
+            else if (plotType == PlotType.plot3D)
+            {
+                commandList.Add("enhanced3d=true");
+                prambleList.Add("\"set pm3d lighting depthorder base\"");
+            }
+
             //PM3D
             if (pm3d == State.Enable)
             {
                 commandList.Add("enhanced3d = true");
-                commandList.Add("palette =" + pm3dpalette.Replace(',',GlobalProfile.ArgumentsSeparatorStandard));
+                commandList.Add("palette =" + pm3dpalette.Replace(',', GlobalProfile.ArgumentsSeparatorStandard));
             }
 
             //SURFACE GRID
@@ -194,7 +248,7 @@ namespace MaximaPlugin.PlotImage
                 commandList.Add("yv_grid=" + gridYv);
             }
             //BORDER
-            if(border==State.Enable)
+            if (border == State.Enable)
                 prambleList.Add("\"set border " + borderVal.ToString() + "\"");
             if (view == State.MapView && plotType == PlotType.plot3D)
                 prambleList.Add("\"set view map\"");
@@ -204,7 +258,7 @@ namespace MaximaPlugin.PlotImage
             //X
             if (xNameS == State.Enable)
                 commandList.Add("xlabel=\"" + xName + "\"");
-            else if(xNameS == State.Default)
+            else if (xNameS == State.Default)
                 commandList.Add("xlabel=\"" + SharedFunctions.defaultPlotValues.xName + "\"");
             //Y
             if (yNameS == State.Enable)
@@ -249,12 +303,12 @@ namespace MaximaPlugin.PlotImage
                 prambleList.Add("\"set logscale x " + Convert.ToString(xLogBase) + "\"");
             if (yLogarithmic == State.Enable || yLogarithmic == State.Default)
                 prambleList.Add("\"set logscale y " + Convert.ToString(yLogBase) + "\"");
-            if ((zLogarithmic == State.Enable || zLogarithmic == State.Default) && plotType==PlotType.plot3D)
+            if ((zLogarithmic == State.Enable || zLogarithmic == State.Default) && plotType == PlotType.plot3D)
                 prambleList.Add("\"set logscale z " + Convert.ToString(zLogBase) + "\"");
             #endregion
 
-            if ((view == State.Interactive || view == State.Default || view == State.Custom) && plotType == PlotType.plot3D)
-                prambleList.Add("\"set view " + zenith.ToString(nfi) + ", " + azimuth.ToString(nfi) + ", " + scalZenith.ToString(nfi) + ", " + scalAzimuth.ToString(nfi) + Symbols.StringChar);
+            //if ((view == State.Interactive || view == State.Default || view == State.Custom) && plotType == PlotType.plot3D)
+            //    prambleList.Add("\"set view " + zenith.ToString(nfi) + ", " + azimuth.ToString(nfi) + ", " + scalZenith.ToString(nfi) + ", " + scalAzimuth.ToString(nfi) + Symbols.StringChar);
         }
         public object Clone()
         {
@@ -263,9 +317,10 @@ namespace MaximaPlugin.PlotImage
 
         # region ENUMS
         public enum TermType
-        { 
-            png, 
-            svg 
+        {
+            svg,
+            png,
+            //pdf
         };
 
         public enum PlotType
@@ -366,6 +421,15 @@ namespace MaximaPlugin.PlotImage
             set { _contourLevels = value; }
             get { return _contourLevels; }
         }
+
+        //BACKGROUND COLOR
+        private string _bgColor;
+        public string bgColor
+        {
+            set { _bgColor = value; }
+            get { return _bgColor; }
+        }
+
         //PM3D
         private State _pm3d;
         public State pm3d
@@ -403,8 +467,8 @@ namespace MaximaPlugin.PlotImage
         #region PICTURE
         private int _widht;
         public int width
-        { 
-            set { _widht = value; } 
+        {
+            set { _widht = value; }
             get { return _widht; }
         }
         private int _height;
@@ -463,6 +527,55 @@ namespace MaximaPlugin.PlotImage
             set { _zName = value; }
             get { return _zName; }
         }
+        #endregion
+
+        #region AXIS TYPES
+        private string _xaxisType;
+        public string xAxisType
+        {
+            set { _xaxisType = value; }
+            get { return _xaxisType; }
+        }
+
+        private string _yaxisType;
+        public string yAxisType
+        {
+            set { _yaxisType = value; }
+            get { return _yaxisType; }
+        }
+
+        #endregion
+
+        #region AXIS CONFIG
+
+        private string _xaxisColor;
+        public string xAxisColor
+        {
+            set { _xaxisColor = value; }
+            get { return _xaxisColor; }
+        }
+
+        private string _yaxisColor;
+        public string yAxisColor
+        {
+            set { _yaxisColor = value; }
+            get { return _yaxisColor; }
+        }
+
+        private int _xaxisWidth;
+        public int xaxisWidth
+        {
+            set { _xaxisWidth = value; }
+            get { return _xaxisWidth; }
+        }
+
+        private int _yaxisWidth;
+        public int yaxisWidth
+        {
+            set { _yaxisWidth = value; }
+            get { return _yaxisWidth; }
+        }
+
         #endregion
 
         #region AXIS NAMES STATE

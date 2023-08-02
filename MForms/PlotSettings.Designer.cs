@@ -912,8 +912,8 @@
             // 
             this.comboTerm.FormattingEnabled = true;
             this.comboTerm.Items.AddRange(new object[] {
-            "png",
-            "svg"});
+            "svg",
+            "png"});
             this.comboTerm.Location = new System.Drawing.Point(151, 20);
             this.comboTerm.Name = "comboTerm";
             this.comboTerm.Size = new System.Drawing.Size(93, 21);

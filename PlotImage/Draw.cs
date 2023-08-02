@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 using SMath.Manager;
-
+using System;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -20,23 +20,58 @@ namespace MaximaPlugin.PlotImage
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
             Regex rxUnit = new Regex(@"(['][\w\d]+)", RegexOptions.None);
             string textHolder = region.lastPlotRequest;
+
             // tag "polar" as noun
             textHolder = textHolder.Replace("polar(", ControlObjects.Replacement.Noun + "polar(");
+            textHolder = textHolder.Replace("spherical(", ControlObjects.Replacement.Noun + "spherical(");
+            textHolder = textHolder.Replace("cylindrical(", ControlObjects.Replacement.Noun + "cylindrical(");
+
             // wrap in system if required
-            if (! textHolder.StartsWith("sys("))
+            if (!textHolder.StartsWith("sys("))
                 textHolder = "sys(" + textHolder + ",1,1)";
+
+            // extract user_preamble
+            string preamble;
+            textHolder = MFunctions.DirectMaximaFunctions.ExtractUserPreamble(textHolder, out preamble);
+            if (preamble != "")
+                preamble = MFunctions.DirectMaximaFunctions.RemoveSysFromPreamble(preamble);
+
             // neutralize units
             textHolder = rxUnit.Replace(textHolder, "1");
+
             //REFRESH SETTINGSLIST
             region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/"); ;
             region.plotStore.MakeLists();
+
             //GET STRINGS OUT
             MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
             List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { textHolder });
+
             //ADD SETTINGS TO PLOT
             MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
             esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
             //esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, textHolder);
+            
+            //add preamble into list if exists
+            if(preamble != "")
+            {
+                int numSeparatorOccurrences = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.None).Length - 1;
+                if (numSeparatorOccurrences > 0)
+                {
+                    // Split the preamble using the separator (',') into multiple parts
+                    string[] preambleParts = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < preambleParts.Length; i++)
+                    {
+                        region.plotStore.prambleList.Add(preambleParts[i]);
+                    }
+                }
+                else
+                {
+                    region.plotStore.prambleList.Add(Symbols.StringChar + preamble + Symbols.StringChar);
+                }
+            }
+            
             ListHandle(esm, region.plotStore.commandList, region.plotStore.prambleList);
             terminate(esm, region.plotStore.commandList, region.plotStore.prambleList);
             textHolder = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");

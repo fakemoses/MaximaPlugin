@@ -306,11 +306,11 @@ namespace MaximaPlugin.PlotImage
 
             if (plotStore.termType == MaximaPlugin.PlotImage.PlotStore.TermType.svg)
             {
-                comboTerm.SelectedIndex = 1;
-            }
-            else
-            {
                 comboTerm.SelectedIndex = 0;
+            }
+            else if (plotStore.termType == MaximaPlugin.PlotImage.PlotStore.TermType.png)
+            {
+                comboTerm.SelectedIndex = 1;
             }
             #endregion
 
@@ -762,9 +762,9 @@ namespace MaximaPlugin.PlotImage
                 }
             }
 
-            if (comboTerm.SelectedIndex==1)
+            if (comboTerm.SelectedIndex == 0)
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.svg;
-            else
+            else if (comboTerm.SelectedIndex == 1)
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.png;
             #endregion
 

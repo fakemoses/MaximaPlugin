@@ -665,18 +665,11 @@ namespace MaximaPlugin.MFunctions
                     args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
                 }
 
-            }
-            for (int i = 0; i < args[0].Length; i++)
-            {
                 if (args[0][i].Text == "spherical" && args[0][i].Type == TermType.Function)
                 {
                     args[0][i].Text = ControlObjects.Replacement.Noun + "spherical";
                 }
 
-            }
-
-            for (int i = 0; i < args[0].Length; i++)
-            {
                 if (args[0][i].Text == "cylindrical" && args[0][i].Type == TermType.Function)
                 {
                     args[0][i].Text = ControlObjects.Replacement.Noun + "cylindrical";
@@ -817,7 +810,7 @@ namespace MaximaPlugin.MFunctions
             {
                 term = "svg";
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
-                ipre = "set term svg enhanced size ";
+                ipre = "set term svg noenhanced size ";
             }
             // set term to pdf if requested by file name
             else if (Target.EndsWith("png") && Target.Length > 3)
@@ -1072,11 +1065,14 @@ namespace MaximaPlugin.MFunctions
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        static string ReplaceUnicodeEscapeSequences(string input)
+        public static string ReplaceUnicodeEscapeSequences(string input)
         {
             // Replace specific Unicode escape sequences with their corresponding characters
             input = input.Replace("\\005F", "_");
             input = input.Replace("\\002E", ".");
+            //input = input.Replace("\\0020", " ");
+            //input = input.Replace("\\002C", ",");
+            //input = input.Replace("\\", "");
             return input;
         }
 

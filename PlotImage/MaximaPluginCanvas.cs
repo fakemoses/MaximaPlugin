@@ -8,6 +8,7 @@ using SharpVectors.Renderers.Gdi;
 using SMath.Manager;
 using SMath.Controls;
 using SMath.Drawing;
+using System;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -32,6 +33,12 @@ namespace MaximaPlugin.PlotImage
         public GdiGraphicsRenderer svgRenderer;
         public bool mouseD = false;
         public bool borderOn = true;
+
+        public int oldHeight = 0;
+        public int oldWidth = 0;
+
+        private double dpiSCR = GlobalProfile.ContentDpi, dpiPrint = 300;
+
         public MaximaPluginCanvas(SessionProfile sessionProfile)
             : base(sessionProfile)
         {
@@ -75,7 +82,16 @@ namespace MaximaPlugin.PlotImage
             svgWindow.CreateEmptySvgDocument();
             //PATHS
             Directory.CreateDirectory(ControlObjects.Translator.GetMaxima().gnuPlotImageFolder);
-            imageFilePath = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), ".png");
+
+            //problem lies here - stuffs are hardcoded
+            string fileExt = "";
+
+            if (plotStore.termType == PlotStore.TermType.pdf)
+                fileExt = ".pdf";
+            else
+                fileExt = ".png";
+
+            imageFilePath = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), fileExt);
             imageFilePath = Path.Combine(ControlObjects.Translator.GetMaxima().gnuPlotImageFolder, imageFilePath);
             plotStore.filename = System.IO.Path.ChangeExtension(imageFilePath, null).Replace("\\", "/");
             //IMAGE
@@ -87,22 +103,26 @@ namespace MaximaPlugin.PlotImage
         }
         public void ScalImg(System.Drawing.Image img)
         {
-            double newWidth, sizeFactor, newHeigth;
-            newWidth = base.Size.Width;
-            sizeFactor = newWidth / img.Width;
-            newHeigth = sizeFactor * img.Height;
-            if (newHeigth > base.Size.Height)
-            {
-                newHeigth = base.Size.Height;
-                sizeFactor = newHeigth / img.Height;
-                newWidth = sizeFactor * img.Width;
-            }
-            imageEs = new Bitmap((int)newWidth, (int)newHeigth);
+
+            double widthScale = 0, heightScale = 0;
+
+            if (img.Width != 0)
+                widthScale = (double)base.Size.Width / (double)img.Width;
+            if (img.Height != 0)
+                heightScale = (double)base.Size.Height / (double)img.Height;
+
+            double scale = Math.Min(widthScale, heightScale);
+
+            int newWidth = (int)(img.Width * scale);
+            int newHeight = (int)(img.Height * scale);
+
+            imageEs = new Bitmap(newWidth, newHeight);
             using (var g = System.Drawing.Graphics.FromImage(imageEs))
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.DrawImage(img, new Rectangle(0, 0, (int)newWidth, (int)newHeigth));
+                g.DrawImage(img, new System.Drawing.Rectangle(0, 0, newWidth, newHeight));
             }
+
         }
         public bool Plot()
         {
@@ -122,6 +142,16 @@ namespace MaximaPlugin.PlotImage
         }
         public bool LoadImage()
         {
+            System.Drawing.Image loadedImage = new Bitmap(Size.Width, Size.Height);
+
+            string fileExt = "";
+            if (plotStore.termType == PlotStore.TermType.pdf)
+                fileExt = ".pdf";
+            else
+                fileExt = ".png";
+
+            imageFilePath = Path.ChangeExtension(imageFilePath, fileExt);
+
             if (!File.Exists(imageFilePath)) return false;
             try
             {
@@ -133,10 +163,67 @@ namespace MaximaPlugin.PlotImage
                     imageEo = svgRenderer.RasterImage;
                     svgRenderer.ClearMap();
                     return true;
+
+                }
+                else if (plotStore.termType == PlotStore.TermType.pdf)
+                {
+                    // pdf reader here
+                    // implementation based on https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
+                    try
+                    {
+                        //using (PdfReader reader = new PdfReader(imageFilePath))
+                        //{
+                        //    oldWidth = Convert.ToInt32(reader.GetPageSize(1).Width / 72 * dpiSCR);
+                        //    oldHeight = Convert.ToInt32(reader.GetPageSize(1).Height / 72 * dpiSCR);
+                        //}
+
+                        //GhostscriptSettings PDFsettings = new GhostscriptSettings();
+                        //PDFsettings.Page.AllPages = false;
+                        //PDFsettings.Page.Start = 1;
+                        //PDFsettings.Page.End = 1;
+                        //PDFsettings.Size.Manual = new Size(oldWidth, oldHeight);
+                        //PDFsettings.Device = GhostscriptSharp.Settings.GhostscriptDevices.jpeg;
+                        //int dpiXPDF = Convert.ToInt32(oldWidth / (Size.Width / dpiSCR));
+                        //int dpiYPDF = Convert.ToInt32(oldHeight / (Size.Height / dpiSCR));
+                        //double dpiPDFxFactor = Math.Max(1, dpiPrint / Math.Max(dpiXPDF, dpiYPDF));
+                        //PDFsettings.Resolution = new Size(Convert.ToInt32(dpiSCR * dpiPDFxFactor), Convert.ToInt32(dpiSCR * dpiPDFxFactor));
+                        //string ConvertedPDFtoPNG = System.IO.Path.ChangeExtension(imageFilePath, ".jpeg");
+                        //GhostscriptWrapper.GenerateOutput(imageFilePath, ConvertedPDFtoPNG, PDFsettings);
+
+                        string ConvertedPDFtoPNG = System.IO.Path.ChangeExtension(imageFilePath, ".png");
+
+                        //using (var document = new Document(imageFilePath))
+                        //{
+                        //    var renderer = new Aspose.Pdf.Devices.PngDevice();
+                        //    renderer.Process(document.Pages[1], ConvertedPDFtoPNG);
+                        //} 
+
+                        var dd = System.IO.File.ReadAllBytes(imageFilePath);
+                        byte[] pngByte = Freeware.Pdf2Png.Convert(dd, 1);
+                        System.IO.File.WriteAllBytes(ConvertedPDFtoPNG, pngByte);
+
+
+                        using (Stream PDFbmpstrm = System.IO.File.Open(ConvertedPDFtoPNG, System.IO.FileMode.Open, FileAccess.Read))
+                        {
+                            
+                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(PDFbmpstrm);
+                            var PDFBitmap = new Bitmap(PDFimg);
+                            loadedImage = PDFimg;
+                        }
+
+                        imageEo = loadedImage;
+
+                    }
+                    catch
+                    {
+
+                    }
+
+                    return true;
                 }
                 else
                 {
-                    using (FileStream stream = new FileStream(Path.ChangeExtension(imageFilePath, "png"), FileMode.Open, FileAccess.Read))
+                    using (FileStream stream = new FileStream(Path.ChangeExtension(imageFilePath, fileExt), FileMode.Open, FileAccess.Read))
                     {
                         imageEo = System.Drawing.Image.FromStream(stream);
                     }
@@ -199,7 +286,7 @@ namespace MaximaPlugin.PlotImage
             else
             {
                 this.Border = true;
-                e.Graphics.Clear(Color.White);
+                e.Graphics.Clear(System.Drawing.Color.White);
                 e.Graphics.DrawString("Maxima draw error:\n\r" + errorText, new FontInfo("Tahoma", 12, FontfaceStyle.Regular), ColorBrushes.Black, e.ClipRectangle.X, e.ClipRectangle.Y, e.ClipRectangle.Width, StringOptions.GenericDefault);
             }
         }

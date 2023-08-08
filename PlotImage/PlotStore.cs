@@ -51,7 +51,6 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             #region PICTURE
-            //size in inch for some reasons but this is it
             width = 300;
             height = 300;
             pictureSizeState = State.Interactive;
@@ -161,14 +160,14 @@ namespace MaximaPlugin.PlotImage
         {
             commandList.Clear();
             prambleList.Clear();
-            float dpi = GlobalProfile.ContentDpi;
+            //float dpi = GlobalProfile.ContentDpi;
             #region PICTURE AND SETTINGS
 
             if (textSizeState == State.Disable)
                 textSize = 8;
 
-            //string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",",".");
-            //string convertedHeightforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",", ".");
+            string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",",".");
+            string convertedHeightforPDF = (height / GlobalProfile.ContentDpi).ToString("0.#").Replace(",", ".");
 
             string convertedWidth = width.ToString();
             string convertedHeight = height.ToString();
@@ -179,22 +178,22 @@ namespace MaximaPlugin.PlotImage
                 prambleList.Add("\"set term svg noenhanced size " + convertedWidth + ", " + convertedHeight + Symbols.StringChar);
 
             }
-            else //if (termType == TermType.png)
+            else if (termType == TermType.png)
             {
                 commandList.Add("terminal=pngcairo");
                 prambleList.Add("\"set term pngcairo enhanced size " + convertedWidth + ", " + convertedHeight + Symbols.StringChar);
 
             }
-            //else
-            //{
-            //    commandList.Add("terminal=pdfcairo");
-            //    prambleList.Add("\"set term pdfcairo enhanced size " + convertedWidthforPDF + ", " + convertedHeightforPDF + Symbols.StringChar);
-            //}
+            else
+            {
+                commandList.Add("terminal=pdfcairo");
+                prambleList.Add("\"set term pdfcairo enhanced size " + convertedWidthforPDF + ", " + convertedHeightforPDF + Symbols.StringChar);
+            }
 
             commandList.Add("file_name=\"" + filename + "\"");
             //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
-            commandList.Add("font=\"" + textFont + "\"");
-            commandList.Add("font_size=" + textSize);
+            //commandList.Add("font=\"" + textFont + "\"");
+            //commandList.Add("font_size=" + textSize);
 
             prambleList.Add("\"set encoding utf8\"");
             if (titleState == State.Custom)
@@ -320,7 +319,7 @@ namespace MaximaPlugin.PlotImage
         {
             svg,
             png,
-            //pdf
+            pdf
         };
 
         public enum PlotType

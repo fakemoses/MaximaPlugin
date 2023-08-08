@@ -311,6 +311,9 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.termType == MaximaPlugin.PlotImage.PlotStore.TermType.png)
             {
                 comboTerm.SelectedIndex = 1;
+            } else
+            {
+                comboTerm.SelectedIndex = 2;
             }
             #endregion
 
@@ -766,9 +769,11 @@ namespace MaximaPlugin.PlotImage
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.svg;
             else if (comboTerm.SelectedIndex == 1)
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.png;
-            #endregion
+            else
+                plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.pdf;
+                #endregion
 
-            #region AXIS NAMES
+                #region AXIS NAMES
             plotStore.xNameS = PlotImage.PlotStore.State.Enable;
             plotStore.xName = textXtitle.Text;
 

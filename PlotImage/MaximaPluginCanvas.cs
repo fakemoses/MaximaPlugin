@@ -9,6 +9,7 @@ using SMath.Manager;
 using SMath.Controls;
 using SMath.Drawing;
 using System;
+using System.Threading.Tasks;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -33,6 +34,9 @@ namespace MaximaPlugin.PlotImage
         public GdiGraphicsRenderer svgRenderer;
         public bool mouseD = false;
         public bool borderOn = true;
+        public bool redrawCanvas = false;
+        string lastGivenEquation = "";
+        bool firstTimeDraw = true;
 
         public int oldHeight = 0;
         public int oldWidth = 0;
@@ -98,7 +102,7 @@ namespace MaximaPlugin.PlotImage
             imageEo = new Bitmap(plotStore.width, plotStore.height);
             imageEo.Save(imageFilePath);
             lastInput = "";
-            SetLastRequest();
+            //SetLastRequest();
             plotApproval = true;
         }
         public void ScalImg(System.Drawing.Image img)
@@ -124,7 +128,7 @@ namespace MaximaPlugin.PlotImage
             }
 
         }
-        public bool Plot()
+        public void Plot()
         {
             string returnV = MaximaPlugin.PlotImage.Draw.RegionDraw(this);
             if (returnV == null)
@@ -138,7 +142,8 @@ namespace MaximaPlugin.PlotImage
             }
             System.Threading.Thread.Sleep(10);
             plotApproval = false;
-            return LoadImage();
+            redrawCanvas = false;
+            LoadImage();
         }
         public bool LoadImage()
         {
@@ -168,36 +173,11 @@ namespace MaximaPlugin.PlotImage
                 else if (plotStore.termType == PlotStore.TermType.pdf)
                 {
                     // pdf reader here
-                    // implementation based on https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
+                    // idea of implementation based on https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
                     try
                     {
-                        //using (PdfReader reader = new PdfReader(imageFilePath))
-                        //{
-                        //    oldWidth = Convert.ToInt32(reader.GetPageSize(1).Width / 72 * dpiSCR);
-                        //    oldHeight = Convert.ToInt32(reader.GetPageSize(1).Height / 72 * dpiSCR);
-                        //}
-
-                        //GhostscriptSettings PDFsettings = new GhostscriptSettings();
-                        //PDFsettings.Page.AllPages = false;
-                        //PDFsettings.Page.Start = 1;
-                        //PDFsettings.Page.End = 1;
-                        //PDFsettings.Size.Manual = new Size(oldWidth, oldHeight);
-                        //PDFsettings.Device = GhostscriptSharp.Settings.GhostscriptDevices.jpeg;
-                        //int dpiXPDF = Convert.ToInt32(oldWidth / (Size.Width / dpiSCR));
-                        //int dpiYPDF = Convert.ToInt32(oldHeight / (Size.Height / dpiSCR));
-                        //double dpiPDFxFactor = Math.Max(1, dpiPrint / Math.Max(dpiXPDF, dpiYPDF));
-                        //PDFsettings.Resolution = new Size(Convert.ToInt32(dpiSCR * dpiPDFxFactor), Convert.ToInt32(dpiSCR * dpiPDFxFactor));
-                        //string ConvertedPDFtoPNG = System.IO.Path.ChangeExtension(imageFilePath, ".jpeg");
-                        //GhostscriptWrapper.GenerateOutput(imageFilePath, ConvertedPDFtoPNG, PDFsettings);
 
                         string ConvertedPDFtoPNG = System.IO.Path.ChangeExtension(imageFilePath, ".png");
-
-                        //using (var document = new Document(imageFilePath))
-                        //{
-                        //    var renderer = new Aspose.Pdf.Devices.PngDevice();
-                        //    renderer.Process(document.Pages[1], ConvertedPDFtoPNG);
-                        //} 
-
                         var dd = System.IO.File.ReadAllBytes(imageFilePath);
                         byte[] pngByte = Freeware.Pdf2Png.Convert(dd, 1);
                         System.IO.File.WriteAllBytes(ConvertedPDFtoPNG, pngByte);
@@ -212,6 +192,7 @@ namespace MaximaPlugin.PlotImage
                         }
 
                         imageEo = loadedImage;
+                        File.Delete(ConvertedPDFtoPNG);
 
                     }
                     catch
@@ -244,7 +225,23 @@ namespace MaximaPlugin.PlotImage
             if (this.lastInput != "#" && this.lastInput != "")
             {
                 if (plotStore.titleState != PlotStore.State.Custom) plotStore.titleState = PlotStore.State.Disable;
-                lastPlotRequest = this.lastInput;
+                if (firstTimeDraw == true)
+                {
+                    lastPlotRequest = this.lastInput;
+                    lastGivenEquation = lastPlotRequest;
+                    redrawCanvas = true;
+                    firstTimeDraw = false;
+                } else if (!string.Equals(lastGivenEquation, this.lastInput, StringComparison.OrdinalIgnoreCase))
+                {
+                    lastPlotRequest = this.lastInput;
+                    lastGivenEquation = lastPlotRequest;
+                    redrawCanvas = true;
+                }
+                else
+                {
+                    lastPlotRequest = lastGivenEquation;
+                    redrawCanvas = false;
+                }
             }
             else if (plotStore.plotType == PlotStore.PlotType.plot2D)
             {
@@ -252,6 +249,7 @@ namespace MaximaPlugin.PlotImage
                 plotStore.titleState = PlotStore.State.Default;
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
+                redrawCanvas = true;
             }
             else if (plotStore.plotType == PlotStore.PlotType.plot3D)
             {
@@ -260,6 +258,7 @@ namespace MaximaPlugin.PlotImage
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 //plotStore.yRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";
+                redrawCanvas = true;
             }
         }
         public int GetInstanceNum()
@@ -268,14 +267,18 @@ namespace MaximaPlugin.PlotImage
         }
         public override void OnPaint(PaintEventOptions e)
         {
+            string dummyval = lastPlotRequest;
             if (borderOn) this.Border = true;
             else this.Border = false;
             base.OnPaint(e);
             if (plotApproval)
             {
-                SetLastRequest();
-                Plot();
-                ScalImg(imageEo);
+                //SetLastRequest();
+                if (redrawCanvas)
+                {
+                    Plot();
+                    ScalImg(imageEo);
+                }
             }
             if (imageEs == null) return;
             if (!isError)

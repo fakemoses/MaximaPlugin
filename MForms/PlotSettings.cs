@@ -1079,6 +1079,7 @@ namespace MaximaPlugin.PlotImage
             RefreshStore();
             region.formOpen = false;
             region.GetCanvas().plotApproval = true;
+            region.GetCanvas().redrawCanvas = true;
             region.Invalidate();
         }
         private void Abort_Click(object sender, EventArgs e)

@@ -130,8 +130,8 @@
             this.button_Cancel_all = new System.Windows.Forms.Button();
             this.button_ShowCommandlist = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControls.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox26.SuspendLayout();
@@ -1276,17 +1276,10 @@
             this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Location = new System.Drawing.Point(2, 484);
+            this.panel1.Location = new System.Drawing.Point(2, 577);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(291, 525);
+            this.panel1.Size = new System.Drawing.Size(294, 525);
             this.panel1.TabIndex = 11;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(26, 207);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(238, 23);
-            this.progressBar1.TabIndex = 0;
             // 
             // label2
             // 
@@ -1296,6 +1289,13 @@
             this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Applying changes..";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(26, 207);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(238, 23);
+            this.progressBar1.TabIndex = 0;
             // 
             // PlotSettings
             // 

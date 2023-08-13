@@ -1072,7 +1072,6 @@ namespace MaximaPlugin.PlotImage
 
         private void MoveControlsToTopLeft()
         {
-            panel1.BackColor = Color.FromArgb(30, Color.Gray);
             progressBar1.Style = ProgressBarStyle.Marquee;
 
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
@@ -1091,7 +1090,7 @@ namespace MaximaPlugin.PlotImage
             progressBar1.Style = ProgressBarStyle.Marquee;
 
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
-            panel1.Location = new Point(2, 484);
+            panel1.Location = new Point(2, 577);
             progressBar1.Location = new Point(26, 207);
             label2.Location = new Point(91, 233);
 

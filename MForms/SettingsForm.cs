@@ -214,20 +214,20 @@ namespace MaximaPlugin.MForms
 
         private async void SetMaximaVersionInformation()
         {
-            string workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41";
+            string workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41\maxima.xml";
             string r = CheckMaximaAvailable();
+            string xml = FindPathToMaximaInXML(workingFolder);
 
-            //current version
-            if (r != "")
+            if (xml != "")
+            {
+                label6.Text = ExtractMaximaVersion(xml);
+
+            } else if (r != "")
             {
                 label6.Text = ExtractMaximaVersion(r);
             } else
             {
-                string xml = FindPathToMaximaInXML(workingFolder);
-                if (xml != "")
-                    label6.Text = xml;
-                else
-                    label6.Text = "None";
+                label6.Text = "None";
             }
 
             // need to deal with error -> try block for the await line

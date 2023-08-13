@@ -10,6 +10,7 @@ using SMath.Controls;
 using SMath.Drawing;
 using System;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -38,23 +39,35 @@ namespace MaximaPlugin.PlotImage
         string lastGivenEquation = "";
         bool firstTimeDraw = true;
 
+        
+        public int newWidth = 0;
+        public int newHeight = 0;
         public int oldHeight = 0;
         public int oldWidth = 0;
 
-        private double dpiSCR = GlobalProfile.ContentDpi, dpiPrint = 300;
+        // image container method
+        internal ThreadSafeImageContainer ImageContainer { get; set; }
 
         public MaximaPluginCanvas(SessionProfile sessionProfile)
             : base(sessionProfile)
         {
             Init();
+
+            // image container method
+            this.ImageContainer = new ThreadSafeImageContainer();
+
             base.Size = new Size(plotStore.width, plotStore.height);
-            plotApproval = true;
+            //SetLastRequest();
+            //Plot();
+            //ScalImg(imageEo);
             this.Invalidate();
         }
         public MaximaPluginCanvas(MaximaPluginCanvas region)
             : base(region)
         {
             this.Init();
+            // image container method
+            this.ImageContainer = new ThreadSafeImageContainer(region.ImageContainer);
             this.imageEo = region.imageEo;
             this.plotStore = region.plotStore;
             this.lastPlotRequest = region.lastPlotRequest;
@@ -87,7 +100,6 @@ namespace MaximaPlugin.PlotImage
             //PATHS
             Directory.CreateDirectory(ControlObjects.Translator.GetMaxima().gnuPlotImageFolder);
 
-            //problem lies here - stuffs are hardcoded
             string fileExt = "";
 
             if (plotStore.termType == PlotStore.TermType.pdf)
@@ -102,8 +114,7 @@ namespace MaximaPlugin.PlotImage
             imageEo = new Bitmap(plotStore.width, plotStore.height);
             imageEo.Save(imageFilePath);
             lastInput = "";
-            //SetLastRequest();
-            plotApproval = true;
+            //plotApproval = true;
         }
         public void ScalImg(System.Drawing.Image img)
         {
@@ -117,8 +128,8 @@ namespace MaximaPlugin.PlotImage
 
             double scale = Math.Min(widthScale, heightScale);
 
-            int newWidth = (int)(img.Width * scale);
-            int newHeight = (int)(img.Height * scale);
+            newWidth = (int)(img.Width * scale);
+            newHeight = (int)(img.Height * scale);
 
             imageEs = new Bitmap(newWidth, newHeight);
             using (var g = System.Drawing.Graphics.FromImage(imageEs))
@@ -140,8 +151,8 @@ namespace MaximaPlugin.PlotImage
                 isError = true;
                 errorText = returnV;
             }
-            System.Threading.Thread.Sleep(10);
-            plotApproval = false;
+
+            //plotApproval = false;
             redrawCanvas = false;
             LoadImage();
         }
@@ -162,11 +173,13 @@ namespace MaximaPlugin.PlotImage
             {
                 if (plotStore.termType == PlotStore.TermType.svg)
                 {
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     svgWindow.Source = Path.ChangeExtension(imageFilePath, "svg");
                     svgWindow.Resize(Size.Width, Size.Height);
                     svgRenderer.Render(svgWindow.Document as SvgDocument);
                     imageEo = svgRenderer.RasterImage;
                     svgRenderer.ClearMap();
+                    watch.Stop();
                     return true;
 
                 }
@@ -176,23 +189,19 @@ namespace MaximaPlugin.PlotImage
                     // idea of implementation based on https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
                     try
                     {
+                        //read and convert directly from memory
 
-                        string ConvertedPDFtoPNG = System.IO.Path.ChangeExtension(imageFilePath, ".png");
-                        var dd = System.IO.File.ReadAllBytes(imageFilePath);
-                        byte[] pngByte = Freeware.Pdf2Png.Convert(dd, 1);
-                        System.IO.File.WriteAllBytes(ConvertedPDFtoPNG, pngByte);
+                        byte[] pdfBytes = System.IO.File.ReadAllBytes(imageFilePath);
+                        byte[] pngByte = Freeware.Pdf2Png.Convert(pdfBytes, 1);
 
-
-                        using (Stream PDFbmpstrm = System.IO.File.Open(ConvertedPDFtoPNG, System.IO.FileMode.Open, FileAccess.Read))
+                        using (MemoryStream pngStream = new MemoryStream(pngByte))
                         {
-                            
-                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(PDFbmpstrm);
+                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
                             var PDFBitmap = new Bitmap(PDFimg);
                             loadedImage = PDFimg;
                         }
 
                         imageEo = loadedImage;
-                        File.Delete(ConvertedPDFtoPNG);
 
                     }
                     catch
@@ -204,10 +213,12 @@ namespace MaximaPlugin.PlotImage
                 }
                 else
                 {
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     using (FileStream stream = new FileStream(Path.ChangeExtension(imageFilePath, fileExt), FileMode.Open, FileAccess.Read))
                     {
                         imageEo = System.Drawing.Image.FromStream(stream);
                     }
+                    watch.Stop();
                     return true;
                 }
             }
@@ -247,7 +258,7 @@ namespace MaximaPlugin.PlotImage
             {
                 tempState = plotStore.titleState;
                 plotStore.titleState = PlotStore.State.Default;
-                //plotStore.xRangeS = PlotStore.State.Disable;
+                plotStore.xRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
                 redrawCanvas = true;
             }
@@ -255,8 +266,8 @@ namespace MaximaPlugin.PlotImage
             {
                 tempState = plotStore.titleState;
                 plotStore.titleState = PlotStore.State.Default;
-                //plotStore.xRangeS = PlotStore.State.Disable;
-                //plotStore.yRangeS = PlotStore.State.Disable;
+                plotStore.xRangeS = PlotStore.State.Disable;
+                plotStore.yRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";
                 redrawCanvas = true;
             }
@@ -267,24 +278,20 @@ namespace MaximaPlugin.PlotImage
         }
         public override void OnPaint(PaintEventOptions e)
         {
-            string dummyval = lastPlotRequest;
+
             if (borderOn) this.Border = true;
             else this.Border = false;
             base.OnPaint(e);
-            if (plotApproval)
-            {
-                //SetLastRequest();
-                if (redrawCanvas)
-                {
-                    Plot();
-                    ScalImg(imageEo);
-                }
-            }
+
             if (imageEs == null) return;
             if (!isError)
             {
-                var bmp = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(imageEs);
-                GraphicsExtensions.DrawImage(e.Graphics, bmp, e.ClipRectangle.Location.X, e.ClipRectangle.Location.Y);
+                IBitmap bmp = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(new Bitmap(imageEs));
+
+                //using imagecontainer method as implemented by https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
+                this.ImageContainer.SetImage(bmp);
+                this.ImageContainer.DrawImage(e.Graphics, new System.Drawing.Rectangle((int)e.ClipRectangle.X, (int)e.ClipRectangle.Y, newWidth, newHeight), true);
+                bmp.Dispose();
             }
             else
             {

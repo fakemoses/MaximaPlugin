@@ -678,7 +678,7 @@ namespace MaximaPlugin.MFunctions
 
 
             // build SMath list - User preamble part
-            if(root.Text == "draw3D")
+            if(root.Text == "Draw3D")
             {
                 ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
                 + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar +  "set pm3d lighting depthorder base" + Symbols.StringChar;

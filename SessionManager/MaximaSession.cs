@@ -172,7 +172,13 @@ namespace MaximaPlugin
 
             if (res != "CannotFind")
             {
-                MessageBox.Show("Found Path to maxima: " + MaximaPath);
+                //running this as a thread prevents it from blocking the main thread and this is important when clicking the region draw 
+                Thread staThread = new Thread(() =>
+                {
+                    MessageBox.Show("Found Path to maxima: " + MaximaPath);
+                });
+                staThread.SetApartmentState(ApartmentState.STA);
+                staThread.Start();
             }
             else
             {

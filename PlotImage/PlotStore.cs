@@ -94,9 +94,9 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             #region AXIS RANGE STATE
-            xRangeS = State.Disable;
-            yRangeS = State.Disable;
-            zRangeS = State.Disable;
+            xRangeS = State.Interactive;
+            yRangeS = State.Interactive;
+            zRangeS = State.Interactive;
             #endregion
 
             #region AXIS GRID STATE
@@ -192,8 +192,8 @@ namespace MaximaPlugin.PlotImage
 
             commandList.Add("file_name=\"" + filename + "\"");
             //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
-            //commandList.Add("font=\"" + textFont + "\"");
-            //commandList.Add("font_size=" + textSize);
+            commandList.Add("font=\"" + textFont + "\"");
+            commandList.Add("font_size=" + textSize);
 
             prambleList.Add("\"set encoding utf8\"");
             if (titleState == State.Custom)
@@ -306,8 +306,8 @@ namespace MaximaPlugin.PlotImage
                 prambleList.Add("\"set logscale z " + Convert.ToString(zLogBase) + "\"");
             #endregion
 
-            //if ((view == State.Interactive || view == State.Default || view == State.Custom) && plotType == PlotType.plot3D)
-            //    prambleList.Add("\"set view " + zenith.ToString(nfi) + ", " + azimuth.ToString(nfi) + ", " + scalZenith.ToString(nfi) + ", " + scalAzimuth.ToString(nfi) + Symbols.StringChar);
+            if ((view == State.Interactive || view == State.Default || view == State.Custom) && plotType == PlotType.plot3D)
+                prambleList.Add("\"set view " + zenith.ToString(nfi) + ", " + azimuth.ToString(nfi) + ", " + scalZenith.ToString(nfi) + ", " + scalAzimuth.ToString(nfi) + Symbols.StringChar);
         }
         public object Clone()
         {

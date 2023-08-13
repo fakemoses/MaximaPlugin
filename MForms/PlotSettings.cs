@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
 namespace MaximaPlugin.PlotImage
@@ -138,7 +140,7 @@ namespace MaximaPlugin.PlotImage
             else
                 RefreshStore();
             region.formOpen = false;
-            region.GetCanvas().plotApproval = true;
+            //region.GetCanvas().plotApproval = true;
             region.Invalidate();
         }
         #endregion
@@ -1041,11 +1043,6 @@ namespace MaximaPlugin.PlotImage
             Store();
             plotStore.MakeLists();
             Restore();
-            //if (valid)
-            //{
-                
-            //}
-            
         }
         #endregion
 
@@ -1067,19 +1064,77 @@ namespace MaximaPlugin.PlotImage
             if (e.KeyData == Keys.Enter)
             {
                 RefreshStore();
-                region.GetCanvas().plotApproval = true;
-                region.Invalidate();
+                //region.GetCanvas().plotApproval = true;
+                //region.Invalidate();
             }
         }
         #endregion
+
+        private void MoveControlsToTopLeft()
+        {
+            panel1.BackColor = Color.FromArgb(30, Color.Gray);
+            progressBar1.Style = ProgressBarStyle.Marquee;
+
+            // Move the overlayPanel, progressBar, and infoText to the top-left corner
+            panel1.Location = new Point(0, 0);
+            progressBar1.Location = new Point(26, 207);
+            label2.Location = new Point(91, 233);
+
+            // Ensure they are on top of other controls
+            panel1.BringToFront();
+            progressBar1.BringToFront();
+            label2.BringToFront();
+        }
+
+        private void MovetoBackPosition()
+        {
+            progressBar1.Style = ProgressBarStyle.Marquee;
+
+            // Move the overlayPanel, progressBar, and infoText to the top-left corner
+            panel1.Location = new Point(2, 484);
+            progressBar1.Location = new Point(26, 207);
+            label2.Location = new Point(91, 233);
+
+            // Ensure they are on top of other controls
+            panel1.BringToFront();
+            progressBar1.BringToFront();
+            label2.BringToFront();
+        }
 
         #region BUTTONS
         private void Refresh_Click(object sender, EventArgs e)
         {
             RefreshStore();
-            region.formOpen = false;
-            region.GetCanvas().plotApproval = true;
+            //region.formOpen = false;
+            //region.GetCanvas().plotApproval = true;
             region.GetCanvas().redrawCanvas = true;
+
+            if(plotStore.termType != PlotStore.TermType.png){
+                //for loading screen
+                
+            }
+
+            Thread staThread = new Thread(()=>
+            {
+                regionC.SetLastRequest();
+                regionC.Plot();
+                regionC.ScalImg(regionC.imageEo);
+
+            });
+
+            staThread.Start();
+
+            if (plotStore.termType != PlotStore.TermType.png)
+            {
+                MoveControlsToTopLeft();
+                while (staThread.IsAlive)
+                {
+                    Application.DoEvents(); // Keep the UI responsive
+                }
+                MovetoBackPosition();
+            }
+            staThread.Join();
+
             region.Invalidate();
         }
         private void Abort_Click(object sender, EventArgs e)

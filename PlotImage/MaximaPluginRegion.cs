@@ -31,7 +31,7 @@ namespace MaximaPlugin.PlotImage
         //public double factorZ;
         public double changeValue;
         System.Diagnostics.Stopwatch dblclicktimer = new System.Diagnostics.Stopwatch();
-        
+
 
 
         //Control Vars
@@ -40,7 +40,9 @@ namespace MaximaPlugin.PlotImage
         bool mouseDown = false;
         public bool formOpen = false;
         PlotSettings psf = null;
-        private const double zoomFactor=30;
+        private const double zoomFactor = 30;
+
+        bool mouseDoubleClick = false;
 
         //Constructors
         public MaximaPluginRegion(SessionProfile sessionProfile)
@@ -76,14 +78,14 @@ namespace MaximaPlugin.PlotImage
             dMouseX = region.dMouseX;
             dMouseY = region.dMouseY;
             dMouseW = region.dMouseW;
-//            factorX = region.factorX;
-//            factorY = region.factorY;
-//            factorZ = region.factorZ;
+            //            factorX = region.factorX;
+            //            factorY = region.factorY;
+            //            factorZ = region.factorZ;
             formOpen = region.formOpen;
             psf = region.psf;
             canv.borderOn = region.canv.borderOn;
 
-           
+
         }
         //VIEW CONTROL
 
@@ -107,6 +109,7 @@ namespace MaximaPlugin.PlotImage
             mouseY = e.Y;
             dMouseX = e.X / canv.Size.Width;
             dMouseY = e.Y / canv.Size.Height;
+            mouseDoubleClick = false;
 
             if (!dblclicktimer.IsRunning)
             {
@@ -117,29 +120,30 @@ namespace MaximaPlugin.PlotImage
                 dblclicktimer.Stop();
                 if (dblclicktimer.ElapsedMilliseconds < 500)
                 {
-                    // Double-click logic here
-                    if (canv.plotStore.viewRedirecting == PlotStore.State.Enable ||
-                        canv.plotStore.mouseRedirecting == PlotStore.State.Enable ||
-                        canv.plotStore.xRedirecting == PlotStore.State.Enable ||
-                        canv.plotStore.yRedirecting == PlotStore.State.Enable ||
-                        canv.plotStore.zRedirecting == PlotStore.State.Enable)
-                    {
-                        this.RequestEvaluation();
-                    }
+
+                    //if (canv.plotStore.viewRedirecting == PlotStore.State.Enable ||
+                    //    canv.plotStore.mouseRedirecting == PlotStore.State.Enable ||
+                    //    canv.plotStore.xRedirecting == PlotStore.State.Enable ||
+                    //    canv.plotStore.yRedirecting == PlotStore.State.Enable ||
+                    //    canv.plotStore.zRedirecting == PlotStore.State.Enable)
+                    //{
+                    //    //this.RequestEvaluation();
+                    //}
+                    //else
+                    //{
+                    if (formOpen)
+                        psf.Focus();
                     else
                     {
-                        if (formOpen)
-                            psf.Focus();
-                        else
-                        {
-                            canv.oldPlotStore = canv.plotStore.Clone() as PlotStore;
-                            psf = new PlotSettings(this);
-                            psf.Show();
-                            formOpen = true;
-                            psf.Focus();
-                        }
+                        mouseDoubleClick = true;
+                        canv.oldPlotStore = canv.plotStore.Clone() as PlotStore;
+                        psf = new PlotSettings(this);
+                        psf.Show();
+                        formOpen = true;
+                        psf.Focus();
                     }
-                    canv.plotApproval = true;
+                    //}
+                    //canv.plotApproval = true;
                     this.Invalidate();
                 }
                 dblclicktimer.Reset();
@@ -151,7 +155,8 @@ namespace MaximaPlugin.PlotImage
         /// <param name="e"></param>
         public override void OnMouseMove(MouseEventOptions e)
         {
-            if (mouseDown && canv.mouseD && !sizeChange)
+            //rotation and panning only available for PNG since it takes extremely less time compared to other file types
+            if (mouseDown && canv.mouseD && !sizeChange && canv.plotStore.termType == PlotStore.TermType.png)
             {
                 double dy = mouseY - e.Y;
                 double dx = mouseX - e.X;
@@ -184,16 +189,16 @@ namespace MaximaPlugin.PlotImage
                     {
                         if (canv.plotStore.xLogarithmic == PlotStore.State.Enable)
                         {
-                            changeValue = Math.Exp( (Math.Log(canv.plotStore.xMaxRange) - Math.Log(canv.plotStore.xMinRange)) * dx / canv.Size.Width);
+                            changeValue = Math.Exp((Math.Log(canv.plotStore.xMaxRange) - Math.Log(canv.plotStore.xMinRange)) * dx / canv.Size.Width);
                             canv.plotStore.xMinRange *= changeValue;
-                            canv.plotStore.xMaxRange *= changeValue;                            
+                            canv.plotStore.xMaxRange *= changeValue;
                         }
                         else
                         {
-                            changeValue = (canv.plotStore.xMaxRange-canv.plotStore.xMinRange) * dx / canv.Size.Width;
+                            changeValue = (canv.plotStore.xMaxRange - canv.plotStore.xMinRange) * dx / canv.Size.Width;
                             canv.plotStore.xMinRange += changeValue;
                             canv.plotStore.xMaxRange += changeValue;
-                        }                        
+                        }
                     }
                     // y axis
                     if (canv.plotStore.yRangeS == PlotStore.State.Interactive)
@@ -215,7 +220,7 @@ namespace MaximaPlugin.PlotImage
                 // pan the x and y axes of a 3D plot
                 else if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && controlKeyDownAxis)
                 {
-                    
+
                     if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
                     {
                         double ddx = (dx * System.Math.Cos((canv.plotStore.azimuth / 180) * System.Math.PI)) + (dy * System.Math.Sin((canv.plotStore.azimuth / 180) * System.Math.PI));
@@ -231,11 +236,19 @@ namespace MaximaPlugin.PlotImage
                         canv.plotStore.yMaxRange += changeValue;
                     }
                 }
+                //canv.plotApproval = true;
+                if (!mouseDoubleClick)
+                {
+                    canv.SetLastRequest();
+                    canv.Plot();
+                    canv.ScalImg(canv.imageEo);
+                    mouseDoubleClick = false;
+                }
+                canv.Invalidate();
+
                 mouseX = e.X;
                 mouseY = e.Y;
-          
-                canv.plotApproval = true;
-                canv.Invalidate();
+
             }
             base.OnMouseMove(e);
         }
@@ -247,7 +260,7 @@ namespace MaximaPlugin.PlotImage
             mouseDown = false;
             base.OnMouseUp(e);
             dblclicktimer.Start();
-            
+
         }
         // Zoom
         protected override void OnMouseWheelAction(MouseEventOptions e, int delta)
@@ -313,11 +326,20 @@ namespace MaximaPlugin.PlotImage
                     canv.plotStore.zMinRange += changeValue;
                 }
             }
-            canv.plotApproval = true;
+            //canv.plotApproval = true;
+            canv.SetLastRequest();
+            canv.Plot();
+            canv.ScalImg(canv.imageEo);
             canv.Invalidate();
             base.OnMouseWheelAction(e, delta);
             if (canv.plotStore.viewRedirecting == PlotStore.State.Enable || canv.plotStore.mouseRedirecting == PlotStore.State.Enable)
+            {
+                canv.SetLastRequest();
+                canv.Plot();
+                canv.ScalImg(canv.imageEo);
                 this.RequestEvaluation();
+            }
+
         }
         // handle the modifier keys
         public override void OnKeyDown(KeyEventOptions e)
@@ -352,7 +374,11 @@ namespace MaximaPlugin.PlotImage
             {
                 canv.plotStore.width = canv.Size.Width;
                 canv.plotStore.height = canv.Size.Height;
-                canv.plotApproval = true;
+                //canv.plotApproval = true;
+                canv.redrawCanvas = true;
+
+                // TODO Just resize the image ES
+                canv.ScalImg(canv.imageEo);
             }
             base.OnSizeChanged(e);
         }
@@ -469,13 +495,20 @@ namespace MaximaPlugin.PlotImage
                     OptionInterpreter(canv.plotStore.option);
                     canv.Size = new Size(canv.plotStore.width, canv.plotStore.height);
                 }
-                
+
                 if (reader.Name == "input" || reader.Name == "maximaplugin")
                     break;
             }
 
             base.FromXml(storage, parsingContext);
         }
+
+        private void callRedraw()
+        {
+            canv.Plot();
+            canv.ScalImg(canv.imageEo);
+        }
+
         public override void OnEvaluation(SMath.Math.Store store)
         {
             //IncludeDefs(ref store);
@@ -495,7 +528,13 @@ namespace MaximaPlugin.PlotImage
             }
             canv.lastInput = input;
             canv.SetLastRequest();
-            canv.plotApproval = true;
+            //canv.plotApproval = true;
+
+            if (canv.redrawCanvas)
+            {
+                callRedraw();
+            }
+
             AddDefs(store);
             //dMouseX = 0;
             //dMouseY = 0;
@@ -514,7 +553,7 @@ namespace MaximaPlugin.PlotImage
             //MOUSE
             if (canv.plotStore.mouseRedirecting == PlotStore.State.Enable)
             {
-                store.AddDefinition(canv.plotStore.varNameMouseX, new Entry(dMouseX.ToString("0.0000",nfi)));
+                store.AddDefinition(canv.plotStore.varNameMouseX, new Entry(dMouseX.ToString("0.0000", nfi)));
                 store.AddDefinition(canv.plotStore.varNameMouseY, new Entry(dMouseY.ToString("0.0000", nfi)));
                 store.AddDefinition(canv.plotStore.varNameMouseWheel, new Entry(dMouseW.ToString("0.0000", nfi)));
             }

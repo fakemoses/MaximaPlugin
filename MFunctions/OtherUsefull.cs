@@ -28,10 +28,13 @@ namespace MaximaPlugin.MFunctions
             string text = "";
             string tempString = "";
             int i = 0;
+            string term = root.Text;
             while (i < root.ArgsCount)
             {
                 //tempString = TermsConverter.ToString(Computation.Preprocessing(args[i], ref context));
                 tempString = SharedFunctions.Proprocessing(args[i]);
+
+                // Solve has to be precomputed if exists?
 
                 if (i == 0)
                     text = tempString;
@@ -43,19 +46,5 @@ namespace MaximaPlugin.MFunctions
             result = TermsConverter.ToTerms(text);
             return true;
         }
-        // This is never called
-        //public static bool SocketInit(Term root, Term[][] args, ref Store context, ref Term[] result, MaximaSession maxima)
-        //{
-        //    anySocket = new AutoSocket();
-        //    result = TermsConverter.ToTerms("\"SocketClientServer has started on port: "+ Convert.ToString(anySocket.GetAutoSocketPort()) + "\"");
-        //    return true;
-        //}
-        //public static bool Socket(Term root, Term[][] args, ref Store context, ref Term[] result,MaximaSession maxima)
-        //{
-        //    string arg1 = TermsConverter.ToString(args[0]);
-        //    //  anySocket.ConnectClient();
-        //    result = TermsConverter.ToTerms(SMath.Manager.Symbols.StringChar + maxima.SendAndReceiveFromSocket(arg1) + SMath.Manager.Symbols.StringChar);
-        //    return true;
-        //}
     }
 }

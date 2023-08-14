@@ -411,10 +411,18 @@ namespace MaximaPlugin.ControlObjects
         /// <returns></returns>
         public static string TranslateToSMath(List<string> answers)
         {
-            //some code to deal with if else output? probably some other unknown output too
             
             string outputString = "";
             originalStrings = new List<string>();
+
+            string booleanMaximatoSMathPattern = @"if\s+([^)]+)\s+then\s+([^)]+)\s+else\s+([^\\\n(]+)";
+            //deal with boolean expression
+            for (int i = 0; i < answers.Count; i++)
+            {
+
+                answers[i] = Regex.Replace(answers[i], booleanMaximatoSMathPattern, "if($1, $2, $3)");
+            }
+
             answers = GetStringsOutAndReplaceThem(answers);
             originalStrings = PrepareStringsForSMath(originalStrings);
             answers = PrepareTermsForSMath(answers);
@@ -467,8 +475,8 @@ namespace MaximaPlugin.ControlObjects
             //start session of not available - used in some forms which has no initial maxima session
             GetMaxima().StartSession();
 
-            // SMath if(condition,true,false) maybe use regex to find it
-            // in this case much easier than having to deal with 
+            //// SMath if(condition,true,false) maybe use regex to find it
+            //// in this case much easier than having to deal with 
             string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
             Match match = Regex.Match(termText, pattern);
 
@@ -481,7 +489,7 @@ namespace MaximaPlugin.ControlObjects
 
                 string combineResult = $"if({condition}) then {trueResult} else {falseResult}";
 
-                return combineResult;
+                termText = Regex.Replace(termText, pattern, combineResult);
             }
 
             originalStrings =new List<string>();

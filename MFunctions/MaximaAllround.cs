@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Text.RegularExpressions;
 using SMath.Manager;
 using SMath.Math;
 
@@ -44,9 +44,15 @@ namespace MaximaPlugin.MFunctions
                 // produce the input for maxima
                 // issue is here string to maxima
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
+
+                string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+                Match match = Regex.Match(stringToMaxima, pattern);
+                if(!match.Success)
                 // send input and get result
-                result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
-                
+                    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+                else
+                    result = TermsConverter.ToTerms(Symbols.StringChar + ControlObjects.Translator.Ask(stringToMaxima) + Symbols.StringChar);
+
                 return true;
             }
         }

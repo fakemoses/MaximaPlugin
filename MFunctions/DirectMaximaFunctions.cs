@@ -502,27 +502,42 @@ namespace MaximaPlugin.MFunctions
         // new draw method based
         public static bool Draw(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            // nounify polar to avoid conflicts with variable names in Maxima
-            args[0] = Computation.Preprocessing(args[0], ref context);
-            string t = SharedFunctions.Proprocessing(args[0]);
-
-            for (int i = 0; i < args[0].Length; i++)
+            bool isBooleanExpression = false;
+            // boolean expression check
+            string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
+            //use regex to check if it contain the SMath if(condition,true,false) condition
+            string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+            Match match = Regex.Match(stringToMaxima, pattern);
+            if (!match.Success)
             {
-                if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
+
+                // nounify polar to avoid conflicts with variable names in Maxima
+                args[0] = Computation.Preprocessing(args[0], ref context);
+                string t = SharedFunctions.Proprocessing(args[0]);
+
+                for (int i = 0; i < args[0].Length; i++)
                 {
-                    args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
+                    if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
+                    {
+                        args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
+                    }
+
+                    if (args[0][i].Text == "spherical" && args[0][i].Type == TermType.Function)
+                    {
+                        args[0][i].Text = ControlObjects.Replacement.Noun + "spherical";
+                    }
+
+                    if (args[0][i].Text == "cylindrical" && args[0][i].Type == TermType.Function)
+                    {
+                        args[0][i].Text = ControlObjects.Replacement.Noun + "cylindrical";
+                    }
+
                 }
 
-                if (args[0][i].Text == "spherical" && args[0][i].Type == TermType.Function)
-                {
-                    args[0][i].Text = ControlObjects.Replacement.Noun + "spherical";
-                }
-
-                if (args[0][i].Text == "cylindrical" && args[0][i].Type == TermType.Function)
-                {
-                    args[0][i].Text = ControlObjects.Replacement.Noun + "cylindrical";
-                }
-
+            }
+            else
+            {
+                isBooleanExpression = true;
             }
 
             MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
@@ -538,8 +553,8 @@ namespace MaximaPlugin.MFunctions
 
             //user_preamble extraction here
             string preamble;
-            arg1 = ExtractUserPreamble(arg1,out preamble);
-            if(preamble != "")
+            arg1 = ExtractUserPreamble(arg1, out preamble);
+            if (preamble != "")
                 preamble = RemoveSysFromPreamble(preamble);
 
             //add the default settings at the beginning of the thing
@@ -554,7 +569,6 @@ namespace MaximaPlugin.MFunctions
                     "yaxis_type≡solid, yaxis≡true, yaxis_color≡black, yaxis_width≡1";
                 arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 12);
             }
-
             // replace units by 1
             arg1 = rxUnit.Replace(arg1, "1");
             // Strings
@@ -590,7 +604,7 @@ namespace MaximaPlugin.MFunctions
 
 
             // use random file name when only one arguments -> only lists of settings
-            if(root.ArgsCount == 1)
+            if (root.ArgsCount == 1)
             {
                 FilePath = FilePath + "." + term;
             }
@@ -635,7 +649,7 @@ namespace MaximaPlugin.MFunctions
                     // Replace specific Unicode escape sequences with their corresponding characters
                     string convertedString = ReplaceUnicodeEscapeSequences(Target);
 
-                    convertedString = convertedString.Replace("\\","");
+                    convertedString = convertedString.Replace("\\", "");
 
                     FilePath = Path.Combine(permPath, convertedString);
 
@@ -678,19 +692,19 @@ namespace MaximaPlugin.MFunctions
 
 
             // build SMath list - User preamble part
-            if(root.Text == "Draw3D")
+            if (root.Text == "Draw3D")
             {
                 ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar +  "set pm3d lighting depthorder base" + Symbols.StringChar;
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set pm3d lighting depthorder base" + Symbols.StringChar;
             }
             else
             {
                 ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set style line 100 lc rgb 'grey' lt -1 lw 0" 
+                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set style line 100 lc rgb 'grey' lt -1 lw 0"
                 + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set grid ls 100" + Symbols.StringChar;
             }
 
-            if(preamble != "")
+            if (preamble != "")
             {
                 // Check if the preamble contains more than one part
                 int numSeparatorOccurrences = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.None).Length - 1;
@@ -722,9 +736,17 @@ namespace MaximaPlugin.MFunctions
                 + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
             terminate(esm, ipre, "terminal≡" + term, "file_name≡"
                 + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
-            
+
             // convert to Maxima
             string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
+
+            //remove user preamble manually if boolean expression
+            if (isBooleanExpression)
+            {
+                string userPreamblePattern = @"user_preamble≡\[[^\]]*\],\s*";
+                send = Regex.Replace(send, userPreamblePattern, "");
+            }
+
             sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
             // send to Maxima
             ControlObjects.TranslationModifiers.TimeOut = 5000;
@@ -746,12 +768,13 @@ namespace MaximaPlugin.MFunctions
                 GenerateErrorMsgAsImage(errormsg, errorImg);
                 result = TermsConverter.ToTerms(Symbols.StringChar + errorImg + Symbols.StringChar);
                 return true;
-            } else
+            }
+            else
             {
                 long fileSize = new FileInfo(fullFilePath).Length;
-                if(fileSize< 0)
+                if (fileSize < 0)
                 {
-                    if(backupFile  != "")
+                    if (backupFile != "")
                         errormsg = "Error: " + res + "\n" + "Backup file can be found at: " + backupFile;
                     else
                         errormsg = "Error: " + res;

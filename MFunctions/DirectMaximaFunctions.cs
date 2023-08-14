@@ -563,6 +563,12 @@ namespace MaximaPlugin.MFunctions
                 string drawSettings = "enhanced3d≡true,background_color≡\"#fefefe\", xu_grid≡100, yv_grid≡100, palette≡color,xlabel≡\"x\", ylabel≡\"y\"";
                 arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 7);
             }
+            else if(isBooleanExpression)
+            {
+                string drawSettings = "yrange≡[-5,5],enhanced3d≡true, background_color≡\"#fefefe\", xlabel≡\"x\", ylabel≡\"y\",xaxis_type≡solid, xaxis≡true, xaxis_color≡black, xaxis_width≡1, " +
+                    "yaxis_type≡solid, yaxis≡true, yaxis_color≡black, yaxis_width≡1";
+                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 13);
+            }
             else
             {
                 string drawSettings = "enhanced3d≡true, background_color≡\"#fefefe\", xlabel≡\"x\", ylabel≡\"y\",xaxis_type≡solid, xaxis≡true, xaxis_color≡black, xaxis_width≡1, " +

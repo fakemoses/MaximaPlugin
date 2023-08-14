@@ -1108,11 +1108,6 @@ namespace MaximaPlugin.PlotImage
             //region.GetCanvas().plotApproval = true;
             region.GetCanvas().redrawCanvas = true;
 
-            if(plotStore.termType != PlotStore.TermType.png){
-                //for loading screen
-                
-            }
-
             Thread staThread = new Thread(()=>
             {
                 regionC.SetLastRequest();

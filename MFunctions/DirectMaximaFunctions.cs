@@ -684,7 +684,7 @@ namespace MaximaPlugin.MFunctions
             else if (Target.EndsWith("png") && Target.Length > 3)
             {
                 term = "png";
-                ipre = "set term pngcairo font 'arial,8' enhanced size ";
+                ipre = "set term pngcairo enhanced size ";
                 sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
             }
             else // use pdf otherwise
@@ -747,11 +747,11 @@ namespace MaximaPlugin.MFunctions
             string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
 
             //remove user preamble manually if boolean expression
-            if (isBooleanExpression)
-            {
-                string userPreamblePattern = @"user_preamble≡\[[^\]]*\],\s*";
-                send = Regex.Replace(send, userPreamblePattern, "");
-            }
+            //if (isBooleanExpression)
+            //{
+            //    string userPreamblePattern = @"user_preamble≡\[[^\]]*\],\s*";
+            //    send = Regex.Replace(send, userPreamblePattern, "");
+            // }
 
             sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
             // send to Maxima

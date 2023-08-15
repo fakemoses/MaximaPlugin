@@ -132,6 +132,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.xAxis = new System.Windows.Forms.CheckBox();
+            this.yAxis = new System.Windows.Forms.CheckBox();
+            this.zAxis = new System.Windows.Forms.CheckBox();
             this.tabControls.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox26.SuspendLayout();
@@ -287,6 +290,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.zAxis);
             this.groupBox1.Controls.Add(this.checkZgrid);
             this.groupBox1.Controls.Add(this.textZbase);
             this.groupBox1.Controls.Add(this.checkZlog);
@@ -295,7 +299,7 @@
             this.groupBox1.Controls.Add(this.radioZrangeCustom);
             this.groupBox1.Controls.Add(this.textZrangeMin);
             this.groupBox1.Controls.Add(this.textZrangeMax);
-            this.groupBox1.Location = new System.Drawing.Point(6, 238);
+            this.groupBox1.Location = new System.Drawing.Point(6, 233);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(250, 110);
             this.groupBox1.TabIndex = 11;
@@ -391,6 +395,7 @@
             // 
             // groupBox31
             // 
+            this.groupBox31.Controls.Add(this.yAxis);
             this.groupBox31.Controls.Add(this.checkYgrid);
             this.groupBox31.Controls.Add(this.textYbase);
             this.groupBox31.Controls.Add(this.checkYlog);
@@ -399,7 +404,7 @@
             this.groupBox31.Controls.Add(this.radioYrangeCustom);
             this.groupBox31.Controls.Add(this.textYrangeMin);
             this.groupBox31.Controls.Add(this.textYrangeMax);
-            this.groupBox31.Location = new System.Drawing.Point(6, 122);
+            this.groupBox31.Location = new System.Drawing.Point(6, 117);
             this.groupBox31.Name = "groupBox31";
             this.groupBox31.Size = new System.Drawing.Size(250, 110);
             this.groupBox31.TabIndex = 10;
@@ -494,6 +499,7 @@
             // 
             // groupBox32
             // 
+            this.groupBox32.Controls.Add(this.xAxis);
             this.groupBox32.Controls.Add(this.textXbase);
             this.groupBox32.Controls.Add(this.checkXgrid);
             this.groupBox32.Controls.Add(this.checkXlog);
@@ -504,7 +510,7 @@
             this.groupBox32.Controls.Add(this.textXrangeMin);
             this.groupBox32.Location = new System.Drawing.Point(6, 6);
             this.groupBox32.Name = "groupBox32";
-            this.groupBox32.Size = new System.Drawing.Size(250, 110);
+            this.groupBox32.Size = new System.Drawing.Size(250, 107);
             this.groupBox32.TabIndex = 9;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "X-Axis [ min / max ]";
@@ -626,7 +632,7 @@
             this.groupBox7.Controls.Add(this.checkTextSizeCustom);
             this.groupBox7.Location = new System.Drawing.Point(7, 9);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(250, 139);
+            this.groupBox7.Size = new System.Drawing.Size(250, 146);
             this.groupBox7.TabIndex = 13;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "General";
@@ -772,7 +778,7 @@
             this.groupBox30.Controls.Add(this.radioViewDisable);
             this.groupBox30.Controls.Add(this.textAzimut);
             this.groupBox30.Controls.Add(this.textZenit);
-            this.groupBox30.Location = new System.Drawing.Point(7, 235);
+            this.groupBox30.Location = new System.Drawing.Point(7, 242);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(250, 75);
             this.groupBox30.TabIndex = 11;
@@ -871,7 +877,7 @@
             this.groupBox18.Controls.Add(this.textHeight);
             this.groupBox18.Controls.Add(this.comboTerm);
             this.groupBox18.Controls.Add(this.textWidth);
-            this.groupBox18.Location = new System.Drawing.Point(7, 154);
+            this.groupBox18.Location = new System.Drawing.Point(7, 161);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(250, 75);
             this.groupBox18.TabIndex = 10;
@@ -1297,6 +1303,36 @@
             this.progressBar1.Size = new System.Drawing.Size(238, 23);
             this.progressBar1.TabIndex = 0;
             // 
+            // xAxis
+            // 
+            this.xAxis.AutoSize = true;
+            this.xAxis.Location = new System.Drawing.Point(92, 88);
+            this.xAxis.Name = "xAxis";
+            this.xAxis.Size = new System.Drawing.Size(45, 17);
+            this.xAxis.TabIndex = 20;
+            this.xAxis.Text = "Axis";
+            this.xAxis.UseVisualStyleBackColor = true;
+            // 
+            // yAxis
+            // 
+            this.yAxis.AutoSize = true;
+            this.yAxis.Location = new System.Drawing.Point(92, 91);
+            this.yAxis.Name = "yAxis";
+            this.yAxis.Size = new System.Drawing.Size(45, 17);
+            this.yAxis.TabIndex = 21;
+            this.yAxis.Text = "Axis";
+            this.yAxis.UseVisualStyleBackColor = true;
+            // 
+            // zAxis
+            // 
+            this.zAxis.AutoSize = true;
+            this.zAxis.Location = new System.Drawing.Point(92, 91);
+            this.zAxis.Name = "zAxis";
+            this.zAxis.Size = new System.Drawing.Size(45, 17);
+            this.zAxis.TabIndex = 21;
+            this.zAxis.Text = "Axis";
+            this.zAxis.UseVisualStyleBackColor = true;
+            // 
             // PlotSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1464,5 +1500,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.CheckBox zAxis;
+        private System.Windows.Forms.CheckBox yAxis;
+        private System.Windows.Forms.CheckBox xAxis;
     }
 }

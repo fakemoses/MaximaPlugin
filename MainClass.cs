@@ -257,6 +257,8 @@ namespace MaximaPlugin
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 if (Path.GetExtension(path).Equals(".svg"))
                     saveFileDialog1.Filter = "svg files (*.svg)|*.svg|All files (*.*)|*.*";
+                else if (Path.GetExtension(path).Equals(".pdf"))
+                    saveFileDialog1.Filter = "pdf files (*.pdf)|*.pdf|All files (*.*)|*.*";
                 else
                     saveFileDialog1.Filter = "png files (*.png)|*.png|All files (*.*)|*.*";
                 saveFileDialog1.FilterIndex = 1;

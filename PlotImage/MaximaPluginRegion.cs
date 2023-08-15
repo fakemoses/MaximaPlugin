@@ -60,6 +60,19 @@ namespace MaximaPlugin.PlotImage
         {
             canv.plotStore.plotType = pt;
 
+            //axis, grid and size for 3D plot 
+            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D)
+            {
+                canv.plotStore.enablexAxis = false;
+                canv.plotStore.enableyAxis = false;
+
+                canv.plotStore.xGrid = PlotStore.State.Disable;
+                canv.plotStore.yGrid = PlotStore.State.Disable;
+
+                canv.plotStore.width = 300;
+                canv.plotStore.width = 300;
+            }
+
             // set default scaling states (see SS-198)
             // x automatic for 2D
             // x,y automatic for 3D
@@ -120,17 +133,6 @@ namespace MaximaPlugin.PlotImage
                 dblclicktimer.Stop();
                 if (dblclicktimer.ElapsedMilliseconds < 500)
                 {
-
-                    //if (canv.plotStore.viewRedirecting == PlotStore.State.Enable ||
-                    //    canv.plotStore.mouseRedirecting == PlotStore.State.Enable ||
-                    //    canv.plotStore.xRedirecting == PlotStore.State.Enable ||
-                    //    canv.plotStore.yRedirecting == PlotStore.State.Enable ||
-                    //    canv.plotStore.zRedirecting == PlotStore.State.Enable)
-                    //{
-                    //    //this.RequestEvaluation();
-                    //}
-                    //else
-                    //{
                     if (formOpen)
                         psf.Focus();
                     else
@@ -142,8 +144,6 @@ namespace MaximaPlugin.PlotImage
                         formOpen = true;
                         psf.Focus();
                     }
-                    //}
-                    //canv.plotApproval = true;
                     this.Invalidate();
                 }
                 dblclicktimer.Reset();
@@ -156,7 +156,7 @@ namespace MaximaPlugin.PlotImage
         public override void OnMouseMove(MouseEventOptions e)
         {
             //rotation and panning only available for PNG since it takes extremely less time compared to other file types
-            if (mouseDown && canv.mouseD && !sizeChange && canv.plotStore.termType == PlotStore.TermType.png)
+            if (mouseDown && canv.mouseD && !sizeChange && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 double dy = mouseY - e.Y;
                 double dx = mouseX - e.X;
@@ -240,8 +240,7 @@ namespace MaximaPlugin.PlotImage
                 if (!mouseDoubleClick)
                 {
                     canv.SetLastRequest();
-                    canv.Plot();
-                    canv.ScalImg(canv.imageEo);
+                    callRedraw();
                     mouseDoubleClick = false;
                 }
                 canv.Invalidate();
@@ -274,7 +273,7 @@ namespace MaximaPlugin.PlotImage
             dMouseW = dMouseW + delta;
 
             // Zoom x and y axis if not a 3D plot in z-only-mode
-            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && controlKeyDownAxis))
+            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && controlKeyDownAxis) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 // Zoom x axis if it is in interactive mode
                 if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
@@ -328,15 +327,14 @@ namespace MaximaPlugin.PlotImage
             }
             //canv.plotApproval = true;
             canv.SetLastRequest();
-            canv.Plot();
-            canv.ScalImg(canv.imageEo);
+            callRedraw();
             canv.Invalidate();
             base.OnMouseWheelAction(e, delta);
             if (canv.plotStore.viewRedirecting == PlotStore.State.Enable || canv.plotStore.mouseRedirecting == PlotStore.State.Enable)
             {
                 canv.SetLastRequest();
-                canv.Plot();
-                canv.ScalImg(canv.imageEo);
+                callRedraw();
+
                 this.RequestEvaluation();
             }
 
@@ -377,8 +375,8 @@ namespace MaximaPlugin.PlotImage
                 //canv.plotApproval = true;
                 canv.redrawCanvas = true;
 
-                // TODO Just resize the image ES
-                canv.ScalImg(canv.imageEo);
+                canv.RequestEvaluation();
+                callRedraw();
             }
             base.OnSizeChanged(e);
         }
@@ -507,7 +505,13 @@ namespace MaximaPlugin.PlotImage
         {
             canv.Plot();
             canv.ScalImg(canv.imageEo);
+            if(formOpen)
+            {
+                psf.Restore();
+                psf.Refresh();
+            }
         }
+
 
         public override void OnEvaluation(SMath.Math.Store store)
         {
@@ -515,13 +519,23 @@ namespace MaximaPlugin.PlotImage
             string input = "";
             try
             {
-                var out1 = Computation.Preprocessing(Terms, ref store);
-                input = TermsConverter.ToString(out1);
-                AvailableItems = new List<Definition>();
-                for (int k = store.Count - 1; k > -1; k--)
+                //boolean expression check
+                string check = TermsConverter.ToString(Terms);
+                string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+                Match match = Regex.Match(check, pattern);
+
+                if (!match.Success)
                 {
-                    AvailableItems[k] = store[k];
+                    var out1 = Computation.Preprocessing(Terms, ref store);
+                    input = TermsConverter.ToString(out1);
+                    AvailableItems = new List<Definition>();
+                    for (int k = store.Count - 1; k > -1; k--)
+                    {
+                        AvailableItems[k] = store[k];
+                    }
                 }
+                else
+                    input = check;
             }
             catch
             {

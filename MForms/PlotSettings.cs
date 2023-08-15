@@ -30,6 +30,7 @@ namespace MaximaPlugin.PlotImage
                 groupBox30.Visible = true;
                 groupBox4.Visible = true;
                 groupBox6.Visible = true;
+
             }
             Restore();
             initComplete = true;
@@ -121,17 +122,23 @@ namespace MaximaPlugin.PlotImage
             toolTip1.SetToolTip(this.button_Refresh, "Apply changes to plot. You might need to re-calculate (F9)");
             toolTip1.SetToolTip(this.button_Cancel_all, "Cancel all changes made in the settings dialog");
             toolTip1.SetToolTip(this.button_ShowCommandlist, "Toggle display of generated Gnuplot and Maxima Draw commands");
-
-
- 
-
+            toolTip1.SetToolTip(this.xAxis, "Show x-axis as black solid line");
+            toolTip1.SetToolTip(this.yAxis, "Show y-axis as black solid line");
+            toolTip1.SetToolTip(this.zAxis, "Show z-axis as black solid line");
         }
         public void SetLocation()
         {
             var screen = Screen.FromPoint(this.Location);
             if (this.Location.X + this.Width > screen.WorkingArea.Right || firstLocationSet)
-                this.Location = new Point(screen.WorkingArea.Right - this.Width, ((screen.WorkingArea.Bottom - screen.WorkingArea.Top) / 2) - (this.Height / 2));
+            {
+                int xOffset = 350; // Adjust this value to determine how much to the right you want the form to spawn
+                this.Location = new Point(
+                    (screen.WorkingArea.Right + screen.WorkingArea.Left) / 2 + xOffset - this.Width / 2,
+                    ((screen.WorkingArea.Bottom - screen.WorkingArea.Top) / 2) - (this.Height / 2)
+                );
+            }
             firstLocationSet = false;
+
         }
         private void PlotSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -237,6 +244,25 @@ namespace MaximaPlugin.PlotImage
                 textGridXu.ReadOnly = true;
                 textGridYv.ReadOnly = true;
             }
+            #endregion
+
+            #region axis
+
+            if (plotStore.enablexAxis)
+                xAxis.Checked = true;
+            else
+                xAxis.Checked = false;
+
+            if (plotStore.enableyAxis)
+                yAxis.Checked = true;
+            else
+                yAxis.Checked = false;
+
+            if (plotStore.enablezAxis)
+                zAxis.Checked = true;
+            else
+                zAxis.Checked = false;
+
             #endregion
 
             #region VIEW
@@ -667,6 +693,21 @@ namespace MaximaPlugin.PlotImage
                 plotStore.contour = PlotStore.State.Disable;
             }
 
+            // axis
+            if (xAxis.Checked)
+                plotStore.enablexAxis = true;
+            else
+                plotStore.enablexAxis = false;
+
+            if (yAxis.Checked)
+                plotStore.enableyAxis = true;
+            else
+                plotStore.enableyAxis = false;
+
+            if (zAxis.Checked)
+                plotStore.enablezAxis = true;
+            else
+                plotStore.enablezAxis = false;
 
 
             if (checkGrid.Checked)

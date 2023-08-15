@@ -104,6 +104,8 @@ namespace MaximaPlugin.PlotImage
 
             if (plotStore.termType == PlotStore.TermType.pdf)
                 fileExt = ".pdf";
+            else if (plotStore.termType == PlotStore.TermType.svg)
+                fileExt = ".svg";
             else
                 fileExt = ".png";
 
@@ -163,6 +165,8 @@ namespace MaximaPlugin.PlotImage
             string fileExt = "";
             if (plotStore.termType == PlotStore.TermType.pdf)
                 fileExt = ".pdf";
+            else if (plotStore.termType == PlotStore.TermType.svg)
+                fileExt = ".svg";
             else
                 fileExt = ".png";
 
@@ -173,13 +177,11 @@ namespace MaximaPlugin.PlotImage
             {
                 if (plotStore.termType == PlotStore.TermType.svg)
                 {
-                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     svgWindow.Source = Path.ChangeExtension(imageFilePath, "svg");
                     svgWindow.Resize(Size.Width, Size.Height);
                     svgRenderer.Render(svgWindow.Document as SvgDocument);
                     imageEo = svgRenderer.RasterImage;
                     svgRenderer.ClearMap();
-                    watch.Stop();
                     return true;
 
                 }
@@ -199,6 +201,7 @@ namespace MaximaPlugin.PlotImage
                             System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
                             var PDFBitmap = new Bitmap(PDFimg);
                             loadedImage = PDFimg;
+    
                         }
 
                         imageEo = loadedImage;

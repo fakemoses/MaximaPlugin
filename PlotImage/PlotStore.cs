@@ -44,6 +44,12 @@ namespace MaximaPlugin.PlotImage
             contour = State.Custom;
             contourLevels = 5;
             contourType = "";
+
+            //AXIS
+            enablexAxis = true;
+            enableyAxis = true;
+            enablezAxis = false;
+
             //SURFACE GRID
             gridState = State.Custom;
             gridXu = 40;
@@ -52,7 +58,7 @@ namespace MaximaPlugin.PlotImage
 
             #region PICTURE
             width = 300;
-            height = 300;
+            height = 250;
             pictureSizeState = State.Interactive;
             termType = TermType.png;
             filename = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), null);
@@ -100,8 +106,8 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             #region AXIS GRID STATE
-            xGrid = State.Disable;
-            yGrid = State.Disable;
+            xGrid = State.Enable;
+            yGrid = State.Enable;
             zGrid = State.Disable;
             #endregion
 
@@ -166,8 +172,8 @@ namespace MaximaPlugin.PlotImage
             if (textSizeState == State.Disable)
                 textSize = 8;
 
-            string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.#").Replace(",",".");
-            string convertedHeightforPDF = (height / GlobalProfile.ContentDpi).ToString("0.#").Replace(",", ".");
+            string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.##").Replace(",",".");
+            string convertedHeightforPDF = (height / GlobalProfile.ContentDpi).ToString("0.##").Replace(",", ".");
 
             string convertedWidth = width.ToString();
             string convertedHeight = height.ToString();
@@ -193,6 +199,10 @@ namespace MaximaPlugin.PlotImage
             commandList.Add("file_name=\"" + filename + "\"");
             //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
             commandList.Add("font=\"" + textFont + "\"");
+            if (termType == TermType.pdf)
+            {
+                textSize = 12;
+            }
             commandList.Add("font_size=" + textSize);
 
             prambleList.Add("\"set encoding utf8\"");
@@ -213,19 +223,29 @@ namespace MaximaPlugin.PlotImage
             //BACKGROUND STYLE
             commandList.Add("background_color=\"" + bgColor + "\"");
 
-            //AXIS SYTLES for 2d
+            //AXIS SYTLES AND GRID for 2d
             if (plotType == PlotType.plot2D)
             {
-                commandList.Add("xaxis_type=" + xAxisType);
-                commandList.Add("xaxis_color=" + xAxisColor);
-                commandList.Add("xaxis_width=" + xaxisWidth);
+                if (enablexAxis)
+                {
+                    commandList.Add("xaxis=true");
+                    commandList.Add("xaxis_type=" + xAxisType);
+                    commandList.Add("xaxis_color=" + xAxisColor);
+                    commandList.Add("xaxis_width=" + xaxisWidth);
+                } 
+                if (enableyAxis)
+                {
+                    commandList.Add("yaxis=true");
+                    commandList.Add("yaxis_type=" + yAxisType);
+                    commandList.Add("yaxis_color=" + yAxisColor);
+                    commandList.Add("yaxis_width=" + yaxisWidth);
+                }
 
-                commandList.Add("yaxis_type=" + yAxisType);
-                commandList.Add("yaxis_color=" + yAxisColor);
-                commandList.Add("yaxis_width=" + yaxisWidth);
-
-                prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0\"");
-                prambleList.Add("\"set grid ls 100\"");
+                if (xGrid == State.Enable || xGrid == State.Default || yGrid == State.Enable || yGrid == State.Default)
+                {
+                    prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0\"");
+                    //prambleList.Add("\"set grid ls 100\"");
+                }
             }
             else if (plotType == PlotType.plot3D)
             {
@@ -874,6 +894,31 @@ namespace MaximaPlugin.PlotImage
             set { _option = value; }
             get { return _option; }
         }
+        #endregion
+
+        #region AXIS
+        private bool _enablexAxis;
+        private bool _enableyAxis;
+        private bool _enablezAxis;
+
+        public bool enablexAxis
+        {
+            set { _enablexAxis = value; }
+            get { return _enablexAxis; }
+        }
+
+        public bool enableyAxis
+        {
+            set { _enableyAxis = value; }
+            get { return _enableyAxis; }
+        }
+
+        public bool enablezAxis
+        {
+            set { _enablezAxis = value; }
+            get { return _enablezAxis; }
+        }
+
         #endregion
     }
 }

@@ -16,15 +16,25 @@ namespace MaximaPlugin.PlotImage
         /// <returns>File name</returns>
         public static string RegionDraw(MaximaPluginCanvas region)
         {
+            bool isBooleanExpression = false;
+
             //PREPARE INPUT
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
             Regex rxUnit = new Regex(@"(['][\w\d]+)", RegexOptions.None);
             string textHolder = region.lastPlotRequest;
 
-            // tag "polar" as noun
-            textHolder = textHolder.Replace("polar(", ControlObjects.Replacement.Noun + "polar(");
-            textHolder = textHolder.Replace("spherical(", ControlObjects.Replacement.Noun + "spherical(");
-            textHolder = textHolder.Replace("cylindrical(", ControlObjects.Replacement.Noun + "cylindrical(");
+            //use regex to check if it contain the SMath if(condition,true,false) condition
+            string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+            Match match = Regex.Match(textHolder, pattern);
+
+            if (!match.Success)
+            {
+                // tag "polar" as noun
+                textHolder = textHolder.Replace("polar(", ControlObjects.Replacement.Noun + "polar(");
+                textHolder = textHolder.Replace("spherical(", ControlObjects.Replacement.Noun + "spherical(");
+                textHolder = textHolder.Replace("cylindrical(", ControlObjects.Replacement.Noun + "cylindrical(");
+
+            }
 
             // wrap in system if required
             if (!textHolder.StartsWith("sys("))
@@ -38,6 +48,10 @@ namespace MaximaPlugin.PlotImage
 
             // neutralize units
             textHolder = rxUnit.Replace(textHolder, "1");
+
+            // add extra command to the list
+            //if (isBooleanExpression)
+            //    region.plotStore.commandList.Add("yrange=[-5,5]");
 
             //REFRESH SETTINGSLIST
             region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/"); ;
@@ -76,6 +90,14 @@ namespace MaximaPlugin.PlotImage
             terminate(esm, region.plotStore.commandList, region.plotStore.prambleList);
             textHolder = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
             textHolder = textHolder.Substring(1, (textHolder.Length - 2));
+
+            //remove user preamble manually if boolean expression
+            if (isBooleanExpression)
+            {
+                string userPreamblePattern = @"user_preamble≡\[[^\]]*\],\s*";
+                textHolder = Regex.Replace(textHolder, userPreamblePattern, "");
+            }
+
             //PUT STRINGS IN
             sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { textHolder });
             //SEND

@@ -40,6 +40,7 @@
             this.textXtitle = new System.Windows.Forms.TextBox();
             this.tabAxes = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.zAxis = new System.Windows.Forms.CheckBox();
             this.checkZgrid = new System.Windows.Forms.CheckBox();
             this.textZbase = new System.Windows.Forms.TextBox();
             this.checkZlog = new System.Windows.Forms.CheckBox();
@@ -49,6 +50,7 @@
             this.textZrangeMin = new System.Windows.Forms.TextBox();
             this.textZrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.yAxis = new System.Windows.Forms.CheckBox();
             this.checkYgrid = new System.Windows.Forms.CheckBox();
             this.textYbase = new System.Windows.Forms.TextBox();
             this.checkYlog = new System.Windows.Forms.CheckBox();
@@ -58,6 +60,7 @@
             this.textYrangeMin = new System.Windows.Forms.TextBox();
             this.textYrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
+            this.xAxis = new System.Windows.Forms.CheckBox();
             this.textXbase = new System.Windows.Forms.TextBox();
             this.checkXgrid = new System.Windows.Forms.CheckBox();
             this.checkXlog = new System.Windows.Forms.CheckBox();
@@ -132,9 +135,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.xAxis = new System.Windows.Forms.CheckBox();
-            this.yAxis = new System.Windows.Forms.CheckBox();
-            this.zAxis = new System.Windows.Forms.CheckBox();
             this.tabControls.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox26.SuspendLayout();
@@ -307,6 +307,16 @@
             this.groupBox1.Text = "Z-Axis [ min / max ]";
             this.groupBox1.Visible = false;
             // 
+            // zAxis
+            // 
+            this.zAxis.AutoSize = true;
+            this.zAxis.Location = new System.Drawing.Point(92, 91);
+            this.zAxis.Name = "zAxis";
+            this.zAxis.Size = new System.Drawing.Size(45, 17);
+            this.zAxis.TabIndex = 21;
+            this.zAxis.Text = "Axis";
+            this.zAxis.UseVisualStyleBackColor = true;
+            // 
             // checkZgrid
             // 
             this.checkZgrid.AutoSize = true;
@@ -411,6 +421,16 @@
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Y-Axis [ min / max ]";
             // 
+            // yAxis
+            // 
+            this.yAxis.AutoSize = true;
+            this.yAxis.Location = new System.Drawing.Point(92, 91);
+            this.yAxis.Name = "yAxis";
+            this.yAxis.Size = new System.Drawing.Size(45, 17);
+            this.yAxis.TabIndex = 21;
+            this.yAxis.Text = "Axis";
+            this.yAxis.UseVisualStyleBackColor = true;
+            // 
             // checkYgrid
             // 
             this.checkYgrid.AutoSize = true;
@@ -514,6 +534,16 @@
             this.groupBox32.TabIndex = 9;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "X-Axis [ min / max ]";
+            // 
+            // xAxis
+            // 
+            this.xAxis.AutoSize = true;
+            this.xAxis.Location = new System.Drawing.Point(92, 88);
+            this.xAxis.Name = "xAxis";
+            this.xAxis.Size = new System.Drawing.Size(45, 17);
+            this.xAxis.TabIndex = 20;
+            this.xAxis.Text = "Axis";
+            this.xAxis.UseVisualStyleBackColor = true;
             // 
             // textXbase
             // 
@@ -762,9 +792,9 @@
             this.checkTextSizeCustom.AutoSize = true;
             this.checkTextSizeCustom.Location = new System.Drawing.Point(6, 43);
             this.checkTextSizeCustom.Name = "checkTextSizeCustom";
-            this.checkTextSizeCustom.Size = new System.Drawing.Size(147, 17);
+            this.checkTextSizeCustom.Size = new System.Drawing.Size(148, 17);
             this.checkTextSizeCustom.TabIndex = 1;
-            this.checkTextSizeCustom.Text = "Specify text               size:";
+            this.checkTextSizeCustom.Text = "Specify              Font size:";
             this.checkTextSizeCustom.UseVisualStyleBackColor = true;
             this.checkTextSizeCustom.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
@@ -1302,36 +1332,6 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(238, 23);
             this.progressBar1.TabIndex = 0;
-            // 
-            // xAxis
-            // 
-            this.xAxis.AutoSize = true;
-            this.xAxis.Location = new System.Drawing.Point(92, 88);
-            this.xAxis.Name = "xAxis";
-            this.xAxis.Size = new System.Drawing.Size(45, 17);
-            this.xAxis.TabIndex = 20;
-            this.xAxis.Text = "Axis";
-            this.xAxis.UseVisualStyleBackColor = true;
-            // 
-            // yAxis
-            // 
-            this.yAxis.AutoSize = true;
-            this.yAxis.Location = new System.Drawing.Point(92, 91);
-            this.yAxis.Name = "yAxis";
-            this.yAxis.Size = new System.Drawing.Size(45, 17);
-            this.yAxis.TabIndex = 21;
-            this.yAxis.Text = "Axis";
-            this.yAxis.UseVisualStyleBackColor = true;
-            // 
-            // zAxis
-            // 
-            this.zAxis.AutoSize = true;
-            this.zAxis.Location = new System.Drawing.Point(92, 91);
-            this.zAxis.Name = "zAxis";
-            this.zAxis.Size = new System.Drawing.Size(45, 17);
-            this.zAxis.TabIndex = 21;
-            this.zAxis.Text = "Axis";
-            this.zAxis.UseVisualStyleBackColor = true;
             // 
             // PlotSettings
             // 

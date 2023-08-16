@@ -255,8 +255,13 @@ namespace MaximaPlugin.PlotImage
         public override void OnMouseUp(MouseEventOptions e)
         {
             canv.mouseD = false;
-            sizeChange = false;
             mouseDown = false;
+            if (sizeChange)
+            {
+                sizeChange = false;
+                callRedraw();
+            }
+            base.Invalidate();
             base.OnMouseUp(e);
             dblclicktimer.Start();
 
@@ -375,8 +380,9 @@ namespace MaximaPlugin.PlotImage
                 //canv.plotApproval = true;
                 canv.redrawCanvas = true;
 
-                canv.RequestEvaluation();
-                callRedraw();
+                //canv.RequestEvaluation();
+
+                canv.ScalImg(canv.imageEo);
             }
             base.OnSizeChanged(e);
         }

@@ -199,7 +199,7 @@ namespace MaximaPlugin.PlotImage
             commandList.Add("file_name=\"" + filename + "\"");
             //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
             commandList.Add("font=\"" + textFont + "\"");
-            if (termType == TermType.pdf)
+            if (termType == TermType.pdf && textSizeState != State.Custom)
             {
                 textSize = 12;
             }
@@ -243,7 +243,7 @@ namespace MaximaPlugin.PlotImage
 
                 if (xGrid == State.Enable || xGrid == State.Default || yGrid == State.Enable || yGrid == State.Default)
                 {
-                    prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0\"");
+                    prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
                     //prambleList.Add("\"set grid ls 100\"");
                 }
             }
@@ -252,6 +252,16 @@ namespace MaximaPlugin.PlotImage
                 commandList.Add("enhanced3d=true");
                 prambleList.Add("\"set pm3d lighting depthorder base\"");
             }
+
+            #region AXIS GRID
+
+            if (xGrid == State.Enable || xGrid == State.Default)
+                prambleList.Add("\"set grid xtics ls 100\"");
+            if (yGrid == State.Enable || yGrid == State.Default)
+                prambleList.Add("\"set grid ytics ls 100\"");
+            if ((zGrid == State.Enable || zGrid == State.Default) && plotType == PlotType.plot3D)
+                prambleList.Add("\"set grid ztics ls 100\"");
+            #endregion
 
             //PM3D
             if (pm3d == State.Enable)
@@ -307,15 +317,6 @@ namespace MaximaPlugin.PlotImage
                 commandList.Add("zrange=[" + zMinRange.ToString(nfi) + GlobalProfile.ArgumentsSeparatorStandard + zMaxRange.ToString(nfi) + "]");
             #endregion
 
-            #region AXIS GRID
-
-            if (xGrid == State.Enable || xGrid == State.Default)
-                prambleList.Add("\"set grid xtics mxtics\"");
-            if (yGrid == State.Enable || yGrid == State.Default)
-                prambleList.Add("\"set grid ytics mytics\"");
-            if ((zGrid == State.Enable || zGrid == State.Default) && plotType == PlotType.plot3D)
-                prambleList.Add("\"set grid ztics mztics\"");
-            #endregion
 
             #region AXIS LOGARITHMIC
             if (xLogarithmic == State.Enable || xLogarithmic == State.Default)

@@ -658,6 +658,7 @@ namespace MaximaPlugin.PlotImage
             else
             {
                 plotStore.textSizeState = PlotImage.PlotStore.State.Disable;
+                textTextSize.Text = Convert.ToString(plotStore.textSize);
             }
 
             //PM3D
@@ -809,11 +810,17 @@ namespace MaximaPlugin.PlotImage
             }
 
             if (comboTerm.SelectedIndex == 0)
+            {
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.svg;
+            }
             else if (comboTerm.SelectedIndex == 1)
+            {
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.png;
+            }
             else
+            {
                 plotStore.termType = MaximaPlugin.PlotImage.PlotStore.TermType.pdf;
+            }
                 #endregion
 
                 #region AXIS NAMES

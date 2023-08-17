@@ -49,9 +49,16 @@ namespace MaximaPlugin.PlotImage
             // neutralize units
             textHolder = rxUnit.Replace(textHolder, "1");
 
-            // add extra command to the list
-            //if (isBooleanExpression)
-            //    region.plotStore.commandList.Add("yrange=[-5,5]");
+            //check if there is any grid=true -> override this using the gnuplot grid instead
+            string gridRegex = @"\bgrid≡true\b";
+            Match userDefineGrid = Regex.Match(textHolder, gridRegex);
+
+            if (userDefineGrid.Success)
+            {
+                region.plotStore.xGrid = PlotStore.State.Enable;
+                region.plotStore.yGrid = PlotStore.State.Enable;
+                region.plotStore.zGrid = PlotStore.State.Enable;
+            }
 
             //REFRESH SETTINGSLIST
             region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/"); ;

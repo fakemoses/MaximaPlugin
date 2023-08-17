@@ -241,11 +241,7 @@ namespace MaximaPlugin.PlotImage
                     commandList.Add("yaxis_width=" + yaxisWidth);
                 }
 
-                if (xGrid == State.Enable || xGrid == State.Default || yGrid == State.Enable || yGrid == State.Default)
-                {
-                    prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
-                    //prambleList.Add("\"set grid ls 100\"");
-                }
+                prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
             }
             else if (plotType == PlotType.plot3D)
             {

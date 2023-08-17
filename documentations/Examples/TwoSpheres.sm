@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="96">
+    <identity>
+      <id>2ad475bf-81f7-4165-ad18-d508faa35cde</id>
+      <revision>3</revision>
+    </identity>
+    <calculation>
+      <precision>3</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>true</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="false" viewMode="2" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="9" orientation="Portrait" width="827" height="1169" />
+      <margins left="39" right="39" top="49" bottom="49" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+      <assembly name="MaximaPlugin" version="1.98.8629.37440" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
+      <assembly name="TextRegion" version="1.11.8348.30405" guid="485d28c5-349a-48b6-93be-12a35a1c1e39" />
+      <assembly name="Image Region" version="2.99.7818.2866" guid="63ddaef8-9a56-4ff6-938e-d590b638bf99" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="0" top="0" width="369" height="26" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand" style="string">restart</e>
+          <e type="function" args="1">MaximaControl</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Restart complete.</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="36" width="329" height="128" color="#000000" fontSize="10">
+      <text lang="ger" width="324" fontFamily="Arial" fontSize="10">
+        <content>
+          <p>This image breaks the communication with Maxima. <br />- Recalculate the sheet<br />- Image remains empty and Maximalog shows no output.<br />- only upon click the image appears<br />- when doing something on the canvas, the image is  replaced by an error message and the output in the log appears.</p>
+        </content>
+      </text>
+    </region>
+    <region left="0" top="180" width="436" height="39" color="#000000" fontSize="10">
+      <math optimize="2" decimalPlaces="4" significantDigitsMode="false">
+        <input>
+          <e type="operand">f</e>
+          <e type="operand">x</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">y</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">z</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">1</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operand">x</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">y</e>
+          <e type="operand">1.5</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">z</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">0.5</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">0.015</e>
+          <e type="operator" args="2">≡</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="0" top="216" width="410" height="213" color="#000000" fontSize="10">
+      <math optimize="0" decimalPlaces="4" significantDigitsMode="false">
+        <input>
+          <e type="operand">obj</e>
+          <e type="operand">palette</e>
+          <e type="operand">white</e>
+          <e type="operand">white</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">sys</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">cbtics</e>
+          <e type="operand">0.5</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">x_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">y_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">z_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">f</e>
+          <e type="operand">x</e>
+          <e type="operand">1</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">1</e>
+          <e type="operand">y</e>
+          <e type="operand">1.2</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">2.3</e>
+          <e type="operand">z</e>
+          <e type="operand">1</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">1</e>
+          <e type="function" args="10">implicit</e>
+          <e type="operand">user_preamble</e>
+          <e type="operand" style="string">set view 70, 120, 1, 1.4</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">colorbox</e>
+          <e type="operand">false</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">proportional_axes</e>
+          <e type="operand">xyz</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">xyplane</e>
+          <e type="operand">0</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">10</e>
+          <e type="operand">1</e>
+          <e type="function" args="12">sys</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="261" top="369" width="309" height="307" color="#000000" fontSize="10">
+      <image width="299" height="299">
+        <input>
+          <e type="operand">obj</e>
+          <e type="operand" style="string">png</e>
+          <e type="function" args="2">Draw3D</e>
+        </input>
+      </image>
+    </region>
+    <region left="0" top="747" width="5114" height="39" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">
+(%i22) draw3d([terminal=png,file_name=$C:/Users/kraska/AppData/Roaming/SMath/extensions/plugins/44011c1e-5d0d-4533-8e68-e32b5badce41/GnuPlot/g0uXEjdG$,terminal=png,user_preamble=[$set term pngcairo enhanced size 300,300$,$set encoding utf8$,$set pm3d lighting depthorder base$,$set view 70, 120, 1, 1.4$],enhanced3d=true,background_color=$#fefefe$, xu_grid=100, yv_grid=100, palette=color,xlabel=$x$, ylabel=$y$,palette=[white,white],cbtics=1/2,x_voxel=15,y_voxel=15,z_voxel=15,implicit(((-1+x^2+y^2+z^2)*(2*(-1+2*x^2)+(-3+2*y)^2+4*z^2))/4=3/200,x,-1,1,y,-6/5,23/10,z,-1,1),colorbox=false,proportional_axes=xyz,xyplane=0]);</e>
+        </result>
+      </math>
+    </region>
+  </regions>
+</worksheet>

@@ -70,7 +70,7 @@ namespace MaximaPlugin.PlotImage
                 canv.plotStore.yGrid = PlotStore.State.Disable;
 
                 canv.plotStore.width = 300;
-                canv.plotStore.width = 300;
+                canv.plotStore.height = 300;
             }
 
             // set default scaling states (see SS-198)

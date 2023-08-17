@@ -620,27 +620,35 @@ namespace MaximaPlugin.MFunctions
                 // preprocess second argument
                 arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
                 Target = arg2.Replace("\"", "");
-
-                if (!rxSys.IsMatch(arg2) && (Target != "pdf" && Target != "png" && Target != "svg")) // argument is not a list, i.e. filename is given and not only file extension 
+                if (Target != "pdf" && Target != "png" && Target != "svg")
                 {
-                    CopyTempFile = true;
+                    if (!rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given and not only file extension 
+                    {
+                        CopyTempFile = true;
 
-                    // Replace specific Unicode escape sequences with their corresponding characters
-                    string convertedString = ReplaceUnicodeEscapeSequences(Target);
+                        // Replace specific Unicode escape sequences with their corresponding characters
+                        string convertedString = ReplaceUnicodeEscapeSequences(Target);
 
-                    convertedString = convertedString.Replace("\\", "");
+                        convertedString = convertedString.Replace("\\", "");
 
-                    FilePath = Path.Combine(permPath, convertedString);
+                        FilePath = Path.Combine(permPath, convertedString);
 
-                    //check if file exists. If yes, convert to bck.
-                    backupFile = CreateBackupFilePath(FilePath);
+                        //check if file exists. If yes, convert to bck.
+                        backupFile = CreateBackupFilePath(FilePath);
+                    }
+                    else // size is given
+                    {
+                        size = Entry.Create(Computation.Preprocessing(args[1], ref context));
+                        CopyTempFile = false;
+
+                        //file path
+                        FilePath = FilePath + "." + term;
+                    }
                 }
-                else // size is given
+                else
                 {
-                    size = Entry.Create(Computation.Preprocessing(args[1], ref context));
-                    CopyTempFile = false;
-
-                    //file path
+                    term = Target;
+                    Target = RandomFileName + "." + Target;
                     FilePath = FilePath + "." + term;
                 }
             }

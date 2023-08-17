@@ -58,7 +58,7 @@ namespace MaximaPlugin.PlotImage
 
             #region PICTURE
             width = 300;
-            height = 250;
+            height = 240;
             pictureSizeState = State.Interactive;
             termType = TermType.png;
             filename = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), null);

@@ -558,7 +558,7 @@ namespace MaximaPlugin.MFunctions
                 preamble = RemoveSysFromPreamble(preamble);
 
             //add the default settings at the beginning of the thing
-            if (root.Text == "draw3D")
+            if (root.Text == "Draw3D")
             {
                 string drawSettings = "enhanced3d≡true,background_color≡\"#fefefe\", xu_grid≡100, yv_grid≡100, palette≡color,xlabel≡\"x\", ylabel≡\"y\"";
                 arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 7);
@@ -600,7 +600,16 @@ namespace MaximaPlugin.MFunctions
 
             // prepare size and filename
             string arg2 = "";
-            Entry size = Entry.Create(TermsConverter.ToTerms("sys(300,300,2,1)")); //size in px
+            string dummyEquation = "";
+            if (root.Text == "Draw3D")
+            {
+                dummyEquation = "sys(300,300,2,1)";
+            }
+            else
+            {
+                dummyEquation = "sys(300,240,2,1)";
+            }
+            Entry size = Entry.Create(TermsConverter.ToTerms(dummyEquation)); //size in px
             string sizeStringPart = "";
             string term = "pdf"; // default terminal
             string ipre = "";

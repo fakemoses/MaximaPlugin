@@ -4,7 +4,7 @@
   <settings ppi="96">
     <identity>
       <id>e01d0b68-1aab-4895-88af-2a5960fcbcc3</id>
-      <revision>332</revision>
+      <revision>333</revision>
     </identity>
     <metadata lang="ger">
       <author>Martin Kraska</author>
@@ -446,7 +446,7 @@
         </result>
       </math>
     </region>
-    <region left="9" top="1503" width="277" height="80" color="#000000" fontSize="10">
+    <region left="9" top="1503" width="285" height="80" color="#000000" fontSize="10">
       <math error="2" decimalPlaces="4">
         <input>
           <e type="operand">T</e>
@@ -630,7 +630,7 @@
         </input>
       </cflabel>
     </region>
-    <region left="18" top="1899" width="76" height="69" color="#000000" fontSize="10">
+    <region left="18" top="1899" width="80" height="69" color="#000000" fontSize="10">
       <math error="2" decimalPlaces="4">
         <input>
           <e type="operand">j</e>
@@ -1564,18 +1564,6 @@
         </input>
       </cflabel>
     </region>
-    <region left="909" top="3321" width="64" height="24" color="#000000" fontSize="10">
-      <math error="63">
-        <input>
-          <e type="operand">c</e>
-          <e type="operand">d</e>
-          <e type="operator" args="2">†</e>
-        </input>
-        <result action="symbolic">
-          <e type="operand">#</e>
-        </result>
-      </math>
-    </region>
     <region left="900" top="3357" width="794" height="24" color="#000000" fontSize="10">
       <math>
         <input>
@@ -1600,7 +1588,7 @@
         </content>
       </text>
     </region>
-    <region left="18" top="3411" width="264" height="86" color="#000000" fontSize="10">
+    <region left="18" top="3411" width="276" height="86" color="#000000" fontSize="10">
       <math error="63">
         <input>
           <e type="operand">A.1</e>
@@ -1643,7 +1631,7 @@
         </result>
       </math>
     </region>
-    <region left="27" top="3537" width="148" height="60" color="#000000" fontSize="10">
+    <region left="27" top="3537" width="152" height="60" color="#000000" fontSize="10">
       <math error="63">
         <input>
           <e type="operand">a.1</e>
@@ -2079,7 +2067,7 @@
         </input>
       </cflabel>
     </region>
-    <region left="18" top="4248" width="76" height="69" color="#000000" fontSize="10">
+    <region left="18" top="4248" width="80" height="69" color="#000000" fontSize="10">
       <math error="2" decimalPlaces="4">
         <input>
           <e type="operand">j</e>
@@ -2212,7 +2200,7 @@
         </input>
       </cflabel>
     </region>
-    <region left="1530" top="4473" width="244" height="71" color="#000000" fontSize="10">
+    <region left="1530" top="4473" width="248" height="71" color="#000000" fontSize="10">
       <math error="2" decimalPlaces="4">
         <input>
           <e type="operand">j</e>
@@ -2273,7 +2261,7 @@
         </input>
       </cflabel>
     </region>
-    <region left="18" top="4581" width="76" height="69" color="#000000" fontSize="10">
+    <region left="18" top="4581" width="80" height="69" color="#000000" fontSize="10">
       <math error="2" decimalPlaces="4">
         <input>
           <e type="operand">j</e>
@@ -5522,7 +5510,7 @@
         </content>
       </text>
     </region>
-    <region left="18" top="8487" width="93" height="26" color="#000000" fontSize="10">
+    <region left="18" top="8487" width="99" height="26" color="#000000" fontSize="10">
       <math error="63" decimalPlaces="4">
         <input>
           <e type="operand">λ</e>

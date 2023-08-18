@@ -43,6 +43,7 @@ namespace MaximaPlugin.PlotImage
         private const double zoomFactor = 30;
 
         bool mouseDoubleClick = false;
+        bool firstEval = false;
 
         //Constructors
         public MaximaPluginRegion(SessionProfile sessionProfile)
@@ -71,6 +72,9 @@ namespace MaximaPlugin.PlotImage
 
                 canv.plotStore.width = 300;
                 canv.plotStore.height = 300;
+
+                this.SetSize(new Size(canv.plotStore.width, canv.plotStore.height));
+                this.Resize();
             }
 
             // set default scaling states (see SS-198)
@@ -80,6 +84,8 @@ namespace MaximaPlugin.PlotImage
             if (canv.plotStore.plotType == PlotStore.PlotType.plot3D) canv.plotStore.yRangeS = PlotStore.State.Disable;
             canv.lastInput = "";
             canv.SetLastRequest();
+            callRedraw();
+            firstEval = true;
         }
 
         public MaximaPluginRegion(MaximaPluginRegion region)
@@ -511,10 +517,22 @@ namespace MaximaPlugin.PlotImage
         {
             canv.Plot();
             canv.ScalImg(canv.imageEo);
-            if(formOpen)
+            if (formOpen)
             {
-                psf.Restore();
-                psf.Refresh();
+                //some events calls from different thread causing cross thread exception and sometimes it's from the same thread
+                if (psf.InvokeRequired)
+                {
+                    psf.Invoke(new MethodInvoker(delegate ()
+                    {
+                        psf.Restore();
+                        psf.Refresh();
+                    }));
+                }
+                else
+                {
+                    psf.Restore();
+                    psf.Refresh();
+                }
             }
         }
 
@@ -523,43 +541,50 @@ namespace MaximaPlugin.PlotImage
         {
             //IncludeDefs(ref store);
             string input = "";
-            try
+            if (!firstEval)
             {
-                //boolean expression check
-                string check = TermsConverter.ToString(Terms);
-                string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
-                Match match = Regex.Match(check, pattern);
-
-                if (!match.Success)
+                try
                 {
-                    var out1 = Computation.Preprocessing(Terms, ref store);
-                    input = TermsConverter.ToString(out1);
-                    AvailableItems = new List<Definition>();
-                    for (int k = store.Count - 1; k > -1; k--)
+                    //boolean expression check
+                    string check = TermsConverter.ToString(Terms);
+                    string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+                    Match match = Regex.Match(check, pattern);
+
+                    if (!match.Success)
                     {
-                        AvailableItems[k] = store[k];
+                        var out1 = Computation.Preprocessing(Terms, ref store);
+                        input = TermsConverter.ToString(out1);
+                        AvailableItems = new List<Definition>();
+                        for (int k = store.Count - 1; k > -1; k--)
+                        {
+                            AvailableItems[k] = store[k];
+                        }
                     }
+                    else
+                        input = check;
                 }
-                else
-                    input = check;
-            }
-            catch
-            {
-            }
-            canv.lastInput = input;
-            canv.SetLastRequest();
-            //canv.plotApproval = true;
+                catch
+                {
+                }
+                canv.lastInput = input;
+                canv.SetLastRequest();
+                //canv.plotApproval = true;
 
-            if (canv.redrawCanvas)
-            {
-                callRedraw();
-            }
+                if (canv.redrawCanvas)
+                {
+                    callRedraw();
+                }
 
-            AddDefs(store);
-            //dMouseX = 0;
-            //dMouseY = 0;
-            //dMouseW = 0;
-            base.OnEvaluation(store);
+                AddDefs(store);
+                //dMouseX = 0;
+                //dMouseY = 0;
+                //dMouseW = 0;
+                base.OnEvaluation(store);
+            }
+            else
+                firstEval = false;
+
+            
         }
 
         // Redirection to context

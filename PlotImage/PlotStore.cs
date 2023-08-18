@@ -201,7 +201,7 @@ namespace MaximaPlugin.PlotImage
             commandList.Add("font=\"" + textFont + "\"");
             if (termType == TermType.pdf && textSizeState != State.Custom)
             {
-                textSize = 12;
+                textSize = 14;
             }
             commandList.Add("font_size=" + textSize);
 
@@ -240,14 +240,14 @@ namespace MaximaPlugin.PlotImage
                     commandList.Add("yaxis_color=" + yAxisColor);
                     commandList.Add("yaxis_width=" + yaxisWidth);
                 }
-
-                prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
             }
             else if (plotType == PlotType.plot3D)
             {
                 commandList.Add("enhanced3d=true");
                 prambleList.Add("\"set pm3d lighting depthorder base\"");
             }
+
+            prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
 
             #region AXIS GRID
 

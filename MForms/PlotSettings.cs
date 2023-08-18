@@ -1166,6 +1166,7 @@ namespace MaximaPlugin.PlotImage
 
             staThread.Start();
 
+            // showing loading screen for long processes, Pdf and Svg
             if (plotStore.termType != PlotStore.TermType.png)
             {
                 MoveControlsToTopLeft();

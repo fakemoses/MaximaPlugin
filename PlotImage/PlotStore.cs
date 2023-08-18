@@ -247,7 +247,10 @@ namespace MaximaPlugin.PlotImage
                 prambleList.Add("\"set pm3d lighting depthorder base\"");
             }
 
-            prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
+            if(termType == TermType.svg || termType == TermType.pdf)
+                prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
+            else if(termType == TermType.png)
+                prambleList.Add("\"set style line 100 lc rgb 'black' lt -1 lw 0.1\"");
 
             #region AXIS GRID
 

@@ -45,7 +45,7 @@ namespace MaximaPlugin.PlotImage
             textHolder = MFunctions.DirectMaximaFunctions.ExtractUserPreamble(textHolder, out preamble);
             if (preamble != "")
                 preamble = MFunctions.DirectMaximaFunctions.RemoveSysFromPreamble(preamble);
-
+              
             // neutralize units
             textHolder = rxUnit.Replace(textHolder, "1");
 
@@ -89,7 +89,7 @@ namespace MaximaPlugin.PlotImage
                 }
                 else
                 {
-                    region.plotStore.prambleList.Add(Symbols.StringChar + preamble + Symbols.StringChar);
+                    region.plotStore.prambleList.Add(preamble);
                 }
             }
             

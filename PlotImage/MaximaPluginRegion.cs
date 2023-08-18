@@ -541,31 +541,32 @@ namespace MaximaPlugin.PlotImage
         {
             //IncludeDefs(ref store);
             string input = "";
-            if (!firstEval)
-            {
-                try
-                {
-                    //boolean expression check
-                    string check = TermsConverter.ToString(Terms);
-                    string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
-                    Match match = Regex.Match(check, pattern);
 
-                    if (!match.Success)
-                    {
-                        var out1 = Computation.Preprocessing(Terms, ref store);
-                        input = TermsConverter.ToString(out1);
-                        AvailableItems = new List<Definition>();
-                        for (int k = store.Count - 1; k > -1; k--)
-                        {
-                            AvailableItems[k] = store[k];
-                        }
-                    }
-                    else
-                        input = check;
-                }
-                catch
+            try
+            {
+                //boolean expression check
+                string check = TermsConverter.ToString(Terms);
+                string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
+                Match match = Regex.Match(check, pattern);
+
+                if (!match.Success)
                 {
+                    var out1 = Computation.Preprocessing(Terms, ref store);
+                    input = TermsConverter.ToString(out1);
+                    AvailableItems = new List<Definition>();
+                    for (int k = store.Count - 1; k > -1; k--)
+                    {
+                        AvailableItems[k] = store[k];
+                    }
                 }
+                else
+                    input = check;
+            }
+            catch
+            {
+            }
+            if (firstEval || canv.lastInput != input)
+            {
                 canv.lastInput = input;
                 canv.SetLastRequest();
                 //canv.plotApproval = true;
@@ -574,17 +575,19 @@ namespace MaximaPlugin.PlotImage
                 {
                     callRedraw();
                 }
-
-                AddDefs(store);
-                //dMouseX = 0;
-                //dMouseY = 0;
-                //dMouseW = 0;
-                base.OnEvaluation(store);
             }
             else
+            {
                 firstEval = false;
+            }
 
-            
+
+            AddDefs(store);
+            //dMouseX = 0;
+            //dMouseY = 0;
+            //dMouseW = 0;
+            base.OnEvaluation(store);
+
         }
 
         // Redirection to context

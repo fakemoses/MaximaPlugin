@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="96">
+    <identity>
+      <id>e902bdd9-65c0-4e1f-9dee-25412b9ae544</id>
+      <revision>3</revision>
+    </identity>
+    <calculation>
+      <precision>3</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>false</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="false" viewMode="2" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="9" orientation="Portrait" width="827" height="1169" />
+      <margins left="39" right="39" top="49" bottom="49" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+      <assembly name="Custom Glyphs" version="1.1.7783.42782" guid="24c691c1-37f2-49e3-9a84-ccb77304d14a" />
+      <assembly name="MaximaPlugin" version="1.98.8629.42223" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
+      <assembly name="TextRegion" version="1.11.8348.30405" guid="485d28c5-349a-48b6-93be-12a35a1c1e39" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="9" top="0" width="69" height="81" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">a</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="99" top="0" width="69" height="81" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">b</e>
+          <e type="operand">b.1</e>
+          <e type="operand">b.2</e>
+          <e type="operand">b.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="225" top="27" width="69" height="57" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">c.1</e>
+          <e type="operand">c.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="306" top="27" width="69" height="57" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">d</e>
+          <e type="operand">d.1</e>
+          <e type="operand">d.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="0" top="108" width="173" height="81" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">a</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">†</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="198" width="192" height="32" color="#000000" fontSize="10">
+      <math error="63">
+        <input>
+          <e type="operand">A.1</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">B.1</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">†</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">#</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="234" width="794" height="24" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">lastError</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="270" width="234" height="35" color="#000000" fontSize="10">
+      <math error="63">
+        <input>
+          <e type="operand">A.1</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">B.1</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">†</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">#</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="306" width="794" height="24" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">lastError</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="333" width="469" height="87" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">A.1</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="function" args="1">Maxima</e>
+          <e type="operand">B.1</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="function" args="1">Maxima</e>
+          <e type="operator" args="2">†</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="423" width="68" height="24" color="#000000" fontSize="10">
+      <math error="63">
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">†</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">#</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="459" width="794" height="24" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">lastError</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="495" width="178" height="57" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">c</e>
+          <e type="function" args="1">MaximaDefine</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">c.1</e>
+          <e type="operand">c.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="207" top="495" width="178" height="57" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">d</e>
+          <e type="function" args="1">MaximaDefine</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">d.1</e>
+          <e type="operand">d.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="567" width="237" height="81" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand" style="string">$a~b$</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="648" width="200" height="57" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand" style="string">$c~d$</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="none">
+          <e type="operand">c.1</e>
+          <e type="operand">c.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operand">d.1</e>
+          <e type="operand">d.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operator" args="2">†</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="720" width="508" height="38" color="#000000" fontSize="10">
+      <text lang="eng" width="501" fontFamily="Arial" fontSize="10">
+        <content>
+          <p>On maxima side we need an improved cross product, which can handle 2d vectors, but that is a second step.</p>
+        </content>
+      </text>
+    </region>
+  </regions>
+</worksheet>

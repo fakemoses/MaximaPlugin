@@ -36,6 +36,11 @@ namespace MaximaPlugin.PlotImage
 
             }
 
+            //check if there is any user-inserted enhanced3d. Incase it is set to false
+            Match isEnhanced3D = Regex.Match(textHolder, @"enhanced3d≡(false|none)");
+            if (isEnhanced3D.Success)
+                region.plotStore.enhanced3dState = PlotImage.PlotStore.State.Disable;
+
             // wrap in system if required
             if (!textHolder.StartsWith("sys("))
                 textHolder = "sys(" + textHolder + ",1,1)";

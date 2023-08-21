@@ -40,6 +40,9 @@ namespace MaximaPlugin.PlotImage
             //BACKGROUND COLOR
             bgColor = "#fefefe";
 
+            //Enhanced3D
+            enhanced3dState = State.Enable;
+
             //CONTOUR
             contour = State.Custom;
             contourLevels = 5;
@@ -172,8 +175,11 @@ namespace MaximaPlugin.PlotImage
             if (textSizeState == State.Disable)
                 textSize = 8;
 
-            string convertedWidthforPDF = (width / GlobalProfile.ContentDpi).ToString("0.##").Replace(",",".");
-            string convertedHeightforPDF = (height / GlobalProfile.ContentDpi).ToString("0.##").Replace(",", ".");
+            double convertedW = Math.Round(width / GlobalProfile.ContentDpi, 2,MidpointRounding.ToEven);
+            string convertedWidthforPDF = convertedW.ToString("0.##").Replace(",", ".");
+
+            double convertedH = Math.Round(height / GlobalProfile.ContentDpi, 2, MidpointRounding.ToEven);
+            string convertedHeightforPDF = convertedH.ToString("0.##").Replace(",", ".");
 
             string convertedWidth = width.ToString();
             string convertedHeight = height.ToString();
@@ -243,8 +249,9 @@ namespace MaximaPlugin.PlotImage
             }
             else if (plotType == PlotType.plot3D)
             {
-                commandList.Add("enhanced3d=true");
-                prambleList.Add("\"set pm3d lighting depthorder base\"");
+                if(enhanced3dState == State.Enable)
+                    commandList.Add("enhanced3d=true");
+                    prambleList.Add("\"set pm3d lighting depthorder base\"");
             }
 
             if(termType == TermType.svg || termType == TermType.pdf)
@@ -447,6 +454,14 @@ namespace MaximaPlugin.PlotImage
         {
             set { _bgColor = value; }
             get { return _bgColor; }
+        }
+
+        //Enhanced3D
+        private State _enhanced3dState;
+        public State enhanced3dState
+        {
+            set { _enhanced3dState = value; }
+            get { return _enhanced3dState; }
         }
 
         //PM3D

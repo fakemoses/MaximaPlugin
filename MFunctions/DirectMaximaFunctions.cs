@@ -499,55 +499,50 @@ namespace MaximaPlugin.MFunctions
         /// <param name="result"></param>
         /// <returns></returns>
 
-        // new draw method based
+       
         public static bool Draw(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            bool isBooleanExpression = false;
+            PlotImage.PlotStore plotStore = new PlotImage.PlotStore();
+
+            //set some plot options
+            plotStore.xRangeS = PlotImage.PlotStore.State.Disable;
+            plotStore.yRangeS = PlotImage.PlotStore.State.Disable;
+            plotStore.zRangeS = PlotImage.PlotStore.State.Disable;
+            plotStore.gridState = PlotImage.PlotStore.State.Disable;
+            plotStore.view = PlotImage.PlotStore.State.Disable;
+
+            //set type of drawing
+            if (root.Text == "Draw2D")
+                plotStore.plotType = PlotImage.PlotStore.PlotType.plot2D;
+            else
+                plotStore.plotType = PlotImage.PlotStore.PlotType.plot3D;
+
             // boolean expression check
-            string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
+            string arg1 = SharedFunctions.Proprocessing(args[0]);
+
             //use regex to check if it contain the SMath if(condition,true,false) condition
             string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
-            Match match = Regex.Match(stringToMaxima, pattern);
+            Match match = Regex.Match(arg1, pattern);
             if (!match.Success)
             {
-
-                // nounify polar to avoid conflicts with variable names in Maxima
-                args[0] = Computation.Preprocessing(args[0], ref context);
-                string t = SharedFunctions.Proprocessing(args[0]);
-
-                for (int i = 0; i < args[0].Length; i++)
-                {
-                    if (args[0][i].Text == "polar" && args[0][i].Type == TermType.Function)
-                    {
-                        args[0][i].Text = ControlObjects.Replacement.Noun + "polar";
-                    }
-
-                    if (args[0][i].Text == "spherical" && args[0][i].Type == TermType.Function)
-                    {
-                        args[0][i].Text = ControlObjects.Replacement.Noun + "spherical";
-                    }
-
-                    if (args[0][i].Text == "cylindrical" && args[0][i].Type == TermType.Function)
-                    {
-                        args[0][i].Text = ControlObjects.Replacement.Noun + "cylindrical";
-                    }
-
-                }
-
-            }
-            else
-            {
-                isBooleanExpression = true;
+                // tag "polar, spherical, cylindrical" as noun
+                arg1 = arg1.Replace("polar(", ControlObjects.Replacement.Noun + "polar(");
+                arg1 = arg1.Replace("spherical(", ControlObjects.Replacement.Noun + "spherical(");
+                arg1 = arg1.Replace("cylindrical(", ControlObjects.Replacement.Noun + "cylindrical(");
             }
 
-            MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
-            bool CopyTempFile = false; // Do we have to copy the temp file to some destination?
+            //check if there is any user-inserted enhanced3d. Incase it is set to false
+            Match isEnhanced3D = Regex.Match(arg1, @"enhanced3d≡(false|none)");
+            if (isEnhanced3D.Success)
+                plotStore.enhanced3dState = PlotImage.PlotStore.State.Disable;
+
 
             // process first argument (draw commands and objects)
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
             Regex rxUnit = new Regex(@"(['][\w\d]+)", RegexOptions.None);
             Regex rxSize = new Regex(@"sys\((\d+),(\d+),2,1\)");
-            string arg1 = SharedFunctions.Proprocessing(args[0]);
+            
+            
             // enclose argument in list if it is scalar
             if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
 
@@ -557,31 +552,9 @@ namespace MaximaPlugin.MFunctions
             if (preamble != "")
                 preamble = RemoveSysFromPreamble(preamble);
 
-            //add the default settings at the beginning of the thing
-            if (root.Text == "Draw3D")
-            {
-                string drawSettings = "enhanced3d≡true,background_color≡\"#fefefe\", xu_grid≡100, yv_grid≡100, palette≡color,xlabel≡\"x\", ylabel≡\"y\"";
-                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 7);
-            }
-            else if(isBooleanExpression)
-            {
-                string drawSettings = "yrange≡[-5,5],enhanced3d≡true, background_color≡\"#fefefe\", xlabel≡\"x\", ylabel≡\"y\",xaxis_type≡solid, xaxis≡true, xaxis_color≡black, xaxis_width≡1, " +
-                    "yaxis_type≡solid, yaxis≡true, yaxis_color≡black, yaxis_width≡1";
-                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 13);
-            }
-            else
-            {
-                string drawSettings = "enhanced3d≡true, background_color≡\"#fefefe\", xlabel≡\"x\", ylabel≡\"y\",xaxis_type≡solid, xaxis≡true, xaxis_color≡black, xaxis_width≡1, " +
-                    "yaxis_type≡solid, yaxis≡true, yaxis_color≡black, yaxis_width≡1";
-                arg1 = AddItemsAndAdjustValues(arg1, drawSettings, 12);
-            }
-            // replace units by 1
+            // neutralize units by replacing with 1
             arg1 = rxUnit.Replace(arg1, "1");
-            // Strings
-            MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
-            List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { arg1 });
-            // Matrices and Lists
-            esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
+
 
             // Create Temp path in SMath Working folder
             string TempPath = ControlObjects.Translator.GetMaxima().gnuPlotImageFolder;
@@ -600,27 +573,27 @@ namespace MaximaPlugin.MFunctions
 
             // prepare size and filename
             string arg2 = "";
-            string dummyEquation = "";
             if (root.Text == "Draw3D")
             {
-                dummyEquation = "sys(300,300,2,1)";
+                plotStore.width = 300;
+                plotStore.height = 300;
             }
             else
             {
-                dummyEquation = "sys(300,240,2,1)";
+                plotStore.width = 300;
+                plotStore.height = 240;
             }
-            Entry size = Entry.Create(TermsConverter.ToTerms(dummyEquation)); //size in px
-            string sizeStringPart = "";
+            
             string term = "pdf"; // default terminal
-            string ipre = "";
-            string Target = "dummy.pdf";
-            string bgColor = "";
+            string Target = "";
             string backupFile = "";
 
 
             // use random file name when only one arguments -> only lists of settings
             if (root.ArgsCount == 1)
             {
+                plotStore.filename = FilePath;
+                plotStore.termType = PlotImage.PlotStore.TermType.pdf;
                 FilePath = FilePath + "." + term;
             }
 
@@ -633,7 +606,6 @@ namespace MaximaPlugin.MFunctions
                 {
                     if (!rxSys.IsMatch(arg2)) // argument is not a list, i.e. filename is given and not only file extension 
                     {
-                        CopyTempFile = true;
 
                         // Replace specific Unicode escape sequences with their corresponding characters
                         string convertedString = ReplaceUnicodeEscapeSequences(Target);
@@ -642,13 +614,30 @@ namespace MaximaPlugin.MFunctions
 
                         FilePath = Path.Combine(permPath, convertedString);
 
+                        //set value in plotstore
+                        plotStore.filename = Path.ChangeExtension(FilePath, null);
+
+                        if (FilePath.EndsWith("png"))
+                            plotStore.termType = PlotImage.PlotStore.TermType.png;
+                        else if(FilePath.EndsWith("svg"))
+                            plotStore.termType = PlotImage.PlotStore.TermType.svg;
+                        else
+                            plotStore.termType = PlotImage.PlotStore.TermType.pdf;
+
                         //check if file exists. If yes, convert to bck.
                         backupFile = CreateBackupFilePath(FilePath);
                     }
                     else // size is given
                     {
-                        size = Entry.Create(Computation.Preprocessing(args[1], ref context));
-                        CopyTempFile = false;
+                        //some size extractor here
+                        int[] size = GetSizeofImage(Target);
+
+                        plotStore.width = size[0];
+                        plotStore.height = size[1];
+
+                        //set plotstore
+                        plotStore.filename = FilePath;
+                        plotStore.termType = PlotImage.PlotStore.TermType.pdf;
 
                         //file path
                         FilePath = FilePath + "." + term;
@@ -656,9 +645,20 @@ namespace MaximaPlugin.MFunctions
                 }
                 else
                 {
+                    //only extension is given as filename
                     term = Target;
-                    Target = RandomFileName + "." + Target;
+
+                    //set value in plotstore
+                    plotStore.filename = Path.ChangeExtension(FilePath, null);
+
                     FilePath = FilePath + "." + term;
+
+                    if (FilePath.EndsWith("png"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.png;
+                    else if (FilePath.EndsWith("svg"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.svg;
+                    else
+                        plotStore.termType = PlotImage.PlotStore.TermType.pdf;
                 }
             }
             else if (root.ArgsCount == 3) // filename and size are given
@@ -676,56 +676,61 @@ namespace MaximaPlugin.MFunctions
 
                     FilePath = Path.Combine(permPath, convertedString);
 
+                    //set value in plotstore
+                    plotStore.filename = Path.ChangeExtension(FilePath, null);
+
+                    if (FilePath.EndsWith("png"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.png;
+                    else if (FilePath.EndsWith("svg"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.svg;
+                    else
+                        plotStore.termType = PlotImage.PlotStore.TermType.pdf;
+
                     //check if file exists. If yes, convert to bck.
                     backupFile = CreateBackupFilePath(FilePath);
                 }
                 else
                 {
+                    //only extension is given as filename
+                    term = Target;
+
+                    //set value in plotstore
+                    plotStore.filename = Path.ChangeExtension(FilePath, null);
+
                     FilePath = FilePath + "." + term;
+
+                    if (FilePath.EndsWith("png"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.png;
+                    else if (FilePath.EndsWith("svg"))
+                        plotStore.termType = PlotImage.PlotStore.TermType.svg;
+                    else
+                        plotStore.termType = PlotImage.PlotStore.TermType.pdf;
                 }
 
-                CopyTempFile = true;
+
                 // third argument is size
-                size = Entry.Create(Computation.Preprocessing(args[2], ref context));
+                string sizeString = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));
+                int[] size = GetSizeofImage(sizeString);
+
+                plotStore.width = size[0];
+                plotStore.height = size[1];
+
             }
 
-
-            // set term to svg if requested by file name
-            if (Target.EndsWith("svg") && Target.Length > 3)
-            {
-                term = "svg";
-                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
-                ipre = "set term svg noenhanced size ";
-            }
-            // set term to pdf if requested by file name
-            else if (Target.EndsWith("png") && Target.Length > 3)
-            {
-                term = "png";
-                ipre = "set term pngcairo enhanced size ";
-                sizeStringPart = GetSizeString(size, context, SizeUnit.Pixel);
-            }
-            else // use pdf otherwise
-            {
-                term = "pdf";
-                ipre = "set term pdfcairo enhanced size ";
-                sizeStringPart = GetSizeString(size, context, SizeUnit.Inch);
-            }
-
+            //for use later
             string fullFilePath = FilePath;
 
 
-            // build SMath list - User preamble part
-            if (root.Text == "Draw3D")
-            {
-                ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set pm3d lighting depthorder base" + Symbols.StringChar;
-            }
-            else
-            {
-                ipre = Symbols.StringChar + ipre + sizeStringPart + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard
-                + Symbols.StringChar + "set encoding utf8" + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set style line 100 lc rgb 'grey' lt -1 lw 0"
-                + Symbols.StringChar + GlobalProfile.ArgumentsSeparatorStandard + Symbols.StringChar + "set grid ls 100" + Symbols.StringChar;
-            }
+            //makelists()
+            plotStore.MakeLists();
+
+            // Extract Strings here!
+            MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
+            List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { arg1 });
+
+            // Matrices and Lists
+            MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
+            esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
 
             if (preamble != "")
             {
@@ -736,45 +741,30 @@ namespace MaximaPlugin.MFunctions
                     // Split the preamble using the separator (',') into multiple parts
                     string[] preambleParts = preamble.Split(new[] { GlobalProfile.ArgumentsSeparatorStandard }, StringSplitOptions.RemoveEmptyEntries);
 
-                    // Join the preamble parts with the separator and include them in the 'ipre' string
-                    ipre += GlobalProfile.ArgumentsSeparatorStandard.ToString();
                     for (int i = 0; i < preambleParts.Length; i++)
                     {
-                        ipre += preambleParts[i];
-                        if (i < preambleParts.Length - 1)
-                        {
-                            ipre += GlobalProfile.ArgumentsSeparatorStandard;
-                        }
+                        plotStore.prambleList.Add(preambleParts[i]);
                     }
                 }
                 else
                 {
-                    ipre += GlobalProfile.ArgumentsSeparatorStandard + preamble;
+                    plotStore.prambleList.Add(preamble);
                 }
 
             }
 
-            // the last argument is obsolet but required due to the signature.
-            ListHandle(esm, ipre, "terminal≡" + term, "file_name≡"
-                + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
-            terminate(esm, ipre, "terminal≡" + term, "file_name≡"
-                + Symbols.StringChar + Path.ChangeExtension(FilePath, null).Replace("\\", "/") + Symbols.StringChar, "terminal≡" + term);
 
+            ListHandle(esm, plotStore.commandList, plotStore.prambleList);
+            terminate(esm, plotStore.commandList, plotStore.prambleList);
+            
             // convert to Maxima
             string send = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
 
-            //remove user preamble manually if boolean expression
-            //if (isBooleanExpression)
-            //{
-            //    string userPreamblePattern = @"user_preamble≡\[[^\]]*\],\s*";
-            //    send = Regex.Replace(send, userPreamblePattern, "");
-            // }
 
             sl = MaximaPlugin.ControlObjects.Translator.PutOriginalStringsIn(new List<string>() { send });
             // send to Maxima
             ControlObjects.TranslationModifiers.TimeOut = 5000;
             string res = ControlObjects.Translator.Ask(root.Text.ToLower() + "(" + sl[0] + ")");
-
 
             //check if file exists, if yes check if it has content. No content means there is error.
 
@@ -811,7 +801,6 @@ namespace MaximaPlugin.MFunctions
         }
 
 
-
         public static bool findPreL = false;
 
         /// <summary>
@@ -822,17 +811,19 @@ namespace MaximaPlugin.MFunctions
         /// <param name="term"></param>
         /// <param name="name"></param>
         /// <param name="bgColor"></param>
-        public static void ListHandle(MaximaPlugin.Converter.ElementStoreManager esm, string pres, string term, string name, string bgColor)
+        public static void ListHandle(MaximaPlugin.Converter.ElementStoreManager esm, List<string> commands, List<string> preamble)
         {
             Regex rxPreamble = new Regex(@"preamble");
             for (int i = 0; i < esm.currentStore.items; i++)
             {
+                if (findPreL) break;
                 for (int j = 0; j < esm.currentStore.itemData[i].Count; j++)
                 {
-                    if (esm.currentStore.itemData[i][j] == esm.layerMsg)
+                    if (findPreL) break;
+                    else if (esm.currentStore.itemData[i][j] == esm.layerMsg)
                     {
                         esm.nextElementStore();
-                        ListHandle(esm, pres, term, name, bgColor);
+                        ListHandle(esm, commands, preamble);
                         esm.prevElementStore();
                     }
                     else if (rxPreamble.Match(esm.currentStore.itemData[i][0], 0).Success)
@@ -847,33 +838,29 @@ namespace MaximaPlugin.MFunctions
                                 tmp = true;
                             }
                             esm.nextElementStore();
-                            esm.currentStore.itemData.Insert(0, new List<string> { pres });
+                            string temp = "";
+                            for (int o = 0; o < preamble.Count; o++)
+                            {
+                                if (o == preamble.Count - 1)
+                                    temp = temp + preamble[o];
+                                else
+                                    temp = temp + preamble[o] + GlobalProfile.ArgumentsSeparatorStandard + " ";
+                            }
+                            esm.currentStore.itemData.Insert(0, (new List<string>() { temp }));
                             esm.currentStore.items++;
                             esm.currentStore.rows = esm.currentStore.items;
                             esm.currentStore.cols = esm.currentStore.items;
                             esm.currentStore.refPointer = 0;
                             esm.prevElementStore();
-                            if (tmp)
+                            if (tmp && esm.currentStore.itemData[i].Count > 1)
                             {
                                 esm.currentStore.itemData[i].RemoveAt(2);
                             }
                         }
                         else
                         {
-                            // bool braket = false;
                             string temp = esm.currentStore.itemData[i][0].Substring(14);
-                            if (temp[0] == '≡')
-                            {
-                                temp = temp.Substring(1);
-                                //   braket = true;
-                            }
-
-                            /*
-                            for(int z = 1; z < esm.currentStore.itemData[i].Count; z++)
-                            {
-                                temp = temp + esm.currentStore.itemData[i][z];
-                            }*/
-
+                            if (temp[0] == '≡') temp = temp.Substring(1);
                             int open = 0, close = 0;
                             for (int z = 0; z < temp.Length; z++)
                             {
@@ -882,72 +869,84 @@ namespace MaximaPlugin.MFunctions
                             }
                             if (open - close == -1) temp = temp.Substring(0, temp.Length - 1);
                             esm.currentStore.itemData.RemoveAt(i);
-                            esm.currentStore.itemData.Insert(0, (new List<string>() { "user_preamble≡[" + pres + GlobalProfile.ArgumentsSeparatorStandard + temp + "]" }));
+                            string temp2 = "[";
+                            for (int o = 0; o < preamble.Count; o++)
+                            {
+                                temp2 = temp2 + preamble[o] + GlobalProfile.ArgumentsSeparatorStandard + " ";
+                            }
+                            temp2 = temp2 + temp + "]";
+                            esm.currentStore.itemData.Insert(0, (new List<string>() { "user_preamble≡" + temp2 }));
                         }
-                        i++;
                     }
                 }
             }
             esm.currentStore.refPointer = 0;
         }
-        public static void terminate(MaximaPlugin.Converter.ElementStoreManager esm, string pres, string term, string name, string bgColor)
+        public static void terminate(MaximaPlugin.Converter.ElementStoreManager esm, List<string> commands, List<string> preamble)
         {
+            string temp = "[";
+
             if (!findPreL)
             {
-                esm.currentStore.itemData.Insert(0, new List<string> { "user_preamble≡[" + pres + "]" });
+                temp = "[";
+                for (int o = 0; o < preamble.Count; o++)
+                {
+                    if (o == preamble.Count - 1)
+                        temp = temp + preamble[o];
+                    else
+                        temp = temp + preamble[o] + GlobalProfile.ArgumentsSeparatorStandard + " ";
+                }
+                temp = temp + "]";
+                esm.currentStore.itemData.Insert(0, (new List<string>() { "user_preamble≡" + temp }));
+
                 esm.currentStore.items++;
-                esm.currentStore.rows++;
+                esm.currentStore.rows = esm.currentStore.items;
+                esm.currentStore.cols = esm.currentStore.items;
+
             }
-            esm.currentStore.itemData.Insert(0, new List<string> { term });
-            esm.currentStore.itemData.Insert(0, new List<string> { name });
-            esm.currentStore.itemData.Insert(0, new List<string> { bgColor });
-            esm.currentStore.items += 3;
+
+
+
+            temp = "";
+            for (int o = 0; o < commands.Count; o++)
+            {
+                if (o == commands.Count - 1)
+                    temp = temp + commands[o];
+                else
+                    temp = temp + commands[o] + GlobalProfile.ArgumentsSeparatorStandard + " ";
+            }
+
+            esm.currentStore.itemData.Insert(0, (new List<string>() { temp }));
+
+            esm.currentStore.items++;
             esm.currentStore.rows = esm.currentStore.items;
             esm.currentStore.cols = esm.currentStore.items;
             esm.currentStore.refPointer = 0;
             findPreL = false;
             esm.gotoFirstElementStore();
+
         }
 
-        public enum SizeUnit { Pixel, Inch };
 
-        /// <summary>
-        /// This returns a string for specification of the image size in Gnuplot.
-        /// </summary>
-        /// <param name="arg"></param>expression (list), size in meters or if without unit, in pixels
-        /// <param name="context"></param> 
-        /// <param name="unit"></param> unit for gnuplot
-        /// <returns></returns>
-        public static string GetSizeString(Entry arg, Store context, SizeUnit resultunit)
+        //get string from argument
+        static int[] GetSizeofImage(string input)
         {
-            TNumber Inch = Computation.NumericCalculation(new Entry("'in"), context);
-            TNumber size = Computation.NumericCalculation(arg, context);
-            int digits = 2;
-            if (size.El(1).obj.Units.ContainsUnits() && size.El(2).obj.Units.ContainsUnits())
+            int[] numbers = new int[2];
+
+            // Define a regular expression pattern to match numbers
+            string pattern = @"\d+";
+
+            // Use Regex.Match to find all matches of the pattern in the input string
+            MatchCollection matches = Regex.Matches(input, pattern);
+
+            // Convert the first two matched numbers to integers
+            if (matches.Count >= 2)
             {
-                if (size.El(1).obj.Units.Text == "'m" && size.El(2).obj.Units.Text == "'m")
-                {
-                    // compute the size string if given in m
-                    if (resultunit == SizeUnit.Pixel)
-                    {
-                        size = size / Inch * GlobalProfile.ContentDpi;
-                        digits = 0; // avoid fractional pixel values
-                    }
-                    else size = size / Inch;
-                }
-                else
-                {
-                    // complain about non-consistent units 
-                }
+                numbers[0] = int.Parse(matches[0].Value);
+                numbers[1] = int.Parse(matches[1].Value);
             }
-            else
-            {
-                // compute size given as pixels
-                if (resultunit == SizeUnit.Inch) size = size / GlobalProfile.ContentDpi;
-            }
-            // Extract list entries to string
-            return size.El(1).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven) + ","
-                + size.El(2).obj.ToString(digits, 10, FractionsType.Decimal, false, false, MidpointRounding.ToEven);
+
+            return numbers;
         }
 
         static string GenerateRandomString(int length)
@@ -963,9 +962,6 @@ namespace MaximaPlugin.MFunctions
             // Replace specific Unicode escape sequences with their corresponding characters
             input = input.Replace("\\005F", "_");
             input = input.Replace("\\002E", ".");
-            //input = input.Replace("\\0020", " ");
-            //input = input.Replace("\\002C", ",");
-            //input = input.Replace("\\", "");
             return input;
         }
 
@@ -989,40 +985,6 @@ namespace MaximaPlugin.MFunctions
             }
 
             return -1; // If there's no second-to-last item, return -1
-        }
-
-        static string AddItemsAndAdjustValues(string input, string itemsToAdd, int numberofItems)
-        {
-            // Use regex to find the last two numbers in the input string
-            MatchCollection matches = Regex.Matches(input, @"\d+");
-            int secondLastNumber = int.Parse(matches[matches.Count - 2].Value);
-            int lastNumber = int.Parse(matches[matches.Count - 1].Value);
-
-            // Calculate the updated values based on the rule (adding 2 to the second-to-last number)
-            int updatedSecondLastNumber = secondLastNumber + numberofItems;
-
-            // Find the position after "sys("
-            int insertIndex = input.IndexOf("sys(") + 4;
-
-            // Find the position of the comma just before the second-to-last number
-            int commaBeforeSecondLastIndex = FindCommaBeforeSecondLastIndex(input, insertIndex);
-
-            // Adjust the substring length if the second-to-last item is not present
-            string originalItems;
-            if (commaBeforeSecondLastIndex >= 0)
-            {
-                originalItems = input.Substring(insertIndex, commaBeforeSecondLastIndex - insertIndex);
-            }
-            else
-            {
-                originalItems = input.Substring(insertIndex);
-            }
-
-            // Construct the new output string by adding the new items and the updated values
-            string newOutput = "sys(" + itemsToAdd + "," + originalItems.TrimEnd() + "," + updatedSecondLastNumber + "," + lastNumber + ")";
-
-
-            return newOutput;
         }
 
         public static string ExtractUserPreamble(string input, out string userPreamble)

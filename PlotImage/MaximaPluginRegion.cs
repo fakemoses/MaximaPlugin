@@ -565,7 +565,7 @@ namespace MaximaPlugin.PlotImage
             catch
             {
             }
-            if (firstEval || canv.lastInput != input)
+            if (!firstEval || canv.lastInput != input)
             {
                 canv.lastInput = input;
                 canv.SetLastRequest();

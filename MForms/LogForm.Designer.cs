@@ -172,9 +172,9 @@
             this.Controls.Add(this.button3);
             this.Name = "LogForm";
             this.Text = "Log";
-            this.Activated += new System.EventHandler(this.tbLog_TextChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_Close);
             this.Load += new System.EventHandler(this.LogForm_Load);
+            this.Shown += new System.EventHandler(this.tbLog_TextChanged);
             this.Click += new System.EventHandler(this.LogForm_Click);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

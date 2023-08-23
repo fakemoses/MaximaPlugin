@@ -207,7 +207,7 @@ namespace MaximaPlugin.PlotImage
             commandList.Add("font=\"" + textFont + "\"");
             if (termType == TermType.pdf && textSizeState != State.Custom)
             {
-                textSize = 14;
+                textSize = 12; //on random points, 14 is too large
             }
             commandList.Add("font_size=" + textSize);
 

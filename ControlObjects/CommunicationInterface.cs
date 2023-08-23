@@ -120,7 +120,9 @@ namespace MaximaPlugin.ControlObjects
         public static bool isPartAnswer = false;
         public static int receiveTries = 14; // 14 = 10,5s
         // public static int timeout = 10000; // receive-timeout in milliseconds
-
+        
+        //logging event handler
+        public static event EventHandler LogChanged;
 
         /// <summary>
         /// Issue a single command to Maxima and get the result
@@ -139,7 +141,10 @@ namespace MaximaPlugin.ControlObjects
                 maxima.SendSingleCommandToSocket(sendString);
                 List<string> answers = Receive();
                 string outputString = TranslateToSMath(answers);
-                // if (! maxima.IsAlive()) maxima.RestartMaxima();
+                //maybe put an event to tell the form something changed so that real time changes can be made
+                if(LogChanged != null)
+                    LogChanged.Invoke(null, EventArgs.Empty);
+
                 TranslationModifiers.Reset();
                 return outputString;
             }

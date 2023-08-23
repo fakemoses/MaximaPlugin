@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaximaPlugin.ControlObjects;
+using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
 
 namespace MaximaPlugin.MForms
@@ -11,22 +13,32 @@ namespace MaximaPlugin.MForms
             InitializeComponent();
             session = ControlObjects.Translator.GetMaxima();
             ControlObjects.Translator.GetMaxima().StartSession();
+
+            // add new event to update everytime changes occurs instead of relying on isFocused event
+            Translator.LogChanged += tbLog_TextChanged;
         }
         private void tbLog_TextChanged(object sender, EventArgs e)
         {
-            if (opFuLog.Checked)
+            if (IsHandleCreated)
             {
-                tbLog.Text = ControlObjects.Translator.Log.Replace("\n", "\r\n");
+                Invoke((MethodInvoker)delegate
+                {
+                    if (opFuLog.Checked)
+                    {
+                        tbLog.Text = ControlObjects.Translator.Log.Replace("\n", "\r\n");
+                    }
+                    else if (opMaLog.Checked)
+                    {
+                        tbLog.Text = session.socket.fullLog.Replace("\n", "\r\n");
+                    }
+                    else if (opWxm.Checked)
+                    {
+                        tbLog.Text = MaximaPlugin.MaximaSocket.wxmLog;
+                    }
+                    tbLog.SelectionStart = tbLog.Text.Length;
+                    tbLog.ScrollToCaret();
+                });
             }
-            else if (opMaLog.Checked)
-            {
-                tbLog.Text = session.socket.fullLog.Replace("\n", "\r\n");
-            }else if(opWxm.Checked)
-            {
-                tbLog.Text = MaximaPlugin.MaximaSocket.wxmLog;
-            }
-            tbLog.SelectionStart = tbLog.Text.Length;
-            tbLog.ScrollToCaret();
         }
         private void opFuLog_CheckedChanged(object sender, EventArgs e)
         {
@@ -53,7 +65,7 @@ namespace MaximaPlugin.MForms
         private void button3_Click(object sender, EventArgs e)
         {
             if (opWxm.Checked)
-            {        
+            {
                 System.Diagnostics.Process.Start(MaximaSocket.WriteWXM());
             }
             else

@@ -261,7 +261,7 @@ namespace MaximaPlugin.PlotImage
             {
                 tempState = plotStore.titleState;
                 plotStore.titleState = PlotStore.State.Default;
-                plotStore.xRangeS = PlotStore.State.Disable;
+                //plotStore.xRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
                 redrawCanvas = true;
             }
@@ -269,8 +269,8 @@ namespace MaximaPlugin.PlotImage
             {
                 tempState = plotStore.titleState;
                 plotStore.titleState = PlotStore.State.Default;
-                plotStore.xRangeS = PlotStore.State.Disable;
-                plotStore.yRangeS = PlotStore.State.Disable;
+                //plotStore.xRangeS = PlotStore.State.Disable;
+                //plotStore.yRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";
                 redrawCanvas = true;
             }

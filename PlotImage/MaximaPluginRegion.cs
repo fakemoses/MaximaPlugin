@@ -161,7 +161,7 @@ namespace MaximaPlugin.PlotImage
         /// <param name="e"></param>
         public override void OnMouseMove(MouseEventOptions e)
         {
-            //rotation and panning only available for PNG since it takes extremely less time compared to other file types
+            //rotation and panning only available for PNG and SVG since they takes extremely less time compared to other file types
             if (mouseDown && canv.mouseD && !sizeChange && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 double dy = mouseY - e.Y;
@@ -332,8 +332,8 @@ namespace MaximaPlugin.PlotImage
                 else
                 {
                     changeValue = (canv.plotStore.zMaxRange - canv.plotStore.zMinRange) * delta / zoomFactor;
-                    canv.plotStore.zMaxRange -= changeValue;
-                    canv.plotStore.zMinRange += changeValue;
+                    canv.plotStore.zMaxRange += changeValue;
+                    canv.plotStore.zMinRange -= changeValue;
                 }
             }
             //canv.plotApproval = true;
@@ -345,7 +345,6 @@ namespace MaximaPlugin.PlotImage
             {
                 canv.SetLastRequest();
                 callRedraw();
-
                 this.RequestEvaluation();
             }
 
@@ -367,6 +366,10 @@ namespace MaximaPlugin.PlotImage
                 canv.plotStore.scalZenith++;
             else if (controlKeyDownAxis && e.KeyCode == (int)InputKeys.Back)
                 canv.plotStore.scalZenith--;
+
+            canv.redrawCanvas = true;
+            canv.SetLastRequest();
+            callRedraw();
             base.OnKeyDown(e);
 
         }
@@ -383,10 +386,7 @@ namespace MaximaPlugin.PlotImage
             {
                 canv.plotStore.width = canv.Size.Width;
                 canv.plotStore.height = canv.Size.Height;
-                //canv.plotApproval = true;
                 canv.redrawCanvas = true;
-
-                //canv.RequestEvaluation();
 
                 canv.ScalImg(canv.imageEo);
             }

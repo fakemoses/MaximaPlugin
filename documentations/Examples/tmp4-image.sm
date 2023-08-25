@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="144">
+    <identity>
+      <id>e7c2ded9-f30d-4669-9cd4-d6a7d169c885</id>
+      <revision>3</revision>
+    </identity>
+    <calculation>
+      <precision>3</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>true</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="false" viewMode="2" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="9" orientation="Portrait" width="827" height="1169" />
+      <margins left="39" right="39" top="49" bottom="49" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+      <assembly name="SpecialFunctions" version="1.12.8348.30405" guid="2814e667-4e12-48b1-8d51-194e480eabc5" />
+      <assembly name="MaximaPlugin" version="1.98.8637.31531" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
+      <assembly name="TextRegion" version="1.11.8348.30405" guid="485d28c5-349a-48b6-93be-12a35a1c1e39" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="0" top="18" width="84" height="26" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">j</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="function" args="2">range</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="108" top="18" width="84" height="26" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">k</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="function" args="2">range</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="0" top="54" width="131" height="65" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">M</e>
+          <e type="operand">j</e>
+          <e type="operand">k</e>
+          <e type="function" args="3">el</e>
+          <e type="operand">1</e>
+          <e type="operand">j</e>
+          <e type="operand">k</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="function" args="1">eval</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="171" top="72" width="91" height="123" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">M</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="function" args="6">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="288" top="162" width="180" height="23" color="#000000" fontSize="10">
+      <text lang="eng" fontFamily="Arial" fontSize="10">
+        <content>
+          <p>Matrix is correctly translated</p>
+        </content>
+      </text>
+    </region>
+    <region left="9" top="216" width="423" height="125" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">M</e>
+          <e type="operand">0</e>
+          <e type="operand">0</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="function" args="5">image</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">1</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">sys</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="function" args="6">mat</e>
+          <e type="operand">0</e>
+          <e type="operand">0</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="function" args="5">image</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="351" width="657" height="54" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Received Bytes: 74
+(%i45) image(matrix([[1,1,1],[1,1,2]],[[1,2,1],[1,2,2]]),0,0,2,2);
+(%o45) image(matrix([[1,1,1],[1,1,2]],[[1,2,1],[1,2,2]]),0,0,2,2)</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="459" width="310" height="248" color="#000000" fontSize="10">
+      <maximaplugin>
+        <ImageFile FileName="034n0wox.png" DataLenght="5087">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</ImageFile>
+        <plotstore>
+          <PlotStore xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="">
+            <commandList>
+              <string>terminal=pngcairo</string>
+              <string>file_name="C:/Users/kraska/AppData/Roaming/SMath/extensions/plugins/44011c1e-5d0d-4533-8e68-e32b5badce41/GnuPlot/034n0wox"</string>
+              <string>font="Arial"</string>
+              <string>font_size=8</string>
+              <string>background_color="#fefefe"</string>
+              <string>xaxis=true</string>
+              <string>xaxis_type=solid</string>
+              <string>xaxis_color=black</string>
+              <string>xaxis_width=1</string>
+              <string>yaxis=true</string>
+              <string>yaxis_type=solid</string>
+              <string>yaxis_color=black</string>
+              <string>yaxis_width=1</string>
+              <string>xu_grid=40</string>
+              <string>yv_grid=40</string>
+              <string>xlabel="x"</string>
+              <string>ylabel="y"</string>
+              <string>zlabel="z"</string>
+              <string>yrange=[-0.509607936,0.509607936]</string>
+              <string>zrange=[-5,5]</string>
+            </commandList>
+            <prambleList>
+              <string>"set term pngcairo enhanced size 300, 240"</string>
+              <string>"set encoding utf8"</string>
+              <string>"set style line 100 lc rgb 'black' lt -1 lw 0.1"</string>
+              <string>"set grid xtics ls 100"</string>
+              <string>"set grid ytics ls 100"</string>
+            </prambleList>
+            <plotType>plot2D</plotType>
+            <titleDefault>SAMPLE PLOT</titleDefault>
+            <title>Sample</title>
+            <titleState>Disable</titleState>
+            <border>Default</border>
+            <borderVal>4095</borderVal>
+            <textSize>8</textSize>
+            <textSizeState>Default</textSizeState>
+            <textFont>Arial</textFont>
+            <contour>Custom</contour>
+            <contourType />
+            <contourLevels>5</contourLevels>
+            <bgColor>#fefefe</bgColor>
+            <enhanced3dState>Enable</enhanced3dState>
+            <pm3d>Custom</pm3d>
+            <pm3dpalette>[blue,red,green]</pm3dpalette>
+            <gridXu>40</gridXu>
+            <gridYv>40</gridYv>
+            <gridState>Custom</gridState>
+            <width>300</width>
+            <height>240</height>
+            <pictureSizeState>Interactive</pictureSizeState>
+            <filename>C:/Users/kraska/AppData/Roaming/SMath/extensions/plugins/44011c1e-5d0d-4533-8e68-e32b5badce41/GnuPlot/034n0wox</filename>
+            <termType>png</termType>
+            <mapView>Disable</mapView>
+            <xName>x</xName>
+            <yName>y</yName>
+            <zName>z</zName>
+            <xAxisType>solid</xAxisType>
+            <yAxisType>solid</yAxisType>
+            <xAxisColor>black</xAxisColor>
+            <yAxisColor>black</yAxisColor>
+            <xaxisWidth>1</xaxisWidth>
+            <yaxisWidth>1</yaxisWidth>
+            <xNameS>Default</xNameS>
+            <yNameS>Default</yNameS>
+            <zNameS>Default</zNameS>
+            <xMinRange>-5</xMinRange>
+            <xMaxRange>5</xMaxRange>
+            <yMinRange>-0.50960793599999987</yMinRange>
+            <yMaxRange>0.50960793599999987</yMaxRange>
+            <zMinRange>-5</zMinRange>
+            <zMaxRange>5</zMaxRange>
+            <xRangeS>Disable</xRangeS>
+            <yRangeS>Interactive</yRangeS>
+            <zRangeS>Interactive</zRangeS>
+            <xGrid>Enable</xGrid>
+            <yGrid>Enable</yGrid>
+            <zGrid>Disable</zGrid>
+            <xLogarithmic>Disable</xLogarithmic>
+            <yLogarithmic>Disable</yLogarithmic>
+            <zLogarithmic>Disable</zLogarithmic>
+            <xLogBase>10</xLogBase>
+            <yLogBase>10</yLogBase>
+            <zLogBase>10</zLogBase>
+            <azimuth>60</azimuth>
+            <zenith>60</zenith>
+            <scalAzimuth>1</scalAzimuth>
+            <scalZenith>1</scalZenith>
+            <view>Interactive</view>
+            <mouseRedirecting>Disable</mouseRedirecting>
+            <varNameMouseX>MouseX1</varNameMouseX>
+            <varNameMouseY>MouseY1</varNameMouseY>
+            <varNameMouseWheel>MouseW1</varNameMouseWheel>
+            <viewRedirecting>Disable</viewRedirecting>
+            <varNameAzimuth>Azimut1</varNameAzimuth>
+            <varNameZenith>Zenit1</varNameZenith>
+            <xRedirecting>Disable</xRedirecting>
+            <varNameXmin>MinX1</varNameXmin>
+            <varNameXmax>MaxX1</varNameXmax>
+            <yRedirecting>Disable</yRedirecting>
+            <varNameYmin>MinY1</varNameYmin>
+            <varNameYmax>MaxY1</varNameYmax>
+            <zRedirecting>Disable</zRedirecting>
+            <varNameZmin>MinZ1</varNameZmin>
+            <varNameZmax>MaxZ1</varNameZmax>
+            <option>border=true;</option>
+            <enablexAxis>true</enablexAxis>
+            <enableyAxis>true</enableyAxis>
+            <enablezAxis>false</enablezAxis>
+          </PlotStore>
+        </plotstore>
+        <input>
+          <e type="operand">M</e>
+          <e type="operand">0</e>
+          <e type="operand">0</e>
+          <e type="operand">2</e>
+          <e type="operand">2</e>
+          <e type="function" args="5">image</e>
+        </input>
+      </maximaplugin>
+    </region>
+    <region left="342" top="594" width="194" height="23" color="#000000" fontSize="10">
+      <text lang="eng" fontFamily="Arial" fontSize="10">
+        <content>
+          <p>Matrix isn't correctly translated</p>
+        </content>
+      </text>
+    </region>
+    <region left="0" top="738" width="5706" height="190" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Received Bytes: 224
+(%i48) draw2d(terminal=pngcairo, file_name=$C:/Users/kraska/AppData/Roaming/SMath/extensions/plugins/44011c1e-5d0d-4533-8e68-e32b5badce41/GnuPlot/034n0wox$, font=$Arial$, font_size=8, background_color=$#fefefe$, xaxis=true, xaxis_type=solid, xaxis_color=black, xaxis_width=1, yaxis=true, yaxis_type=solid, yaxis_color=black, yaxis_width=1, xu_grid=40, yv_grid=40, xlabel=$x$, ylabel=$y$, zlabel=$z$, yrange=[-0.509607936,0.509607936], zrange=[-5,5],user_preamble=[$set term pngcairo enhanced size 300, 240$, $set encoding utf8$, $set style line 100 lc rgb 'black' lt -1 lw 0.1$, $set grid xtics ls 100$, $set grid ytics ls 100$],image(matrix([[1,1],[1],[1],[1,2]],[[1,2],[1],[1],[2,2]]),0,0,2,2));
+Maxima encountered a Lisp error:
+
+ The value
+   NIL
+ is not of type
+   DOUBLE-FLOAT
+ when setting an element of (ARRAY DOUBLE-FLOAT)
+
+Automatically continuing.
+To enable the Lisp debugger set *debugger-hook* to nil.</e>
+        </result>
+      </math>
+    </region>
+  </regions>
+</worksheet>

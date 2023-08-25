@@ -325,169 +325,35 @@ namespace MaximaPlugin.MFunctions
         }
 
 
+        // Cross product
 
+        public static bool CrossProduct(Term root, Term[][] args, ref Store context, ref Term[] result)
+        {
+            var arg1 = SharedFunctions.Proprocessing(args[0]);
+            var arg2 = SharedFunctions.Proprocessing(args[1]);
 
-        ////Plotting
-        //public static bool findPre = false;
+            // for each of the args replace mat( with [ and ],[ with ,
+            // regex probably suffice to do this
 
-        ///// <summary>
-        ///// Combine the standard and the user preamble in draw commands.
-        ///// </summary>
-        ///// <param name="text"></param>
-        ///// <param name="ipre"></param>
-        ///// <returns></returns>
-        //public static string PreambleReplace(string text, string ipre)
-        //{
-        //    findPre = false;
-        //    int bracketO = 0, bracketC = 0;
-        //    List<string> element = new List<string>();
-        //    int i = -1, start = 0, charCounter = 0;
-        //    int completeStart = 0;
-        //    bool flip = false;
-        //    int completeEnd = 0;
-        //    while (i < text.Length - 17)
-        //    {
-        //        i++;
-        //        //text.IndexOf("user_preamble≡sys(");
-        //        // TODO MK 2017 07 18 Check if that can't be reduced to a single comparison
-        //        if (
-        //            text[i + 0] == 'u' &&
-        //            text[i + 1] == 's' &&
-        //            text[i + 2] == 'e' &&
-        //            text[i + 3] == 'r' &&
-        //            text[i + 4] == '_' &&
-        //            text[i + 5] == 'p' &&
-        //            text[i + 6] == 'r' &&
-        //            text[i + 7] == 'e' &&
-        //            text[i + 8] == 'a' &&
-        //            text[i + 9] == 'm' &&
-        //            text[i + 10] == 'b' &&
-        //            text[i + 11] == 'l' &&
-        //            text[i + 12] == 'e' &&
-        //            text[i + 13] == '≡' &&
-        //            text[i + 14] == 's' &&
-        //            text[i + 15] == 'y' &&
-        //            text[i + 16] == 's' &&
-        //            text[i + 17] == '(')
-        //        {
-        //            //sys((user_preamble≡sys("set term svg noenhanced size 400,400 dynamic","set style fill transparent solid 0.5 border","set view 60, 30, 1.2, 1.2",3,1))
-        //            completeStart = i;
-        //            i += 17; 
-        //            bracketO++;
-        //            findPre = true;
-        //            while (i < text.Length && bracketO - bracketC > 0)
-        //            {
-        //                i++;
-        //                start = i;
-        //                charCounter = 0;
-        //                while (((text[i] != GlobalProfile.ArgumentsSeparatorStandard && text[i] != ')') || flip || bracketO - bracketC > 1) && i < text.Length)
-        //                {
-        //                    if (text[i] == '(')
-        //                        bracketO++;
-        //                    else if (text[i] == ')')
-        //                        bracketC++;
-        //                    if (text[i] == '"' && flip)
-        //                        flip = false;
-        //                    else if (text[i] == '"')
-        //                        flip = true;
+            arg1 = Regex.Replace(arg1, @"mat\(", "[");
+            arg1 = Regex.Replace(arg1, @"\],\[", ",");
+            arg1 = Regex.Replace(arg1, @",\d+,\d+\)", "]");
 
-        //                    if (bracketO - bracketC > 0) charCounter++;
-        //                    i++;
-        //                }
-        //                if (charCounter > 0)
-        //                    element.Add(text.Substring(start, charCounter));
+            arg2 = Regex.Replace(arg2, @"mat\(", "[");
+            arg2 = Regex.Replace(arg2, @"\],\[", ",");
+            arg2 = Regex.Replace(arg2, @",\d+,\d+\)", "]");
 
-        //                if (i < text.Length && text[i] == '(')
-        //                    bracketO++;
-        //                else if (i < text.Length && text[i] == ')')
-        //                    bracketC++;
-        //            }
-        //            completeEnd = i + 1;
-        //        }
-        //    }
+            //matrix has to be turned into string of array
 
+            string stringtoMaxima = "load(vect);" +"(" + arg1 + ")" + "†" + "(" + arg2 + ");" + "express(%)";
+            string outputFromMaxima = ControlObjects.Translator.Ask(stringtoMaxima);
 
+            outputFromMaxima = Regex.Replace(outputFromMaxima,@"sys", "mat");
 
-        //    if (findPre && element.Count > 0)
-        //    {
-        //        string tmp = "user_preamble≡sys(" + ipre + GlobalProfile.ArgumentsSeparatorStandard;
-        //        for (int k = 0; k < element.Count - 2; k++)
-        //        {
-        //            tmp = tmp + element[k];
-        //            if (k == element.Count - 3) tmp = tmp + GlobalProfile.ArgumentsSeparatorStandard + Convert.ToString(k + 3) + GlobalProfile.ArgumentsSeparatorStandard + "1)";
-        //            else tmp = tmp + GlobalProfile.ArgumentsSeparatorStandard;
-        //        }
-        //        return MakeString(text, tmp, completeStart, completeEnd);
-        //    }
-        //    else if (!findPre)
-        //    {
-        //        i = -1;
-        //        while (i < text.Length - 13)
-        //        {
-        //            i++;
-        //            if (
-        //                text[i + 0] == 'u' &&
-        //                text[i + 1] == 's' &&
-        //                text[i + 2] == 'e' &&
-        //                text[i + 3] == 'r' &&
-        //                text[i + 4] == '_' &&
-        //                text[i + 5] == 'p' &&
-        //                text[i + 6] == 'r' &&
-        //                text[i + 7] == 'e' &&
-        //                text[i + 8] == 'a' &&
-        //                text[i + 9] == 'm' &&
-        //                text[i + 10] == 'b' &&
-        //                text[i + 11] == 'l' &&
-        //                text[i + 12] == 'e' &&
-        //                text[i + 13] == '≡')
-        //            {
-        //                //sys((user_preamble≡sys("set term svg noenhanced size 400,400 dynamic","set style fill transparent solid 0.5 border","set view 60, 30, 1.2, 1.2",3,1))
-        //                completeStart = i;
-        //                i += 14;
-        //                findPre = true;
-        //                start = i;
-
-        //                while (((text[i] != GlobalProfile.ArgumentsSeparatorStandard) || flip || bracketO - bracketC > 0) && i < text.Length)
-        //                {
-        //                    if (text[i] == '(')
-        //                        bracketO++;
-        //                    else if (text[i] == ')')
-        //                        bracketC++;
-        //                    if (text[i] == '"' && flip)
-        //                        flip = false;
-        //                    else if (text[i] == '"')
-        //                        flip = true;
-
-        //                    charCounter++;
-        //                    i++;
-        //                }
-
-
-        //                if (charCounter > 0)
-        //                {
-        //                    if (bracketO - bracketC == -1) charCounter--;
-        //                    element.Add(text.Substring(start, charCounter));
-        //                    completeEnd = i;
-        //                }
-        //            }
-        //        }
-
-        //        if (findPre && element.Count == 1)
-        //        {
-        //            string tmp = "user_preamble≡sys(" + ipre + GlobalProfile.ArgumentsSeparatorStandard + element[0] + GlobalProfile.ArgumentsSeparatorStandard + "3" + GlobalProfile.ArgumentsSeparatorStandard + "1)";
-        //            return MakeString(text, tmp, completeStart, completeEnd).Replace("sys((user_preamble≡", "sys(user_preamble≡").Replace((GlobalProfile.ArgumentsSeparatorStandard + "(user_preamble≡"), (GlobalProfile.ArgumentsSeparatorStandard + "user_preamble≡"));
-        //        }
-        //    }
-
-        //    return text;
-        //}
-        //public static string MakeString(string input, string newArrayString, int arrayStart, int arrayEnd)
-        //{
-        //    string tmp1 = input.Substring(0, arrayStart);
-        //    string tmp2 = input.Substring(arrayEnd, input.Length - arrayEnd);
-        //    return tmp1 + newArrayString + tmp2;
-        //}
-
+            // output from the ask has to be changed from sys to mat
+            result = TermsConverter.ToTerms(outputFromMaxima);
+            return true;
+        }
 
 
         /// <summary>
@@ -499,7 +365,7 @@ namespace MaximaPlugin.MFunctions
         /// <param name="result"></param>
         /// <returns></returns>
 
-       
+
         public static bool Draw(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             PlotImage.PlotStore plotStore = new PlotImage.PlotStore();

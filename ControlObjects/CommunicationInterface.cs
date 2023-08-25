@@ -141,7 +141,7 @@ namespace MaximaPlugin.ControlObjects
                 maxima.SendSingleCommandToSocket(sendString);
                 List<string> answers = Receive();
                 string outputString = TranslateToSMath(answers);
-                //maybe put an event to tell the form something changed so that real time changes can be made
+                //event to tell the log something changed
                 if(LogChanged != null)
                     LogChanged.Invoke(null, EventArgs.Empty);
 
@@ -435,12 +435,26 @@ namespace MaximaPlugin.ControlObjects
 
             if (answers.Count > 1) // if more than one string, combine them into a SMath list.
             {
-                outputString = "sys(";
-                for (int i = 0; i < answers.Count; i++)
+                //check if string has this vect message -> take only last answer
+                bool isCrossProd = false;
+                for(int i = 0; i < answers.Count; i++)
                 {
-                    outputString = outputString + answers[i] + GlobalProfile.ArgumentsSeparatorStandard;
+                    if (answers[i].Contains("vect: warning: removing existing rule or rules for .."))
+                        isCrossProd = true;
                 }
-                outputString = outputString + Convert.ToString(answers.Count) + GlobalProfile.ArgumentsSeparatorStandard + "1)";
+                if (!isCrossProd)
+                {
+                    outputString = "sys(";
+                    for (int i = 0; i < answers.Count; i++)
+                    {
+                        outputString = outputString + answers[i] + GlobalProfile.ArgumentsSeparatorStandard;
+                    }
+                    outputString = outputString + Convert.ToString(answers.Count) + GlobalProfile.ArgumentsSeparatorStandard + "1)";
+                }
+                else
+                {
+                    outputString = answers[answers.Count-1];
+                }
             }
             else if (answers.Count == 1) outputString = answers[0]; // if a single string returned, just hand it over.
 

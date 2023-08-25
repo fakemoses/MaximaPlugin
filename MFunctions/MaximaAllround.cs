@@ -44,12 +44,35 @@ namespace MaximaPlugin.MFunctions
                 // produce the input for maxima
                 // issue is here string to maxima
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
+                bool isCrossProd = false;
+                if(stringToMaxima.Contains("†"))
+                {
+                    isCrossProd = true;
+                    string[] delim = stringToMaxima.Split('†');
+                    // cross exists means it is for cross product
+                    delim[0] = Regex.Replace(delim[0], @"mat\(", "[");
+                    delim[0] = Regex.Replace(delim[0], @"\],\[", ",");
+                    delim[0] = Regex.Replace(delim[0], @",\d+,\d+\)", "]");
+
+                    delim[1] = Regex.Replace(delim[1], @"mat\(", "[");
+                    delim[1] = Regex.Replace(delim[1], @"\],\[", ",");
+                    delim[1] = Regex.Replace(delim[1], @",\d+,\d+\)", "]");
+
+                    stringToMaxima = "load(vect);" + "(" + delim[0] + ")" + "†" + "(" + delim[1] + ");" + "express(%)";
+                }
 
                 string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
                 Match match = Regex.Match(stringToMaxima, pattern);
-                if(!match.Success)
+                if(!match.Success && !isCrossProd)
                 // send input and get result
                     result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
+                else if (isCrossProd)
+                {
+                    string outputFromMaxima = ControlObjects.Translator.Ask(stringToMaxima);
+
+                    outputFromMaxima = Regex.Replace(outputFromMaxima, @"sys", "mat");
+                    result = TermsConverter.ToTerms(outputFromMaxima);
+                }
                 else
                     result = TermsConverter.ToTerms(Symbols.StringChar + ControlObjects.Translator.Ask(stringToMaxima) + Symbols.StringChar);
 

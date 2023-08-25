@@ -71,6 +71,9 @@ namespace MaximaPlugin
                 // Residuals(4)
                 new TermInfo ("Residuals", TermType.Function,"Residuals(Data" + sessionProfile.ArgumentsSeparator + " var" + sessionProfile.ArgumentsSeparator + " function" + sessionProfile.ArgumentsSeparator + " params) Returns the residuals between the given data and model function. Data columns correspond to entries in var list. params is a list of name=value pairs to substitute any undefined variables beyond the data variables in the model function. " , FunctionSections.Unknown , true, new ArgumentInfo(ArgumentSections.Matrix),new ArgumentInfo(ArgumentSections.Expression), new ArgumentInfo(ArgumentSections.Expression), new ArgumentInfo(ArgumentSections.Expression)),
 
+                // Cross Product
+                new TermInfo ("Cross", TermType.Function,"Cross(expr" + sessionProfile.ArgumentsSeparator + " expr" + sessionProfile.ArgumentsSeparator + ") Returns the result of cross product. Inputs are in form of vector. Also support 2D-Vectors. " , FunctionSections.Unknown , true, new ArgumentInfo(ArgumentSections.Expression), new ArgumentInfo(ArgumentSections.Expression)),
+
                 //differential equations
                 new TermInfo ("ODE"+GlobalProfile.DecimalSymbolStandard+"2", TermType.Function,"ODE.2(ode" + sessionProfile.ArgumentsSeparator + " f(x)" + sessionProfile.ArgumentsSeparator + " x) solves an ordinary differential equation (max second order) for function f(x) with independent variable x. Returns a boolean equation f(x)=expr, which can be converted into an assignment using Assign()." , FunctionSections.Unknown , true, new ArgumentInfo(ArgumentSections.Expression), new ArgumentInfo(ArgumentSections.Expression), new ArgumentInfo(ArgumentSections.Expression)) { IsUndefinedArgumentsSupported = true },
 
@@ -213,6 +216,9 @@ namespace MaximaPlugin
                 else if (root.Type == TermType.Function && root.Text == "Assign")
                 {
                     return MFunctions.OtherUsefull.Assign(root, args, ref context, ref result);
+                } else if (root.Type == TermType.Function && root.Text == "Cross")
+                {
+                    return MFunctions.DirectMaximaFunctions.CrossProduct(root, args, ref context, ref result);
                 }
                 //Plotting
                 else if (root.Type == TermType.Function && (root.Text == "Draw2D" || root.Text == "Draw3D"))

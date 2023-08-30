@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SMath.Manager;
+using System;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
@@ -14,6 +16,7 @@ namespace MaximaPlugin.PlotImage
         public bool abort = false;
         public bool firstLocationSet = true;
         public bool initComplete = false;
+        private double scaleFactor = 1.0;
 
         #region FORM CONTROL
         public PlotSettings(MaximaPlugin.PlotImage.MaximaPluginRegion region)
@@ -22,19 +25,59 @@ namespace MaximaPlugin.PlotImage
             this.region = region;
             this.regionC = region.GetCanvas();
 
+            int deviceDPI = this.DeviceDpi;
+            scaleFactor = (deviceDPI / GlobalProfile.ContentDpi);
+
             this.plotStore = region.GetCanvas().plotStore;
             if (plotStore.plotType == PlotImage.PlotStore.PlotType.plot3D)
             {
-                groupBox2.Visible = true;
                 groupBox1.Visible = true;
                 groupBox30.Visible = true;
                 groupBox4.Visible = true;
                 groupBox6.Visible = true;
 
+            } else
+            {
+                checkGrid.Visible = false;
+                textGridXu.Visible = false;
+                textGridYv.Visible = false;
+
+                checkContour.Visible = false;
+                textContourLevels.Visible = false;
+                comboBoxContour.Visible = false;
+
+                checkPm3d.Visible = false;
+                textPm3dPalette.Visible = false;
+
+                
+                if(scaleFactor > 1.0)
+                {
+                    groupBox7.Size = new System.Drawing.Size((int)(250 * scaleFactor)+22, (int)(65 * scaleFactor));
+                    groupBox18.Location = new System.Drawing.Point(6, (int)(132 *scaleFactor));
+                    groupBox30.Location = new System.Drawing.Point(6, (int)(213 * scaleFactor));
+                } 
+                else
+                {
+                    groupBox7.Size = new System.Drawing.Size(250, 65);
+                    groupBox18.Location = new System.Drawing.Point(6, 132);
+                    groupBox30.Location = new System.Drawing.Point(6, 213);
+                }
             }
             Restore();
             initComplete = true;
-            this.Size = new System.Drawing.Size(310, 525);
+
+            //scale factor is added due to the Windows scaling not automatically applied on Windows Form
+
+            if (scaleFactor > 1.0 && scaleFactor < 1.5)
+            {
+                this.Size = new System.Drawing.Size((int)(325 * scaleFactor), (int)(572 * scaleFactor));
+            } else if(scaleFactor >= 1.5)
+            {
+                this.Size = new System.Drawing.Size((int)(310 * scaleFactor), (int)(572 * scaleFactor)+10);
+                this.panel1.Size = new Size((int)(310*scaleFactor), (int)(572*scaleFactor));
+            }
+            else
+                this.Size = new System.Drawing.Size(310, 572);
 
         }
         private void PlotSettings_Load(object sender, EventArgs e)
@@ -73,9 +116,6 @@ namespace MaximaPlugin.PlotImage
             toolTip1.SetToolTip(this.checkXlog, "Enable logarithmic axis");
             toolTip1.SetToolTip(this.checkYlog, "Enable logarithmic axis");
             toolTip1.SetToolTip(this.checkZlog, "Enable logarithmic axis");
-            toolTip1.SetToolTip(this.textXbase, "Base of the logarithm");
-            toolTip1.SetToolTip(this.textYbase, "Base of the logarithm");
-            toolTip1.SetToolTip(this.textZbase, "Base of the logarithm");
             toolTip1.SetToolTip(this.checkBorder, "Check to set custom border code");
             toolTip1.SetToolTip(this.textBorderVal, "Sum of 1:left, 2:right, 4: bottom, 8: top");
             toolTip1.SetToolTip(this.checkTextSizeCustom, "Use a custom text size");
@@ -125,6 +165,7 @@ namespace MaximaPlugin.PlotImage
             toolTip1.SetToolTip(this.xAxis, "Show x-axis as black solid line");
             toolTip1.SetToolTip(this.yAxis, "Show y-axis as black solid line");
             toolTip1.SetToolTip(this.zAxis, "Show z-axis as black solid line");
+            toolTip1.SetToolTip(this.propAxesCheckBox, "Set axes with increments that maintain equal intervals, preserving consistent value proportions along each axis.");
         }
         public void SetLocation()
         {
@@ -205,9 +246,16 @@ namespace MaximaPlugin.PlotImage
                 // textTextFont.ReadOnly = true;
 
             }
+
+            //propotional axes
+            if(plotStore.propAxes == PlotStore.State.Enable)
+                propAxesCheckBox.Checked = true;
+            else
+                propAxesCheckBox.Checked = false;
+
             //PM3D
             textPm3dPalette.Text = plotStore.pm3dpalette;
-            if (plotStore.pm3d == PlotStore.State.Enable)
+            if (plotStore.pm3d == PlotStore.State.Enable || plotStore.pm3d == PlotStore.State.Custom)
             {
                 checkPm3d.Checked = true;
                 textPm3dPalette.ReadOnly = false;
@@ -348,65 +396,13 @@ namespace MaximaPlugin.PlotImage
             #region AXIS NAMES
             textXtitle.Text = plotStore.xName;
             textXtitle.ReadOnly = false;
-            //if (plotStore.xNameS == PlotImage.PlotStore.State.Enable)
-            //{
-            //    radioXtitleCustom.Checked = true;
-            //    textXtitle.Text = plotStore.xName;
-            //    textXtitle.ReadOnly = false;
-            //}
-            //else if (plotStore.xNameS == PlotImage.PlotStore.State.Default)
-            //{
-            //    radioXtitleDefault.Checked = true;
-            //    textXtitle.Text = SharedFunctions.defaultPlotValues.xName;
-            //    textXtitle.ReadOnly = true;
-            //}
-            //else
-            //{
-            //    radioXtitleDisable.Checked = true;
-            //    textXtitle.Text = "";
-            //    textXtitle.ReadOnly = true;
-            //}
+
             textYtitle.Text = plotStore.yName;
             textYtitle.ReadOnly = false;
-            //if (plotStore.yNameS == PlotImage.PlotStore.State.Enable)
-            //{
-            //    radioYtitleCustom.Checked = true;
-            //    textYtitle.Text = plotStore.yName;
-            //    textYtitle.ReadOnly = false;
-            //}
-            //else if (plotStore.yNameS == PlotImage.PlotStore.State.Default)
-            //{
-            //    radioYtitleDefault.Checked = true;
-            //    textYtitle.Text = SharedFunctions.defaultPlotValues.yName;
-            //    textYtitle.ReadOnly = true;
 
-            //}
-            //else
-            //{
-            //    radioYtitleDisable.Checked = true;
-            //    textYtitle.Text = "";
-            //    textYtitle.ReadOnly = true;
-            //}
             textZtitle.Text = plotStore.zName;
             textZtitle.ReadOnly = false;
-            //if (plotStore.zNameS == PlotImage.PlotStore.State.Enable)
-            //{
-            //    radioZtitleCustom.Checked = true;
-            //    textZtitle.Text = plotStore.zName;
-            //    textZtitle.ReadOnly = false;
-            //}
-            //else if (plotStore.zNameS == PlotImage.PlotStore.State.Default)
-            //{
-            //    radioZtitleDefault.Checked = true;
-            //    textZtitle.Text = SharedFunctions.defaultPlotValues.zName;
-            //    textZtitle.ReadOnly = true;
-            //}
-            //else
-            //{
-            //    radioZtitleDisable.Checked = true;
-            //    textZtitle.Text = "";
-            //    textZtitle.ReadOnly = true;
-            //}
+            
             #endregion
 
             #region AXIS RANGE
@@ -505,9 +501,6 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             #region LOG
-            textXbase.Text = Convert.ToString(plotStore.xLogBase);
-            textYbase.Text = Convert.ToString(plotStore.yLogBase);
-            textZbase.Text = Convert.ToString(plotStore.zLogBase);
             if (plotStore.xLogarithmic == PlotImage.PlotStore.State.Enable)
                 checkXlog.Checked = true;
             else
@@ -661,11 +654,24 @@ namespace MaximaPlugin.PlotImage
                 textTextSize.Text = Convert.ToString(plotStore.textSize);
             }
 
+            //propotional axes
+            if (propAxesCheckBox.Checked)
+                plotStore.propAxes = PlotStore.State.Enable;
+            else
+                plotStore.propAxes = PlotStore.State.Disable;
+
             //PM3D
             if (checkPm3d.Checked)
             {
                 plotStore.pm3d = PlotStore.State.Enable;
                 if (!textPm3dPalette.ReadOnly) plotStore.pm3dpalette = textPm3dPalette.Text;
+
+                if(!textPm3dPalette.Text.Contains("[color,color,color]"))
+                {
+                  plotStore.pm3d = PlotStore.State.Custom;
+                  plotStore.pm3dpalette = textPm3dPalette.Text;
+
+                }
             }
             else
             {
@@ -975,8 +981,6 @@ namespace MaximaPlugin.PlotImage
             if (checkXlog.Checked)
             {
                 plotStore.xLogarithmic = PlotImage.PlotStore.State.Enable;
-                try { plotStore.xLogBase = Convert.ToDouble(textXbase.Text); }
-                catch { plotStore.xLogBase = 10; }
                 if (plotStore.xMaxRange <= 0.0 && plotStore.xMinRange <= 0.0)
                 {
                     plotStore.xMinRange = PlotStore.logMinDefault;
@@ -993,8 +997,6 @@ namespace MaximaPlugin.PlotImage
             if (checkYlog.Checked)
             {
                 plotStore.yLogarithmic = PlotImage.PlotStore.State.Enable;
-                try { plotStore.yLogBase = Convert.ToDouble(textYbase.Text); }
-                catch { plotStore.yLogBase = 10; }
                 if (plotStore.yMaxRange <= 0.0 && plotStore.yMinRange <= 0.0)
                 {
                     plotStore.yMinRange = PlotStore.logMinDefault;
@@ -1011,8 +1013,6 @@ namespace MaximaPlugin.PlotImage
             if (checkZlog.Checked)
             {
                 plotStore.zLogarithmic = PlotImage.PlotStore.State.Enable;
-                try { plotStore.zLogBase = Convert.ToDouble(textZbase.Text); }
-                catch { plotStore.zLogBase = 10; }
                 if (plotStore.zMaxRange <= 0.0 && plotStore.zMinRange <= 0.0)
                 {
                     plotStore.zMinRange = PlotStore.logMinDefault;
@@ -1125,8 +1125,11 @@ namespace MaximaPlugin.PlotImage
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
             panel1.Location = new Point(0, 0);
             progressBar1.Location = new Point(26, 207);
-            label2.Location = new Point(91, 233);
 
+            if(scaleFactor > 1.0)
+                label2.Location = new Point(120, 245);
+            else
+                label2.Location = new Point(91, 233);
             // Ensure they are on top of other controls
             panel1.BringToFront();
             progressBar1.BringToFront();
@@ -1138,9 +1141,23 @@ namespace MaximaPlugin.PlotImage
             progressBar1.Style = ProgressBarStyle.Marquee;
 
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
-            panel1.Location = new Point(2, 577);
-            progressBar1.Location = new Point(26, 207);
-            label2.Location = new Point(91, 233);
+            if(scaleFactor > 1.0 && scaleFactor < 1.5)
+            {
+                panel1.Location = new Point(2, 700);
+                progressBar1.Location = new Point(26, 207);
+                label2.Location = new Point(91, 233);
+            } else if( scaleFactor >= 1.5)
+            {
+                panel1.Location = new Point(2, 900);
+                progressBar1.Location = new Point(26, 207);
+                label2.Location = new Point(91, 233);
+            }
+            else
+            {
+                panel1.Location = new Point(2, 577);
+                progressBar1.Location = new Point(26, 207);
+                label2.Location = new Point(91, 233);
+            }
 
             // Ensure they are on top of other controls
             panel1.BringToFront();
@@ -1190,13 +1207,13 @@ namespace MaximaPlugin.PlotImage
             if (!tabControl2.Visible)
             {
                 button_ShowCommandlist.Text = "Hide commands";
-                this.Size = new System.Drawing.Size(700, 525);
+                this.Size = new System.Drawing.Size(700, 572);
                 tabControl2.Visible = true;
 
             }
             else
             {
-                this.Size = new System.Drawing.Size(310, 525);
+                this.Size = new System.Drawing.Size(310, 572);
                 button_ShowCommandlist.Text = "Show commands";
                 tabControl2.Visible = false;
 

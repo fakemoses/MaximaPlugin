@@ -45,6 +45,9 @@ namespace MaximaPlugin.PlotImage
         bool mouseDoubleClick = false;
         bool firstEval = false;
 
+        bool isShiftKeyDown = false;
+        bool isCtrlKeyDown = false;
+
         //Constructors
         public MaximaPluginRegion(SessionProfile sessionProfile)
             : base(sessionProfile)
@@ -60,6 +63,7 @@ namespace MaximaPlugin.PlotImage
             : base(sessionProfile)
         {
             canv.plotStore.plotType = pt;
+            firstEval = true;
 
             //axis, grid and size for 3D plot 
             if (canv.plotStore.plotType == PlotStore.PlotType.plot3D)
@@ -73,7 +77,7 @@ namespace MaximaPlugin.PlotImage
                 canv.plotStore.width = 300;
                 canv.plotStore.height = 300;
 
-                this.SetSize(new Size(canv.plotStore.width, canv.plotStore.height));
+                this.SetSize(new Size(canv.plotStore.width, canv.plotStore.height)); //this method trigger the onSizeChanged event
                 this.Resize();
             }
 
@@ -85,7 +89,6 @@ namespace MaximaPlugin.PlotImage
             canv.lastInput = "";
             canv.SetLastRequest();
             callRedraw();
-            firstEval = true;
         }
 
         public MaximaPluginRegion(MaximaPluginRegion region)
@@ -169,7 +172,7 @@ namespace MaximaPlugin.PlotImage
                 dMouseX = e.X / canv.Size.Width;
                 dMouseY = e.Y / canv.Size.Height;
                 // Orbiting by mouse drag in 3D plot with interactive view setting
-                if (canv.plotStore.view == PlotStore.State.Interactive && canv.plotStore.plotType == PlotStore.PlotType.plot3D && !controlKeyDownAxis)
+                if (canv.plotStore.view == PlotStore.State.Interactive && canv.plotStore.plotType == PlotStore.PlotType.plot3D && !isShiftKeyDown)
                 {
                     // change zenith value based on y-move and make sure that it is between 0 and 180°
                     if (canv.plotStore.zenith + dy >= 180)
@@ -224,7 +227,7 @@ namespace MaximaPlugin.PlotImage
                     }
                 }
                 // pan the x and y axes of a 3D plot
-                else if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && controlKeyDownAxis)
+                else if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown)
                 {
 
                     if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
@@ -241,7 +244,7 @@ namespace MaximaPlugin.PlotImage
                         canv.plotStore.yMinRange += changeValue;
                         canv.plotStore.yMaxRange += changeValue;
                     }
-                }
+                } 
                 //canv.plotApproval = true;
                 if (!mouseDoubleClick)
                 {
@@ -275,7 +278,6 @@ namespace MaximaPlugin.PlotImage
         // Zoom
         protected override void OnMouseWheelAction(MouseEventOptions e, int delta)
         {
-            //FactorRefresh();
             double ddelta = delta;
             if (ddelta > 0)
                 ddelta = 2;
@@ -284,7 +286,7 @@ namespace MaximaPlugin.PlotImage
             dMouseW = dMouseW + delta;
 
             // Zoom x and y axis if not a 3D plot in z-only-mode
-            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && controlKeyDownAxis) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 // Zoom x axis if it is in interactive mode
                 if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
@@ -321,7 +323,7 @@ namespace MaximaPlugin.PlotImage
                 }
             }
             // zoom of z if it is a 3D plot
-            if (controlKeyDownAxis && canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive)
+            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive)
             {
                 if (canv.plotStore.zLogarithmic == PlotStore.State.Enable)
                 {
@@ -334,6 +336,24 @@ namespace MaximaPlugin.PlotImage
                     changeValue = (canv.plotStore.zMaxRange - canv.plotStore.zMinRange) * delta / zoomFactor;
                     canv.plotStore.zMaxRange += changeValue;
                     canv.plotStore.zMinRange -= changeValue;
+                }
+            }
+
+            if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            {
+                //perform some calc with shiftkey
+                canv.plotStore.scalAzimuth += (delta/zoomFactor);
+                if(canv.plotStore.scalAzimuth < 0)
+                {
+                    canv.plotStore.scalAzimuth = 0;
+                }
+            } else if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isCtrlKeyDown && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            {
+                //perform some calc with ctrlkey
+                canv.plotStore.scalZenith += (delta / zoomFactor);
+                if (canv.plotStore.scalZenith < 0)
+                {
+                    canv.plotStore.scalZenith = 0;
                 }
             }
             //canv.plotApproval = true;
@@ -352,27 +372,23 @@ namespace MaximaPlugin.PlotImage
         // handle the modifier keys
         public override void OnKeyDown(KeyEventOptions e)
         {
-            // A toggles between 3D modes 
-            if (e.KeyCode == (int)InputKeys.A && controlKeyDownAxis)
-                controlKeyDownAxis = false;
-            else if (e.KeyData == InputKeys.A && !controlKeyDownAxis)
-                controlKeyDownAxis = true;
-            // no effect of these keys has been observed
-            else if (controlKeyDownAxis && e.KeyCode == (int)InputKeys.P)
-                canv.plotStore.scalAzimuth++;
-            else if (controlKeyDownAxis && e.KeyCode == (int)InputKeys.M)
-                canv.plotStore.scalAzimuth--;
-            else if (controlKeyDownAxis && e.KeyCode == (int)InputKeys.Space)
-                canv.plotStore.scalZenith++;
-            else if (controlKeyDownAxis && e.KeyCode == (int)InputKeys.Back)
-                canv.plotStore.scalZenith--;
-
-            canv.redrawCanvas = true;
-            canv.SetLastRequest();
-            callRedraw();
+            if (e.KeyCode == (int)InputKeys.ShiftKey)
+                    isShiftKeyDown = true;
+            else if(e.KeyCode == (int)InputKeys.ControlKey)
+                isCtrlKeyDown = true;
             base.OnKeyDown(e);
 
         }
+        public override void OnKeyUp(KeyEventOptions e)
+        {
+            if (e.KeyCode == (int)InputKeys.ShiftKey)
+                isShiftKeyDown = false;
+            else if (e.KeyCode == (int)InputKeys.ControlKey)
+                isCtrlKeyDown = false;
+
+            base.OnKeyUp(e);
+        }
+
         //SMATH
         public override RegionBase Clone()
         {
@@ -381,9 +397,10 @@ namespace MaximaPlugin.PlotImage
         // handler for region size changes
         protected override void OnSizeChanged(MouseEventOptions e)
         {
-            sizeChange = true;
-            if (canv.plotStore.pictureSizeState == PlotImage.PlotStore.State.Interactive)
+            
+            if (canv.plotStore.pictureSizeState == PlotImage.PlotStore.State.Interactive && !firstEval)
             {
+                sizeChange = true;
                 canv.plotStore.width = canv.Size.Width;
                 canv.plotStore.height = canv.Size.Height;
                 canv.redrawCanvas = true;

@@ -70,7 +70,7 @@ namespace MaximaPlugin.ControlObjects
         private static MaximaSession maxima; 
         public static bool triedToCreate = false;
         public static int maximaStartStep = 0;
-        public static string Log; // Translationlog
+        public static string Log = ""; // Translationlog
 
         /// <summary>
         /// Get the session object, if it does not exist, create it.
@@ -439,6 +439,7 @@ namespace MaximaPlugin.ControlObjects
                 bool isCrossProd = false;
                 for(int i = 0; i < answers.Count; i++)
                 {
+                    // this might change in the future but this is the only thing at the moment that can differentiate the type of the problem it solves.
                     if (answers[i].Contains("vect: warning: removing existing rule or rules for .."))
                         isCrossProd = true;
                 }

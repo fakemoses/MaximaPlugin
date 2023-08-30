@@ -29,20 +29,12 @@
         private void InitializeComponent()
         {
             this.tabControls = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox26 = new System.Windows.Forms.GroupBox();
-            this.textTitle = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textZtitle = new System.Windows.Forms.TextBox();
-            this.groupBox27 = new System.Windows.Forms.GroupBox();
-            this.textYtitle = new System.Windows.Forms.TextBox();
-            this.groupBox28 = new System.Windows.Forms.GroupBox();
-            this.textXtitle = new System.Windows.Forms.TextBox();
             this.tabAxes = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textZtitle = new System.Windows.Forms.TextBox();
             this.zAxis = new System.Windows.Forms.CheckBox();
             this.checkZgrid = new System.Windows.Forms.CheckBox();
-            this.textZbase = new System.Windows.Forms.TextBox();
             this.checkZlog = new System.Windows.Forms.CheckBox();
             this.radioZrangeInteractive = new System.Windows.Forms.RadioButton();
             this.radioZrangeDisable = new System.Windows.Forms.RadioButton();
@@ -50,9 +42,10 @@
             this.textZrangeMin = new System.Windows.Forms.TextBox();
             this.textZrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textYtitle = new System.Windows.Forms.TextBox();
             this.yAxis = new System.Windows.Forms.CheckBox();
             this.checkYgrid = new System.Windows.Forms.CheckBox();
-            this.textYbase = new System.Windows.Forms.TextBox();
             this.checkYlog = new System.Windows.Forms.CheckBox();
             this.radioYrangeInteractive = new System.Windows.Forms.RadioButton();
             this.radioYrangeDisable = new System.Windows.Forms.RadioButton();
@@ -60,8 +53,9 @@
             this.textYrangeMin = new System.Windows.Forms.TextBox();
             this.textYrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textXtitle = new System.Windows.Forms.TextBox();
             this.xAxis = new System.Windows.Forms.CheckBox();
-            this.textXbase = new System.Windows.Forms.TextBox();
             this.checkXgrid = new System.Windows.Forms.CheckBox();
             this.checkXlog = new System.Windows.Forms.CheckBox();
             this.radioXrangeInteractive = new System.Windows.Forms.RadioButton();
@@ -70,6 +64,8 @@
             this.textXrangeMax = new System.Windows.Forms.TextBox();
             this.textXrangeMin = new System.Windows.Forms.TextBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox26 = new System.Windows.Forms.GroupBox();
+            this.textTitle = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textPm3dPalette = new System.Windows.Forms.TextBox();
@@ -135,17 +131,24 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.propAxesCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControls.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.groupBox26.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox27.SuspendLayout();
-            this.groupBox28.SuspendLayout();
             this.tabAxes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox31.SuspendLayout();
             this.groupBox32.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            this.groupBox26.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox30.SuspendLayout();
             this.groupBox18.SuspendLayout();
@@ -159,11 +162,11 @@
             this.tabPage2.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControls
             // 
-            this.tabControls.Controls.Add(this.tabPage1);
             this.tabControls.Controls.Add(this.tabAxes);
             this.tabControls.Controls.Add(this.tabPage8);
             this.tabControls.Controls.Add(this.tabVariables);
@@ -172,145 +175,68 @@
             this.tabControls.Name = "tabControls";
             this.tabControls.RightToLeftLayout = true;
             this.tabControls.SelectedIndex = 0;
-            this.tabControls.Size = new System.Drawing.Size(270, 417);
+            this.tabControls.Size = new System.Drawing.Size(270, 463);
             this.tabControls.TabIndex = 6;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox26);
-            this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.groupBox27);
-            this.tabPage1.Controls.Add(this.groupBox28);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(262, 391);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Labels";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // groupBox26
-            // 
-            this.groupBox26.Controls.Add(this.textTitle);
-            this.groupBox26.Location = new System.Drawing.Point(6, 6);
-            this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(250, 46);
-            this.groupBox26.TabIndex = 8;
-            this.groupBox26.TabStop = false;
-            this.groupBox26.Text = "Title";
-            // 
-            // textTitle
-            // 
-            this.textTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textTitle.Location = new System.Drawing.Point(6, 19);
-            this.textTitle.Name = "textTitle";
-            this.textTitle.Size = new System.Drawing.Size(238, 20);
-            this.textTitle.TabIndex = 0;
-            this.textTitle.TextChanged += new System.EventHandler(this.AnyChanges);
-            this.textTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.textZtitle);
-            this.groupBox2.Location = new System.Drawing.Point(6, 165);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(250, 47);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Z-Axis";
-            this.groupBox2.Visible = false;
-            // 
-            // textZtitle
-            // 
-            this.textZtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textZtitle.Location = new System.Drawing.Point(6, 19);
-            this.textZtitle.Name = "textZtitle";
-            this.textZtitle.Size = new System.Drawing.Size(238, 20);
-            this.textZtitle.TabIndex = 0;
-            this.textZtitle.TextChanged += new System.EventHandler(this.AnyChanges);
-            this.textZtitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
-            // 
-            // groupBox27
-            // 
-            this.groupBox27.Controls.Add(this.textYtitle);
-            this.groupBox27.Location = new System.Drawing.Point(6, 111);
-            this.groupBox27.Name = "groupBox27";
-            this.groupBox27.Size = new System.Drawing.Size(250, 48);
-            this.groupBox27.TabIndex = 1;
-            this.groupBox27.TabStop = false;
-            this.groupBox27.Text = "Y-Axis";
-            // 
-            // textYtitle
-            // 
-            this.textYtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textYtitle.Location = new System.Drawing.Point(6, 19);
-            this.textYtitle.Name = "textYtitle";
-            this.textYtitle.Size = new System.Drawing.Size(238, 20);
-            this.textYtitle.TabIndex = 0;
-            this.textYtitle.TextChanged += new System.EventHandler(this.AnyChanges);
-            this.textYtitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
-            // 
-            // groupBox28
-            // 
-            this.groupBox28.Controls.Add(this.textXtitle);
-            this.groupBox28.Location = new System.Drawing.Point(6, 58);
-            this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(250, 47);
-            this.groupBox28.TabIndex = 0;
-            this.groupBox28.TabStop = false;
-            this.groupBox28.Text = "X-Axis";
-            this.groupBox28.Enter += new System.EventHandler(this.groupBox28_Enter);
-            // 
-            // textXtitle
-            // 
-            this.textXtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textXtitle.Location = new System.Drawing.Point(6, 19);
-            this.textXtitle.Name = "textXtitle";
-            this.textXtitle.Size = new System.Drawing.Size(238, 20);
-            this.textXtitle.TabIndex = 0;
-            this.textXtitle.TextChanged += new System.EventHandler(this.AnyChanges);
-            this.textXtitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             // 
             // tabAxes
             // 
+            this.tabAxes.Controls.Add(this.groupBox2);
             this.tabAxes.Controls.Add(this.groupBox1);
             this.tabAxes.Controls.Add(this.groupBox31);
             this.tabAxes.Controls.Add(this.groupBox32);
             this.tabAxes.Location = new System.Drawing.Point(4, 22);
             this.tabAxes.Name = "tabAxes";
             this.tabAxes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAxes.Size = new System.Drawing.Size(262, 391);
+            this.tabAxes.Size = new System.Drawing.Size(262, 437);
             this.tabAxes.TabIndex = 4;
             this.tabAxes.Text = "Axes";
             this.tabAxes.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.textZtitle);
             this.groupBox1.Controls.Add(this.zAxis);
             this.groupBox1.Controls.Add(this.checkZgrid);
-            this.groupBox1.Controls.Add(this.textZbase);
             this.groupBox1.Controls.Add(this.checkZlog);
             this.groupBox1.Controls.Add(this.radioZrangeInteractive);
             this.groupBox1.Controls.Add(this.radioZrangeDisable);
             this.groupBox1.Controls.Add(this.radioZrangeCustom);
             this.groupBox1.Controls.Add(this.textZrangeMin);
             this.groupBox1.Controls.Add(this.textZrangeMax);
-            this.groupBox1.Location = new System.Drawing.Point(6, 233);
+            this.groupBox1.Location = new System.Drawing.Point(6, 296);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 110);
+            this.groupBox1.Size = new System.Drawing.Size(250, 115);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Z-Axis [ min / max ]";
+            this.groupBox1.Text = "Z-Axis";
             this.groupBox1.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Axis label:";
+            // 
+            // textZtitle
+            // 
+            this.textZtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textZtitle.Location = new System.Drawing.Point(66, 19);
+            this.textZtitle.Name = "textZtitle";
+            this.textZtitle.Size = new System.Drawing.Size(178, 20);
+            this.textZtitle.TabIndex = 22;
             // 
             // zAxis
             // 
             this.zAxis.AutoSize = true;
-            this.zAxis.Location = new System.Drawing.Point(92, 91);
+            this.zAxis.Location = new System.Drawing.Point(57, 94);
             this.zAxis.Name = "zAxis";
             this.zAxis.Size = new System.Drawing.Size(45, 17);
             this.zAxis.TabIndex = 21;
@@ -320,7 +246,7 @@
             // checkZgrid
             // 
             this.checkZgrid.AutoSize = true;
-            this.checkZgrid.Location = new System.Drawing.Point(5, 91);
+            this.checkZgrid.Location = new System.Drawing.Point(5, 94);
             this.checkZgrid.Name = "checkZgrid";
             this.checkZgrid.Size = new System.Drawing.Size(45, 17);
             this.checkZgrid.TabIndex = 19;
@@ -328,20 +254,10 @@
             this.checkZgrid.UseVisualStyleBackColor = true;
             this.checkZgrid.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
-            // textZbase
-            // 
-            this.textZbase.Location = new System.Drawing.Point(109, 66);
-            this.textZbase.Name = "textZbase";
-            this.textZbase.Size = new System.Drawing.Size(30, 20);
-            this.textZbase.TabIndex = 18;
-            this.textZbase.Text = "10";
-            this.textZbase.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
-            this.textZbase.Validated += new System.EventHandler(this.AnyChanges);
-            // 
             // checkZlog
             // 
             this.checkZlog.AutoSize = true;
-            this.checkZlog.Location = new System.Drawing.Point(6, 68);
+            this.checkZlog.Location = new System.Drawing.Point(107, 94);
             this.checkZlog.Name = "checkZlog";
             this.checkZlog.Size = new System.Drawing.Size(106, 17);
             this.checkZlog.TabIndex = 17;
@@ -352,7 +268,7 @@
             // radioZrangeInteractive
             // 
             this.radioZrangeInteractive.AutoSize = true;
-            this.radioZrangeInteractive.Location = new System.Drawing.Point(92, 45);
+            this.radioZrangeInteractive.Location = new System.Drawing.Point(92, 71);
             this.radioZrangeInteractive.Name = "radioZrangeInteractive";
             this.radioZrangeInteractive.Size = new System.Drawing.Size(57, 17);
             this.radioZrangeInteractive.TabIndex = 16;
@@ -364,19 +280,19 @@
             // radioZrangeDisable
             // 
             this.radioZrangeDisable.AutoSize = true;
-            this.radioZrangeDisable.Location = new System.Drawing.Point(174, 45);
+            this.radioZrangeDisable.Location = new System.Drawing.Point(174, 71);
             this.radioZrangeDisable.Name = "radioZrangeDisable";
-            this.radioZrangeDisable.Size = new System.Drawing.Size(39, 17);
+            this.radioZrangeDisable.Size = new System.Drawing.Size(47, 17);
             this.radioZrangeDisable.TabIndex = 14;
             this.radioZrangeDisable.TabStop = true;
-            this.radioZrangeDisable.Text = "Off";
+            this.radioZrangeDisable.Text = "Auto";
             this.radioZrangeDisable.UseVisualStyleBackColor = true;
             this.radioZrangeDisable.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
             // radioZrangeCustom
             // 
             this.radioZrangeCustom.AutoSize = true;
-            this.radioZrangeCustom.Location = new System.Drawing.Point(6, 45);
+            this.radioZrangeCustom.Location = new System.Drawing.Point(6, 71);
             this.radioZrangeCustom.Name = "radioZrangeCustom";
             this.radioZrangeCustom.Size = new System.Drawing.Size(60, 17);
             this.radioZrangeCustom.TabIndex = 12;
@@ -387,44 +303,66 @@
             // 
             // textZrangeMin
             // 
-            this.textZrangeMin.Location = new System.Drawing.Point(6, 19);
+            this.textZrangeMin.Location = new System.Drawing.Point(74, 45);
             this.textZrangeMin.Name = "textZrangeMin";
-            this.textZrangeMin.Size = new System.Drawing.Size(116, 20);
+            this.textZrangeMin.Size = new System.Drawing.Size(66, 20);
             this.textZrangeMin.TabIndex = 4;
             this.textZrangeMin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             this.textZrangeMin.Validated += new System.EventHandler(this.AnyChanges);
             // 
             // textZrangeMax
             // 
-            this.textZrangeMax.Location = new System.Drawing.Point(128, 19);
+            this.textZrangeMax.Location = new System.Drawing.Point(174, 45);
             this.textZrangeMax.Name = "textZrangeMax";
-            this.textZrangeMax.Size = new System.Drawing.Size(116, 20);
+            this.textZrangeMax.Size = new System.Drawing.Size(70, 20);
             this.textZrangeMax.TabIndex = 0;
             this.textZrangeMax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             this.textZrangeMax.Validated += new System.EventHandler(this.AnyChanges);
             // 
             // groupBox31
             // 
+            this.groupBox31.Controls.Add(this.label11);
+            this.groupBox31.Controls.Add(this.label10);
+            this.groupBox31.Controls.Add(this.label9);
+            this.groupBox31.Controls.Add(this.label4);
+            this.groupBox31.Controls.Add(this.textYtitle);
             this.groupBox31.Controls.Add(this.yAxis);
             this.groupBox31.Controls.Add(this.checkYgrid);
-            this.groupBox31.Controls.Add(this.textYbase);
             this.groupBox31.Controls.Add(this.checkYlog);
             this.groupBox31.Controls.Add(this.radioYrangeInteractive);
             this.groupBox31.Controls.Add(this.radioYrangeDisable);
             this.groupBox31.Controls.Add(this.radioYrangeCustom);
             this.groupBox31.Controls.Add(this.textYrangeMin);
             this.groupBox31.Controls.Add(this.textYrangeMax);
-            this.groupBox31.Location = new System.Drawing.Point(6, 117);
+            this.groupBox31.Location = new System.Drawing.Point(6, 175);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(250, 110);
+            this.groupBox31.Size = new System.Drawing.Size(250, 115);
             this.groupBox31.TabIndex = 10;
             this.groupBox31.TabStop = false;
-            this.groupBox31.Text = "Y-Axis [ min / max ]";
+            this.groupBox31.Text = "Y-Axis";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Axis label:";
+            // 
+            // textYtitle
+            // 
+            this.textYtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textYtitle.Location = new System.Drawing.Point(66, 19);
+            this.textYtitle.Name = "textYtitle";
+            this.textYtitle.Size = new System.Drawing.Size(178, 20);
+            this.textYtitle.TabIndex = 22;
             // 
             // yAxis
             // 
             this.yAxis.AutoSize = true;
-            this.yAxis.Location = new System.Drawing.Point(92, 91);
+            this.yAxis.Location = new System.Drawing.Point(57, 94);
             this.yAxis.Name = "yAxis";
             this.yAxis.Size = new System.Drawing.Size(45, 17);
             this.yAxis.TabIndex = 21;
@@ -434,7 +372,7 @@
             // checkYgrid
             // 
             this.checkYgrid.AutoSize = true;
-            this.checkYgrid.Location = new System.Drawing.Point(6, 91);
+            this.checkYgrid.Location = new System.Drawing.Point(6, 94);
             this.checkYgrid.Name = "checkYgrid";
             this.checkYgrid.Size = new System.Drawing.Size(45, 17);
             this.checkYgrid.TabIndex = 19;
@@ -442,20 +380,10 @@
             this.checkYgrid.UseVisualStyleBackColor = true;
             this.checkYgrid.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
-            // textYbase
-            // 
-            this.textYbase.Location = new System.Drawing.Point(109, 66);
-            this.textYbase.Name = "textYbase";
-            this.textYbase.Size = new System.Drawing.Size(30, 20);
-            this.textYbase.TabIndex = 18;
-            this.textYbase.Text = "10";
-            this.textYbase.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
-            this.textYbase.Validated += new System.EventHandler(this.AnyChanges);
-            // 
             // checkYlog
             // 
             this.checkYlog.AutoSize = true;
-            this.checkYlog.Location = new System.Drawing.Point(6, 68);
+            this.checkYlog.Location = new System.Drawing.Point(107, 94);
             this.checkYlog.Name = "checkYlog";
             this.checkYlog.Size = new System.Drawing.Size(106, 17);
             this.checkYlog.TabIndex = 17;
@@ -466,7 +394,7 @@
             // radioYrangeInteractive
             // 
             this.radioYrangeInteractive.AutoSize = true;
-            this.radioYrangeInteractive.Location = new System.Drawing.Point(92, 45);
+            this.radioYrangeInteractive.Location = new System.Drawing.Point(92, 71);
             this.radioYrangeInteractive.Name = "radioYrangeInteractive";
             this.radioYrangeInteractive.Size = new System.Drawing.Size(57, 17);
             this.radioYrangeInteractive.TabIndex = 16;
@@ -478,19 +406,19 @@
             // radioYrangeDisable
             // 
             this.radioYrangeDisable.AutoSize = true;
-            this.radioYrangeDisable.Location = new System.Drawing.Point(174, 45);
+            this.radioYrangeDisable.Location = new System.Drawing.Point(174, 71);
             this.radioYrangeDisable.Name = "radioYrangeDisable";
-            this.radioYrangeDisable.Size = new System.Drawing.Size(39, 17);
+            this.radioYrangeDisable.Size = new System.Drawing.Size(47, 17);
             this.radioYrangeDisable.TabIndex = 14;
             this.radioYrangeDisable.TabStop = true;
-            this.radioYrangeDisable.Text = "Off";
+            this.radioYrangeDisable.Text = "Auto";
             this.radioYrangeDisable.UseVisualStyleBackColor = true;
             this.radioYrangeDisable.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
             // radioYrangeCustom
             // 
             this.radioYrangeCustom.AutoSize = true;
-            this.radioYrangeCustom.Location = new System.Drawing.Point(6, 45);
+            this.radioYrangeCustom.Location = new System.Drawing.Point(6, 71);
             this.radioYrangeCustom.Name = "radioYrangeCustom";
             this.radioYrangeCustom.Size = new System.Drawing.Size(60, 17);
             this.radioYrangeCustom.TabIndex = 12;
@@ -501,26 +429,30 @@
             // 
             // textYrangeMin
             // 
-            this.textYrangeMin.Location = new System.Drawing.Point(6, 19);
+            this.textYrangeMin.Location = new System.Drawing.Point(74, 45);
             this.textYrangeMin.Name = "textYrangeMin";
-            this.textYrangeMin.Size = new System.Drawing.Size(116, 20);
+            this.textYrangeMin.Size = new System.Drawing.Size(66, 20);
             this.textYrangeMin.TabIndex = 4;
             this.textYrangeMin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             this.textYrangeMin.Validated += new System.EventHandler(this.AnyChanges);
             // 
             // textYrangeMax
             // 
-            this.textYrangeMax.Location = new System.Drawing.Point(128, 19);
+            this.textYrangeMax.Location = new System.Drawing.Point(174, 45);
             this.textYrangeMax.Name = "textYrangeMax";
-            this.textYrangeMax.Size = new System.Drawing.Size(116, 20);
+            this.textYrangeMax.Size = new System.Drawing.Size(70, 20);
             this.textYrangeMax.TabIndex = 0;
             this.textYrangeMax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             this.textYrangeMax.Validated += new System.EventHandler(this.AnyChanges);
             // 
             // groupBox32
             // 
+            this.groupBox32.Controls.Add(this.label8);
+            this.groupBox32.Controls.Add(this.label7);
+            this.groupBox32.Controls.Add(this.label6);
+            this.groupBox32.Controls.Add(this.label3);
+            this.groupBox32.Controls.Add(this.textXtitle);
             this.groupBox32.Controls.Add(this.xAxis);
-            this.groupBox32.Controls.Add(this.textXbase);
             this.groupBox32.Controls.Add(this.checkXgrid);
             this.groupBox32.Controls.Add(this.checkXlog);
             this.groupBox32.Controls.Add(this.radioXrangeInteractive);
@@ -528,37 +460,45 @@
             this.groupBox32.Controls.Add(this.radioXrangeCustom);
             this.groupBox32.Controls.Add(this.textXrangeMax);
             this.groupBox32.Controls.Add(this.textXrangeMin);
-            this.groupBox32.Location = new System.Drawing.Point(6, 6);
+            this.groupBox32.Location = new System.Drawing.Point(6, 54);
             this.groupBox32.Name = "groupBox32";
-            this.groupBox32.Size = new System.Drawing.Size(250, 107);
+            this.groupBox32.Size = new System.Drawing.Size(250, 115);
             this.groupBox32.TabIndex = 9;
             this.groupBox32.TabStop = false;
-            this.groupBox32.Text = "X-Axis [ min / max ]";
+            this.groupBox32.Text = "X-Axis";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Axis label:";
+            // 
+            // textXtitle
+            // 
+            this.textXtitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textXtitle.Location = new System.Drawing.Point(66, 17);
+            this.textXtitle.Name = "textXtitle";
+            this.textXtitle.Size = new System.Drawing.Size(178, 20);
+            this.textXtitle.TabIndex = 21;
             // 
             // xAxis
             // 
             this.xAxis.AutoSize = true;
-            this.xAxis.Location = new System.Drawing.Point(92, 88);
+            this.xAxis.Location = new System.Drawing.Point(57, 94);
             this.xAxis.Name = "xAxis";
             this.xAxis.Size = new System.Drawing.Size(45, 17);
             this.xAxis.TabIndex = 20;
             this.xAxis.Text = "Axis";
             this.xAxis.UseVisualStyleBackColor = true;
             // 
-            // textXbase
-            // 
-            this.textXbase.Location = new System.Drawing.Point(109, 66);
-            this.textXbase.Name = "textXbase";
-            this.textXbase.Size = new System.Drawing.Size(30, 20);
-            this.textXbase.TabIndex = 19;
-            this.textXbase.Text = "10";
-            this.textXbase.TextChanged += new System.EventHandler(this.ShowCommandlist_Click);
-            this.textXbase.Validated += new System.EventHandler(this.AnyChanges);
-            // 
             // checkXgrid
             // 
             this.checkXgrid.AutoSize = true;
-            this.checkXgrid.Location = new System.Drawing.Point(6, 88);
+            this.checkXgrid.Location = new System.Drawing.Point(6, 94);
             this.checkXgrid.Name = "checkXgrid";
             this.checkXgrid.Size = new System.Drawing.Size(45, 17);
             this.checkXgrid.TabIndex = 17;
@@ -569,7 +509,7 @@
             // checkXlog
             // 
             this.checkXlog.AutoSize = true;
-            this.checkXlog.Location = new System.Drawing.Point(6, 68);
+            this.checkXlog.Location = new System.Drawing.Point(107, 94);
             this.checkXlog.Name = "checkXlog";
             this.checkXlog.Size = new System.Drawing.Size(106, 17);
             this.checkXlog.TabIndex = 16;
@@ -580,7 +520,7 @@
             // radioXrangeInteractive
             // 
             this.radioXrangeInteractive.AutoSize = true;
-            this.radioXrangeInteractive.Location = new System.Drawing.Point(92, 45);
+            this.radioXrangeInteractive.Location = new System.Drawing.Point(92, 69);
             this.radioXrangeInteractive.Name = "radioXrangeInteractive";
             this.radioXrangeInteractive.Size = new System.Drawing.Size(57, 17);
             this.radioXrangeInteractive.TabIndex = 15;
@@ -592,19 +532,19 @@
             // radioXrangeDisable
             // 
             this.radioXrangeDisable.AutoSize = true;
-            this.radioXrangeDisable.Location = new System.Drawing.Point(174, 45);
+            this.radioXrangeDisable.Location = new System.Drawing.Point(174, 69);
             this.radioXrangeDisable.Name = "radioXrangeDisable";
-            this.radioXrangeDisable.Size = new System.Drawing.Size(39, 17);
+            this.radioXrangeDisable.Size = new System.Drawing.Size(47, 17);
             this.radioXrangeDisable.TabIndex = 14;
             this.radioXrangeDisable.TabStop = true;
-            this.radioXrangeDisable.Text = "Off";
+            this.radioXrangeDisable.Text = "Auto";
             this.radioXrangeDisable.UseVisualStyleBackColor = true;
             this.radioXrangeDisable.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
             // radioXrangeCustom
             // 
             this.radioXrangeCustom.AutoSize = true;
-            this.radioXrangeCustom.Location = new System.Drawing.Point(6, 45);
+            this.radioXrangeCustom.Location = new System.Drawing.Point(6, 69);
             this.radioXrangeCustom.Name = "radioXrangeCustom";
             this.radioXrangeCustom.Size = new System.Drawing.Size(60, 17);
             this.radioXrangeCustom.TabIndex = 12;
@@ -615,18 +555,18 @@
             // 
             // textXrangeMax
             // 
-            this.textXrangeMax.Location = new System.Drawing.Point(128, 19);
+            this.textXrangeMax.Location = new System.Drawing.Point(174, 43);
             this.textXrangeMax.Name = "textXrangeMax";
-            this.textXrangeMax.Size = new System.Drawing.Size(116, 20);
+            this.textXrangeMax.Size = new System.Drawing.Size(70, 20);
             this.textXrangeMax.TabIndex = 5;
             this.textXrangeMax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
             this.textXrangeMax.Validated += new System.EventHandler(this.AnyChanges);
             // 
             // textXrangeMin
             // 
-            this.textXrangeMin.Location = new System.Drawing.Point(6, 19);
+            this.textXrangeMin.Location = new System.Drawing.Point(74, 43);
             this.textXrangeMin.Name = "textXrangeMin";
-            this.textXrangeMin.Size = new System.Drawing.Size(116, 20);
+            this.textXrangeMin.Size = new System.Drawing.Size(66, 20);
             this.textXrangeMin.TabIndex = 6;
             this.textXrangeMin.Tag = "num";
             this.textXrangeMin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterKey);
@@ -634,16 +574,36 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.groupBox26);
             this.tabPage8.Controls.Add(this.groupBox7);
             this.tabPage8.Controls.Add(this.groupBox30);
             this.tabPage8.Controls.Add(this.groupBox18);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(262, 391);
+            this.tabPage8.Size = new System.Drawing.Size(262, 437);
             this.tabPage8.TabIndex = 6;
             this.tabPage8.Text = "Diagram style";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox26
+            // 
+            this.groupBox26.Controls.Add(this.textTitle);
+            this.groupBox26.Location = new System.Drawing.Point(6, 9);
+            this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Size = new System.Drawing.Size(250, 46);
+            this.groupBox26.TabIndex = 15;
+            this.groupBox26.TabStop = false;
+            this.groupBox26.Text = "Title";
+            // 
+            // textTitle
+            // 
+            this.textTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textTitle.Location = new System.Drawing.Point(6, 19);
+            this.textTitle.Name = "textTitle";
+            this.textTitle.Size = new System.Drawing.Size(238, 20);
+            this.textTitle.TabIndex = 0;
             // 
             // groupBox7
             // 
@@ -660,7 +620,7 @@
             this.groupBox7.Controls.Add(this.textTextSize);
             this.groupBox7.Controls.Add(this.checkBorder);
             this.groupBox7.Controls.Add(this.checkTextSizeCustom);
-            this.groupBox7.Location = new System.Drawing.Point(7, 9);
+            this.groupBox7.Location = new System.Drawing.Point(6, 61);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(250, 146);
             this.groupBox7.TabIndex = 13;
@@ -751,9 +711,9 @@
             this.checkGrid.AutoSize = true;
             this.checkGrid.Location = new System.Drawing.Point(6, 67);
             this.checkGrid.Name = "checkGrid";
-            this.checkGrid.Size = new System.Drawing.Size(94, 17);
+            this.checkGrid.Size = new System.Drawing.Size(100, 17);
             this.checkGrid.TabIndex = 4;
-            this.checkGrid.Text = "Surface grid x:";
+            this.checkGrid.Text = "Sampling grid x:";
             this.checkGrid.UseVisualStyleBackColor = true;
             this.checkGrid.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
@@ -808,7 +768,7 @@
             this.groupBox30.Controls.Add(this.radioViewDisable);
             this.groupBox30.Controls.Add(this.textAzimut);
             this.groupBox30.Controls.Add(this.textZenit);
-            this.groupBox30.Location = new System.Drawing.Point(7, 242);
+            this.groupBox30.Location = new System.Drawing.Point(6, 294);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(250, 75);
             this.groupBox30.TabIndex = 11;
@@ -907,7 +867,7 @@
             this.groupBox18.Controls.Add(this.textHeight);
             this.groupBox18.Controls.Add(this.comboTerm);
             this.groupBox18.Controls.Add(this.textWidth);
-            this.groupBox18.Location = new System.Drawing.Point(7, 161);
+            this.groupBox18.Location = new System.Drawing.Point(6, 213);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(250, 75);
             this.groupBox18.TabIndex = 10;
@@ -982,7 +942,7 @@
             this.tabVariables.Location = new System.Drawing.Point(4, 22);
             this.tabVariables.Name = "tabVariables";
             this.tabVariables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVariables.Size = new System.Drawing.Size(262, 391);
+            this.tabVariables.Size = new System.Drawing.Size(262, 437);
             this.tabVariables.TabIndex = 7;
             this.tabVariables.Text = "Variables";
             this.tabVariables.UseVisualStyleBackColor = true;
@@ -1227,7 +1187,7 @@
             this.tabControl2.Location = new System.Drawing.Point(288, 12);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(340, 413);
+            this.tabControl2.Size = new System.Drawing.Size(340, 463);
             this.tabControl2.TabIndex = 7;
             this.tabControl2.Visible = false;
             // 
@@ -1237,7 +1197,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(332, 387);
+            this.tabPage2.Size = new System.Drawing.Size(332, 437);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Maxima Draw commands";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1251,7 +1211,7 @@
             "InitValue"});
             this.listBox1.Location = new System.Drawing.Point(6, 6);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(320, 368);
+            this.listBox1.Size = new System.Drawing.Size(320, 420);
             this.listBox1.TabIndex = 1;
             // 
             // tabPage5
@@ -1260,7 +1220,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(332, 387);
+            this.tabPage5.Size = new System.Drawing.Size(332, 437);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Gnuplot commands (user_preamble)";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1279,7 +1239,7 @@
             // 
             // button_Refresh
             // 
-            this.button_Refresh.Location = new System.Drawing.Point(12, 435);
+            this.button_Refresh.Location = new System.Drawing.Point(12, 481);
             this.button_Refresh.Name = "button_Refresh";
             this.button_Refresh.Size = new System.Drawing.Size(86, 42);
             this.button_Refresh.TabIndex = 8;
@@ -1289,7 +1249,7 @@
             // 
             // button_Cancel_all
             // 
-            this.button_Cancel_all.Location = new System.Drawing.Point(104, 435);
+            this.button_Cancel_all.Location = new System.Drawing.Point(104, 481);
             this.button_Cancel_all.Name = "button_Cancel_all";
             this.button_Cancel_all.Size = new System.Drawing.Size(86, 42);
             this.button_Cancel_all.TabIndex = 9;
@@ -1299,7 +1259,7 @@
             // 
             // button_ShowCommandlist
             // 
-            this.button_ShowCommandlist.Location = new System.Drawing.Point(196, 435);
+            this.button_ShowCommandlist.Location = new System.Drawing.Point(196, 481);
             this.button_ShowCommandlist.Name = "button_ShowCommandlist";
             this.button_ShowCommandlist.Size = new System.Drawing.Size(86, 42);
             this.button_ShowCommandlist.TabIndex = 10;
@@ -1314,7 +1274,7 @@
             this.panel1.Controls.Add(this.progressBar1);
             this.panel1.Location = new System.Drawing.Point(2, 577);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(294, 525);
+            this.panel1.Size = new System.Drawing.Size(294, 572);
             this.panel1.TabIndex = 11;
             // 
             // label2
@@ -1332,6 +1292,107 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(238, 23);
             this.progressBar1.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 46);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Range";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(46, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "Min:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(141, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(30, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Max:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(141, 48);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Max:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(46, 48);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "Min:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 48);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(39, 13);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Range";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 48);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(39, 13);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "Range";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(46, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "Min:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(141, 48);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(30, 13);
+            this.label14.TabIndex = 29;
+            this.label14.Text = "Max:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.propAxesCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(250, 42);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "General";
+            // 
+            // propAxesCheckBox
+            // 
+            this.propAxesCheckBox.AutoSize = true;
+            this.propAxesCheckBox.Location = new System.Drawing.Point(5, 19);
+            this.propAxesCheckBox.Name = "propAxesCheckBox";
+            this.propAxesCheckBox.Size = new System.Drawing.Size(108, 17);
+            this.propAxesCheckBox.TabIndex = 12;
+            this.propAxesCheckBox.Text = "Proportional Axes";
+            this.propAxesCheckBox.UseVisualStyleBackColor = true;
             // 
             // PlotSettings
             // 
@@ -1351,15 +1412,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlotSettings_FormClosing);
             this.Load += new System.EventHandler(this.PlotSettings_Load);
             this.tabControls.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.groupBox26.ResumeLayout(false);
-            this.groupBox26.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox27.ResumeLayout(false);
-            this.groupBox27.PerformLayout();
-            this.groupBox28.ResumeLayout(false);
-            this.groupBox28.PerformLayout();
             this.tabAxes.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -1368,6 +1420,8 @@
             this.groupBox32.ResumeLayout(false);
             this.groupBox32.PerformLayout();
             this.tabPage8.ResumeLayout(false);
+            this.groupBox26.ResumeLayout(false);
+            this.groupBox26.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox30.ResumeLayout(false);
@@ -1390,6 +1444,8 @@
             this.tabPage5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1397,13 +1453,6 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControls;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBox27;
-        private System.Windows.Forms.TextBox textYtitle;
-        private System.Windows.Forms.GroupBox groupBox28;
-        private System.Windows.Forms.TextBox textXtitle;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textZtitle;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox listBox1;
@@ -1446,14 +1495,10 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.CheckBox checkTextSizeCustom;
         private System.Windows.Forms.CheckBox checkBorder;
-        private System.Windows.Forms.GroupBox groupBox26;
-        private System.Windows.Forms.TextBox textTitle;
-        private System.Windows.Forms.TextBox textYbase;
         private System.Windows.Forms.CheckBox checkYlog;
         private System.Windows.Forms.CheckBox checkXgrid;
         private System.Windows.Forms.CheckBox checkXlog;
         private System.Windows.Forms.CheckBox checkZgrid;
-        private System.Windows.Forms.TextBox textZbase;
         private System.Windows.Forms.CheckBox checkZlog;
         private System.Windows.Forms.CheckBox checkYgrid;
         private System.Windows.Forms.TextBox textTextSize;
@@ -1475,7 +1520,6 @@
         private System.Windows.Forms.Button button_ShowCommandlist;
         private System.Windows.Forms.TextBox textGridXu;
         private System.Windows.Forms.CheckBox checkGrid;
-        private System.Windows.Forms.TextBox textXbase;
         private System.Windows.Forms.CheckBox checkPm3d;
         private System.Windows.Forms.TextBox textGridYv;
         private System.Windows.Forms.CheckBox checkContour;
@@ -1503,5 +1547,24 @@
         private System.Windows.Forms.CheckBox zAxis;
         private System.Windows.Forms.CheckBox yAxis;
         private System.Windows.Forms.CheckBox xAxis;
+        private System.Windows.Forms.GroupBox groupBox26;
+        private System.Windows.Forms.TextBox textTitle;
+        private System.Windows.Forms.TextBox textZtitle;
+        private System.Windows.Forms.TextBox textYtitle;
+        private System.Windows.Forms.TextBox textXtitle;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox propAxesCheckBox;
     }
 }

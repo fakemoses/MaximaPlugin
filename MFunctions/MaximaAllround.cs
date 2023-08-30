@@ -204,7 +204,8 @@ namespace MaximaPlugin.MFunctions
                 "Int(f__,x__,a__,b__)",
                 "Lim(f__,x__,x0__)",
                 "Sum(f__,var__,a__,b__)",
-                "Det(m__)"
+                "Det(m__)",
+                "a__†b__"
             };
 
             // Try to ensure maxima is running
@@ -230,9 +231,9 @@ namespace MaximaPlugin.MFunctions
 
                 if (ArgString.Contains(LhsString.Substring(0, 3)) || ArgString.Contains("all"))
                 {
-                    // add definition
-                    Entry rhs = Entry.Create(TermsConverter.ToTerms(Function));
-                    context.AddDefinition(lhs, rhs);
+                        // add definition
+                        Entry rhs = Entry.Create(TermsConverter.ToTerms(Function));
+                        context.AddDefinition(lhs, rhs);
                     // add description (doesn't work)
                     //context[context.Count-1].Description =  "description of "+ LhsString ;
                     // augment message if needed

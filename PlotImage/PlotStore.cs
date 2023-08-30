@@ -34,14 +34,11 @@ namespace MaximaPlugin.PlotImage
             textSize = 8;
             textFont = "Arial";
             //3D
-            pm3d = State.Custom;
-            pm3dpalette = "[blue,red,green]";
+            pm3d = State.Enable;
+            pm3dpalette = "[color,color,color]";
 
             //BACKGROUND COLOR
             bgColor = "#fefefe";
-
-            //Enhanced3D
-            enhanced3dState = State.Enable;
 
             //CONTOUR
             contour = State.Custom;
@@ -66,6 +63,9 @@ namespace MaximaPlugin.PlotImage
             termType = TermType.png;
             filename = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), null);
             #endregion
+
+            //propotional axes
+            propAxes = State.Disable;
 
             #region AXIS NAMES
             xName = "x";
@@ -247,12 +247,6 @@ namespace MaximaPlugin.PlotImage
                     commandList.Add("yaxis_width=" + yaxisWidth);
                 }
             }
-            else if (plotType == PlotType.plot3D)
-            {
-                if(enhanced3dState == State.Enable)
-                    commandList.Add("enhanced3d=true");
-                    prambleList.Add("\"set pm3d lighting depthorder base\"");
-            }
 
             if(termType == TermType.svg || termType == TermType.pdf)
                 prambleList.Add("\"set style line 100 lc rgb 'grey' lt -1 lw 0.1\"");
@@ -270,10 +264,12 @@ namespace MaximaPlugin.PlotImage
             #endregion
 
             //PM3D
-            if (pm3d == State.Enable)
+            if (pm3d == State.Enable || pm3d == State.Custom)
             {
                 commandList.Add("enhanced3d = true");
-                commandList.Add("palette =" + pm3dpalette.Replace(',', GlobalProfile.ArgumentsSeparatorStandard));
+                prambleList.Add("\"set pm3d lighting depthorder base\"");
+                if(pm3d == State.Custom)
+                    commandList.Add("palette =" + pm3dpalette.Replace(',', GlobalProfile.ArgumentsSeparatorStandard));
             }
 
             //SURFACE GRID
@@ -306,6 +302,20 @@ namespace MaximaPlugin.PlotImage
             else if (zNameS == State.Default)
                 commandList.Add("zlabel=\"" + SharedFunctions.defaultPlotValues.zName + "\"");
             #endregion
+
+            // propotional axes
+
+            if(propAxes == State.Enable)
+            {
+                if (plotType == PlotType.plot2D)
+                {
+                    commandList.Add("proportional_axes=xy");
+                }
+                else
+                {
+                    commandList.Add("proportional_axes=xyz");
+                }
+            }
 
             #region AXIS RANGES
             NumberFormatInfo nfi = new NumberFormatInfo
@@ -932,6 +942,22 @@ namespace MaximaPlugin.PlotImage
         {
             set { _enablezAxis = value; }
             get { return _enablezAxis; }
+        }
+
+        // custom palette
+        private State _customPalatte;
+        public State customPalatte
+        {
+            set { _customPalatte = value; }
+            get { return _customPalatte; }
+        }
+
+        // Propotional Axes
+        private State _propAxes;
+        public State propAxes
+        {
+            set { _propAxes = value; }
+            get { return _propAxes; }
         }
 
         #endregion

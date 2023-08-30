@@ -400,7 +400,7 @@ namespace MaximaPlugin.MFunctions
             //check if there is any user-inserted enhanced3d. Incase it is set to false
             Match isEnhanced3D = Regex.Match(arg1, @"enhanced3d≡(false|none)");
             if (isEnhanced3D.Success)
-                plotStore.enhanced3dState = PlotImage.PlotStore.State.Disable;
+                plotStore.pm3d = PlotImage.PlotStore.State.Disable;
 
 
             // process first argument (draw commands and objects)

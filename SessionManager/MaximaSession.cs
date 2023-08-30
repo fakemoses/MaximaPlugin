@@ -90,6 +90,8 @@ namespace MaximaPlugin
         /// Path to maxima.bat relative to SMath dir.
         /// </summary>
         /// <returns></returns>
+        /// 
+        public string GetPathToMaximaAbs() { return pathToMAXIMA; }
         public string GetPathToMaximabat() { return pathToMAXIMArel; }
         public string GetAssemblyFolder() { return assemblyFolder; }
         public string WorkingFolderPath() { return workingFolder; }

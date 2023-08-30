@@ -1207,13 +1207,34 @@ namespace MaximaPlugin.PlotImage
             if (!tabControl2.Visible)
             {
                 button_ShowCommandlist.Text = "Hide commands";
-                this.Size = new System.Drawing.Size(700, 572);
+                if(scaleFactor > 1.0)
+                {
+                    this.Size = new System.Drawing.Size((int)(700*scaleFactor), (int)(572 * scaleFactor));
+                } else if(scaleFactor >= 1.5)
+                {
+                    this.Size = new System.Drawing.Size((int)(680 * scaleFactor), (int)(585 * scaleFactor));
+                }
+                else
+                {
+                    this.Size = new System.Drawing.Size(700,572);
+                }
                 tabControl2.Visible = true;
 
             }
             else
             {
-                this.Size = new System.Drawing.Size(310, 572);
+                if (scaleFactor > 1.0)
+                {
+                    this.Size = new System.Drawing.Size((int)(310 * scaleFactor)+20, (int)(572 * scaleFactor));
+                }
+                else if (scaleFactor >= 1.5)
+                {
+                    this.Size = new System.Drawing.Size((int)(295 * scaleFactor), (int)(585 * scaleFactor)+50);
+                }
+                else
+                {
+                    this.Size = new System.Drawing.Size(310, 572);
+                }
                 button_ShowCommandlist.Text = "Show commands";
                 tabControl2.Visible = false;
 

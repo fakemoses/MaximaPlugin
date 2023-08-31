@@ -205,7 +205,6 @@ namespace MaximaPlugin.MFunctions
                 "Lim(f__,x__,x0__)",
                 "Sum(f__,var__,a__,b__)",
                 "Det(m__)",
-                "a__†b__"
             };
 
             // Try to ensure maxima is running

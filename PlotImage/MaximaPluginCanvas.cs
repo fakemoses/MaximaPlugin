@@ -11,6 +11,8 @@ using SMath.Drawing;
 using System;
 using System.Threading.Tasks;
 using System.Web;
+using System.Reflection;
+using ImageMagick;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -193,18 +195,50 @@ namespace MaximaPlugin.PlotImage
                     {
                         //read and convert directly from memory
 
-                        byte[] pdfBytes = System.IO.File.ReadAllBytes(imageFilePath);
-                        byte[] pngByte = Freeware.Pdf2Png.Convert(pdfBytes, 1);
+                        //byte[] pdfBytes = System.IO.File.ReadAllBytes(imageFilePath);
+                        //byte[] pngByte = Freeware.Pdf2Png.Convert(pdfBytes, 1);
 
-                        using (MemoryStream pngStream = new MemoryStream(pngByte))
-                        {
-                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
-                            var PDFBitmap = new Bitmap(PDFimg);
-                            loadedImage = PDFimg;
+                        //using (MemoryStream pngStream = new MemoryStream(pngByte))
+                        //{
+                        //    System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
+                        //    var PDFBitmap = new Bitmap(PDFimg);
+                        //    loadedImage = PDFimg;
     
+                        //}
+
+                        //MagickNET thing
+                        string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+                        MagickNET.Initialize();
+                        MagickNET.SetGhostscriptDirectory(assemblyPath);
+
+                        var settings = new MagickReadSettings
+                        {
+                            Density = new Density(300, 300, DensityUnit.PixelsPerInch),
+                            Depth = 1,
+                        };
+                        settings.SetDefine(MagickFormat.Png, "quality", "100"); // not even sure if this does anything
+                        string ImginPng = Path.ChangeExtension(imageFilePath, "png");
+
+                        using(var images = new MagickImageCollection())
+                        {
+                            images.Read(imageFilePath, settings);
+                            images.Write(ImginPng);
                         }
 
-                        imageEo = loadedImage;
+                        using (Stream PDFbmpstrm = System.IO.File.Open(ImginPng, System.IO.FileMode.Open)) 
+                        {
+                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(PDFbmpstrm);
+                            var PDFBitmap = new Bitmap(PDFimg);
+                            loadedImage = PDFBitmap;
+                            imageEo = loadedImage;
+                        }
+
+                        File.Delete(ImginPng);
+
+
+
+
 
                     }
                     catch

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Reflection;
 using ImageMagick;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -59,9 +60,6 @@ namespace MaximaPlugin.PlotImage
             this.ImageContainer = new ThreadSafeImageContainer();
 
             base.Size = new Size(plotStore.width, plotStore.height);
-            //SetLastRequest();
-            //Plot();
-            //ScalImg(imageEo);
             this.Invalidate();
         }
         public MaximaPluginCanvas(MaximaPluginCanvas region)
@@ -141,7 +139,6 @@ namespace MaximaPlugin.PlotImage
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.DrawImage(img, new System.Drawing.Rectangle(0, 0, newWidth, newHeight));
             }
-
         }
         public void Plot()
         {
@@ -214,10 +211,10 @@ namespace MaximaPlugin.PlotImage
 
                         var settings = new MagickReadSettings
                         {
-                            Density = new Density(300, 300, DensityUnit.PixelsPerInch),
+                            Density = new Density(300, 300, DensityUnit.PixelsPerCentimeter),
                             Depth = 1,
+                            Compression = CompressionMethod.NoCompression,
                         };
-                        settings.SetDefine(MagickFormat.Png, "quality", "100"); // not even sure if this does anything
                         string ImginPng = Path.ChangeExtension(imageFilePath, "png");
 
                         using(var images = new MagickImageCollection())
@@ -226,19 +223,27 @@ namespace MaximaPlugin.PlotImage
                             images.Write(ImginPng);
                         }
 
-                        using (Stream PDFbmpstrm = System.IO.File.Open(ImginPng, System.IO.FileMode.Open)) 
+                        //ouput image is in 32bit. The standard output from Gnuplot is 24 bit
+                        using (var imgMagick = new MagickImage(ImginPng))
                         {
-                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(PDFbmpstrm);
-                            var PDFBitmap = new Bitmap(PDFimg);
-                            loadedImage = PDFBitmap;
-                            imageEo = loadedImage;
+                            imgMagick.Format = MagickFormat.Png24;
+                            imgMagick.HasAlpha = false;
+
+                            var size = new MagickGeometry(plotStore.width, plotStore.height);
+
+                            size.IgnoreAspectRatio = true;
+
+                            imgMagick.Resize(size);
+
+                            imgMagick.Write(ImginPng);
+                        }
+
+                        using (FileStream stream = new FileStream(ImginPng, FileMode.Open, FileAccess.Read))
+                        {
+                            imageEo = System.Drawing.Image.FromStream(stream);
                         }
 
                         File.Delete(ImginPng);
-
-
-
-
 
                     }
                     catch
@@ -250,12 +255,10 @@ namespace MaximaPlugin.PlotImage
                 }
                 else
                 {
-                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     using (FileStream stream = new FileStream(Path.ChangeExtension(imageFilePath, fileExt), FileMode.Open, FileAccess.Read))
                     {
                         imageEo = System.Drawing.Image.FromStream(stream);
                     }
-                    watch.Stop();
                     return true;
                 }
             }

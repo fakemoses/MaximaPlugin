@@ -110,6 +110,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaximaToolbox.cs" />
     <Compile Include="MForms\MaximaSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -73,6 +73,16 @@ namespace MaximaPlugin {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap maxima {
+            get {
+                object obj = ResourceManager.GetObject("maxima", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap maxima16 {
             get {
                 object obj = ResourceManager.GetObject("maxima16", resourceCulture);

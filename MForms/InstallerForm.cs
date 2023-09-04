@@ -1,4 +1,5 @@
 ﻿using MaximaPlugin.MInstaller;
+using SMath.Manager;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -11,10 +12,14 @@ namespace MaximaPlugin.MForms
     {
         private int installerProcessId;
         private Timer timer;
+        private double scaleFactor = 1.0;
 
         public InstallerForm()
         {
             InitializeComponent();
+
+            int deviceDPI = this.DeviceDpi;
+            scaleFactor = (deviceDPI / GlobalProfile.ContentDpi);
 
             // form panel thing
             panel1.Visible = false;
@@ -27,7 +32,12 @@ namespace MaximaPlugin.MForms
             radioButton1.CheckedChanged += RadioButtonOption_CheckedChanged;
             radioButton2.CheckedChanged += RadioButtonOption_CheckedChanged;
 
-            this.Size = new System.Drawing.Size(520, 260);
+            if (scaleFactor > 1.0 && scaleFactor < 1.5)
+                this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(260 * scaleFactor));
+            else if (scaleFactor >= 1.5)
+                this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(260 * scaleFactor));
+            else
+                this.Size = new System.Drawing.Size(520, 260);
 
             //move panel 2 to panel 1 location
             panel2.Location = panel1.Location;
@@ -165,11 +175,22 @@ namespace MaximaPlugin.MForms
             // Handle radio button changes here
             if (radioButton1.Checked)
             {
-                this.Size = new System.Drawing.Size(520, 260);
+                if (scaleFactor > 1.0 && scaleFactor < 1.5)
+                    this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(260 * scaleFactor));
+                else if (scaleFactor >= 1.5)
+                    this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(260 * scaleFactor));
+                else
+                    this.Size = new System.Drawing.Size(520, 260);
             }
             else if (radioButton2.Checked)
             {
-                this.Size = new System.Drawing.Size(520, 200);
+                if (scaleFactor > 1.0 && scaleFactor < 1.5)
+                    this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(200 * scaleFactor));
+                else if (scaleFactor >= 1.5)
+                    this.Size = new System.Drawing.Size((int)(520 * scaleFactor), (int)(200 * scaleFactor));
+                else
+                    this.Size = new System.Drawing.Size(520, 200);
+
                 label3.Location = new System.Drawing.Point(0, 76);
                 label4.Location = new System.Drawing.Point(46, 123);
                 label5.Location = new System.Drawing.Point(0, 123);

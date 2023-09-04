@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-
+using MaximaPlugin.ControlObjects;
 using SMath.Controls;
 using SMath.Manager;
 using SMath.Math;
@@ -32,7 +34,7 @@ namespace MaximaPlugin
         plot3D
     };
 
-    public class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion
+    public partial class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion
     {
         #region Private fields
 
@@ -306,7 +308,7 @@ namespace MaximaPlugin
         MenuButton[] IPluginCustomRegion.GetMenuItems(SessionProfile sessionProfile)
         {
             MenuButton menubutton = new MenuButton("Maxima");
-            menubutton.Icon = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(Resource1.maxima16c);
+            menubutton.Icon = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(Resource1.maxima);
             menubutton.Behavior = MenuButtonBehavior.AlwaysEnabled;
             menubutton.AppendChild("Log", MLog);
             menubutton.AppendChild("Debug", MDebug);
@@ -320,6 +322,7 @@ namespace MaximaPlugin
                 args.CurrentRegion = new PlotImage.MaximaPluginRegion(sessionProfile, PlotImage.PlotStore.PlotType.plot3D);
             }  ));
 
+            menubutton.AppendChild("Help", MHelp);
             return new MenuButton[] { menubutton };
         }
         string IPluginCustomRegion.TagName
@@ -373,6 +376,31 @@ namespace MaximaPlugin
             sf.Show();
 
             args.CurrentRegions = new RegionBase[0];
+        }
+
+        void MHelp(MenuButtonArgs args) 
+        {
+            Translator.GetMaxima().StartSession();
+            string maximaPath = Translator.GetMaxima().GetPathToMaximaAbs();
+            Match match = Regex.Match(maximaPath, @"^(.*?\\maxima-\d+\.\d+\.\d+)");
+
+            Match maximaVersion = Regex.Match(maximaPath, @"\d+\.\d+\.\d+");
+
+            if (match.Success)
+            {
+                maximaPath = match.Value.Replace("\\", "/");
+                string fileUrl = "file:///" + maximaPath +"/share/maxima/" + maximaVersion.Value + "/doc/html/maxima_toc.html";
+
+                string localFilePath = new Uri(fileUrl).LocalPath;
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = localFilePath,
+                        UseShellExecute = true
+                    });
+                } catch { }
+            }
         }
         #endregion
     }

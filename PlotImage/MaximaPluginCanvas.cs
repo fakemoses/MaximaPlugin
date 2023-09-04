@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 
-using SharpVectors.Dom.Svg;
+//using SharpVectors.Dom.Svg;
 using SharpVectors.Renderers.Forms;
 using SharpVectors.Renderers.Gdi;
 
@@ -14,6 +14,7 @@ using System.Web;
 using System.Reflection;
 using ImageMagick;
 using System.Runtime.InteropServices.ComTypes;
+using Svg;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -176,11 +177,39 @@ namespace MaximaPlugin.PlotImage
             {
                 if (plotStore.termType == PlotStore.TermType.svg)
                 {
-                    svgWindow.Source = Path.ChangeExtension(imageFilePath, "svg");
-                    svgWindow.Resize(Size.Width, Size.Height);
-                    svgRenderer.Render(svgWindow.Document as SvgDocument);
-                    imageEo = svgRenderer.RasterImage;
-                    svgRenderer.ClearMap();
+                    //svgWindow.Source = Path.ChangeExtension(imageFilePath, "svg");
+                    //svgWindow.Resize(Size.Width, Size.Height);
+                    //svgRenderer.Render(svgWindow.Document as SvgDocument);
+                    //imageEo = svgRenderer.RasterImage;
+                    //svgRenderer.ClearMap();
+
+                    //new renderer based on : https://smath.com:8443/svn/public/plugins/ImageEditRegion
+                    // this renderer gives a sharper output image
+
+                    var SVGdoc = Svg.SvgDocument.Open(Path.ChangeExtension(imageFilePath,"svg"));
+                    if (SVGdoc.OwnerDocument.ViewBox.Width == 0 || SVGdoc.OwnerDocument.ViewBox.Height == 0)
+                    {
+                        SVGdoc.Height = 1;
+                        SVGdoc.Width = 1;
+                        SVGdoc.Height = SVGdoc.Height.ToPercentage();
+                        SVGdoc.Width = SVGdoc.Width.ToPercentage();
+                        SVGdoc.OwnerDocument.ViewBox = new SvgViewBox(SVGdoc.OwnerDocument.Bounds.Left, SVGdoc.OwnerDocument.Bounds.Top, Convert.ToInt32(SVGdoc.OwnerDocument.GetDimensions().Width), Convert.ToInt32(SVGdoc.OwnerDocument.GetDimensions().Height));
+                        SVGdoc.Height = Convert.ToInt32(SVGdoc.OwnerDocument.GetDimensions().Height);
+                        SVGdoc.Width = Convert.ToInt32(SVGdoc.OwnerDocument.GetDimensions().Width);
+                    }
+                    oldWidth = Convert.ToInt32(SVGdoc.Width);
+                    oldHeight = Convert.ToInt32(SVGdoc.Height);
+
+                    SVGdoc.Height = Convert.ToInt32(Size.Height * (300 / Math.Max(GlobalProfile.ContentDpi, GlobalProfile.ContentDpi)));
+                    SVGdoc.Width = Convert.ToInt32(Size.Width * (300/ Math.Max(GlobalProfile.ContentDpi, GlobalProfile.ContentDpi)));
+
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        SVGdoc.Draw().Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                        loadedImage = System.Drawing.Image.FromStream(stream);
+                        imageEo = loadedImage;
+                    }
+
                     return true;
 
                 }
@@ -224,16 +253,11 @@ namespace MaximaPlugin.PlotImage
                         }
 
                         //ouput image is in 32bit. The standard output from Gnuplot is 24 bit
+                        // probably not even needed to convert to 24 bit png
                         using (var imgMagick = new MagickImage(ImginPng))
                         {
                             imgMagick.Format = MagickFormat.Png24;
                             imgMagick.HasAlpha = false;
-
-                            var size = new MagickGeometry(plotStore.width, plotStore.height);
-
-                            size.IgnoreAspectRatio = true;
-
-                            imgMagick.Resize(size);
 
                             imgMagick.Write(ImginPng);
                         }
@@ -326,7 +350,7 @@ namespace MaximaPlugin.PlotImage
             if (imageEs == null) return;
             if (!isError)
             {
-                IBitmap bmp = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(new Bitmap(imageEs));
+                IBitmap bmp = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(new Bitmap(imageEo));
 
                 //using imagecontainer method as implemented by https://smath.com:8443/!/#public/view/head/plugins/ImageEditRegion/ImageCanvas.cs
                 this.ImageContainer.SetImage(bmp);

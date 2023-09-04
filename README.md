@@ -37,7 +37,8 @@ git clone https://github.com/fakemoses/MaximaPlugin
 - Newtonsoft.Json
 - Microsoft.CSharp
 - Microsoft.PowerShell.5.1.ReferenceAssemblies.1.0.0
-- Freeware.Pdf2Png
+- Magick.NET-Q16-AnyCPU
+- Svg
 
 9. Build the solution by clicking the build option on the top bar `Build > Build Solution` or by using the hotkey `Ctrl+Shift+B`
 

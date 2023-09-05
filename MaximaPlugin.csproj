@@ -63,6 +63,10 @@
     <Reference Include="Magick.NET.Core, Version=13.2.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
       <HintPath>..\packages\Magick.NET.Core.13.2.0\lib\netstandard20\Magick.NET.Core.dll</HintPath>
     </Reference>
+    <Reference Include="MathRegion, Version=1.11.8348.30405, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\SMath Studio\plugins\MathRegion.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -265,6 +269,8 @@
     <EmbeddedResource Include="Resources\smathm.mac" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\maximaIco.png" />
+    <None Include="Resources\maxima32.png" />
     <None Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

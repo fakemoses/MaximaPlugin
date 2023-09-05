@@ -30,7 +30,12 @@
         {
             this.tabControls = new System.Windows.Forms.TabControl();
             this.tabAxes = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.propAxesCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textZtitle = new System.Windows.Forms.TextBox();
             this.zAxis = new System.Windows.Forms.CheckBox();
@@ -42,6 +47,9 @@
             this.textZrangeMin = new System.Windows.Forms.TextBox();
             this.textZrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textYtitle = new System.Windows.Forms.TextBox();
             this.yAxis = new System.Windows.Forms.CheckBox();
@@ -53,6 +61,9 @@
             this.textYrangeMin = new System.Windows.Forms.TextBox();
             this.textYrangeMax = new System.Windows.Forms.TextBox();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textXtitle = new System.Windows.Forms.TextBox();
             this.xAxis = new System.Windows.Forms.CheckBox();
@@ -131,19 +142,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.propAxesCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControls.SuspendLayout();
             this.tabAxes.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox31.SuspendLayout();
             this.groupBox32.SuspendLayout();
@@ -162,7 +163,6 @@
             this.tabPage2.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControls
@@ -192,6 +192,26 @@
             this.tabAxes.Text = "Axes";
             this.tabAxes.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.propAxesCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(250, 42);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "General";
+            // 
+            // propAxesCheckBox
+            // 
+            this.propAxesCheckBox.AutoSize = true;
+            this.propAxesCheckBox.Location = new System.Drawing.Point(5, 19);
+            this.propAxesCheckBox.Name = "propAxesCheckBox";
+            this.propAxesCheckBox.Size = new System.Drawing.Size(108, 17);
+            this.propAxesCheckBox.TabIndex = 12;
+            this.propAxesCheckBox.Text = "Proportional Axes";
+            this.propAxesCheckBox.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label12);
@@ -214,6 +234,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Z-Axis";
             this.groupBox1.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 48);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(39, 13);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "Range";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(46, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "Min:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(141, 48);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(30, 13);
+            this.label14.TabIndex = 29;
+            this.label14.Text = "Max:";
             // 
             // label5
             // 
@@ -259,9 +306,9 @@
             this.checkZlog.AutoSize = true;
             this.checkZlog.Location = new System.Drawing.Point(107, 94);
             this.checkZlog.Name = "checkZlog";
-            this.checkZlog.Size = new System.Drawing.Size(106, 17);
+            this.checkZlog.Size = new System.Drawing.Size(80, 17);
             this.checkZlog.TabIndex = 17;
-            this.checkZlog.Text = "Logarithmic base";
+            this.checkZlog.Text = "Logarithmic";
             this.checkZlog.UseVisualStyleBackColor = true;
             this.checkZlog.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
@@ -341,6 +388,33 @@
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Y-Axis";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 48);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(39, 13);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Range";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(46, 48);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "Min:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(141, 48);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Max:";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -385,9 +459,9 @@
             this.checkYlog.AutoSize = true;
             this.checkYlog.Location = new System.Drawing.Point(107, 94);
             this.checkYlog.Name = "checkYlog";
-            this.checkYlog.Size = new System.Drawing.Size(106, 17);
+            this.checkYlog.Size = new System.Drawing.Size(80, 17);
             this.checkYlog.TabIndex = 17;
-            this.checkYlog.Text = "Logarithmic base";
+            this.checkYlog.Text = "Logarithmic";
             this.checkYlog.UseVisualStyleBackColor = true;
             this.checkYlog.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
@@ -467,6 +541,33 @@
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "X-Axis";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(141, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(30, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Max:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(46, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "Min:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 46);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Range";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -511,9 +612,9 @@
             this.checkXlog.AutoSize = true;
             this.checkXlog.Location = new System.Drawing.Point(107, 94);
             this.checkXlog.Name = "checkXlog";
-            this.checkXlog.Size = new System.Drawing.Size(106, 17);
+            this.checkXlog.Size = new System.Drawing.Size(80, 17);
             this.checkXlog.TabIndex = 16;
-            this.checkXlog.Text = "Logarithmic base";
+            this.checkXlog.Text = "Logarithmic";
             this.checkXlog.UseVisualStyleBackColor = true;
             this.checkXlog.CheckedChanged += new System.EventHandler(this.AnyChanges);
             // 
@@ -1293,107 +1394,6 @@
             this.progressBar1.Size = new System.Drawing.Size(238, 23);
             this.progressBar1.TabIndex = 0;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 46);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Range";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(46, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "Min:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(141, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 13);
-            this.label8.TabIndex = 25;
-            this.label8.Text = "Max:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(141, 48);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(30, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Max:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(46, 48);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(27, 13);
-            this.label10.TabIndex = 27;
-            this.label10.Text = "Min:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 48);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(39, 13);
-            this.label11.TabIndex = 26;
-            this.label11.Text = "Range";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 48);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(39, 13);
-            this.label12.TabIndex = 28;
-            this.label12.Text = "Range";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(46, 48);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(27, 13);
-            this.label13.TabIndex = 30;
-            this.label13.Text = "Min:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(141, 48);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(30, 13);
-            this.label14.TabIndex = 29;
-            this.label14.Text = "Max:";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.propAxesCheckBox);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(250, 42);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "General";
-            // 
-            // propAxesCheckBox
-            // 
-            this.propAxesCheckBox.AutoSize = true;
-            this.propAxesCheckBox.Location = new System.Drawing.Point(5, 19);
-            this.propAxesCheckBox.Name = "propAxesCheckBox";
-            this.propAxesCheckBox.Size = new System.Drawing.Size(108, 17);
-            this.propAxesCheckBox.TabIndex = 12;
-            this.propAxesCheckBox.Text = "Proportional Axes";
-            this.propAxesCheckBox.UseVisualStyleBackColor = true;
-            // 
             // PlotSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1413,6 +1413,8 @@
             this.Load += new System.EventHandler(this.PlotSettings_Load);
             this.tabControls.ResumeLayout(false);
             this.tabAxes.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox31.ResumeLayout(false);
@@ -1444,8 +1446,6 @@
             this.tabPage5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }

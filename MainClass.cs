@@ -308,16 +308,16 @@ namespace MaximaPlugin
         MenuButton[] IPluginCustomRegion.GetMenuItems(SessionProfile sessionProfile)
         {
             MenuButton menubutton = new MenuButton("Maxima");
-            menubutton.Icon = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(Resource1.maxima);
+            menubutton.Icon = SMath.Drawing.Graphics.Specifics.BitmapFromNativeImage(Resource1.maxima16c);
             menubutton.Behavior = MenuButtonBehavior.AlwaysEnabled;
             menubutton.AppendChild("Log", MLog);
             menubutton.AppendChild("Debug", MDebug);
             menubutton.AppendChild("Settings", MSettings);
-            menubutton.AppendChild(new MenuButton("Draw2D()", delegate (MenuButtonArgs args)
+            menubutton.AppendChild(new MenuButton("Draw2D", delegate (MenuButtonArgs args)
             {
                 args.CurrentRegion = new PlotImage.MaximaPluginRegion(sessionProfile, PlotImage.PlotStore.PlotType.plot2D);
             }  ));
-            menubutton.AppendChild(new MenuButton("Draw3D()", delegate (MenuButtonArgs args)
+            menubutton.AppendChild(new MenuButton("Draw3D", delegate (MenuButtonArgs args)
             {
                 args.CurrentRegion = new PlotImage.MaximaPluginRegion(sessionProfile, PlotImage.PlotStore.PlotType.plot3D);
             }  ));

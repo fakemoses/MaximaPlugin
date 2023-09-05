@@ -177,11 +177,6 @@ namespace MaximaPlugin.PlotImage
             {
                 if (plotStore.termType == PlotStore.TermType.svg)
                 {
-                    //svgWindow.Source = Path.ChangeExtension(imageFilePath, "svg");
-                    //svgWindow.Resize(Size.Width, Size.Height);
-                    //svgRenderer.Render(svgWindow.Document as SvgDocument);
-                    //imageEo = svgRenderer.RasterImage;
-                    //svgRenderer.ClearMap();
 
                     //new renderer based on : https://smath.com:8443/svn/public/plugins/ImageEditRegion
                     // this renderer gives a sharper output image

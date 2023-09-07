@@ -72,8 +72,8 @@ namespace MaximaPlugin.MFunctions
             var arg3 = SharedFunctions.Proprocessing(args[2]);
 
             string stringToMaxima;
-            arg3 = (new Regex(@"(.*)\+0$")).Replace(arg3, "$1" + ", plus");
-            arg3 = (new Regex(@"(.*)\-0$")).Replace(arg3, "$1" + ", minus");
+            arg3 = (new Regex(@"(.*)\+'0$")).Replace(arg3, "$1" + ", plus");
+            arg3 = (new Regex(@"(.*)\-'0$")).Replace(arg3, "$1" + ", minus");
             stringToMaxima = "limit(" + arg1 + "," + arg2 + "," + arg3 + ")";
 
             string answerFromMaxima = ControlObjects.Translator.Ask(stringToMaxima);

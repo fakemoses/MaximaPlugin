@@ -27,11 +27,11 @@ namespace MaximaPlugin
                 new ButtonsMetaData(GetPngImage(Resource1.maxima))
                     { Size = new Size(36, 24), Description = "Maxima(): Execute expression in Maxima", Action = GetButtonAction("Maxima", 1, sessionProfile) },
                 new ButtonsMetaData("Control")
-                    { Size = new Size(54, 24), Description = "Control Maxima process", Action = GetButtonAction("MaximaControl", 1, sessionProfile) },
+                    { Size = new Size(54, 24), Description = "Control Maxima process. E.g. Restarting the session by using MaximaControl(\"restart\")", Action = GetButtonAction("MaximaControl", 1, sessionProfile) },
                 new ButtonsMetaData("Define")
                     { Size = new Size(54, 24), Description = "Define in Maxima", Action = GetButtonAction("MaximaDefine", 1, sessionProfile) },
                 new ButtonsMetaData("Takeover")
-                    { Size = new Size(72, 24), Description = "Takeover by Maxima of SMath functions", Action = GetButtonAction("MaximaTakeover", 1, sessionProfile) },
+                    { Size = new Size(72, 24), Description = "Takeover by Maxima of SMath functions. Use \"all\", \"none\", \"int\", \"lim\", \"diff\", \"det\" or \"sum\".", Action = GetButtonAction("MaximaTakeover", 1, sessionProfile) },
                 new ButtonsMetaData("Log")
                     { Size = new Size(36, 24), Description = "Maxima process log overview", Action = GetButtonAction("MaximaLog", 1, sessionProfile) },
                 new ButtonsMetaData(new[]{

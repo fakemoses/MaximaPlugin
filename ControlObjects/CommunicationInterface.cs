@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using SMath.Manager;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace MaximaPlugin.ControlObjects
 {
@@ -118,7 +119,7 @@ namespace MaximaPlugin.ControlObjects
         public static bool foundError = false;
         public static bool timereset = false;
         public static bool isPartAnswer = false;
-        public static int receiveTries = 14; // 14 = 10,5s
+        public static int receiveTries = 7; // 14 = 10,5s
         // public static int timeout = 10000; // receive-timeout in milliseconds
         
         //logging event handler
@@ -174,13 +175,26 @@ namespace MaximaPlugin.ControlObjects
                     // see if action has to be taken prior to back-translation
                     Filter(tempstring);
                 }
-                //if (timereset) { i = 0; timereset = false; }
-                //i++;
-                if (i < 20) i++;
+
+                //TODO: if No Data found && in the log contains Incorrect Syntax means syntax error was made -> Restart of maxima is required
+                if (tempstring.Contains("NoDataAvailable") && GetMaxima().GetLastLog().Contains("incorrect syntax"))
+                {
+                    Thread staThread = new Thread(() =>
+                    {
+                        MessageBox.Show("Syntax error: Maxima hangs due to incorrect input. Restart the session by running MaximaControl(\"restart\") command.",
+                            "Maxima Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    });
+                    staThread.SetApartmentState(ApartmentState.STA);
+                    staThread.Start();
+                    break;
+                }
+
+                if (i < receiveTries) i++;
 
                 //} while (i < receiveTries && !rxMxOut.IsMatch(tempstring, 0) && !foundError);
                 if (ControlObjects.TranslationModifiers.TimeOut != 0 && time.ElapsedMilliseconds > ControlObjects.TranslationModifiers.TimeOut) return receivedStrings;
-            } while (! rxMxOut.IsMatch(tempstring, 0) && ! foundError);
+            } while (! rxMxOut.IsMatch(tempstring, 0) && ! foundError && i < receiveTries);
             foundError = false;
             return receivedStrings;
         }

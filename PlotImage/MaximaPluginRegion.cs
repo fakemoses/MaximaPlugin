@@ -286,7 +286,7 @@ namespace MaximaPlugin.PlotImage
             dMouseW = dMouseW + delta;
 
             // Zoom x and y axis if not a 3D plot in z-only-mode
-            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && (isShiftKeyDown || isCtrlKeyDown)) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 // Zoom x axis if it is in interactive mode
                 if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
@@ -323,7 +323,7 @@ namespace MaximaPlugin.PlotImage
                 }
             }
             // zoom of z if it is a 3D plot
-            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive)
+            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive && !(isShiftKeyDown || isCtrlKeyDown) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
             {
                 if (canv.plotStore.zLogarithmic == PlotStore.State.Enable)
                 {

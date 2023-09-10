@@ -18,10 +18,7 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool Maxima(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            //int i = 0;
-            //string[] stringArgs = new string[root.ArgsCount];
-            //while (i < stringArgs.Length){stringArgs[i] = TermsConverter.ToString(args[i]); i++;}
-            
+
             // check if debug window has to be used
             if (root.ArgsCount > 1 && args[1][0].Text.Contains("debug")) 
             {
@@ -42,23 +39,30 @@ namespace MaximaPlugin.MFunctions
             {
                 // don't use debugger
                 // produce the input for maxima
-                // issue is here string to maxima
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
                 bool isCrossProd = false;
                 if(stringToMaxima.Contains("†"))
                 {
                     isCrossProd = true;
                     string[] delim = stringToMaxima.Split('†');
-                    // cross exists means it is for cross product
-                    delim[0] = Regex.Replace(delim[0], @"mat\(", "[");
-                    delim[0] = Regex.Replace(delim[0], @"\],\[", ",");
-                    delim[0] = Regex.Replace(delim[0], @",\d+,\d+\)", "]");
 
-                    delim[1] = Regex.Replace(delim[1], @"mat\(", "[");
-                    delim[1] = Regex.Replace(delim[1], @"\],\[", ",");
-                    delim[1] = Regex.Replace(delim[1], @",\d+,\d+\)", "]");
+                    string tempString = "load(vect);";
 
-                    stringToMaxima = "load(vect);" + "(" + delim[0] + ")" + "†" + "(" + delim[1] + ");" + "express(%)";
+                    for (int i = 0; i < delim.Length; i++)
+                    {
+                        delim[i] = Regex.Replace(delim[i], @"mat\(", "[");
+                        delim[i] = Regex.Replace(delim[i], @"\],\[", ",");
+                        delim[i] = Regex.Replace(delim[i], @",\d+,\d+\)", "]");
+
+                        if (i < delim.Length-1)
+                            tempString += "(" + delim[i] + ")" + "†";
+                        else
+                            tempString += "(" + delim[i] + ")";
+                    }
+
+                    tempString += ";express(%)";
+
+                    stringToMaxima = tempString;
                 }
 
                 string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";

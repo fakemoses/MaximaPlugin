@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using SMath.Manager;
 using System;
+using MaximaPlugin.MFunctions;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -40,6 +41,21 @@ namespace MaximaPlugin.PlotImage
             Match isEnhanced3D = Regex.Match(textHolder, @"enhanced3d≡(false|none)");
             if (isEnhanced3D.Success)
                 region.plotStore.pm3d = PlotImage.PlotStore.State.Disable;
+
+            //TODO: Fix regex to make sure the title in the canvas is the same in the setting
+            ////check if user defined a custom title then override the plotstore value
+            //Match isCustomTitle = Regex.Match(textHolder, @"title≡""([^""]*)""");
+            //if (isCustomTitle.Success)
+            //    region.plotStore.title = DirectMaximaFunctions.ReplaceUnicodeEscapeSequences(isCustomTitle.Groups[0].Value);
+
+            //check if user enabled disabled grid via sys
+            Match isGridDisabled = Regex.Match(textHolder, @"grid≡false");
+            if (isGridDisabled.Success)
+            {
+                region.plotStore.xGrid = PlotStore.State.Disable;
+                region.plotStore.yGrid = PlotStore.State.Disable;
+                region.plotStore.zGrid = PlotStore.State.Disable;
+            }
 
             // wrap in system if required
             if (!textHolder.StartsWith("sys("))

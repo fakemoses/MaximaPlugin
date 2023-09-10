@@ -301,7 +301,7 @@ namespace MaximaPlugin.PlotImage
                     lastGivenEquation = lastPlotRequest;
                     redrawCanvas = true;
                     firstTimeDraw = false;
-                } else if (!string.Equals(lastGivenEquation, this.lastInput, StringComparison.OrdinalIgnoreCase))
+                } else if (!string.Equals(lastGivenEquation, this.lastInput, StringComparison.OrdinalIgnoreCase) || this.CheckEvaluability())
                 {
                     lastPlotRequest = this.lastInput;
                     lastGivenEquation = lastPlotRequest;
@@ -316,7 +316,10 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.plotType == PlotStore.PlotType.plot2D)
             {
                 tempState = plotStore.titleState;
-                plotStore.titleState = PlotStore.State.Default;
+                if (plotStore.title != "")
+                    plotStore.titleState = PlotStore.State.Custom;
+                else
+                    plotStore.titleState = PlotStore.State.Default;
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
                 redrawCanvas = true;
@@ -324,7 +327,10 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.plotType == PlotStore.PlotType.plot3D)
             {
                 tempState = plotStore.titleState;
-                plotStore.titleState = PlotStore.State.Default;
+                if (plotStore.title != "")
+                    plotStore.titleState = PlotStore.State.Custom;
+                else
+                    plotStore.titleState = PlotStore.State.Default;
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 //plotStore.yRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";

@@ -127,7 +127,7 @@ namespace MaximaPlugin.PlotImage
             toolTip1.SetToolTip(this.textContourLevels, "# of contour lines");
             toolTip1.SetToolTip(this.comboBoxContour, "Location of contour lines");
             toolTip1.SetToolTip(this.checkPm3d, "Enable enhanded colouring mode (PM3D)");
-            toolTip1.SetToolTip(this.textPm3dPalette, "PM3D palette, e.g. [red, green, blue]");
+            toolTip1.SetToolTip(this.textPm3dPalette, "Set PM3D palette. E.g.: color, gray or list of colors, e.g. [red, green, blue]");
             toolTip1.SetToolTip(this.textWidth, "Width of the plot (pixel)");
             toolTip1.SetToolTip(this.textHeight, "Height of the plot (pixel)");
             toolTip1.SetToolTip(this.comboTerm, "Image format (gnuplot terminal)");
@@ -664,13 +664,13 @@ namespace MaximaPlugin.PlotImage
             if (checkPm3d.Checked)
             {
                 plotStore.pm3d = PlotStore.State.Enable;
-                if (!textPm3dPalette.ReadOnly) plotStore.pm3dpalette = textPm3dPalette.Text;
+                if (!textPm3dPalette.ReadOnly && textPm3dPalette.Text != "") plotStore.pm3dpalette = textPm3dPalette.Text;
+                else plotStore.pm3dpalette = "color";
 
-                if(!textPm3dPalette.Text.Contains("[color,color,color]"))
+                if (!textPm3dPalette.Text.Contains("color") && textPm3dPalette.Text != "")
                 {
-                  plotStore.pm3d = PlotStore.State.Custom;
-                  plotStore.pm3dpalette = textPm3dPalette.Text;
-
+                    plotStore.pm3d = PlotStore.State.Custom;
+                    plotStore.pm3dpalette = textPm3dPalette.Text;
                 }
             }
             else

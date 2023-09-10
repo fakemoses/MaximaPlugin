@@ -19,7 +19,7 @@ namespace MaximaPlugin.PlotImage
         {
             #region TITLE AND LOOK
             plotType = PlotType.plot2D;
-            title = "Sample";
+            title = "";
             titleDefault = "SAMPLE PLOT";
             titleState = State.Disable;
 
@@ -35,7 +35,7 @@ namespace MaximaPlugin.PlotImage
             textFont = "Arial";
             //3D
             pm3d = State.Enable;
-            pm3dpalette = "[color,color,color]";
+            pm3dpalette = "color";
 
             //BACKGROUND COLOR
             bgColor = "#fefefe";

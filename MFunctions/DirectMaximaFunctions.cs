@@ -345,7 +345,7 @@ namespace MaximaPlugin.MFunctions
 
             //matrix has to be turned into string of array
 
-            string stringtoMaxima = "load(vect);" +"(" + arg1 + ")" + "†" + "(" + arg2 + ");" + "express(%)";
+            string stringtoMaxima = "(" + arg1 + ")" + "†" + "(" + arg2 + ");" + "express(%)";
             string outputFromMaxima = ControlObjects.Translator.Ask(stringtoMaxima);
 
             outputFromMaxima = Regex.Replace(outputFromMaxima,@"sys", "mat");

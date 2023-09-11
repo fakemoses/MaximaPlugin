@@ -449,12 +449,12 @@ namespace MaximaPlugin.ControlObjects
 
             if (answers.Count > 1) // if more than one string, combine them into a SMath list.
             {
-                //check if string has this vect message -> take only last answer
+                //check if string is  vect. It will give 2 answers and one of it contains the ~ sign which is cross
                 bool isCrossProd = false;
                 for(int i = 0; i < answers.Count; i++)
                 {
                     // this might change in the future but this is the only thing at the moment that can differentiate the type of the problem it solves.
-                    if (answers[i].Contains("vect: warning: removing existing rule or rules for .."))
+                    if (answers[i].Contains("~"))
                         isCrossProd = true;
                 }
                 if (!isCrossProd)

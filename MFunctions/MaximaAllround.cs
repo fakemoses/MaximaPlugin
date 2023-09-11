@@ -46,7 +46,7 @@ namespace MaximaPlugin.MFunctions
                     isCrossProd = true;
                     string[] delim = stringToMaxima.Split('†');
 
-                    string tempString = "load(vect);";
+                    string tempString = "";
 
                     for (int i = 0; i < delim.Length; i++)
                     {

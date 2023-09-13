@@ -180,7 +180,7 @@ namespace MaximaPlugin.ControlObjects
                 {
                     Thread staThread = new Thread(() =>
                     {
-                        MessageBox.Show("Syntax error: Maxima hangs due to incorrect input. Restart the session by running MaximaControl(\"restart\") command.",
+                        MessageBox.Show("Syntax error: Maxima hangs due to incorrect input. Restart the session by clicking Insert > Maxima > Restart from the menu bar.",
                             "Maxima Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     });

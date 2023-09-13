@@ -321,7 +321,7 @@ namespace MaximaPlugin
             {
                 args.CurrentRegion = new PlotImage.MaximaPluginRegion(sessionProfile, PlotImage.PlotStore.PlotType.plot3D);
             }  ));
-
+            menubutton.AppendChild("Restart", MRestart);
             menubutton.AppendChild("Help", MHelp);
             return new MenuButton[] { menubutton };
         }
@@ -401,6 +401,13 @@ namespace MaximaPlugin
                     });
                 } catch { }
             }
+        }
+
+        void MRestart(MenuButtonArgs args)
+        {
+            ControlObjects.Translator.GetMaxima().RestartMaxima();
+            args.CurrentRegions = new RegionBase[0];
+            args.Worksheet.StartEvaluation();
         }
         #endregion
     }

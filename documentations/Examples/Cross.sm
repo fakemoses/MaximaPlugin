@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
 <worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
-  <settings ppi="96">
+  <settings ppi="144">
     <identity>
       <id>e902bdd9-65c0-4e1f-9dee-25412b9ae544</id>
-      <revision>3</revision>
+      <revision>13</revision>
     </identity>
     <calculation>
       <precision>3</precision>
       <exponentialThreshold>5</exponentialThreshold>
       <trailingZeros>false</trailingZeros>
-      <significantDigitsMode>false</significantDigitsMode>
+      <significantDigitsMode>true</significantDigitsMode>
       <roundingMode>0</roundingMode>
       <approximateEqualAccuracy>0</approximateEqualAccuracy>
       <fractions>decimal</fractions>
@@ -25,14 +25,32 @@
     <dependencies>
       <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
       <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
-      <assembly name="Custom Glyphs" version="1.1.7783.42782" guid="24c691c1-37f2-49e3-9a84-ccb77304d14a" />
-      <assembly name="MaximaPlugin" version="1.98.8629.42223" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
+      <assembly name="PictureRegion" version="1.10.8348.30405" guid="06b5df04-393e-4be7-9107-305196fcb861" />
+      <assembly name="MaximaPlugin" version="1.98.8656.38198" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
       <assembly name="TextRegion" version="1.11.8348.30405" guid="485d28c5-349a-48b6-93be-12a35a1c1e39" />
     </dependencies>
   </settings>
   <regions type="content">
-    <region left="9" top="0" width="69" height="81" color="#000000" fontSize="10">
+    <region left="0" top="0" width="369" height="26" color="#000000" fontSize="10">
       <math>
+        <input>
+          <e type="operand" style="string">restart</e>
+          <e type="function" args="1">MaximaControl</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Restart complete.</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="36" width="36" height="24" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">int</e>
+        </input>
+      </math>
+    </region>
+    <region left="9" top="99" width="69" height="81" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
         <input>
           <e type="operand">a</e>
           <e type="operand">a.1</e>
@@ -45,8 +63,8 @@
         </input>
       </math>
     </region>
-    <region left="99" top="0" width="69" height="81" color="#000000" fontSize="10">
-      <math>
+    <region left="99" top="99" width="69" height="81" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
         <input>
           <e type="operand">b</e>
           <e type="operand">b.1</e>
@@ -59,34 +77,8 @@
         </input>
       </math>
     </region>
-    <region left="225" top="27" width="69" height="57" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">c</e>
-          <e type="operand">c.1</e>
-          <e type="operand">c.2</e>
-          <e type="operand">2</e>
-          <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-          <e type="operator" args="2">:</e>
-        </input>
-      </math>
-    </region>
-    <region left="306" top="27" width="69" height="57" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">d</e>
-          <e type="operand">d.1</e>
-          <e type="operand">d.2</e>
-          <e type="operand">2</e>
-          <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-          <e type="operator" args="2">:</e>
-        </input>
-      </math>
-    </region>
-    <region left="0" top="108" width="173" height="81" color="#000000" fontSize="10">
-      <math>
+    <region left="279" top="99" width="173" height="81" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
         <input>
           <e type="operand">a</e>
           <e type="operand">b</e>
@@ -120,8 +112,8 @@
         </result>
       </math>
     </region>
-    <region left="0" top="198" width="192" height="32" color="#000000" fontSize="10">
-      <math error="63">
+    <region left="9" top="180" width="180" height="32" color="#000000" fontSize="10">
+      <math error="63" significantDigitsMode="false">
         <input>
           <e type="operand">A.1</e>
           <e type="operand">a</e>
@@ -142,8 +134,8 @@
         </result>
       </math>
     </region>
-    <region left="0" top="234" width="794" height="24" color="#000000" fontSize="10">
-      <math>
+    <region left="0" top="216" width="794" height="24" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
         <input>
           <e type="operand">lastError</e>
         </input>
@@ -152,8 +144,8 @@
         </result>
       </math>
     </region>
-    <region left="0" top="270" width="234" height="35" color="#000000" fontSize="10">
-      <math error="63">
+    <region left="9" top="243" width="466" height="87" color="#000000" fontSize="10">
+      <math>
         <input>
           <e type="operand">A.1</e>
           <e type="operand">a</e>
@@ -169,38 +161,6 @@
           <e type="bracket">(</e>
           <e type="operator" args="2">†</e>
           <e type="function" args="1">Maxima</e>
-        </input>
-        <result action="symbolic">
-          <e type="operand">#</e>
-        </result>
-      </math>
-    </region>
-    <region left="0" top="306" width="794" height="24" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">lastError</e>
-        </input>
-        <result action="numeric">
-          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
-        </result>
-      </math>
-    </region>
-    <region left="0" top="333" width="469" height="87" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">A.1</e>
-          <e type="operand">a</e>
-          <e type="operator" args="2">*</e>
-          <e type="operand">A.2</e>
-          <e type="operator" args="2">*</e>
-          <e type="function" args="1">Maxima</e>
-          <e type="operand">B.1</e>
-          <e type="operand">b</e>
-          <e type="operator" args="2">*</e>
-          <e type="operand">B.2</e>
-          <e type="operator" args="2">*</e>
-          <e type="function" args="1">Maxima</e>
-          <e type="operator" args="2">†</e>
         </input>
         <result action="symbolic">
           <e type="operand">A.1</e>
@@ -257,11 +217,215 @@
         </result>
       </math>
     </region>
-    <region left="9" top="423" width="68" height="24" color="#000000" fontSize="10">
+    <region left="9" top="369" width="1922" height="69" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Received Bytes: 354
+(%i22) (A_%_1*[a_%_1,a_%_2,a_%_3]*A_%_2) ~ (B_%_1*[b_%_1,b_%_2,b_%_3]*B_%_2);express(%);
+(%o22) [A_%_1*A_%_2*a_%_1,A_%_1*A_%_2*a_%_2,A_%_1*A_%_2*a_%_3] ~ [B_%_1*B_%_2*b_%_1,B_%_1*B_%_2*b_%_2,B_%_1*B_%_2*b_%_3]
+(%o23) [A_%_1*A_%_2*B_%_1*B_%_2*a_%_2*b_%_3-A_%_1*A_%_2*B_%_1*B_%_2*a_%_3*b_%_2,A_%_1*A_%_2*B_%_1*B_%_2*a_%_3*b_%_1-A_%_1*A_%_2*B_%_1*B_%_2*a_%_1*b_%_3,A_%_1*A_%_2*B_%_1*B_%_2*a_%_1*b_%_2-A_%_1*A_%_2*B_%_1*B_%_2*a_%_2*b_%_1]</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="540" width="513" height="93" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">A</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">†</e>
+          <e type="bracket">(</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">†</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">A</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="630" width="1826" height="69" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Received Bytes: 303
+(%i24) (A*[a_%_1,a_%_2,a_%_3]) ~ ([b_%_1,b_%_2,b_%_3]) ~ ([a_%_1,a_%_2,a_%_3]);express(%);
+(%o24) [A*a_%_1,A*a_%_2,A*a_%_3] ~ (-([a_%_1,a_%_2,a_%_3] ~ [b_%_1,b_%_2,b_%_3]))
+(%o25) [A*a_%_2*(a_%_2*b_%_1-a_%_1*b_%_2)-A*a_%_3*(a_%_1*b_%_3-a_%_3*b_%_1),A*a_%_3*(a_%_3*b_%_2-a_%_2*b_%_3)-A*a_%_1*(a_%_2*b_%_1-a_%_1*b_%_2),A*a_%_1*(a_%_1*b_%_3-a_%_3*b_%_1)-A*a_%_2*(a_%_3*b_%_2-a_%_2*b_%_3)]</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="756" width="164" height="76" color="#000000">
+      <picture>
+        <raw format="png" encoding="base64">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</raw>
+      </picture>
+    </region>
+    <region left="0" top="819" width="408" height="87" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
+        <input>
+          <e type="operand">A.1</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">B.1</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="function" args="2">Cross</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A.1</e>
+          <e type="operand">A.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">B.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="45" top="909" width="126" height="28" color="#000000" fontSize="10">
       <math error="63">
         <input>
-          <e type="operand">c</e>
-          <e type="operand">d</e>
+          <e type="operand">A</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">†</e>
+          <e type="bracket">(</e>
+          <e type="operand">a</e>
           <e type="operator" args="2">†</e>
         </input>
         <result action="symbolic">
@@ -269,107 +433,505 @@
         </result>
       </math>
     </region>
-    <region left="0" top="459" width="794" height="24" color="#000000" fontSize="10">
+    <region left="0" top="936" width="513" height="93" color="#000000" fontSize="10">
       <math>
         <input>
-          <e type="operand">lastError</e>
-        </input>
-        <result action="numeric">
-          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
-        </result>
-      </math>
-    </region>
-    <region left="0" top="495" width="178" height="57" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">c</e>
-          <e type="function" args="1">MaximaDefine</e>
-        </input>
-        <result action="symbolic">
-          <e type="operand">c.1</e>
-          <e type="operand">c.2</e>
-          <e type="operand">2</e>
-          <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-        </result>
-      </math>
-    </region>
-    <region left="207" top="495" width="178" height="57" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand">d</e>
-          <e type="function" args="1">MaximaDefine</e>
-        </input>
-        <result action="symbolic">
-          <e type="operand">d.1</e>
-          <e type="operand">d.2</e>
-          <e type="operand">2</e>
-          <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-        </result>
-      </math>
-    </region>
-    <region left="9" top="567" width="237" height="81" color="#000000" fontSize="10">
-      <math>
-        <input>
-          <e type="operand" style="string">$a~b$</e>
+          <e type="operand">A</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b</e>
+          <e type="operator" args="2">†</e>
+          <e type="bracket">(</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">†</e>
           <e type="function" args="1">Maxima</e>
         </input>
         <result action="symbolic">
+          <e type="operand">A</e>
           <e type="operand">a.2</e>
-          <e type="operand">b.3</e>
-          <e type="operator" args="2">*</e>
-          <e type="operand">a.3</e>
-          <e type="operand">b.2</e>
-          <e type="operator" args="2">*</e>
-          <e type="operator" args="2">-</e>
-          <e type="operand">a.3</e>
-          <e type="operand">b.1</e>
-          <e type="operator" args="2">*</e>
-          <e type="operand">a.1</e>
-          <e type="operand">b.3</e>
-          <e type="operator" args="2">*</e>
-          <e type="operator" args="2">-</e>
-          <e type="operand">a.1</e>
-          <e type="operand">b.2</e>
-          <e type="operator" args="2">*</e>
           <e type="operand">a.2</e>
           <e type="operand">b.1</e>
           <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
           <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
           <e type="operand">3</e>
           <e type="operand">1</e>
           <e type="function" args="5">mat</e>
         </result>
       </math>
     </region>
-    <region left="9" top="648" width="200" height="57" color="#000000" fontSize="10">
+    <region left="666" top="1008" width="39" height="24" color="#000000" fontSize="10">
       <math>
         <input>
-          <e type="operand" style="string">$c~d$</e>
-          <e type="function" args="1">Maxima</e>
+          <e type="operand">#</e>
+          <e type="operand">#</e>
+          <e type="function" args="2">Cross</e>
         </input>
-        <result action="none">
-          <e type="operand">c.1</e>
-          <e type="operand">c.2</e>
-          <e type="operand">2</e>
+      </math>
+    </region>
+    <region left="45" top="1026" width="455" height="93" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">A</e>
+          <e type="operand">a</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b</e>
+          <e type="function" args="2">Cross</e>
+          <e type="bracket">(</e>
+          <e type="operand">a</e>
+          <e type="function" args="2">Cross</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">A</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">A</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">3</e>
           <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-          <e type="operand">d.1</e>
-          <e type="operand">d.2</e>
-          <e type="operand">2</e>
-          <e type="operand">1</e>
-          <e type="function" args="4">mat</e>
-          <e type="operator" args="2">†</e>
+          <e type="function" args="5">mat</e>
         </result>
       </math>
     </region>
-    <region left="0" top="720" width="508" height="38" color="#000000" fontSize="10">
-      <text lang="eng" width="501" fontFamily="Arial" fontSize="10">
+    <region left="522" top="1026" width="58" height="23" color="#000000" fontSize="10">
+      <text lang="eng" fontFamily="Arial" fontSize="10">
         <content>
-          <p>On maxima side we need an improved cross product, which can handle 2d vectors, but that is a second step.</p>
+          <p>correct </p>
         </content>
       </text>
+    </region>
+    <region left="0" top="1206" width="69" height="57" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">c.1</e>
+          <e type="operand">c.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="81" top="1206" width="69" height="57" color="#000000" fontSize="10">
+      <math significantDigitsMode="false">
+        <input>
+          <e type="operand">d</e>
+          <e type="operand">d.1</e>
+          <e type="operand">d.2</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">mat</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="0" top="1278" width="64" height="24" color="#000000" fontSize="10">
+      <math error="63">
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">†</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">#</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="1314" width="794" height="24" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">lastError</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Cross product can only be calculated for three-component vectors (3 rows x 1 column).</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="1350" width="215" height="44" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">†</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">c.1</e>
+          <e type="operand">d.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">c.2</e>
+          <e type="operand">d.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="1404" width="157" height="30" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">c</e>
+          <e type="operand">d</e>
+          <e type="function" args="2">Cross</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">c.1</e>
+          <e type="operand">d.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">c.2</e>
+          <e type="operand">d.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+        </result>
+      </math>
+    </region>
+    <region left="306" top="1449" width="123" height="44" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operator" args="2">+</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">2</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="1494" width="434" height="175" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">1</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="bracket">(</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b.1</e>
+          <e type="operand">b.2</e>
+          <e type="operand">b.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="operator" args="2">†</e>
+          <e type="function" args="1">Maxima</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="function" args="1">abs</e>
+          <e type="operand">a.2</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.1</e>
+          <e type="function" args="1">abs</e>
+          <e type="operand">a.3</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.2</e>
+          <e type="function" args="1">abs</e>
+          <e type="operand">a.1</e>
+          <e type="function" args="1">abs</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
+    </region>
+    <region left="468" top="1512" width="50" height="23" color="#000000" fontSize="10">
+      <text lang="eng" fontFamily="Arial" fontSize="10">
+        <content>
+          <p>wrong</p>
+        </content>
+      </text>
+    </region>
+    <region left="18" top="1701" width="338" height="184" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">1</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="bracket">(</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.1</e>
+          <e type="operand">a.2</e>
+          <e type="operand">a.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">b.1</e>
+          <e type="operand">b.2</e>
+          <e type="operand">b.3</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+          <e type="function" args="2">Cross</e>
+        </input>
+        <result action="symbolic">
+          <e type="operand">a.2</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">a.2</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">a.1</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.3</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.3</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">a.2</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">a.1</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">a.1</e>
+          <e type="operand">b.2</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">a.2</e>
+          <e type="operand">b.1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">-</e>
+          <e type="operand">a.3</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">a.2</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">a.1</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">3</e>
+          <e type="operand">1</e>
+          <e type="function" args="5">mat</e>
+        </result>
+      </math>
     </region>
   </regions>
 </worksheet>

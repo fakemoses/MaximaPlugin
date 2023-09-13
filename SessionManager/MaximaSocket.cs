@@ -19,7 +19,7 @@ namespace MaximaPlugin
         //Encoding SocketEncoding = Encoding.GetEncoding("iso-8859-1");
         private Encoding encoding = new UTF8Encoding();
         //communication vars
-        private int timeToWait=25;
+        private int timeToWait=30;
         private int receiveTries = 5;
         // log containers
         private string lastLog = "";
@@ -80,18 +80,6 @@ namespace MaximaPlugin
             connected = false;
             server.Close();
         }
-
-        /// <summary>
-        /// Start socket server
-        /// </summary>
-        //private void StartSocketServer()
-        //{
-        //    IPAddress autoSocketIp = new IPAddress(new byte[] { 127, 0, 0, 1 });
-        //    autoSocketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        //    autoSocketServer.Bind(new IPEndPoint(autoSocketIp, 0));
-        //    autoSocketServer.Listen(1);
-        //    autoSocketPort = ((IPEndPoint)autoSocketServer.LocalEndPoint).Port;
-        //}
 
         /// <summary>
         /// Connect client
@@ -199,19 +187,6 @@ namespace MaximaPlugin
             }
             return ("-NoDataAvailable-");
         }
-
-        /// <summary>
-        /// Send a command to Maxima and receive the response.
-        /// Log both
-        /// </summary>
-        /// <param name="sendString">Command</param>
-        /// <param name="option">Set this to "check" to bypass the log</param>
-        /// <returns>response</returns>
-        //public string SendAndReceive(string sendString, string option = "none")
-        //{
-        //    SendSingleCommand(sendString, option);
-        //    return ReceiveSingleResponse(option);
-        //}
         #endregion
     } 
 }

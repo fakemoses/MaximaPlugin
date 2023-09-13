@@ -176,7 +176,6 @@ namespace MaximaPlugin.ControlObjects
                     Filter(tempstring);
                 }
 
-                //TODO: if No Data found && in the log contains Incorrect Syntax means syntax error was made -> Restart of maxima is required
                 if (tempstring.Contains("NoDataAvailable") && GetMaxima().GetLastLog().Contains("incorrect syntax"))
                 {
                     Thread staThread = new Thread(() =>
@@ -440,6 +439,21 @@ namespace MaximaPlugin.ControlObjects
             {
 
                 answers[i] = Regex.Replace(answers[i], booleanMaximatoSMathPattern, "if($1, $2, $3)");
+            }
+
+            //check if this is a case where Maxima sends Cross results one by one and got appended by the filter
+            // if case to handle multiple outputs but appended in a single line due to the Filter (only for cross case)
+            if (answers.Count == 1 && answers[0].Contains("~"))
+            {
+                MatchCollection matches = Regex.Matches(answers[0], @"\(%o");
+                if (matches.Count > 1)
+                {
+                    int lastIndex = answers[0].LastIndexOf("(%o");
+                    if(lastIndex != -1)
+                    {
+                        answers[0] = answers[0].Substring(lastIndex);
+                    }
+                }
             }
 
             answers = GetStringsOutAndReplaceThem(answers);

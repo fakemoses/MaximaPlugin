@@ -25,8 +25,7 @@ namespace MaximaPlugin.PlotImage
             this.region = region;
             this.regionC = region.GetCanvas();
 
-            int deviceDPI = this.DeviceDpi;
-            scaleFactor = (deviceDPI / GlobalProfile.ContentDpi);
+            scaleFactor = SharedFunctions.getScreenScaleFactor();
 
             this.plotStore = region.GetCanvas().plotStore;
             if (plotStore.plotType == PlotImage.PlotStore.PlotType.plot3D)
@@ -615,15 +614,7 @@ namespace MaximaPlugin.PlotImage
             #region PICTURE
             plotStore.titleState = PlotImage.PlotStore.State.Custom;
             plotStore.title = textTitle.Text;
-            //if (radioTitleCustom.Checked == true)
-            //{
-            //    plotStore.titleState = PlotImage.PlotStore.State.Custom;
-            //    if (!textTitle.ReadOnly) plotStore.title = textTitle.Text;
-            //}
-            //else 
-            //{
-            //    plotStore.titleState = PlotImage.PlotStore.State.Disable;
-            //}
+
 
             #endregion 
 
@@ -632,20 +623,15 @@ namespace MaximaPlugin.PlotImage
             if (checkTextSizeCustom.Checked)
             {
                 plotStore.textSizeState = PlotImage.PlotStore.State.Custom;
-                //if (!textTextFont.ReadOnly) plotStore.textFont = textTextFont.Text;
-                //if (!getInteger(textTextSize, ref number)) return;
-                //plotStore.textSize = number;
+
                 try
                 {
                     if (!textTextSize.ReadOnly) plotStore.textSize = Convert.ToInt32(textTextSize.Text);
-                    //plotStore.textSize = Convert.ToInt32(textTextSize.Text);
-                    //textTextSize.ForeColor = Color.Black;
 
                 }
                 catch
                 {
                     MessageBox.Show("Please enter numbers.");
-                    //textTextSize.ForeColor = Color.Red;
                 }
             }
             else
@@ -833,39 +819,12 @@ namespace MaximaPlugin.PlotImage
             plotStore.xNameS = PlotImage.PlotStore.State.Enable;
             plotStore.xName = textXtitle.Text;
 
-            //if (radioXtitleCustom.Checked == true)
-            //{
-            //    plotStore.xNameS = PlotImage.PlotStore.State.Enable;
-            //    if (!textXtitle.ReadOnly) plotStore.xName = textXtitle.Text;
-            //}
-            //else if (radioXtitleDefault.Checked == true)
-            //    plotStore.xNameS = PlotImage.PlotStore.State.Default;
-            //else
-            //    plotStore.xNameS = PlotImage.PlotStore.State.Disable;
-
             plotStore.yNameS = PlotImage.PlotStore.State.Enable;
             plotStore.yName = textYtitle.Text;
-            //if (radioYtitleCustom.Checked == true)
-            //{
-            //    plotStore.yNameS = PlotImage.PlotStore.State.Enable;
-            //    if (!textYtitle.ReadOnly) plotStore.yName = textYtitle.Text;
-            //}
-            //else if (radioYtitleDefault.Checked == true)
-            //    plotStore.yNameS = PlotImage.PlotStore.State.Default;
-            //else
-            //    plotStore.yNameS = PlotImage.PlotStore.State.Disable;
+
 
             plotStore.zNameS = PlotImage.PlotStore.State.Enable;
             plotStore.zName = textZtitle.Text;
-            //if (radioZtitleCustom.Checked == true)
-            //{
-            //    plotStore.zNameS = PlotImage.PlotStore.State.Enable;
-            //    if (!textZtitle.ReadOnly) plotStore.zName = textZtitle.Text;
-            //}
-            //else if (radioZtitleDefault.Checked == true)
-            //    plotStore.zNameS = PlotImage.PlotStore.State.Default;
-            //else
-            //    plotStore.zNameS = PlotImage.PlotStore.State.Disable;
             #endregion
 
             #region AXIS RANGES
@@ -1112,8 +1071,6 @@ namespace MaximaPlugin.PlotImage
             if (e.KeyData == Keys.Enter)
             {
                 RefreshStore();
-                //region.GetCanvas().plotApproval = true;
-                //region.Invalidate();
             }
         }
         #endregion
@@ -1169,8 +1126,6 @@ namespace MaximaPlugin.PlotImage
         private void Refresh_Click(object sender, EventArgs e)
         {
             RefreshStore();
-            //region.formOpen = false;
-            //region.GetCanvas().plotApproval = true;
             region.GetCanvas().redrawCanvas = true;
 
             Thread staThread = new Thread(()=>

@@ -6,64 +6,18 @@ using SMath.Manager;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MaximaPlugin
 {
+
+
     // partial implementation of main class for readability
     // code is from CustomGlyphs by Davide Carpi
     // https://smath.com:8443/!/#public/view/head/plugins/CustomGlyphs
     // For IPluginRegionDrawing, manual import of MathRegion from Smath installation folder in the References might be needed
-    public partial class MainClass : IPluginToolboxGroups, IPluginHandleEvaluation, IPluginRegionDrawing
+    public partial class MainClass : IPluginRegionDrawing
     {
-        #region IPluginToolboxGroups
-        public ToolboxGroup[] GetToolboxGroups(SessionProfile sessionProfile)
-        {
-            SvgPaths.Init();
-
-            var groups = new ToolboxGroup[1];
-
-            var buttons = new[]
-            {
-                new ButtonsMetaData(GetPngImage(Resource1.maxima))
-                    { Size = new Size(36, 24), Description = "Maxima(): Execute expression in Maxima", Action = GetButtonAction("Maxima", 1, sessionProfile) },
-                new ButtonsMetaData("Control")
-                    { Size = new Size(54, 24), Description = "Control Maxima process. E.g. Restarting the session by using MaximaControl(\"restart\")", Action = GetButtonAction("MaximaControl", 1, sessionProfile) },
-                new ButtonsMetaData("Define")
-                    { Size = new Size(54, 24), Description = "Define in Maxima", Action = GetButtonAction("MaximaDefine", 1, sessionProfile) },
-                new ButtonsMetaData("Takeover")
-                    { Size = new Size(72, 24), Description = "Takeover by Maxima of SMath functions. Use \"all\", \"none\", \"int\", \"lim\", \"diff\", \"det\" or \"sum\".", Action = GetButtonAction("MaximaTakeover", 1, sessionProfile) },
-                new ButtonsMetaData("Log")
-                    { Size = new Size(36, 24), Description = "Maxima process log overview", Action = GetButtonAction("MaximaLog", 1, sessionProfile) },
-                new ButtonsMetaData(new[]{
-                    "M 7 14 L 6 13 L 9 10 L 6 7 L 7 6 L 10 9 L 13 6 L 14 7 L 11 10 L 14 13 L 13 14 L 10 11 Z" },
-                                    new Size(20, 20))
-                    { Size = new Size(32, 24), Description = "Cross product of vectors", Action = GetButtonAction("Cross", 2, sessionProfile)},
-            };
-
-            groups[0] = new ToolboxGroup { Title = "Maxima", Buttons = buttons, Index = 1};
-
-            return groups;
-        }
-
-        private IBitmap GetImage(string image)
-        {
-            return SessionsManager.Current.Specifics.BitmapFromResources(GlobalProfile.GetAssembly<MainClass>(), "MaximaPlugin.Resources1." + image + ".png");
-        }
-
-        private IBitmap GetPngImage(Bitmap image)
-        {
-            var ms = new MemoryStream();
-            image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            return SessionsManager.Current.Specifics.StreamToBitmap(ms);
-        }
-
-        private string GetButtonAction(string name, int argsCount, SessionProfile sessionProfile)
-        {
-            var term = new Term(name, TermType.Function, argsCount);
-
-            TermInfo.ChangeTermByNamingType(sessionProfile, term, sessionProfile.NamingType, true);
-            return term.Text + Brackets.LeftVisible + (argsCount > 1 ? new String(sessionProfile.ArgumentsSeparator, argsCount - 1) : String.Empty);
-        }
 
         #region IPluginRegionDrawing
         public bool PrepareDrawing(Term[] terms, DrawInfo[] finish, MathPainter math, PaintContext e)
@@ -101,7 +55,15 @@ namespace MaximaPlugin
                         width += (childCount - 1) * sepWidth + 7 * 2 - 1;
 
                         var points = new PointF[childCount];
-                        float posX = LogoSize.Width + 6;
+
+                        //Distance of input from the bracket
+                        float scaleFactor = SharedFunctions.getScreenScaleFactor();
+                        float posX = 0.0f;
+
+                        if (scaleFactor >= 1.5)
+                            posX = LogoSize.Width + 3;
+                        else
+                            posX = LogoSize.Width + 6;
 
                         for (int i = 0; i < childCount; i++)
                         {
@@ -124,10 +86,14 @@ namespace MaximaPlugin
             }
 
             return false;
+
         }
 
         public bool ProceedDrawing(DrawMemory[] mem, MathPainter math, PaintContext e)
         {
+            int backLogoSize = 16;
+            int frontLogoSize = 12;
+
             if (math == null || mem[math.Inc].Type != TermType.Function)
                 return false;
 
@@ -139,35 +105,51 @@ namespace MaximaPlugin
                 // the user can delete placeholders
                 dm.IsCommonFunction = true;
 
+                float scaleFactor = SharedFunctions.getScreenScaleFactor();
+
+                //maxima logo drawing / fontstyles
                 ColorBrush backLogoBrush = new ColorBrush(e.CurFontClr != 0 ? Color.White : Color.FromArgb(255, 12, 50, 180));
                 ColorBrush foreLogoBrush = new ColorBrush(Color.FromArgb(255, 252, 40, 40));
-                FontInfo backLogoFont = new FontInfo(SMath.Drawing.Graphics.Specifics.GenericSerif, 16 * fontScaleFactor, FontfaceStyle.Bold);
-                FontInfo foreLogoFont = new FontInfo(SMath.Drawing.Graphics.Specifics.GenericSerif, 12 * fontScaleFactor, FontfaceStyle.Bold);
+
+                if (scaleFactor > 1.0 && scaleFactor < 1.5)
                 {
-                    Size LogoSize = e.Graphics.MeasureString("ξΣ", backLogoFont, float.MaxValue, StringOptions.GenericDefault).ToSize();
-                    float posX = e.ClipRectangle.Location.X + dm.Location.X - (int)fontScaleFactor;
-                    float posY = e.ClipRectangle.Location.Y + dm.Location.Y + dm.Center - LogoSize.Height / 2 - 1 * (int)fontScaleFactor + 2;
-                    e.Graphics.DrawString("ξΣ", backLogoFont, backLogoBrush, posX, posY, float.MaxValue, StringOptions.GenericDefault);
-                    e.Graphics.DrawString("Μ", foreLogoFont, foreLogoBrush, posX + 5 * fontScaleFactor, posY + 5 * (int)fontScaleFactor - 2, float.MaxValue, StringOptions.GenericDefault);
-
-                    //dm.FunctionTextBounds = new Rectangle(0, posY, 1, 40);dm.
-
-                    Size sepSize = e.Graphics.MeasureString(e.SessionProfile.ArgumentsSeparator.ToString(), e.NormalFont, float.MaxValue, StringOptions.GenericDefault).ToSize();
-                    float bracketPnt2Y = dm.Center + (LogoSize.Height - 8) / 2;
-
-                    for (int i = 0; i < dm.pm.Length; i++)
-                    {
-                        bracketPnt2Y = Math.Max(bracketPnt2Y, mem[dm.pm[i]].Size.Height - mem[dm.pm[i]].Center + dm.Center);
-
-                        if (i > 0)
-                            e.CustomStringDrawing(e.SessionProfile.ArgumentsSeparator.ToString(), e.CurFontClr, mem[dm.pm[i]].Location.X - sepSize.Width - dm.Location.X, dm.Center - sepSize.Height / 2 + 1, dm);
-                    }
-
-                    e.BracketPnt1 = new Point(LogoSize.Width - 1 - 2 * (int)fontScaleFactor, 0);
-                    // to have a full-hight bracket: bracketPnt2Y = mathRegion.mem[mathRegion.Inc].Size.Height
-                    e.BracketPnt2 = new PointF(dm.Size.Width - 1, bracketPnt2Y + 1);
-                    e.Parenthesis = true;
+                    backLogoSize = 20;
+                    frontLogoSize = 16;
                 }
+                else if (scaleFactor >= 1.5)
+                {
+                    backLogoSize = 22;
+                    frontLogoSize = 18;
+                }
+
+                FontInfo backLogoFont = new FontInfo(SMath.Drawing.Graphics.Specifics.GenericSerif, backLogoSize * fontScaleFactor, FontfaceStyle.Bold);
+                FontInfo foreLogoFont = new FontInfo(SMath.Drawing.Graphics.Specifics.GenericSerif, frontLogoSize * fontScaleFactor, FontfaceStyle.Bold);
+
+                //Maxima logo positioning
+                Size LogoSize = e.Graphics.MeasureString("ξΣ", backLogoFont, float.MaxValue, StringOptions.GenericDefault).ToSize();
+                float posX = e.ClipRectangle.Location.X + dm.Location.X - (int)fontScaleFactor;
+                float posY = e.ClipRectangle.Location.Y + dm.Location.Y + dm.Center - LogoSize.Height / 2 - 1 * (int)fontScaleFactor + 2;
+                e.Graphics.DrawString("ξΣ", backLogoFont, backLogoBrush, posX, posY, float.MaxValue, StringOptions.GenericDefault);
+                e.Graphics.DrawString("Μ", foreLogoFont, foreLogoBrush, posX + 5 * fontScaleFactor, posY + 5 * (int)fontScaleFactor - 2, float.MaxValue, StringOptions.GenericDefault);
+
+                //dm.FunctionTextBounds = new Rectangle(0, posY, 1, 40);dm.
+
+                Size sepSize = e.Graphics.MeasureString(e.SessionProfile.ArgumentsSeparator.ToString(), e.NormalFont, float.MaxValue, StringOptions.GenericDefault).ToSize();
+                float bracketPnt2Y = dm.Center + (LogoSize.Height - 8) / 2;
+
+                for (int i = 0; i < dm.pm.Length; i++)
+                {
+                    bracketPnt2Y = Math.Max(bracketPnt2Y, mem[dm.pm[i]].Size.Height - mem[dm.pm[i]].Center + dm.Center);
+
+                    if (i > 0)
+                        e.CustomStringDrawing(e.SessionProfile.ArgumentsSeparator.ToString(), e.CurFontClr, mem[dm.pm[i]].Location.X - sepSize.Width - dm.Location.X, dm.Center - sepSize.Height / 2 + 1, dm);
+                }
+                //bracket positioning
+                e.BracketPnt1 = new Point(LogoSize.Width - 1 - 2 * (int)fontScaleFactor, 0);
+                // to have a full-hight bracket: bracketPnt2Y = mathRegion.mem[mathRegion.Inc].Size.Height
+                e.BracketPnt2 = new PointF(dm.Size.Width - 1, bracketPnt2Y + 1);
+                e.Parenthesis = true;
+
 
                 return true;
             }
@@ -268,8 +250,6 @@ namespace MaximaPlugin
 
             e.Graphics.Translate(-e.ClipRectangle.X, -e.ClipRectangle.Y);
         }
-        #endregion
-
         #endregion
     }
 

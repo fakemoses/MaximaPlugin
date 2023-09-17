@@ -135,13 +135,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaximaToolbox.cs" />
-    <Compile Include="MForms\MaximaSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MForms\MaximaSettingsForm.Designer.cs">
-      <DependentUpon>MaximaSettingsForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MCustomGlyphs.cs" />
     <Compile Include="MForms\InstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,7 +209,6 @@
     <None Include="lib\SharpVectors.Dom.dll" />
     <None Include="lib\SharpVectors.Model.dll" />
     <None Include="lib\SharpVectors.Rendering.Gdi.dll" />
-    <None Include="MFunctions\SingleRohling.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="MFunctions\OtherUsefull.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -235,9 +228,6 @@
     <EmbeddedResource Include="MForms\DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MForms\MaximaSettingsForm.resx">
-      <DependentUpon>MaximaSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MForms\InstallerForm.resx">
       <DependentUpon>InstallerForm.cs</DependentUpon>

@@ -10,8 +10,6 @@ namespace MaximaPlugin.MFunctions
     /// </summary>
     class OtherUsefull
     {
-        //public static AutoSocket anySocket;
-        //public static bool anySocketConnected=false;
 
         /// <summary>
         /// Implements Assign(). 

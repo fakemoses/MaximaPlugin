@@ -225,12 +225,12 @@ namespace MaximaPlugin
             StartPath = Path.GetDirectoryName(StartPath);
             if (StartPath != null)
             {
-                string FoundPath = SharedFunctions.SearchFile(StartPath, MAXIMAname);
+                string FoundPath = SearchFile(StartPath, MAXIMAname);
                 if (FoundPath != null && File.Exists(FoundPath))
                 {
                     ReadConfig();
                     pathToMAXIMA = FoundPath;
-                    pathToMAXIMArel = SharedFunctions.GetRelativePath(FoundPath, GlobalProfile.ApplicationPath);
+                    pathToMAXIMArel = GetRelativePath(FoundPath, GlobalProfile.ApplicationPath);
                     SaveConfig();
                     CloseMaxima();
                     StartSession();
@@ -537,6 +537,67 @@ namespace MaximaPlugin
 
 
             }
+        }
+
+        static string pathToSearchFile = "";
+        static bool searchSucces = false;
+        /// <summary>
+        /// File search function for AutoMaxima, function better goes to AutoMaxima.cs, because it is only used there.
+        /// </summary>
+        /// <param name="path">Path name</param>
+        /// <param name="name">File name</param>
+        /// <returns>Full filename if file exists, null otherwise</returns>
+        public static string SearchFile(string path, string name)
+        {
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(path);
+            RecursiveSearch(di, name);
+            if (searchSucces)
+                return System.IO.Path.Combine(pathToSearchFile, name);
+            else return null;
+        }
+
+        /// <summary>
+        /// The actual recursive search
+        /// </summary>
+        /// <param name="root">Dirinfo object </param>
+        /// <param name="filename">Filename</param>
+        private static void RecursiveSearch(System.IO.DirectoryInfo root, string filename)
+        {
+            System.IO.FileInfo[] files = null;
+            System.IO.DirectoryInfo[] subDirs = null;
+            try { files = root.GetFiles("*.*"); }
+            catch (UnauthorizedAccessException) { }
+            catch (System.IO.DirectoryNotFoundException) { }
+            if (files != null)
+            {
+                foreach (System.IO.FileInfo fi in files)
+                {
+                    if (fi.Name == filename) { pathToSearchFile = fi.DirectoryName; searchSucces = true; }
+                }
+                subDirs = root.GetDirectories();
+                foreach (System.IO.DirectoryInfo dirInfo in subDirs)
+                {
+                    RecursiveSearch(dirInfo, filename);
+                }
+            }
+        }
+
+        /// <summary>
+        /// https://stackoverflow.com/questions/703281/getting-path-relative-to-the-current-working-directory
+        /// </summary>
+        /// <param name="filespec">Fullpath</param>
+        /// <param name="folder">Reference dir</param>
+        /// <returns></returns>
+        public static string GetRelativePath(string filespec, string folder)
+        {
+            Uri pathUri = new Uri(filespec);
+            // Folders must end in a slash
+            if (!folder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                folder += Path.DirectorySeparatorChar;
+            }
+            Uri folderUri = new Uri(folder);
+            return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
 
         /// <summary>

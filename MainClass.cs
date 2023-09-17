@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using MaximaPlugin.ControlObjects;
 using SMath.Controls;
+using SMath.Drawing;
 using SMath.Manager;
 using SMath.Math;
 
@@ -34,7 +36,7 @@ namespace MaximaPlugin
         plot3D
     };
 
-    public partial class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion
+    public partial class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion, IPluginToolboxGroups
     {
         #region Private fields
 
@@ -106,24 +108,11 @@ namespace MaximaPlugin
         {
             if (regularEnable || root.Text == "MaximaControl")
             {
-                /*
-                Term[] answer = TermsConverter.ToTerms("answertext");
-                Term[] vars = TermsConverter.ToTerms("varstext");
-                context.AppendDefinition("varible_name", answer, vars);
-                 */
                 SharedFunctions.rootHold = root;
                 SharedFunctions.argsHold = args;
                 SharedFunctions.contextHold = context;
                 SharedFunctions.resultHold = result;
 
-                /*
-                if (ControlObjects.Translator.triedToCreate)
-                {
-                    var termVar = TermsConverter.ToTerms("include(\"" + Path.Combine(ControlObjects.Translator.GetMaxima().GetAssemblyFolder(), "draw.sm") + "\")");
-                    termVar = SMath.Math.Computation.Preprocessing(termVar, ref context);
-                }*/
-                // TODO MK 2017 07 28: Seems that root is not required as argument in the functions, because no generic functions are called.
-                // Control functions
                 if (root.Type == TermType.Function && root.Text == "Maxima")
                 {
                     return MFunctions.MaximaAllround.Maxima(root, args, ref context, ref result);
@@ -232,6 +221,53 @@ namespace MaximaPlugin
                 }
             }
             return false;
+        }
+
+        #endregion
+
+        #region IPluginToolboxGroups
+        public ToolboxGroup[] GetToolboxGroups(SessionProfile sessionProfile)
+        {
+            SvgPaths.Init();
+
+            var groups = new ToolboxGroup[1];
+
+            var buttons = new[]
+            {
+                new ButtonsMetaData(GetPngImage(Resource1.maxima))
+                    { Size = new Size(36, 24), Description = "Maxima(): Execute expression in Maxima", Action = GetButtonAction("Maxima", 1, sessionProfile) },
+                new ButtonsMetaData("Control")
+                    { Size = new Size(54, 24), Description = "Control Maxima process. E.g. Restarting the session by using MaximaControl(\"restart\")", Action = GetButtonAction("MaximaControl", 1, sessionProfile) },
+                new ButtonsMetaData("Define")
+                    { Size = new Size(54, 24), Description = "Define in Maxima", Action = GetButtonAction("MaximaDefine", 1, sessionProfile) },
+                new ButtonsMetaData("Takeover")
+                    { Size = new Size(72, 24), Description = "Takeover by Maxima of SMath functions. Use \"all\", \"none\", \"int\", \"lim\", \"diff\", \"det\" or \"sum\".", Action = GetButtonAction("MaximaTakeover", 1, sessionProfile) },
+                new ButtonsMetaData("Log")
+                    { Size = new Size(36, 24), Description = "Maxima process log overview", Action = GetButtonAction("MaximaLog", 1, sessionProfile) },
+                new ButtonsMetaData(new[]{
+                    "M 7 14 L 6 13 L 9 10 L 6 7 L 7 6 L 10 9 L 13 6 L 14 7 L 11 10 L 14 13 L 13 14 L 10 11 Z" },
+                                    new Size(20, 20))
+                    { Size = new Size(32, 24), Description = "Cross product of vectors", Action = GetButtonAction("Cross", 2, sessionProfile)},
+            };
+
+            groups[0] = new ToolboxGroup { Title = "Maxima", Buttons = buttons, Index = 1 };
+
+            return groups;
+        }
+
+        private IBitmap GetPngImage(Bitmap image)
+        {
+            var ms = new MemoryStream();
+            image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            return SessionsManager.Current.Specifics.StreamToBitmap(ms);
+        }
+
+        private string GetButtonAction(string name, int argsCount, SessionProfile sessionProfile)
+        {
+            var term = new Term(name, TermType.Function, argsCount);
+
+            TermInfo.ChangeTermByNamingType(sessionProfile, term, sessionProfile.NamingType, true);
+            return term.Text + Brackets.LeftVisible + (argsCount > 1 ? new String(sessionProfile.ArgumentsSeparator, argsCount - 1) : String.Empty);
         }
 
         #endregion

@@ -42,12 +42,6 @@ namespace MaximaPlugin.PlotImage
             if (isEnhanced3D.Success)
                 region.plotStore.pm3d = PlotImage.PlotStore.State.Disable;
 
-            //TODO: Fix regex to make sure the title in the canvas is the same in the setting
-            ////check if user defined a custom title then override the plotstore value
-            //Match isCustomTitle = Regex.Match(textHolder, @"title≡""([^""]*)""");
-            //if (isCustomTitle.Success)
-            //    region.plotStore.title = DirectMaximaFunctions.ReplaceUnicodeEscapeSequences(isCustomTitle.Groups[0].Value);
-
             //check if user enabled disabled grid via sys
             Match isGridDisabled = Regex.Match(textHolder, @"grid≡false");
             if (isGridDisabled.Success)
@@ -85,6 +79,14 @@ namespace MaximaPlugin.PlotImage
             region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/"); ;
             region.plotStore.MakeLists();
 
+            // Find user defined custom title if exists and set the plot setting to have the same value
+            Match isCustomTitle = Regex.Match(textHolder, @"title≡(.*\""),");
+            if (isCustomTitle.Success)
+            {
+                string tmp = isCustomTitle.Groups[1].Value.Replace("\"", "");
+                region.plotStore.title = SharedFunctions.ReplaceUnicodeEscapeSequences(tmp);
+            }
+
             //GET STRINGS OUT
             MaximaPlugin.ControlObjects.Translator.originalStrings = new List<string>();
             List<string> sl = MaximaPlugin.ControlObjects.Translator.GetStringsOutAndReplaceThem(new List<string>() { textHolder });
@@ -92,7 +94,6 @@ namespace MaximaPlugin.PlotImage
             //ADD SETTINGS TO PLOT
             MaximaPlugin.Converter.ElementStoreManager esm = new MaximaPlugin.Converter.ElementStoreManager();
             esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, sl[0]);
-            //esm = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.SMathListDataCollection(esm, textHolder);
             
             //add preamble into list if exists
             if(preamble != "")
@@ -114,6 +115,7 @@ namespace MaximaPlugin.PlotImage
                 }
             }
             
+            // generate list of commands
             ListHandle(esm, region.plotStore.commandList, region.plotStore.prambleList);
             terminate(esm, region.plotStore.commandList, region.plotStore.prambleList);
             textHolder = MaximaPlugin.Converter.MatrixAndListFromSMathToMaxima.MakeTermString(esm, "", "");
@@ -134,7 +136,7 @@ namespace MaximaPlugin.PlotImage
                 textHolder = ControlObjects.Translator.Ask("draw2d(" + sl[0] + ") ");
             else
                 textHolder = ControlObjects.Translator.Ask("draw3d(" + sl[0] + ") ");
-            //Regex rxError = new Regex(@"(syntax)|(error)", RegexOptions.None);
+
             Regex rxError = new Regex(@"\b(syntax|error)\b", RegexOptions.IgnoreCase);
             if (rxError.IsMatch(textHolder, 0))
             {

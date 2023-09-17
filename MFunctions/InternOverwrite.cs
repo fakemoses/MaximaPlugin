@@ -18,12 +18,6 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool Integrate(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(args[1]);
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));
-            var arg4 = TermsConverter.ToString(Computation.Preprocessing(args[3], ref context));
-            */
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             //var arg2 = TermsConverter.ToString(args[1]);
             var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
@@ -63,10 +57,6 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool Limit(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = SharedFunctions.Proprocessing(args[1]);
             var arg3 = SharedFunctions.Proprocessing(args[2]);
@@ -136,10 +126,6 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool DerivateN(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = SharedFunctions.Proprocessing(args[1]);
             var arg3 = SharedFunctions.Proprocessing(args[2]);

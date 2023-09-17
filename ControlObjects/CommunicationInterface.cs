@@ -9,32 +9,6 @@ using System.Windows.Forms;
 
 namespace MaximaPlugin.ControlObjects
 {
-    ///// <summary>
-    ///// Access to Maxima for the Plot regions
-    ///// </summary>
-    //public static class MaximaPluginInterface
-    //{
-    //    /// <summary>
-    //    /// This is never called.
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    public static bool PluginInit()
-    //    {
-    //        return true;
-    //    }
-
-    //    /// <summary>
-    //    /// Access to Maxima for the Plot regions
-    //    /// </summary>
-    //    /// <param name="sendString"></param>
-    //    /// <param name="optionCode"></param>
-    //    /// <returns></returns>
-    //    public static string SendAndReceive(string sendString, string optionCode)
-    //    {
-    //        return Translator.Ask(sendString, optionCode);
-    //    }
-    //}
-
     /// <summary>
     /// Modifiers for the translation process
     /// </summary>
@@ -100,7 +74,6 @@ namespace MaximaPlugin.ControlObjects
                 {
                     try
                     {
-                        //TODO HERE for the 2023 new delete strategy
                         System.IO.Directory.Delete(maxima.gnuPlotImageFolder, true);
                     }
                     catch //(System.IO.IOException e)

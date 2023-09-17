@@ -46,6 +46,13 @@ namespace MaximaPlugin.MFunctions
                     isCrossProd = true;
                     string[] delim = stringToMaxima.Split('†');
 
+                    // force smath to perform symbolic calculation than reconvert 
+                    // for vector^2 problem
+                    for(int i = 0; i < delim.Length; i++)
+                    {
+                        delim[i] = TermsConverter.ToString(Computation.SymbolicCalculation(TermsConverter.ToTerms(delim[i]), ref context));
+                    }
+
                     string tempString = "";
 
                     for (int i = 0; i < delim.Length; i++)

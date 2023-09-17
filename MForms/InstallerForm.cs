@@ -18,8 +18,7 @@ namespace MaximaPlugin.MForms
         {
             InitializeComponent();
 
-            int deviceDPI = this.DeviceDpi;
-            scaleFactor = (deviceDPI / GlobalProfile.ContentDpi);
+            scaleFactor = SharedFunctions.getScreenScaleFactor();
 
             // form panel thing
             panel1.Visible = false;

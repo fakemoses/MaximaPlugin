@@ -37,11 +37,11 @@ namespace MaximaPlugin.MForms
                 check[i] = checkedListBox1.GetItemChecked(4 - i);
 
             }
-            textBox1.Text = Convert.ToString(SharedFunctions.GetIntFromBool(check));
+            textBox1.Text = Convert.ToString(GetIntFromBool(check));
         }
         private void writeList()
         {
-            bool[] tmp = SharedFunctions.GetBooleFromInt(Convert.ToInt32(textBox1.Text));
+            bool[] tmp = GetBooleFromInt(Convert.ToInt32(textBox1.Text));
 
             for (int i = 0; i < checkedListBox1.Items.Count; i++)
             {
@@ -287,6 +287,39 @@ namespace MaximaPlugin.MForms
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Convert integer code to flag array
+        /// </summary>
+        /// <param name="num">integer code</param>
+        /// <returns>boolean array</returns>
+        public static bool[] GetBooleFromInt(int num)
+        {
+            bool[] target = new bool[32];
+
+            for (int i = 0; i < 32; i++)
+            {
+                target[i] = ((num >> i) & 1) == 1;
+            }
+            return target;
+        }
+
+        /// <summary>
+        /// Convert boolean array to integer code
+        /// TODO MK 2017 08 01: Merge this with unique caller 
+        /// </summary>
+        /// <param name="array">boolean array</param>
+        /// <returns>Integer code</returns>
+        public static int GetIntFromBool(bool[] array)
+        {
+            int num = 0;
+
+            for (int i = 0; i < array.Length; ++i)
+            {
+                num = (num << 1) + (array[i] ? 1 : 0);
+            }
+            return num;
         }
     }
 }

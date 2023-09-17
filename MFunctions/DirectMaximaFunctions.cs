@@ -43,97 +43,6 @@ namespace MaximaPlugin.MFunctions
             return true;
         }
 
-
-
-        ///// <summary>
-        ///// Implementation of the Solve function
-        ///// </summary>
-        ///// <param name="root">Name of the function (should be "Solve")</param>
-        ///// <param name="args">List of argument expressions</param>
-        ///// <param name="context">Context for preprocessing </param>
-        ///// <param name="result">result expression</param>
-        ///// <returns></returns>
-        //public static bool SolveM(Term root, Term[][] args, ref Store context, ref Term[] result)
-        //{
-        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-        //    /*
-        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
-        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
-        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
-        //    // both arguments can be provided as matrix or lists. Internally, they are lists
-        //    arg1 = arg1.Replace("mat(", "sys(");
-        //    arg2 = arg2.Replace("mat(", "sys(");
-        //    // scalar arguments are converted to lists
-        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
-        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
-        //    // send string to Maxima
-        //    string stringToMaxima = "solve(" + arg1 + "," + arg2 + ")";
-        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
-        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
-        //    return true;
-        //}
-
-        //// TODO: MK 2017-07-16 Collect the solver functions into a single one
-
-        ///// <summary>
-        ///// Implementation of the LinSolve function
-        ///// </summary>
-        ///// <param name="root">Name of the function (should be "LinSolve")</param>
-        ///// <param name="args">List of argument expressions</param>
-        ///// <param name="context">Context for preprocessing </param>
-        ///// <param name="result">result expression</param>
-        ///// <returns></returns>
-        //public static bool LinSolveM(Term root, Term[][] args, ref Store context, ref Term[] result)
-        //{
-        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-        //    /*
-        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
-        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
-        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
-        //    // both arguments can be provided as matrix or lists. Internally, they are lists
-        //    arg1 = arg1.Replace("mat(", "sys(");
-        //    arg2 = arg2.Replace("mat(", "sys(");
-        //    // scalar arguments are converted to lists
-        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
-        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
-        //    // send string to Maxima
-        //    string stringToMaxima = "linsolve(" + arg1 + "," + arg2 + ")";
-        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
-        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Implementation of the AlgSys function
-        ///// </summary>
-        ///// <param name="root">Name of the function (should be "AlgSys")</param>
-        ///// <param name="args">List of argument expressions</param>
-        ///// <param name="context">Context for preprocessing </param>
-        ///// <param name="result">result expression</param>
-        ///// <returns></returns>
-        //public static bool AlgsysM(Term root, Term[][] args, ref Store context, ref Term[] result)
-        //{
-        //    Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-        //    /*
-        //    var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-        //    var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));*/
-        //    var arg1 = SharedFunctions.Proprocessing(args[0]);
-        //    var arg2 = SharedFunctions.Proprocessing(args[1]);
-        //    // both arguments can be provided as matrix or lists. Internally, they are lists
-        //    arg1 = arg1.Replace("mat(", "sys(");
-        //    arg2 = arg2.Replace("mat(", "sys(");
-        //    // scalar arguments are converted to lists
-        //    if (!rxSys.IsMatch(arg1, 0)) arg1 = "sys(" + arg1 + ",1,1)";
-        //    if (!rxSys.IsMatch(arg2, 0)) arg2 = "sys(" + arg2 + ",1,1)";
-        //    // send string to Maxima
-        //    string stringToMaxima = "algsys(" + arg1 + "," + arg2 + ")";
-        //    ControlObjects.TranslationModifiers.IsExpectedEquation = true;
-        //    result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
-        //    return true;
-        //}
-
         /// <summary>
         /// Implementation of the ODE.2 function.
         /// </summary>
@@ -166,10 +75,6 @@ namespace MaximaPlugin.MFunctions
         public static bool mNewton(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = SharedFunctions.Proprocessing(args[1]);
             var arg3 = SharedFunctions.Proprocessing(args[2]);
@@ -196,10 +101,6 @@ namespace MaximaPlugin.MFunctions
         public static bool Fit(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = SharedFunctions.Proprocessing(args[1]);
             var arg3 = SharedFunctions.Proprocessing(args[2]);
@@ -232,10 +133,6 @@ namespace MaximaPlugin.MFunctions
         public static bool Fit6(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             Regex rxSys = new Regex(@"sys\(", RegexOptions.None);
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
-            var arg3 = TermsConverter.ToString(Computation.Preprocessing(args[2], ref context));*/
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = SharedFunctions.Proprocessing(args[1]);
             var arg3 = SharedFunctions.Proprocessing(args[2]);
@@ -325,8 +222,14 @@ namespace MaximaPlugin.MFunctions
         }
 
 
-        // Cross product
-
+        /// <summary>
+        /// Implements Cross product.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="args"></param>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public static bool CrossProduct(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             var arg1 = SharedFunctions.Proprocessing(args[0]);
@@ -344,7 +247,6 @@ namespace MaximaPlugin.MFunctions
             arg2 = Regex.Replace(arg2, @",\d+,\d+\)", "]");
 
             //matrix has to be turned into string of array
-
             string stringtoMaxima = "(" + arg1 + ")" + "†" + "(" + arg2 + ");" + "express(%)";
             string outputFromMaxima = ControlObjects.Translator.Ask(stringtoMaxima);
 
@@ -474,7 +376,7 @@ namespace MaximaPlugin.MFunctions
                     {
 
                         // Replace specific Unicode escape sequences with their corresponding characters
-                        string convertedString = ReplaceUnicodeEscapeSequences(Target);
+                        string convertedString = SharedFunctions.ReplaceUnicodeEscapeSequences(Target);
 
                         convertedString = convertedString.Replace("\\", "");
 
@@ -536,7 +438,7 @@ namespace MaximaPlugin.MFunctions
                 if (Target != "pdf" && Target != "svg" && Target != "png")
                 {
                     // Replace specific Unicode escape sequences with their corresponding characters
-                    string convertedString = ReplaceUnicodeEscapeSequences(Target);
+                    string convertedString = SharedFunctions.ReplaceUnicodeEscapeSequences(Target);
 
                     convertedString = convertedString.Replace("\\", "");
 
@@ -821,14 +723,6 @@ namespace MaximaPlugin.MFunctions
             Random random = new Random();
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-
-        public static string ReplaceUnicodeEscapeSequences(string input)
-        {
-            // Replace specific Unicode escape sequences with their corresponding characters
-            input = input.Replace("\\005F", "_");
-            input = input.Replace("\\002E", ".");
-            return input;
         }
 
         static int FindCommaBeforeSecondLastIndex(string input, int startIndex)

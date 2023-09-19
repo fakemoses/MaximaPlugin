@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="144">
+    <identity>
+      <id>37d09c88-7c34-44e8-a544-a48767080e6a</id>
+      <revision>2</revision>
+    </identity>
+    <calculation>
+      <precision>3</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>true</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="false" viewMode="2" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="9" orientation="Portrait" width="827" height="1169" />
+      <margins left="39" right="39" top="49" bottom="49" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+      <assembly name="MaximaPlugin" version="1.98.8661.19715" guid="44011c1e-5d0d-4533-8e68-e32b5badce41" />
+      <assembly name="Image Region" version="2.99.7818.2866" guid="63ddaef8-9a56-4ff6-938e-d590b638bf99" />
+      <assembly name="Snapshot Region" version="1.0.7806.25196" guid="9166ba14-4cd9-47f6-b988-e96526b16cc9" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="0" top="0" width="567" height="452" color="#000000" bgColor="#ffffff" fontSize="10">
+      <snapshot tag="drawEN" ID="1" tile="true" width="557" height="400" compact="false" showInViewer="false">
+        <input>
+          <e type="operand" style="string">drawEN</e>
+        </input>
+      </snapshot>
+    </region>
+    <region left="0" top="27" width="436" height="39" color="#000000" fontSize="10">
+      <math optimize="2" decimalPlaces="4" significantDigitsMode="false">
+        <input>
+          <e type="operand">f</e>
+          <e type="operand">x</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">y</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">z</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">1</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operand">x</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">y</e>
+          <e type="operand">1.5</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">z</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">0.5</e>
+          <e type="operator" args="2">-</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">0.015</e>
+          <e type="operator" args="2">≡</e>
+          <e type="bracket">(</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="0" top="63" width="410" height="195" color="#000000" fontSize="10">
+      <math optimize="0" decimalPlaces="4" significantDigitsMode="false">
+        <input>
+          <e type="operand">obj</e>
+          <e type="operand">palette</e>
+          <e type="operand">white</e>
+          <e type="operand">white</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">sys</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">x_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">y_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">z_voxel</e>
+          <e type="operand">15</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">f</e>
+          <e type="operand">x</e>
+          <e type="operand">1</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">1</e>
+          <e type="operand">y</e>
+          <e type="operand">1.2</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">2.3</e>
+          <e type="operand">z</e>
+          <e type="operand">1</e>
+          <e type="operator" args="1">-</e>
+          <e type="operand">1</e>
+          <e type="function" args="10">implicit</e>
+          <e type="operand">user_preamble</e>
+          <e type="operand" style="string">set view 70, 120, 2.8, 1.4</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">colorbox</e>
+          <e type="operand">false</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">proportional_axes</e>
+          <e type="operand">xyz</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">xyplane</e>
+          <e type="operand">0</e>
+          <e type="operator" args="2">≡</e>
+          <e type="operand">9</e>
+          <e type="operand">1</e>
+          <e type="function" args="11">sys</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="252" top="198" width="309" height="188" color="#000000" fontSize="10">
+      <image width="299" height="180">
+        <input>
+          <e type="operand">obj</e>
+          <e type="operand">300</e>
+          <e type="operand">180</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">sys</e>
+          <e type="function" args="2">Draw3D</e>
+        </input>
+      </image>
+    </region>
+    <region left="0" top="495" width="5938" height="84" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">#</e>
+          <e type="function" args="1">MaximaLog</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">Received Bytes: 64
+(%i28) draw3d([terminal=pdfcairo, file_name=$C:\\Users\\kraska\\AppData\\Roaming\\SMath\\extensions\\plugins\\44011c1e-5d0d-4533-8e68-e32b5badce41\\GnuPlot\\inNlW3Nk$, font=$Arial$, font_size=12, background_color=$#fefefe$, enhanced3d = true, xlabel=$x$, ylabel=$y$, zlabel=$z$,user_preamble=[$set term pdfcairo enhanced size 3.12, 1.88$, $set encoding utf8$, $set style line 100 lc rgb 'grey' lt -1 lw 0.1$, $set grid xtics ls 100$, $set grid ytics ls 100$, $set pm3d lighting depthorder base$, $set view 70, 120, 2.8, 1.4$],palette=[white,white],x_voxel=15,y_voxel=15,z_voxel=15,implicit(((-1+x^2+y^2+z^2)*(2*(-1+2*x^2)+(-3+2*y)^2+4*z^2))/4=3/200,x,-1,1,y,-6/5,23/10,z,-1,1),colorbox=false,proportional_axes=xyz,xyplane=0]);
+(%o28) [gr3d(implicit)]
+(%i29) 
+(%o29) [gr3d(implicit)]</e>
+        </result>
+      </math>
+    </region>
+    <region left="0" top="558" width="1101" height="47" color="#000000" fontSize="10">
+      <math>
+        <input>
+          <e type="operand">obj</e>
+          <e type="operand">300</e>
+          <e type="operand">180</e>
+          <e type="operand">2</e>
+          <e type="operand">1</e>
+          <e type="function" args="4">sys</e>
+          <e type="function" args="2">Draw3D</e>
+        </input>
+        <result action="numeric">
+          <e type="operand" style="string">C:\Users\kraska\AppData\Roaming\SMath\extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41\GnuPlot\GaEnk8RK.png</e>
+        </result>
+      </math>
+    </region>
+    <region left="9" top="612" width="610" height="258" color="#000000" fontSize="10">
+      <image>
+        <imagefile filename="IJ6mQFix.png" lenght="1156" width="600" height="250" option="border=true;" dataRenderXmlLength="0" renderExt=".png" OLDwidht="331" OLDheight="39" select_rotation="0°">iVBORw0KGgoAAAANSUhEUgAAAUsAAAAnCAYAAACG9moLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAQZSURBVHhe7dRZbuQwDATQvv+lM+BHAQSHS4l2x9PT9QAhFjfZSaDXj4iIjHRZiogQdFmKiBB0WYqIEHRZiogQdFmKiBB0WYqIEHRZiogQdFmKiBB0WYqIEHRZiogQdFmKiBB0WYqIENaX5ev1Gpf8zf9eumcs7BlsHePOWRV84+lZU/273v1dc58Wv+vuv4e5MrN6/m3rk5986U8Vf2fsP4TtYyxiav5Vp+89feu7fg+b9/xE7/jOKzNj7+msu6xPfeqFP1n3R6+eje1jLGJq/lWn7436qu9dv4fte36ad3znlZmx93TWXdannrwwau2nf8ZPPANiMW4Q8/msLoOerN7P8s/4iWdALMYNYjEfa6tcVRfj0OUt5hdktQbxmPdxLMhins9nNT6W5SPUVLXVGVis2JP1+hqfr+Kmy1Wqnqo/xn1vlvPi3vjeqr7KmyrG1Md8Vv8b1qeevLDVZh+czcjqvKpvspmbxUxW52V92ZxK1VvNqPJZvY919VmOjXlxb5iajq/fzGfOy3qYOT425SGLeV1P1evjXb+J+WlvYv/pjGk/Oa2/w/pEe9lueXFv2Jjx8aqms53LxsxmViXWdrOrXKyDqr+KQzZvimV5w8zuTP1+X83uzmR6NjVMT3T1nCf6oaph6icntXdZn3j1w9iY8fGTc2E7l42ZzaxKrO1mdznPclge9lUc4t6wMbAcltf1ZKZ+v69md2due7CgqzdZzyTrif3dvN/oh6qGqZ+c1N5lfeLVD2NjxsdPzgXrqRb4Z2BjZjOrEmurPVOHBbHGMLErfViQ1ZzI6qv51ezuTLbH9lhQPcPUk2F6sI9xg16fq55NtseC6tnr6qvFOqm9y/rEqx/GxoyPn5wLTA/7PtUsHz/py8Taat/VxRxsZpls3hTL8oaZ3Znm+vxUm2F6NjVMT8T2YF/FIx/vejb9UNVU9SfumHFqfeLJy2a1bMz4+Mm5sJ3LxsxmViXWVvuuLuZgM8tk86ZYljfM7M401+en2gzTs6lheiK2B/sqHvl417Pph6qGqZ+c1N5lfeLVD2N/YdOetZlbnXXnrMx2no9V+a6GzcEUq/IxntV1unpmPnNe1uNj2YyphumJTnpOYj4ea7qcyfpj3dX95LT+DusT7WWnBf4ZshhkM+B0lnfn3NNZppvnxTr2jKzPL8T8z6jKZ/VMzPZ+Ieb5fcxlpposbzEsVuyJvT6f1cSc8THEfT7D9mQx43tR42v9s8n2fiEGPuZrvCpW1XdO6+/yzKlfiv0jP/XP8JRv+165RpflF9BlmdNlKSd0WX4J5g9tNVj/s2/5TrnPk/8r+i8VESHoshQRIeiyFBEh6LIUESHoshQRIeiyFBEh6LIUESHoshQRIeiyFBEh6LIUESHoshQRGf38/AGojTRXx5QPpgAAAABJRU5ErkJggg==</imagefile>
+        <input>
+          <e type="operand" style="string">C:\Users\kraska\AppData\Roaming\SMath\extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41\GnuPlot\IJ6mQFix.png</e>
+        </input>
+      </image>
+    </region>
+  </regions>
+</worksheet>

@@ -76,7 +76,7 @@ namespace MaximaPlugin.PlotImage
             }
 
             //REFRESH SETTINGSLIST
-            region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/"); ;
+            region.plotStore.filename = Path.ChangeExtension(region.imageFilePath, null).Replace("\\", "/");
             region.plotStore.MakeLists();
 
             // Find user defined custom title if exists and set the plot setting to have the same value

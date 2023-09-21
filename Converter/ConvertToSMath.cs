@@ -527,15 +527,6 @@ namespace MaximaPlugin.Converter
                     else
                         tempstring = tempstring + ")";
                 }
-                /*
-                for (int k = 1; k<diffVarNum.Count; k++) 
-                {
-                    if(k%2!=0)
-                        tempstring=tempstring+diffVarNum[k] + GlobalProfile.ArgumentsSeparatorStandard;
-                    else if (k==diffVarNum.Count)
-                        tempstring=tempstring+diffVarNum[k] + ")";
-                    else 
-                        tempstring=tempstring+diffVarNum[k] + ")" + GlobalProfile.ArgumentsSeparatorStandard; */
             }
             return tempstring;
         }

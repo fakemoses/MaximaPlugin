@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MCustomGlyphs.cs" />
+    <Compile Include="MForms\PlotSettingsLogic.cs" />
     <Compile Include="MForms\InstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>

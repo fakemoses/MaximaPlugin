@@ -48,6 +48,7 @@ namespace MaximaPlugin.PlotImage
         bool isShiftKeyDown = false;
         bool isCtrlKeyDown = false;
 
+
         //Constructors
         public MaximaPluginRegion(SessionProfile sessionProfile)
             : base(sessionProfile)
@@ -70,9 +71,6 @@ namespace MaximaPlugin.PlotImage
             {
                 canv.plotStore.enablexAxis = false;
                 canv.plotStore.enableyAxis = false;
-
-                canv.plotStore.xGrid = PlotStore.State.Disable;
-                canv.plotStore.yGrid = PlotStore.State.Disable;
 
                 canv.plotStore.width = 300;
                 canv.plotStore.height = 300;
@@ -109,7 +107,6 @@ namespace MaximaPlugin.PlotImage
 
 
         }
-        //VIEW CONTROL
 
         /// <summary>
         /// Doubleclick: open/activate settings dialog
@@ -165,7 +162,7 @@ namespace MaximaPlugin.PlotImage
         public override void OnMouseMove(MouseEventOptions e)
         {
             //rotation and panning only available for PNG and SVG since they takes extremely less time compared to other file types
-            if (mouseDown && canv.mouseD && !sizeChange && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if (mouseDown && canv.mouseD && !sizeChange)
             {
                 double dy = mouseY - e.Y;
                 double dx = mouseX - e.X;
@@ -392,7 +389,23 @@ namespace MaximaPlugin.PlotImage
         //SMATH
         public override RegionBase Clone()
         {
-            return new MaximaPluginRegion(this);
+            if(psf != null)
+            {
+                if (psf.InvokeRequired)
+                {
+                    psf.Invoke(new MethodInvoker(delegate ()
+                    {
+                        psf.Close();
+                    }));
+                }
+                else
+                    psf.Close();
+            }
+            
+            var clone = new MaximaPluginRegion(this);
+            clone.canv.plotStore = this.canv.plotStore.Clone() as PlotStore;
+            clone.callRedraw();
+            return clone;
         }
         // handler for region size changes
         protected override void OnSizeChanged(MouseEventOptions e)

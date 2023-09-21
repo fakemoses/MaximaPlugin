@@ -369,6 +369,7 @@ namespace MaximaPlugin.PlotImage
         {
             return new MaximaPluginCanvas(this);
         }
+
         public override void OnMouseDown(MouseEventOptions e)
         {
             mouseD = true;

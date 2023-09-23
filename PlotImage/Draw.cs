@@ -137,6 +137,7 @@ namespace MaximaPlugin.PlotImage
             else
                 textHolder = ControlObjects.Translator.Ask("draw3d(" + sl[0] + ") ");
 
+            //file is ready checking is needed because some of the drawings just takes a little more  time!
             Regex rxError = new Regex(@"\b(syntax|error)\b", RegexOptions.IgnoreCase);
             if (rxError.IsMatch(textHolder, 0))
             {

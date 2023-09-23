@@ -161,7 +161,7 @@ namespace MaximaPlugin.PlotImage
         /// <param name="e"></param>
         public override void OnMouseMove(MouseEventOptions e)
         {
-            //rotation and panning only available for PNG and SVG since they takes extremely less time compared to other file types
+            //rotation and panning
             if (mouseDown && canv.mouseD && !sizeChange)
             {
                 double dy = mouseY - e.Y;
@@ -401,12 +401,13 @@ namespace MaximaPlugin.PlotImage
                 else
                     psf.Close();
             }
-            
+            this.Focused = true;
             var clone = new MaximaPluginRegion(this);
             clone.canv.plotStore = this.canv.plotStore.Clone() as PlotStore;
             clone.callRedraw();
             return clone;
         }
+
         // handler for region size changes
         protected override void OnSizeChanged(MouseEventOptions e)
         {

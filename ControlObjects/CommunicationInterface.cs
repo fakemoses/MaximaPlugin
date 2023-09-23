@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SMath.Manager;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MaximaPlugin.ControlObjects
 {
@@ -32,7 +33,7 @@ namespace MaximaPlugin.ControlObjects
         public static string Sharp = "SXhXaXrXp";
         public static string LoopVar = "LXaXuXf";
         public static string Noun = "NXoXuXn";
-    } 
+    }
 
     /// <summary>
     /// Universal Maxima access object
@@ -42,7 +43,7 @@ namespace MaximaPlugin.ControlObjects
         public static Stopwatch time = new Stopwatch();
 
         #region Maxima access
-        private static MaximaSession maxima; 
+        private static MaximaSession maxima;
         public static bool triedToCreate = false;
         public static int maximaStartStep = 0;
         public static string Log = ""; // Translationlog
@@ -55,8 +56,9 @@ namespace MaximaPlugin.ControlObjects
         {
             //thread race when using direct code instead of GUI?
             if (!triedToCreate)
-            { triedToCreate = true;
-              maxima = new MaximaSession();
+            {
+                triedToCreate = true;
+                maxima = new MaximaSession();
             }
             return maxima;
         }
@@ -92,9 +94,8 @@ namespace MaximaPlugin.ControlObjects
         public static bool foundError = false;
         public static bool timereset = false;
         public static bool isPartAnswer = false;
-        public static int receiveTries = 7; // 14 = 10,5s
-        // public static int timeout = 10000; // receive-timeout in milliseconds
-        
+        public static int receiveTries = 14; 
+
         //logging event handler
         public static event EventHandler LogChanged;
 
@@ -116,7 +117,7 @@ namespace MaximaPlugin.ControlObjects
                 List<string> answers = Receive();
                 string outputString = TranslateToSMath(answers);
                 //event to tell the log something changed
-                if(LogChanged != null)
+                if (LogChanged != null)
                     LogChanged.Invoke(null, EventArgs.Empty);
 
                 TranslationModifiers.Reset();
@@ -144,7 +145,7 @@ namespace MaximaPlugin.ControlObjects
                 if (tempstring != "NoDataAvailable")
                 {
                     // if something was found
-                    Log = Log + "\n    Received from Maxima (try number: [" + Convert.ToString(i) + "] | elapsed time: [" + time.ElapsedMilliseconds + "ms]):\n" + tempstring.Replace("\n","");
+                    Log = Log + "\n    Received from Maxima (try number: [" + Convert.ToString(i) + "] | elapsed time: [" + time.ElapsedMilliseconds + "ms]):\n" + tempstring.Replace("\n", "");
                     // see if action has to be taken prior to back-translation
                     Filter(tempstring);
                 }
@@ -166,12 +167,12 @@ namespace MaximaPlugin.ControlObjects
 
                 //} while (i < receiveTries && !rxMxOut.IsMatch(tempstring, 0) && !foundError);
                 if (ControlObjects.TranslationModifiers.TimeOut != 0 && time.ElapsedMilliseconds > ControlObjects.TranslationModifiers.TimeOut) return receivedStrings;
-            } while (! rxMxOut.IsMatch(tempstring, 0) && ! foundError && i < receiveTries);
+            } while (!rxMxOut.IsMatch(tempstring, 0) && !foundError && i < receiveTries);
             foundError = false;
             return receivedStrings;
         }
         #endregion
-        
+
         #region Filter
         //Prefilter
         public static void Filter(string stringToFilter)
@@ -185,19 +186,19 @@ namespace MaximaPlugin.ControlObjects
             Regex rxUnit = new Regex(@"unit");
             Regex rxRedefine = new Regex(@"(\sredefining)|(\sredefined)");
 
-            if(isPartAnswer)  // partial answer
+            if (isPartAnswer)  // partial answer
             {
                 if (receivedStrings.Count > 0) // responselist not empty? Then add string to last response
                     receivedStrings[receivedStrings.Count - 1] = receivedStrings[receivedStrings.Count - 1] + stringToFilter;
-                
+
                 if (rxMxEndOut.IsMatch(stringToFilter, 0)) isPartAnswer = false; // if end-tag found, response is complete.
             }
             else if (rxPosNegQuest.IsMatch(stringToFilter, 0)) // Does Maxima ask for pos/neg?
             {
                 maxima.SendSingleCommandToSocket("positive"); // send default response, 
                 timereset = true; //reset waiting time
-                if (! rxUnit.IsMatch(stringToFilter, 0)) // if the question was not about a unit, add a message to the output.
-                    PositivNegativZeroFilter(stringToFilter); 
+                if (!rxUnit.IsMatch(stringToFilter, 0)) // if the question was not about a unit, add a message to the output.
+                    PositivNegativZeroFilter(stringToFilter);
             }
             else if (rxError.IsMatch(stringToFilter, 0)) // was the output an error message?
             {
@@ -215,172 +216,115 @@ namespace MaximaPlugin.ControlObjects
             }
             else if (rxMxStartOut.IsMatch(stringToFilter, 0)) // begin of output?
             {
-                if (! rxMxEndOut.IsMatch(stringToFilter, 0)) // end of output missing?
+                if (!rxMxEndOut.IsMatch(stringToFilter, 0)) // end of output missing?
                     isPartAnswer = true;
                 InfoTermFilter(stringToFilter); // handle the in/out labels
             }
-            else if(!rxRedefine.IsMatch(stringToFilter, 0)) // reformat eventual 'redefining' message
+            else if (!rxRedefine.IsMatch(stringToFilter, 0)) // reformat eventual 'redefining' message
             {
                 receivedStrings.Add(Symbols.StringChar + stringToFilter.Replace("\"", "").TrimStart('\r', '\n', ' ').TrimEnd('\r', '\n', ' ') + Symbols.StringChar);
             }
 
         }
-        
+
         /// <summary>
         /// Get the output label from the string. 
-        /// TODO: very old code, use regex to do the job
         /// </summary>
         /// <param name="stringToFilter"></param>
+
         public static void InfoTermFilter(string stringToFilter)
         {
-            int startNum = 0, endNum = 0;
-            for (int i = 0; i < stringToFilter.Length; i++)
+            // remove leading spaces
+            stringToFilter = stringToFilter.TrimStart('\r', '\n', ' ');
+
+            // grouping the results into few groups
+            // First group is to check if the string exists
+            // Second group is to check if there is any leading text before (%o
+            // Third group is to extract the number after (%o
+            Match match = Regex.Match(stringToFilter, @"(.*)\(%o(\d+)\)", RegexOptions.Singleline);
+            if (match.Success)
             {
-                if (i < stringToFilter.Length - 5 &&
-                    stringToFilter[i + 0] == '(' &&
-                    stringToFilter[i + 1] == '%' &&
-                  (stringToFilter[i + 2] == 'o') &&
-                    Char.IsDigit(stringToFilter[i + 3]))
+                if (match.Groups[1].Value != "")
                 {
-                    i+=3;
-                    startNum = i;
-                    while (i < stringToFilter.Length && Char.IsDigit(stringToFilter[i]))
-                    {
-                        i++;
-                    }
-                    endNum = i;
-                    if (stringToFilter[i]==')')
-                    {
-                        if (i > 10) receivedStrings.Add("\"" + stringToFilter.Substring(0, startNum-3).Replace("\"", "").TrimStart('\r', '\n', ' ').TrimEnd('\r', '\n', ' ') + "\"");
-                        receivedStrings.Add(stringToFilter.Substring(startNum - 3, stringToFilter.Length - (startNum - 3)));
-                        maximaOutNum=Convert.ToInt32(stringToFilter.Substring(startNum,endNum-startNum));
-                    }
+                    receivedStrings.Add("\"" + match.Groups[1].Value.TrimStart('\r', '\n', ' ').TrimEnd('\r', '\n', ' ') + "\"");
+                    stringToFilter = stringToFilter.Replace(match.Groups[1].Value, "");
                 }
+                receivedStrings.Add(stringToFilter);
+                maximaOutNum = Convert.ToInt32(match.Groups[2].Value);
             }
+
         }
 
         /// <summary>
         /// Generate the message for automatic pos/neg/zero assumptions
         /// </summary>
         /// <param name="stringToFilter"></param>
+
         public static void PositivNegativZeroFilter(string stringToFilter)
         {
             string tempstring = "";
-            int start = 0, end = 0;
-            for (int i = 0; i < stringToFilter.Length; i++)
+            // Example string: Is a*b*(a*b-1) positive, negative or zero?
+            // First group is to check if the string starts with "Is"
+            // Second group is to extract anything between spaces after "Is"
+            Match match = Regex.Match(stringToFilter, @"^Is\s+([^ ]+)");
+            if (match.Success)
             {
-                if (i < stringToFilter.Length - 4 &&
-                    stringToFilter[i + 0] == 'I' &&
-                    stringToFilter[i + 1] == 's' &&
-                    stringToFilter[i + 2] == ' ')
+                if (match.Groups[0].Value.Contains("Is"))
                 {
-                    i = i + 3;
-                    start = i;
-                    do { i++; } while (stringToFilter[i] != ' ' && i < stringToFilter.Length);
-                    i--;
-                    end = i;
-                    tempstring = stringToFilter.Substring(start, (end + 1) - start);
-                    tempstring = "\"" + tempstring + " is assumed to be positive.\"";
+                    tempstring = "\"" + match.Groups[1].Value + " is assumed to be positive.\"";
                     receivedStrings.Add(tempstring);
                 }
             }
         }
         #endregion
-
         #region Converting
         public static int maximaOutNum = 0;
 
-        //STRINGHANDLE FUNCTIONS
+        ////STRINGHANDLE FUNCTIONS
+
         public static List<string> GetStringsOutAndReplaceThem(List<string> answers)
         {
             List<string> replacement = new List<string>();
-            List<string> data = new List<string>();
-            int start = 0, end = 0;
-            //Step to every answers
+
             for (int i = 0; i < answers.Count; i++)
             {
-                //First: get strings out
-                start = 0;
-                //all chars in answer
-                for (int k = 0; k < answers[i].Length; k++)
+                string tmp = answers[i];
+
+                // Regex searches for anything that is between two double quotes within the string
+                // and replaces it with "PlaceForString"
+                // MatchCollection is used because there are multiple matches in one string
+                MatchCollection matches = Regex.Matches(answers[i], @"""(.*?)""");
+                foreach (Match match in matches)
                 {
-                    end = k;
-                    if (answers[i][k] == '"' && k < answers[i].Length-1)
+                    if (match.Success)
                     {
-                        data.Add(answers[i].Substring(start, (end) - start));
-                        start = k;
-                        do
-                        {
-                            k++;
-                        } while (answers[i][k] != '"' && k < answers[i].Length-1);
-                        end = k;
-                        originalStrings.Add(answers[i].Substring(start, (end+1) - start));
-                        data.Add("PlaceForString");
-                        start = k+1;
-                    }
-
-                    if (k == answers[i].Length-1)
-                    {
-
-                        data.Add(answers[i].Substring(start, (end+1) - start));
+                        originalStrings.Add("\"" + match.Groups[1].Value + "\"");
+                        tmp = tmp.Replace("\"" + match.Groups[1].Value + "\"", "PlaceForString");
                     }
                 }
-                replacement.Add("");
-                for (int j = 0; j < data.Count; j++)
-                {
-                    replacement[i] = replacement[i] + data[j];
-                }
-                data.Clear();
+                if(matches.Count == 0)
+                    replacement.Add(answers[i]);
+                else replacement.Add(tmp);
             }
+
             return replacement;
         }
+
         public static List<string> PutOriginalStringsIn(List<string> answers)
         {
-            List<string> data = new List<string>();
-            int start = 0, end = 0, counter=0;
+            //using regex replace to replace the "PlaceForString" with the original string one by one
+            var regex = new Regex(@"PlaceForString");
             for (int i = 0; i < answers.Count; i++)
             {
-                start = 0;
-                for (int k = 0; k < answers[i].Length; k++)
+                for(int j = 0; j < originalStrings.Count; j++)
                 {
-                    end = k;
-                    if (k < answers[i].Length - 13 &&
-                        answers[i][k + 0] == 'P' &&
-                        answers[i][k + 1] == 'l' &&
-                        answers[i][k + 2] == 'a' &&
-                        answers[i][k + 3] == 'c' &&
-                        answers[i][k + 4] == 'e' &&
-                        answers[i][k + 5] == 'F' &&
-                        answers[i][k + 6] == 'o' &&
-                        answers[i][k + 7] == 'r' &&
-                        answers[i][k + 8] == 'S' &&
-                        answers[i][k + 9] == 't' &&
-                        answers[i][k + 10] == 'r' &&
-                        answers[i][k + 11] == 'i' &&
-                        answers[i][k + 12] == 'n' &&
-                        answers[i][k + 13] == 'g'
-                        )
-                    {
-                        data.Add(answers[i].Substring(start, end - start));
-                        data.Add(originalStrings[counter]);
-                        counter++;
-                        k = k + 13;
-                        start = k+1;
-                    }
-                    else if (k == answers[i].Length - 1)
-                    {
-                        data.Add(answers[i].Substring(start, (k+1) - start));
-                    }
+                    answers[i] = regex.Replace(answers[i],originalStrings[j],1);
                 }
-                answers[i] = "";
-                for (int j = 0; j < data.Count; j++)
-                {
-                    answers[i] = answers[i] + data[j];
-                }
-                data.Clear();
             }
+
             return answers;
         }
+
         //TO SMATH
         public static List<string> PrepareStringsForSMath(List<string> answers)
         {
@@ -390,7 +334,7 @@ namespace MaximaPlugin.ControlObjects
         }
         public static List<string> PrepareTermsForSMath(List<string> answers)
         {
-            for (int i = 0; i < answers.Count;i++)
+            for (int i = 0; i < answers.Count; i++)
                 answers[i] = Converter.ConvertToSMath.PrepareTermsForSMath(answers[i].Trim().Replace("\"", "").Replace("\r\n", "").Replace("\n", ""));
             return answers;
         }
@@ -402,7 +346,7 @@ namespace MaximaPlugin.ControlObjects
         /// <returns></returns>
         public static string TranslateToSMath(List<string> answers)
         {
-            
+
             string outputString = "";
             originalStrings = new List<string>();
 
@@ -422,7 +366,7 @@ namespace MaximaPlugin.ControlObjects
                 if (matches.Count > 1)
                 {
                     int lastIndex = answers[0].LastIndexOf("(%o");
-                    if(lastIndex != -1)
+                    if (lastIndex != -1)
                     {
                         answers[0] = answers[0].Substring(lastIndex);
                     }
@@ -438,7 +382,7 @@ namespace MaximaPlugin.ControlObjects
             {
                 //check if string is  vect. It will give 2 answers and one of it contains the ~ sign which is cross
                 bool isCrossProd = false;
-                for(int i = 0; i < answers.Count; i++)
+                for (int i = 0; i < answers.Count; i++)
                 {
                     // this might change in the future but this is the only thing at the moment that can differentiate the type of the problem it solves.
                     if (answers[i].Contains("~"))
@@ -455,7 +399,7 @@ namespace MaximaPlugin.ControlObjects
                 }
                 else
                 {
-                    outputString = answers[answers.Count-1];
+                    outputString = answers[answers.Count - 1];
                 }
             }
             else if (answers.Count == 1) outputString = answers[0]; // if a single string returned, just hand it over.
@@ -464,7 +408,7 @@ namespace MaximaPlugin.ControlObjects
             else outputString = ("error(\"[Maxima]: " + "No data available" + "\")");
 
             // translation log
-            Log = Log + "\n    String given to SMath (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" 
+            Log = Log + "\n    String given to SMath (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n"
                 + outputString + "\n# End conversion (Maxima request number: [%" + maximaOutNum + "]) #";
 
             return outputString.Trim();
@@ -513,10 +457,10 @@ namespace MaximaPlugin.ControlObjects
                 termText = Regex.Replace(termText, pattern, combineResult);
             }
 
-            originalStrings =new List<string>();
+            originalStrings = new List<string>();
             List<string> termTextList = new List<string>() { termText };
             int x = termTextList.Count;
-            Log = Log + "\n\n# Start conversion (Maxima request number: [%" + (maximaOutNum+1)  + "]) #\n    SMath request (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termText;
+            Log = Log + "\n\n# Start conversion (Maxima request number: [%" + (maximaOutNum + 1) + "]) #\n    SMath request (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termText;
             originalStrings.Clear();
             termTextList = GetStringsOutAndReplaceThem(termTextList);
             originalStrings = PrepareStringsForMaxima(originalStrings);

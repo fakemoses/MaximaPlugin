@@ -201,6 +201,7 @@ namespace MaximaPlugin.PlotImage
                     using (MemoryStream stream = new MemoryStream())
                     {
                         SVGdoc.Draw().Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                        SVGdoc.Draw().Save(Path.ChangeExtension(imageFilePath, "png"), System.Drawing.Imaging.ImageFormat.Png);
                         loadedImage = System.Drawing.Image.FromStream(stream);
                         imageEo = loadedImage;
                     }
@@ -262,7 +263,7 @@ namespace MaximaPlugin.PlotImage
                             imageEo = System.Drawing.Image.FromStream(stream);
                         }
 
-                        File.Delete(ImginPng);
+                        //File.Delete(ImginPng);
 
                     }
                     catch

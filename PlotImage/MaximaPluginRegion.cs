@@ -523,8 +523,8 @@ namespace MaximaPlugin.PlotImage
             byte[] data;
             if (File.Exists(canv.imageFilePath))
             {
-                fileInfo = new FileInfo(canv.imageFilePath);
-                fileStream = new FileStream(canv.imageFilePath, FileMode.Open);
+                fileInfo = new FileInfo(Path.ChangeExtension(canv.imageFilePath, "png"));
+                fileStream = new FileStream(Path.ChangeExtension(canv.imageFilePath, "png"), FileMode.Open);
                 binaryReader = new BinaryReader(fileStream);
                 data = binaryReader.ReadBytes((int)fileInfo.Length);
                 imageLength = data.Length;
@@ -565,6 +565,7 @@ namespace MaximaPlugin.PlotImage
                         data = new byte[dataLenght];
                         reader.ReadElementContentAsBase64(data, 0, dataLenght);
 
+                        //only output in png format is supported
                         using (BinaryWriter writer = new BinaryWriter(File.Open(canv.imageFilePath, FileMode.Create)))
                         {
                             writer.Write(data);
@@ -583,7 +584,17 @@ namespace MaximaPlugin.PlotImage
                     break;
             }
 
+            //manually override this
+            using (FileStream stream = new FileStream(Path.ChangeExtension(canv.imageFilePath, "png"), FileMode.Open, FileAccess.Read))
+            {
+                canv.imageEo = System.Drawing.Image.FromStream(stream);
+            }
+
+            canv.ScalImg(canv.imageEo);
+
             base.FromXml(storage, parsingContext);
+            this.Invalidate();
+            this.RequestEvaluation();
         }
 
         private void callRedraw()

@@ -19,7 +19,7 @@ namespace MaximaPlugin.PlotImage
         {
             #region TITLE AND LOOK
             plotType = PlotType.plot2D;
-            title = "";
+            title = "SAMPLE PLOT";
             titleDefault = "SAMPLE PLOT";
             titleState = State.Disable;
 

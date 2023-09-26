@@ -61,7 +61,7 @@ namespace MaximaPlugin.PlotImage
             this.ImageContainer = new ThreadSafeImageContainer();
 
             base.Size = new Size(plotStore.width, plotStore.height);
-            this.Invalidate();
+            
         }
         public MaximaPluginCanvas(MaximaPluginCanvas region)
             : base(region)
@@ -316,10 +316,10 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.plotType == PlotStore.PlotType.plot2D)
             {
                 tempState = plotStore.titleState;
-                if (plotStore.title != "")
+                //if (plotStore.title != "")
                     plotStore.titleState = PlotStore.State.Custom;
-                else
-                    plotStore.titleState = PlotStore.State.Default;
+                //else
+                //    plotStore.titleState = PlotStore.State.Default;
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
                 redrawCanvas = true;
@@ -327,10 +327,10 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.plotType == PlotStore.PlotType.plot3D)
             {
                 tempState = plotStore.titleState;
-                if (plotStore.title != "")
+                //if (plotStore.title != "")
                     plotStore.titleState = PlotStore.State.Custom;
-                else
-                    plotStore.titleState = PlotStore.State.Default;
+                //else
+                //    plotStore.titleState = PlotStore.State.Default;
                 //plotStore.xRangeS = PlotStore.State.Disable;
                 //plotStore.yRangeS = PlotStore.State.Disable;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";

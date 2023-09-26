@@ -11,6 +11,7 @@ using System.Globalization;
 using SMath.Manager;
 using SMath.Controls;
 using SMath.Math;
+using System.Runtime.CompilerServices;
 
 namespace MaximaPlugin.PlotImage
 {
@@ -44,6 +45,8 @@ namespace MaximaPlugin.PlotImage
 
         bool mouseDoubleClick = false;
         bool firstEval = false;
+
+        bool setFocusEvent = false;
 
         bool isShiftKeyDown = false;
         bool isCtrlKeyDown = false;
@@ -87,6 +90,10 @@ namespace MaximaPlugin.PlotImage
             canv.lastInput = "";
             canv.SetLastRequest();
             callRedraw();
+            
+            //add focus event handler
+            base.FocusChanged += new RegionEventHandler(OnFocusChanged);
+            setFocusEvent = true;
         }
 
         public MaximaPluginRegion(MaximaPluginRegion region)
@@ -105,7 +112,8 @@ namespace MaximaPlugin.PlotImage
             psf = region.psf;
             canv.borderOn = region.canv.borderOn;
 
-
+            //add focus event handler
+            base.FocusChanged += new RegionEventHandler(OnFocusChanged);
         }
 
         /// <summary>
@@ -130,6 +138,15 @@ namespace MaximaPlugin.PlotImage
             dMouseY = e.Y / canv.Size.Height;
             mouseDoubleClick = false;
 
+            // set focus event handler if not set yet -> only for copy
+            // this only apply to copy. Copy has weird interaction with custom mouse event.
+            // the custom event does not registered on copy action but on cloning it works.
+            // perhaps if it is fixed in the future this can be removed
+            if (!setFocusEvent)
+            {
+                this.FocusChanged += new RegionEventHandler(OnFocusChanged);
+            }
+
             if (!dblclicktimer.IsRunning)
             {
                 dblclicktimer.Start();
@@ -148,7 +165,6 @@ namespace MaximaPlugin.PlotImage
                         psf = new PlotSettings(this);
                         psf.Show();
                         formOpen = true;
-                        psf.Focus();
                     }
                     this.Invalidate();
                 }
@@ -283,7 +299,7 @@ namespace MaximaPlugin.PlotImage
             dMouseW = dMouseW + delta;
 
             // Zoom x and y axis if not a 3D plot in z-only-mode
-            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && (isShiftKeyDown || isCtrlKeyDown)) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if (!(canv.plotStore.plotType == PlotStore.PlotType.plot3D && (isShiftKeyDown || isCtrlKeyDown)))
             {
                 // Zoom x axis if it is in interactive mode
                 if (canv.plotStore.xRangeS == PlotStore.State.Interactive)
@@ -320,7 +336,7 @@ namespace MaximaPlugin.PlotImage
                 }
             }
             // zoom of z if it is a 3D plot
-            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive && !(isShiftKeyDown || isCtrlKeyDown) && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if (canv.plotStore.plotType == PlotStore.PlotType.plot3D && canv.plotStore.zRangeS == PlotStore.State.Interactive && !(isShiftKeyDown || isCtrlKeyDown))
             {
                 if (canv.plotStore.zLogarithmic == PlotStore.State.Enable)
                 {
@@ -336,7 +352,7 @@ namespace MaximaPlugin.PlotImage
                 }
             }
 
-            if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isShiftKeyDown)
             {
                 //perform some calc with shiftkey
                 canv.plotStore.scalAzimuth += (delta/zoomFactor);
@@ -344,7 +360,7 @@ namespace MaximaPlugin.PlotImage
                 {
                     canv.plotStore.scalAzimuth = 0;
                 }
-            } else if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isCtrlKeyDown && (canv.plotStore.termType == PlotStore.TermType.png || canv.plotStore.termType == PlotStore.TermType.svg))
+            } else if(canv.plotStore.plotType == PlotStore.PlotType.plot3D && isCtrlKeyDown)
             {
                 //perform some calc with ctrlkey
                 canv.plotStore.scalZenith += (delta / zoomFactor);
@@ -366,6 +382,37 @@ namespace MaximaPlugin.PlotImage
             }
 
         }
+
+        //handles focus changed event
+        public  void OnFocusChanged( RegionBase sender)
+        {
+            if(!this.Focused && formOpen)
+            {
+                CloseSettingForm();
+            }
+        }
+
+        private void CloseSettingForm()
+        {
+            if (psf != null)
+            {
+                if (psf.InvokeRequired)
+                {
+                    psf.Invoke(new MethodInvoker(delegate ()
+                    {
+                        psf.Close();
+                        formOpen = false;
+                    }));
+                }
+                else
+                {
+                    psf.Close();
+                    formOpen = false;
+                }
+
+            }
+        }
+
         // handle the modifier keys
         public override void OnKeyDown(KeyEventOptions e)
         {
@@ -389,19 +436,14 @@ namespace MaximaPlugin.PlotImage
         //SMATH
         public override RegionBase Clone()
         {
-            if(psf != null)
-            {
-                if (psf.InvokeRequired)
-                {
-                    psf.Invoke(new MethodInvoker(delegate ()
-                    {
-                        psf.Close();
-                    }));
-                }
-                else
-                    psf.Close();
-            }
-            this.Focused = true;
+            // on clone close the settings dialog when open
+            CloseSettingForm();
+
+            //disable mouse events to prevent multiple draw calls
+            mouseDown = false;
+            canv.mouseD = false;
+
+            //create clone and clone the plot store too
             var clone = new MaximaPluginRegion(this);
             clone.canv.plotStore = this.canv.plotStore.Clone() as PlotStore;
             clone.callRedraw();
@@ -600,7 +642,6 @@ namespace MaximaPlugin.PlotImage
             {
                 canv.lastInput = input;
                 canv.SetLastRequest();
-                //canv.plotApproval = true;
 
                 if (canv.redrawCanvas)
                 {

@@ -12,7 +12,6 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Reflection;
-using ImageMagick;
 using System.Runtime.InteropServices.ComTypes;
 using Svg;
 
@@ -216,52 +215,18 @@ namespace MaximaPlugin.PlotImage
                     try
                     {
                         //read and convert directly from memory
+                        byte[] pdfBytes = System.IO.File.ReadAllBytes(imageFilePath);
+                        byte[] pngByte = Freeware.Pdf2Png.Convert(pdfBytes, 1);
 
-                        //byte[] pdfBytes = System.IO.File.ReadAllBytes(imageFilePath);
-                        //byte[] pngByte = Freeware.Pdf2Png.Convert(pdfBytes, 1);
-
-                        //using (MemoryStream pngStream = new MemoryStream(pngByte))
-                        //{
-                        //    System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
-                        //    var PDFBitmap = new Bitmap(PDFimg);
-                        //    loadedImage = PDFimg;
-    
-                        //}
-
-                        //MagickNET thing
-                        string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-                        MagickNET.Initialize();
-                        MagickNET.SetGhostscriptDirectory(assemblyPath);
-
-                        var settings = new MagickReadSettings
+                        using (MemoryStream pngStream = new MemoryStream(pngByte))
                         {
-                            Density = new Density(300, 300, DensityUnit.PixelsPerCentimeter),
-                            Depth = 1,
-                            Compression = CompressionMethod.NoCompression,
-                        };
-                        string ImginPng = Path.ChangeExtension(imageFilePath, "png");
+                            System.Drawing.Image PDFimg = System.Drawing.Image.FromStream(pngStream);
+                            var PDFBitmap = new Bitmap(PDFimg);
+                            loadedImage = PDFimg;
 
-                        using(var images = new MagickImageCollection())
-                        {
-                            images.Read(imageFilePath, settings);
-                            images.Write(ImginPng);
                         }
 
-                        //ouput image is in 32bit. The standard output from Gnuplot is 24 bit
-                        // probably not even needed to convert to 24 bit png
-                        using (var imgMagick = new MagickImage(ImginPng))
-                        {
-                            imgMagick.Format = MagickFormat.Png24;
-                            imgMagick.HasAlpha = false;
-
-                            imgMagick.Write(ImginPng);
-                        }
-
-                        using (FileStream stream = new FileStream(ImginPng, FileMode.Open, FileAccess.Read))
-                        {
-                            imageEo = System.Drawing.Image.FromStream(stream);
-                        }
+                        imageEo = loadedImage;
 
                         //File.Delete(ImginPng);
 

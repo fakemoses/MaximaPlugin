@@ -523,6 +523,8 @@ namespace MaximaPlugin.PlotImage
             byte[] data;
             if (File.Exists(canv.imageFilePath))
             {
+                // output is set to PNG because the PDF and SVG is not supported later when reading the file
+
                 fileInfo = new FileInfo(Path.ChangeExtension(canv.imageFilePath, "png"));
                 fileStream = new FileStream(Path.ChangeExtension(canv.imageFilePath, "png"), FileMode.Open);
                 binaryReader = new BinaryReader(fileStream);
@@ -584,7 +586,7 @@ namespace MaximaPlugin.PlotImage
                     break;
             }
 
-            //manually override this
+            //The BinaryWriter can only write png file!
             using (FileStream stream = new FileStream(Path.ChangeExtension(canv.imageFilePath, "png"), FileMode.Open, FileAccess.Read))
             {
                 canv.imageEo = System.Drawing.Image.FromStream(stream);

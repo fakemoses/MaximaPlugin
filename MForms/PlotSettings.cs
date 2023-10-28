@@ -19,6 +19,11 @@ namespace MaximaPlugin.PlotImage
         private double scaleFactor = 1.0;
 
         #region FORM CONTROL
+
+        /// <summary>
+        /// Contsructor
+        /// </summary>
+        /// <param name="region"></param>
         public PlotSettings(MaximaPlugin.PlotImage.MaximaPluginRegion region)
         {
             InitializeComponent();
@@ -73,7 +78,7 @@ namespace MaximaPlugin.PlotImage
             } else if(scaleFactor >= 1.5)
             {
                 this.Size = new System.Drawing.Size((int)(310 * scaleFactor), (int)(572 * scaleFactor)+10);
-                this.panel1.Size = new Size((int)(310*scaleFactor), (int)(572*scaleFactor));
+                this.loadScreenPanel.Size = new Size((int)(310*scaleFactor), (int)(572*scaleFactor));
             }
             else
                 this.Size = new System.Drawing.Size(310, 572);
@@ -232,17 +237,14 @@ namespace MaximaPlugin.PlotImage
             //TEXT
             textTextSize.Text = plotStore.textSize.ToString();
             textTextSize.ReadOnly = false;
-            //textTextFont.Text = plotStore.textFont;
             if (plotStore.textSizeState == PlotImage.PlotStore.State.Custom)
             {
                 checkTextSizeCustom.Checked = true;
                 textTextSize.ReadOnly = false;
-                //   textTextFont.ReadOnly = false;
             }
             else
             {
                 textTextSize.ReadOnly = true;
-                // textTextFont.ReadOnly = true;
 
             }
 
@@ -516,13 +518,13 @@ namespace MaximaPlugin.PlotImage
                 checkZlog.Checked = false;
             #endregion
 
-            listBox1.Items.Clear();
+            MaximaDrawLB.Items.Clear();
             foreach (string str in plotStore.commandList)
-                listBox1.Items.Add(str);
+                MaximaDrawLB.Items.Add(str);
 
-            listBox2.Items.Clear();
+            GnuplotCmdLB.Items.Clear();
             foreach (string str in plotStore.prambleList)
-                listBox2.Items.Add(str);
+                GnuplotCmdLB.Items.Add(str);
 
             #region REDIRECTING
             //MOUSE
@@ -608,6 +610,10 @@ namespace MaximaPlugin.PlotImage
             }
             #endregion
         }
+
+        /// <summary>
+        /// Update the PlotStore to the content of the form
+        /// </summary>
         public void Store()
         {
             
@@ -1054,10 +1060,11 @@ namespace MaximaPlugin.PlotImage
         #endregion
 
         #region INPUT EVENTS
-
-        
-
-
+        /// <summary>
+        /// Updates the PlotStore on any change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AnyChanges(object sender, EventArgs e)
         {
             if (initComplete)
@@ -1066,6 +1073,12 @@ namespace MaximaPlugin.PlotImage
             }
               
         }
+
+        /// <summary>
+        /// Updates the PlotStore on any change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnterKey(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
@@ -1075,54 +1088,67 @@ namespace MaximaPlugin.PlotImage
         }
         #endregion
 
+
+        /// <summary>
+        /// Move "Applying changes" controls to on top of the settings
+        /// </summary>
         private void MoveControlsToTopLeft()
         {
-            progressBar1.Style = ProgressBarStyle.Marquee;
+            ApplyChangePB.Style = ProgressBarStyle.Marquee;
 
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
-            panel1.Location = new Point(0, 0);
-            progressBar1.Location = new Point(26, 207);
+            loadScreenPanel.Location = new Point(0, 0);
+            ApplyChangePB.Location = new Point(26, 207);
 
             if(scaleFactor > 1.0)
-                label2.Location = new Point(120, 245);
+                ApplyChangeLabel.Location = new Point(120, 245);
             else
-                label2.Location = new Point(91, 233);
+                ApplyChangeLabel.Location = new Point(91, 233);
             // Ensure they are on top of other controls
-            panel1.BringToFront();
-            progressBar1.BringToFront();
-            label2.BringToFront();
+            loadScreenPanel.BringToFront();
+            ApplyChangePB.BringToFront();
+            ApplyChangeLabel.BringToFront();
         }
 
+        /// <summary>
+        /// Move "Applying changes" controls to original positions
+        /// </summary>
         private void MovetoBackPosition()
         {
-            progressBar1.Style = ProgressBarStyle.Marquee;
+            ApplyChangePB.Style = ProgressBarStyle.Marquee;
 
             // Move the overlayPanel, progressBar, and infoText to the top-left corner
             if(scaleFactor > 1.0 && scaleFactor < 1.5)
             {
-                panel1.Location = new Point(2, 700);
-                progressBar1.Location = new Point(26, 207);
-                label2.Location = new Point(91, 233);
+                loadScreenPanel.Location = new Point(2, 700);
+                ApplyChangePB.Location = new Point(26, 207);
+                ApplyChangeLabel.Location = new Point(91, 233);
             } else if( scaleFactor >= 1.5)
             {
-                panel1.Location = new Point(2, 900);
-                progressBar1.Location = new Point(26, 207);
-                label2.Location = new Point(91, 233);
+                loadScreenPanel.Location = new Point(2, 900);
+                ApplyChangePB.Location = new Point(26, 207);
+                ApplyChangeLabel.Location = new Point(91, 233);
             }
             else
             {
-                panel1.Location = new Point(2, 577);
-                progressBar1.Location = new Point(26, 207);
-                label2.Location = new Point(91, 233);
+                loadScreenPanel.Location = new Point(2, 577);
+                ApplyChangePB.Location = new Point(26, 207);
+                ApplyChangeLabel.Location = new Point(91, 233);
             }
 
             // Ensure they are on top of other controls
-            panel1.BringToFront();
-            progressBar1.BringToFront();
-            label2.BringToFront();
+            loadScreenPanel.BringToFront();
+            ApplyChangePB.BringToFront();
+            ApplyChangeLabel.BringToFront();
         }
 
         #region BUTTONS
+
+        /// <summary>
+        /// Aplly the changes when "Apply" is clicked. Save the changes into the PlotStore
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Refresh_Click(object sender, EventArgs e)
         {
             RefreshStore();
@@ -1152,11 +1178,23 @@ namespace MaximaPlugin.PlotImage
 
             region.Invalidate();
         }
+
+        /// <summary>
+        /// Close form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Abort_Click(object sender, EventArgs e)
         {
             abort = true;
             this.Close();
         }
+
+        /// <summary>
+        /// Show and hide the command list tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowCommandlist_Click(object sender, EventArgs e)
         {
             if (!tabControl2.Visible)
@@ -1198,14 +1236,5 @@ namespace MaximaPlugin.PlotImage
         }
         #endregion
 
-        private void groupBox28_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox10_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

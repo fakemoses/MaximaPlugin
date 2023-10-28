@@ -20,6 +20,15 @@ namespace MaximaPlugin
     {
 
         #region IPluginRegionDrawing
+
+        /// <summary>
+        /// Prepare drawings for glyphs
+        /// </summary>
+        /// <param name="terms">SMath expression</param>
+        /// <param name="finish">DrawInfo</param>
+        /// <param name="math">MathPainter</param>
+        /// <param name="e">PaintContext</param>
+        /// <returns></returns>
         public bool PrepareDrawing(Term[] terms, DrawInfo[] finish, MathPainter math, PaintContext e)
         {
             if (math == null || terms[math.Inc].Type != TermType.Function)
@@ -89,6 +98,13 @@ namespace MaximaPlugin
 
         }
 
+        /// <summary>
+        /// Draw the glyphs
+        /// </summary>
+        /// <param name="mem">DrawMemory</param>
+        /// <param name="math">MathPainter</param>
+        /// <param name="e">PaintContext</param>
+        /// <returns></returns>
         public bool ProceedDrawing(DrawMemory[] mem, MathPainter math, PaintContext e)
         {
             int backLogoSize = 16;
@@ -259,6 +275,10 @@ namespace MaximaPlugin
         // operations
         public static GraphicsFormatter CrossProduct = new GraphicsFormatter();
 
+        /// <summary>
+        /// Parse cross product symbol using SVG
+        /// </summary>
+        /// <returns></returns>
         public static void Init()
         {
             // all glyphs are centered to 0,0

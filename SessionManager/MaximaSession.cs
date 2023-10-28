@@ -98,14 +98,16 @@ namespace MaximaPlugin
 
         /// <summary>
         /// Executed at first Maxima interaction of a given SMath session
-        /// in the constructor of AutoMaxima()
+        /// Called after MaximaSession() is initialized
         /// </summary>
         public void StartSession()
         {
-            // TODO: Why this conditional? Maxima can't be connected when StartSession() is called
+            // Check in case maxima session already started
             if (!maximaConnected)
             {
-                firstCmd = true; // first interaction in a given SMath session
+                // first interaction in a given SMath session
+                firstCmd = true; 
+
                 // Read Config and start Maxima if the config is uptodate and the maxima path is valid
                 if (File.Exists(ConfigFileName))
                 {
@@ -132,13 +134,12 @@ namespace MaximaPlugin
                 };
                 if (DeleteFiles(files))
                 {
+                    // check if config file exists
                     if (checkForXMLandMAXIMA())
                     {
                         ReadConfig();
                         SaveConfig();
-                        //xmlRead(ConfigFileName);
                         StartAndConnectMaxima(1);
-                        // if (! maximaConnected) return
                         MessageBox.Show("Found path: " + pathToMAXIMA + "\nYou can change this path under Insert->Maxima->Settings.\nMaxima Plugin is ready to use.",
                         "Found path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -165,6 +166,7 @@ namespace MaximaPlugin
 
             string EnvironPath = Path.GetPathRoot(Environment.SystemDirectory);
             string MaximaPath = FindMaximaPath(EnvironPath);
+
             // make sure the path has a trailing directory separator
             if (!MaximaPath.EndsWith(Path.DirectorySeparatorChar.ToString())) MaximaPath += Path.DirectorySeparatorChar;
 
@@ -172,17 +174,7 @@ namespace MaximaPlugin
 
             string res = m.SetNewPathToMaxima(MaximaPath);
 
-            if (res != "CannotFind")
-            {
-                //running this as a thread prevents it from blocking the main thread and this is important when clicking the region draw 
-                //Thread staThread = new Thread(() =>
-                //{
-                //    MessageBox.Show("Found Path to maxima: " + MaximaPath);
-                //});
-                //staThread.SetApartmentState(ApartmentState.STA);
-                //staThread.Start();
-            }
-            else
+            if (res == "CannotFind")
             {
 
                 //if failed show this
@@ -196,8 +188,8 @@ namespace MaximaPlugin
 
                 if (result2 == DialogResult.Yes)
                 {
-                    // Based on suggestion by Davide Carpi
                     // Running the form in STAthread so that it can run independently
+
                     Thread staThread = new Thread(() =>
                     {
                         using (var installerForm = new MaximaPlugin.MForms.InstallerForm())
@@ -234,7 +226,6 @@ namespace MaximaPlugin
                     SaveConfig();
                     CloseMaxima();
                     StartSession();
-                    //StartAndConnectMaxima(1);
                     return pathToMAXIMArel;
                 }
             }
@@ -260,20 +251,21 @@ namespace MaximaPlugin
             return (SendAndReceiveFromSocket("check", "check") != "-NoDataAvailable-");
         }
 
+        /// <summary>
+        /// Close maxima session
+        /// </summary>
+        /// <returns></returns>
         public void CloseMaxima()
         {
             if (maximaConnected)
             {
                 try
                 {
-                    //int processesBefore = System.Diagnostics.Process.GetProcessesByName("maxima").Length;
                     Thread.Sleep(timeToWait);
                     socket.SendSingleCommand("quit();");
                     Thread.Sleep(timeToWait * 10);
                     maximaConnected = false;
                     maximaState = maximaStateClosed;
-                    //int processesAfter = System.Diagnostics.Process.GetProcessesByName("maxima").Length;
-                    //Process[] procs = System.Diagnostics.Process.GetProcessesByName("maxima");
                     if (!(newMaximaProcess == null))
                     {
                         newMaximaProcess.Kill();
@@ -292,7 +284,7 @@ namespace MaximaPlugin
         /// Implementation of MaximaControl("cleanup").
         /// Maxima is reset without shutting down the session. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Maxima state message</returns>
         public string CleanupMaxima()
         {
             if (maximaConnected)
@@ -312,7 +304,7 @@ namespace MaximaPlugin
         /// Implementation of MaximaControl("restart").
         /// The Maxima session is closed, the logs are reset and a new session is established.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Maxima state message</returns>
         public string RestartMaxima()
         {
             if (maximaConnected && firstCmd)
@@ -334,7 +326,7 @@ namespace MaximaPlugin
         /// <summary>
         /// Submit configuration commands to a running Maxima session
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Initializing message</returns>
         public string SendInitCmd()
         {
             if (maximaConnected)
@@ -369,9 +361,7 @@ namespace MaximaPlugin
                         i++;
                     }
                 }
-                //SharedFunctions.FullLog = SharedFunctions.FullLog + Environment.CurrentDirectory;
                 maximaState = maximaStateReInitialized;
-                //return socket.ReceiveSingleCommand();
                 return "init complete";
             }
             return "Initializing error";
@@ -385,7 +375,7 @@ namespace MaximaPlugin
         /// </summary>
         /// <param name="sendString"></param>
         /// <param name="option"></param>
-        /// <returns></returns>
+        /// <returns>If maxima is connected, return response from Maxima. If maxima is not connected, return maxima state message</returns>
         public string SendAndReceiveFromSocket(string sendString, string option = "none")
         {
             if (maximaConnected)
@@ -396,7 +386,6 @@ namespace MaximaPlugin
                 socket.SendSingleCommand(sendString + ";", option);
                 return socket.ReceiveSingleResponse(option);
 
-                //return receiveString;
             }
             else
             {
@@ -428,7 +417,7 @@ namespace MaximaPlugin
         /// <summary>
         /// Get the last log entry from maximaSocket
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Last log from socket</returns>
         public string GetLastLog() { return socket.GetLastLog(); }
 
         #endregion
@@ -440,7 +429,7 @@ namespace MaximaPlugin
         /// Possible process names are given in property ProcessNames.
         /// This was required, because different Maxima versions use different process names
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of processes</returns>
         private List<Process> GetProcesses()
         {
             List<Process> tmp = new List<Process> { };
@@ -458,6 +447,7 @@ namespace MaximaPlugin
         /// Detect the process handle for the Maxima process for later closing
         /// </summary>
         /// <param name="option"></param>
+        /// <returns></returns>
         private void StartAndConnectMaxima(int option)
         {
             MaximaPlugin.ControlObjects.Translator.maximaStartStep = 1;
@@ -531,8 +521,6 @@ namespace MaximaPlugin
                         "\nSMath won't be able to kill the process when shutting down or restarting.\n\nPlease identify the name of the Maxima process in your system \nand inform the developer in the SMath Forum.",
                         "No Maxima process found",
                                             MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-                    //maximaState = maximaStateCannotStart;
-                    //maximaConnected = false;
                 }
 
 
@@ -541,6 +529,7 @@ namespace MaximaPlugin
 
         static string pathToSearchFile = "";
         static bool searchSucces = false;
+
         /// <summary>
         /// File search function for AutoMaxima, function better goes to AutoMaxima.cs, because it is only used there.
         /// </summary>
@@ -667,7 +656,7 @@ namespace MaximaPlugin
         /// <summary>
         /// Check if Config file was generated with the current plugin version
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns true if config file is up to date</returns>
         public bool IsConfigFileFromCurrentPluginVersion()
         {
             if (FoundConfigFormatID >= RequiredConfigFormatID)
@@ -693,9 +682,9 @@ namespace MaximaPlugin
         }
 
         /// <summary>
-        /// Returns true if the config file exists and the path to maxima from therein is valid.
+        /// Check and read config file. Check if the path to maxima exists and valid
         /// </summary>
-        /// <returns>test result</returns>
+        /// <returns>Returns true if the config file exists and the path to maxima from therein is valid.</returns>
         public bool checkForXMLandMAXIMA()
         {
             if (File.Exists(ConfigFileName))
@@ -798,10 +787,7 @@ namespace MaximaPlugin
                     revisionV = Convert.ToInt32(settings[5]);
                     try
                     {
-                        //string path = Environment.CurrentDirectory;
-                        //Environment.CurrentDirectory = GlobalProfile.ApplicationPath;
                         pathToMAXIMA = Path.Combine(GlobalProfile.ApplicationPath, pathToMAXIMArel);
-                        //Environment.CurrentDirectory = path;
                     }
                     catch { }
                 }
@@ -810,6 +796,11 @@ namespace MaximaPlugin
 
         }
 
+        /// <summary>
+        /// Search for Maxima path in the given path
+        /// </summary>
+        /// <param name="path">Search path</param>
+        /// <return>full path to maxima<\return>
         public static string FindMaximaPath(string path)
         {
             List<string> files = GetDirectories(path);
@@ -832,6 +823,14 @@ namespace MaximaPlugin
 
             return fullPath;
         }
+
+        /// <summary>
+        /// Helper function for FindMaximaPath(). List all top level directories in the path
+        /// </summary>
+        /// <param name="path">Search path</param>
+        /// /// <param name="searchPattern">Search pattern</param>
+        /// /// <param name="searchOption">Search option</param>
+        /// <return>List directories in the path<\return>
         public static List<string> GetDirectories(string path, string searchPattern = "*",
             SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
@@ -847,6 +846,10 @@ namespace MaximaPlugin
         }
 
         #endregion
+
+        /// <summary>
+        /// Thread class to show progress bar when Maxima session is being initiated
+        /// </summary>
         class ThreadWorkClass
         {
             MaximaSession am;

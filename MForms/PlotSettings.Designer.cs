@@ -133,15 +133,15 @@
             this.button21 = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.MaximaDrawLB = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.GnuplotCmdLB = new System.Windows.Forms.ListBox();
             this.button_Refresh = new System.Windows.Forms.Button();
             this.button_Cancel_all = new System.Windows.Forms.Button();
             this.button_ShowCommandlist = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.loadScreenPanel = new System.Windows.Forms.Panel();
+            this.ApplyChangeLabel = new System.Windows.Forms.Label();
+            this.ApplyChangePB = new System.Windows.Forms.ProgressBar();
             this.tabControls.SuspendLayout();
             this.tabAxes.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -162,7 +162,7 @@
             this.tabControl2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.loadScreenPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControls
@@ -1216,7 +1216,6 @@
             this.groupBox10.TabIndex = 11;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Mouseactions [ x / y / wheel ]";
-            this.groupBox10.Enter += new System.EventHandler(this.groupBox10_Enter);
             // 
             // checkMouseContext
             // 
@@ -1294,7 +1293,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.listBox1);
+            this.tabPage2.Controls.Add(this.MaximaDrawLB);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -1303,21 +1302,21 @@
             this.tabPage2.Text = "Maxima Draw commands";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // MaximaDrawLB
             // 
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.MaximaDrawLB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
+            this.MaximaDrawLB.FormattingEnabled = true;
+            this.MaximaDrawLB.Items.AddRange(new object[] {
             "InitValue"});
-            this.listBox1.Location = new System.Drawing.Point(6, 6);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(320, 420);
-            this.listBox1.TabIndex = 1;
+            this.MaximaDrawLB.Location = new System.Drawing.Point(6, 6);
+            this.MaximaDrawLB.Name = "MaximaDrawLB";
+            this.MaximaDrawLB.Size = new System.Drawing.Size(320, 420);
+            this.MaximaDrawLB.TabIndex = 1;
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.listBox2);
+            this.tabPage5.Controls.Add(this.GnuplotCmdLB);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -1326,17 +1325,17 @@
             this.tabPage5.Text = "Gnuplot commands (user_preamble)";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // listBox2
+            // GnuplotCmdLB
             // 
-            this.listBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GnuplotCmdLB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Items.AddRange(new object[] {
+            this.GnuplotCmdLB.FormattingEnabled = true;
+            this.GnuplotCmdLB.Items.AddRange(new object[] {
             "InitValue"});
-            this.listBox2.Location = new System.Drawing.Point(6, 6);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(320, 368);
-            this.listBox2.TabIndex = 2;
+            this.GnuplotCmdLB.Location = new System.Drawing.Point(6, 6);
+            this.GnuplotCmdLB.Name = "GnuplotCmdLB";
+            this.GnuplotCmdLB.Size = new System.Drawing.Size(320, 368);
+            this.GnuplotCmdLB.TabIndex = 2;
             // 
             // button_Refresh
             // 
@@ -1368,38 +1367,38 @@
             this.button_ShowCommandlist.UseVisualStyleBackColor = true;
             this.button_ShowCommandlist.Click += new System.EventHandler(this.ShowCommandlist_Click);
             // 
-            // panel1
+            // loadScreenPanel
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Location = new System.Drawing.Point(2, 577);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(294, 572);
-            this.panel1.TabIndex = 11;
+            this.loadScreenPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.loadScreenPanel.Controls.Add(this.ApplyChangeLabel);
+            this.loadScreenPanel.Controls.Add(this.ApplyChangePB);
+            this.loadScreenPanel.Location = new System.Drawing.Point(2, 577);
+            this.loadScreenPanel.Name = "loadScreenPanel";
+            this.loadScreenPanel.Size = new System.Drawing.Size(294, 572);
+            this.loadScreenPanel.TabIndex = 11;
             // 
-            // label2
+            // ApplyChangeLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(91, 233);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Applying changes..";
+            this.ApplyChangeLabel.AutoSize = true;
+            this.ApplyChangeLabel.Location = new System.Drawing.Point(91, 233);
+            this.ApplyChangeLabel.Name = "ApplyChangeLabel";
+            this.ApplyChangeLabel.Size = new System.Drawing.Size(97, 13);
+            this.ApplyChangeLabel.TabIndex = 1;
+            this.ApplyChangeLabel.Text = "Applying changes..";
             // 
-            // progressBar1
+            // ApplyChangePB
             // 
-            this.progressBar1.Location = new System.Drawing.Point(26, 207);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(238, 23);
-            this.progressBar1.TabIndex = 0;
+            this.ApplyChangePB.Location = new System.Drawing.Point(26, 207);
+            this.ApplyChangePB.Name = "ApplyChangePB";
+            this.ApplyChangePB.Size = new System.Drawing.Size(238, 23);
+            this.ApplyChangePB.TabIndex = 0;
             // 
             // PlotSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 1011);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.loadScreenPanel);
             this.Controls.Add(this.button_ShowCommandlist);
             this.Controls.Add(this.button_Cancel_all);
             this.Controls.Add(this.button_Refresh);
@@ -1444,8 +1443,8 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.loadScreenPanel.ResumeLayout(false);
+            this.loadScreenPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1455,9 +1454,9 @@
         private System.Windows.Forms.TabControl tabControls;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox MaximaDrawLB;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox GnuplotCmdLB;
         private System.Windows.Forms.TabPage tabAxes;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioZrangeDisable;
@@ -1541,9 +1540,9 @@
         private System.Windows.Forms.CheckBox checkZContext;
         private System.Windows.Forms.CheckBox checkYContext;
         private System.Windows.Forms.CheckBox checkOrbitContext;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Panel loadScreenPanel;
+        private System.Windows.Forms.Label ApplyChangeLabel;
+        private System.Windows.Forms.ProgressBar ApplyChangePB;
         private System.Windows.Forms.CheckBox zAxis;
         private System.Windows.Forms.CheckBox yAxis;
         private System.Windows.Forms.CheckBox xAxis;

@@ -14,7 +14,13 @@ namespace MaximaPlugin.MForms
         {
             InitializeComponent();
         }
-        private void Form1_Load(object sender, EventArgs e)
+
+        /// <summary>
+        /// On load, start Maxima session and set values to the checkbox and label
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DebugForm_Load(object sender, EventArgs e)
         {
             maximaform=ControlObjects.Translator.GetMaxima();
             //start session of not available
@@ -37,6 +43,12 @@ namespace MaximaPlugin.MForms
                 else tbSmIn.Text = FormControl.formDataRe;
             }
         }
+
+        /// <summary>
+        /// When closing form, reset the variables
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Form1_Close(object sender, FormClosingEventArgs e)
         {
             if (tbSmOut.Text != "String to SMath")
@@ -46,11 +58,23 @@ namespace MaximaPlugin.MForms
             FormControl.formSMathCalc = false;
             MForms.FormControl.ThreadDebuggerProState = false;
         }
+
+        /// <summary>
+        /// Translate text from tbSmIn to Maxima and log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bCoToMa_Click(object sender, EventArgs e)
         {
             ControlObjects.Translator.Log = ControlObjects.Translator.Log + "\n###   Debugger   ###";
             tbMaIn.Text = ControlObjects.Translator.TranslateToMaxima(tbSmIn.Text);
         }
+
+        /// <summary>
+        /// Calculate the text tbMaIn in Maxima
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bCalcInMa_Click(object sender, EventArgs e)
         {
             string tempstring = maximaform.SendAndReceiveFromSocket(tbMaIn.Text);
@@ -61,10 +85,22 @@ namespace MaximaPlugin.MForms
                 tbBu.Text = maximaform.ReceiveSingleCommandFromSocket();
             }
         }
+
+        /// <summary>
+        /// Convert the text in tbMaOut to SMath
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bCoToSm_Click(object sender, EventArgs e)
         {
             tbSmOut.Text = ControlObjects.Translator.TranslateToSMath(new List<string> { tbMaOut.Text });
         }
+
+        /// <summary>
+        /// Perform translation to Maxima, calculation using Maxima and translation to SMath. Record the log. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bDoAll_Click(object sender, EventArgs e)
         {
             string tempstring = "";
@@ -90,6 +126,12 @@ namespace MaximaPlugin.MForms
             else FormControl.formDataAn = returnString;
             FormControl.formReadyState = true;
         }
+
+        /// <summary>
+        /// Recieve only from Maxima
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bMaRe_Click(object sender, EventArgs e)
         {
             string tempstring = maximaform.ReceiveSingleCommandFromSocket();
@@ -105,6 +147,11 @@ namespace MaximaPlugin.MForms
             FormControl.formReadyState = true;
         }
 
+        /// <summary>
+        /// Send commands to Maxima
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             maximaform.SendSingleCommandToSocket(tbSend.Text);
@@ -133,10 +180,6 @@ namespace MaximaPlugin.MForms
         private void opFuLog_CheckedChanged(object sender, EventArgs e)
         {
             tbLog_TextChanged(sender, e);
-        }
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -172,15 +215,6 @@ namespace MaximaPlugin.MForms
                 this.TopMost = true;
             else
                 this.TopMost = false;
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DebugForm_Deactivate(object sender, EventArgs e)
-        {
         }
 
         private void bactterm_Click(object sender, EventArgs e)

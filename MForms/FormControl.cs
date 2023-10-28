@@ -21,14 +21,12 @@ namespace MaximaPlugin.MForms
         public static bool formSMathCalc = false;
         public static bool formOpenState = false;
 
-        //  public static DebugForm debugf;
-        //  public static MaximaPluginForm controlf;
-        //  public static LogForm logf;
-        //  public static SettingsForm settingsf;
 
 
-
-        
+        /// <summary>
+        /// Controller to open Debug and log form
+        /// </summary>
+        /// <param name="formName"></param>
         public static void OpenForm(string formName) 
         {
 
@@ -49,6 +47,9 @@ namespace MaximaPlugin.MForms
             }
         }
 
+        /// <summary>
+        /// Configure and run the form
+        /// </summary>
         public static void InstallerForm()
         {
             InstallerFormState = true;

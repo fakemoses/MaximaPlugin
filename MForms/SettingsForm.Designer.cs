@@ -32,22 +32,22 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.PathTB = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SearchButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.InstallGroupBox = new System.Windows.Forms.GroupBox();
+            this.LocVerLabel = new System.Windows.Forms.Label();
+            this.InstVerLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.InstallButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.InstallGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -62,7 +62,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select functions to takeover";
             this.groupBox1.Visible = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // textBox1
             // 
@@ -71,7 +70,6 @@
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 9;
             this.textBox1.Text = "15";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // checkedListBox1
             // 
@@ -87,7 +85,6 @@
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(100, 79);
             this.checkedListBox1.TabIndex = 2;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -99,40 +96,37 @@
             this.label1.Text = "Select here which functions \r\ndo you want to takeover.\r\nThe number you get must \r" +
     "\nbe the twice argument e.g \r\nMaximaControl(takeover;\"number\")\r\nIf there is no ar" +
     "gument \r\nthe value is set to 15.";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox2
+            // PathTB
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 19);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(409, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = "Cannot find maxima.bat. Please enter the path to maxima.bat or any start search p" +
+            this.PathTB.Location = new System.Drawing.Point(6, 19);
+            this.PathTB.Name = "PathTB";
+            this.PathTB.Size = new System.Drawing.Size(409, 20);
+            this.PathTB.TabIndex = 2;
+            this.PathTB.Text = "Cannot find maxima.bat. Please enter the path to maxima.bat or any start search p" +
     "ath.";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.SearchButton);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.PathTB);
             this.groupBox2.Location = new System.Drawing.Point(11, 142);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(453, 78);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Path to Maxima";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // button1
+            // SearchButton
             // 
-            this.button1.Location = new System.Drawing.Point(421, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SearchButton.Location = new System.Drawing.Point(421, 17);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(26, 23);
+            this.SearchButton.TabIndex = 4;
+            this.SearchButton.Text = "...";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
             // label2
             // 
@@ -142,60 +136,59 @@
             this.label2.Size = new System.Drawing.Size(267, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Specify a directory from where to search for maxima.bat";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // button3
+            // SaveButton
             // 
-            this.button3.Location = new System.Drawing.Point(314, 226);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Save";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.SaveButton.Location = new System.Drawing.Point(314, 226);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.TabIndex = 4;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // button4
+            // CancelButton
             // 
-            this.button4.Location = new System.Drawing.Point(395, 226);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "Cancel";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.CancelButton.Location = new System.Drawing.Point(395, 226);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 5;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // groupBox3
+            // InstallGroupBox
             // 
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Location = new System.Drawing.Point(11, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(453, 110);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Install Maxima";
+            this.InstallGroupBox.Controls.Add(this.LocVerLabel);
+            this.InstallGroupBox.Controls.Add(this.InstVerLabel);
+            this.InstallGroupBox.Controls.Add(this.label4);
+            this.InstallGroupBox.Controls.Add(this.label3);
+            this.InstallGroupBox.Controls.Add(this.label5);
+            this.InstallGroupBox.Controls.Add(this.InstallButton);
+            this.InstallGroupBox.Location = new System.Drawing.Point(11, 12);
+            this.InstallGroupBox.Name = "InstallGroupBox";
+            this.InstallGroupBox.Size = new System.Drawing.Size(453, 110);
+            this.InstallGroupBox.TabIndex = 6;
+            this.InstallGroupBox.TabStop = false;
+            this.InstallGroupBox.Text = "Install Maxima";
             // 
-            // label7
+            // LocVerLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(164, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Checking..";
+            this.LocVerLabel.AutoSize = true;
+            this.LocVerLabel.Location = new System.Drawing.Point(164, 56);
+            this.LocVerLabel.Name = "LocVerLabel";
+            this.LocVerLabel.Size = new System.Drawing.Size(58, 13);
+            this.LocVerLabel.TabIndex = 9;
+            this.LocVerLabel.Text = "Checking..";
             // 
-            // label6
+            // InstVerLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(164, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "None";
+            this.InstVerLabel.AutoSize = true;
+            this.InstVerLabel.Location = new System.Drawing.Point(164, 34);
+            this.InstVerLabel.Name = "InstVerLabel";
+            this.InstVerLabel.Size = new System.Drawing.Size(33, 13);
+            this.InstVerLabel.TabIndex = 8;
+            this.InstVerLabel.Text = "None";
             // 
             // label4
             // 
@@ -224,24 +217,24 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "Maxima installation requires active internet connection and admin rights";
             // 
-            // button2
+            // InstallButton
             // 
-            this.button2.Location = new System.Drawing.Point(363, 46);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Install";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.InstallButton.Location = new System.Drawing.Point(363, 46);
+            this.InstallButton.Name = "InstallButton";
+            this.InstallButton.Size = new System.Drawing.Size(75, 23);
+            this.InstallButton.TabIndex = 0;
+            this.InstallButton.Text = "Install";
+            this.InstallButton.UseVisualStyleBackColor = true;
+            this.InstallButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 261);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.InstallGroupBox);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -254,8 +247,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.InstallGroupBox.ResumeLayout(false);
+            this.InstallGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -266,17 +259,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox PathTB;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.GroupBox InstallGroupBox;
+        private System.Windows.Forms.Button InstallButton;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label LocVerLabel;
+        private System.Windows.Forms.Label InstVerLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
     }

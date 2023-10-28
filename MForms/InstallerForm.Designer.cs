@@ -28,43 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.FinishButton = new System.Windows.Forms.Button();
+            this.DlProgressBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.StatusLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.InstProgressBar = new System.Windows.Forms.ProgressBar();
+            this.StatusPanel = new System.Windows.Forms.Panel();
+            this.InstTypePanel = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.NextButton = new System.Windows.Forms.Button();
+            this.ManualInstRB = new System.Windows.Forms.RadioButton();
+            this.SilentInstRB = new System.Windows.Forms.RadioButton();
+            this.StatusPanel.SuspendLayout();
+            this.InstTypePanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // FinishButton
             // 
-            this.button1.Location = new System.Drawing.Point(383, 163);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Finish";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.FinishButton.Location = new System.Drawing.Point(383, 163);
+            this.FinishButton.Name = "FinishButton";
+            this.FinishButton.Size = new System.Drawing.Size(75, 23);
+            this.FinishButton.TabIndex = 0;
+            this.FinishButton.Text = "Finish";
+            this.FinishButton.UseVisualStyleBackColor = true;
+            this.FinishButton.Click += new System.EventHandler(this.FinishButton_Click);
             // 
-            // progressBar1
+            // DlProgressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 23);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(302, 23);
-            this.progressBar1.TabIndex = 2;
+            this.DlProgressBar.Location = new System.Drawing.Point(3, 23);
+            this.DlProgressBar.Name = "DlProgressBar";
+            this.DlProgressBar.Size = new System.Drawing.Size(302, 23);
+            this.DlProgressBar.TabIndex = 2;
             // 
             // label1
             // 
@@ -96,14 +96,14 @@
             this.label3.Text = "Please allow admin access when requested to install the maxima. \r\nInstallation ma" +
     "y takes few minutes.";
             // 
-            // label4
+            // StatusLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(46, 163);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "StatusLabel";
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Location = new System.Drawing.Point(46, 163);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(63, 13);
+            this.StatusLabel.TabIndex = 6;
+            this.StatusLabel.Text = "StatusLabel";
             // 
             // label5
             // 
@@ -114,85 +114,69 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Status:";
             // 
-            // button2
+            // CancelButton
             // 
-            this.button2.Location = new System.Drawing.Point(302, 163);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.CancelButton.Location = new System.Drawing.Point(302, 163);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 8;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // progressBar2
+            // InstProgressBar
             // 
-            this.progressBar2.Location = new System.Drawing.Point(3, 76);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(302, 23);
-            this.progressBar2.TabIndex = 9;
+            this.InstProgressBar.Location = new System.Drawing.Point(3, 76);
+            this.InstProgressBar.Name = "InstProgressBar";
+            this.InstProgressBar.Size = new System.Drawing.Size(302, 23);
+            this.InstProgressBar.TabIndex = 9;
             // 
-            // panel1
+            // StatusPanel
             // 
-            this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Controls.Add(this.progressBar2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(470, 200);
-            this.panel1.TabIndex = 10;
+            this.StatusPanel.Controls.Add(this.DlProgressBar);
+            this.StatusPanel.Controls.Add(this.InstProgressBar);
+            this.StatusPanel.Controls.Add(this.FinishButton);
+            this.StatusPanel.Controls.Add(this.CancelButton);
+            this.StatusPanel.Controls.Add(this.label1);
+            this.StatusPanel.Controls.Add(this.label5);
+            this.StatusPanel.Controls.Add(this.label2);
+            this.StatusPanel.Controls.Add(this.StatusLabel);
+            this.StatusPanel.Controls.Add(this.label3);
+            this.StatusPanel.Location = new System.Drawing.Point(12, 12);
+            this.StatusPanel.Name = "StatusPanel";
+            this.StatusPanel.Size = new System.Drawing.Size(470, 200);
+            this.StatusPanel.TabIndex = 10;
             // 
-            // panel2
+            // InstTypePanel
             // 
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.button3);
-            this.panel2.Controls.Add(this.radioButton2);
-            this.panel2.Controls.Add(this.radioButton1);
-            this.panel2.Location = new System.Drawing.Point(12, 230);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(470, 200);
-            this.panel2.TabIndex = 11;
+            this.InstTypePanel.Controls.Add(this.label8);
+            this.InstTypePanel.Controls.Add(this.label7);
+            this.InstTypePanel.Controls.Add(this.label6);
+            this.InstTypePanel.Controls.Add(this.NextButton);
+            this.InstTypePanel.Controls.Add(this.ManualInstRB);
+            this.InstTypePanel.Controls.Add(this.SilentInstRB);
+            this.InstTypePanel.Location = new System.Drawing.Point(12, 230);
+            this.InstTypePanel.Name = "InstTypePanel";
+            this.InstTypePanel.Size = new System.Drawing.Size(470, 200);
+            this.InstTypePanel.TabIndex = 11;
             // 
-            // radioButton1
+            // label8
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(14, 47);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(122, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Silent installation";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(32, 124);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(344, 13);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "User-customizable installation. Default installation path is recommended.";
             // 
-            // radioButton2
+            // label7
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(14, 104);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(131, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Manual installation";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(383, 157);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Next";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(32, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(205, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Automatic installation with default settings.";
             // 
             // label6
             // 
@@ -204,60 +188,76 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Select the type of the installation";
             // 
-            // label7
+            // NextButton
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(32, 67);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(205, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Automatic installation with default settings.";
+            this.NextButton.Location = new System.Drawing.Point(383, 157);
+            this.NextButton.Name = "NextButton";
+            this.NextButton.Size = new System.Drawing.Size(75, 23);
+            this.NextButton.TabIndex = 2;
+            this.NextButton.Text = "Next";
+            this.NextButton.UseVisualStyleBackColor = true;
+            this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
-            // label8
+            // ManualInstRB
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(32, 124);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(344, 13);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "User-customizable installation. Default installation path is recommended.";
+            this.ManualInstRB.AutoSize = true;
+            this.ManualInstRB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ManualInstRB.Location = new System.Drawing.Point(14, 104);
+            this.ManualInstRB.Name = "ManualInstRB";
+            this.ManualInstRB.Size = new System.Drawing.Size(131, 17);
+            this.ManualInstRB.TabIndex = 1;
+            this.ManualInstRB.TabStop = true;
+            this.ManualInstRB.Text = "Manual installation";
+            this.ManualInstRB.UseVisualStyleBackColor = true;
+            // 
+            // SilentInstRB
+            // 
+            this.SilentInstRB.AutoSize = true;
+            this.SilentInstRB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SilentInstRB.Location = new System.Drawing.Point(14, 47);
+            this.SilentInstRB.Name = "SilentInstRB";
+            this.SilentInstRB.Size = new System.Drawing.Size(122, 17);
+            this.SilentInstRB.TabIndex = 0;
+            this.SilentInstRB.TabStop = true;
+            this.SilentInstRB.Text = "Silent installation";
+            this.SilentInstRB.UseVisualStyleBackColor = true;
             // 
             // InstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 444);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.InstTypePanel);
+            this.Controls.Add(this.StatusPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "InstallerForm";
             this.Text = "Maxima Installation";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.StatusPanel.ResumeLayout(false);
+            this.StatusPanel.PerformLayout();
+            this.InstTypePanel.ResumeLayout(false);
+            this.InstTypePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button FinishButton;
+        private System.Windows.Forms.ProgressBar DlProgressBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.ProgressBar InstProgressBar;
+        private System.Windows.Forms.Panel StatusPanel;
+        private System.Windows.Forms.Panel InstTypePanel;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Button NextButton;
+        private System.Windows.Forms.RadioButton ManualInstRB;
+        private System.Windows.Forms.RadioButton SilentInstRB;
     }
 }

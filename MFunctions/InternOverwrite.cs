@@ -6,6 +6,9 @@ using SMath.Math;
 
 namespace MaximaPlugin.MFunctions
 {
+    /// <summary>
+    /// Implements symbolic alternative functions
+    /// </summary>
     class InternOverwrite
     {
         /// <summary>

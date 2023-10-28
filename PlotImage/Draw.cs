@@ -8,6 +8,9 @@ using MaximaPlugin.MFunctions;
 
 namespace MaximaPlugin.PlotImage
 {
+    /// <summary>
+    /// Draw class for the draw region
+    /// </summary>
     class Draw
     {
         /// <summary>
@@ -57,9 +60,9 @@ namespace MaximaPlugin.PlotImage
 
             // extract user_preamble
             string preamble;
-            textHolder = MFunctions.DirectMaximaFunctions.ExtractUserPreamble(textHolder, out preamble);
+            textHolder = SharedFunctions.ExtractUserPreamble(textHolder, out preamble);
             if (preamble != "")
-                preamble = MFunctions.DirectMaximaFunctions.RemoveSysFromPreamble(preamble);
+                preamble = SharedFunctions.RemoveSysFromPreamble(preamble);
               
             // neutralize units
             textHolder = rxUnit.Replace(textHolder, "1");
@@ -148,6 +151,13 @@ namespace MaximaPlugin.PlotImage
         }
 
         public static bool findPreL = false;
+
+        /// <summary>
+        /// Create a list of command using ElementStoreManager
+        /// </summary>
+        /// <param name="esm">ElementStoreManager</param>
+        /// <param name="commands">List of commands</param>
+        /// <param name="preamble">List of preamble</param>
         public static void ListHandle(MaximaPlugin.Converter.ElementStoreManager esm, List<string> commands, List<string> preamble)
         {
             Regex rxPreamble = new Regex(@"preamble");
@@ -219,6 +229,13 @@ namespace MaximaPlugin.PlotImage
             }
             esm.currentStore.refPointer = 0;
         }
+
+        /// <summary>
+        /// Properly terminate the list of commands using ElementStoreManager
+        /// </summary>
+        /// <param name="esm">ElementStoreManager</param>
+        /// <param name="commands">List of commands</param>
+        /// <param name="preamble">List of preamble</param>
         public static void terminate(MaximaPlugin.Converter.ElementStoreManager esm, List<string> commands, List<string> preamble)
         {
             string temp = "[";

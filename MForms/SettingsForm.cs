@@ -1,14 +1,12 @@
-﻿using System;
-using System.Windows.Forms;
-using System.IO;
-using MaximaPlugin.ControlObjects;
-using MaximaPlugin.MInstaller;
-using System.Threading;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using MaximaPlugin.MInstaller;
 using SMath.Manager;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace MaximaPlugin.MForms
 {
@@ -21,33 +19,12 @@ namespace MaximaPlugin.MForms
             // check and get latest version here
             SetMaximaVersionInformation();
         }
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
 
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void writeNumber()
-        {
-            bool[] check = new bool[checkedListBox1.Items.Count];
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                check[i] = checkedListBox1.GetItemChecked(4 - i);
-
-            }
-            textBox1.Text = Convert.ToString(GetIntFromBool(check));
-        }
-        private void writeList()
-        {
-            bool[] tmp = GetBooleFromInt(Convert.ToInt32(textBox1.Text));
-
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                checkedListBox1.SetItemChecked(i, tmp[i]);
-            }
-        }
+        /// <summary>
+        /// Create maxima session if not available and set the PathTB to the path of the maxima if available
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             // writeList();
@@ -56,63 +33,44 @@ namespace MaximaPlugin.MForms
             {
                 if (ControlObjects.Translator.GetMaxima().GetPathToMaximabat() != "")
                 {
-                    textBox2.Text = Path.GetDirectoryName(ControlObjects.Translator.GetMaxima().GetPathToMaximabat());
+                    PathTB.Text = Path.GetDirectoryName(ControlObjects.Translator.GetMaxima().GetPathToMaximabat());
                 }
                 else
                 {
-                    textBox2.Text = SMath.Manager.GlobalProfile.ApplicationPath;
+                    PathTB.Text = SMath.Manager.GlobalProfile.ApplicationPath;
                 }
             }
 
         }
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            writeNumber();
-        }
+
+        /// <summary>
+        /// When form is closed, reset the variable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SettingsForm_Close(object sender, FormClosingEventArgs e)
         {
             SharedFunctions.initializingOverMenue = false;
             MForms.FormControl.SettingsFormState = false;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            if (textBox1.Text!="")
-               writeList();
-        }
-        public void PathMsgBox()
-        {
-            if (ControlObjects.Translator.GetMaxima().GetPathToMaximabat() != "")
-            {
-                DialogResult result1 = MessageBox.Show("Found \"" + ControlObjects.Translator.GetMaxima().GetPathToMaximabat() + "\".",
-                "Path to Maxima",
-                MessageBoxButtons.OK);
-            }
-            else
-            {
-                DialogResult result2 = MessageBox.Show("Cannot find maxima.bat",
-                "Path to Maxima",
-                MessageBoxButtons.OK);
-            }
-        }
-
         /// <summary>
-        /// "Search for maxima.bat" pressed
+        /// Check if the path given by user contain a valid maxima.bat file.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button3_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             // Verify existence of the path, either absolute or relative to the SMath install dir (ApplicationPath)
             string path = "";
-            if (Directory.Exists(textBox2.Text)) path = textBox2.Text;
-            else if (Directory.Exists(Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, textBox2.Text)))
-                path = Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, textBox2.Text);
+            if (Directory.Exists(PathTB.Text)) path = PathTB.Text;
+            else if (Directory.Exists(Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, PathTB.Text)))
+                path = Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, PathTB.Text);
            
             if (path == "") // If no valid path found, go back
             {
-                MessageBox.Show("Neither " + textBox2.Text 
-                    +         "\nnor     " + Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, textBox2.Text)
+                MessageBox.Show("Neither " + PathTB.Text 
+                    +         "\nnor     " + Path.Combine(SMath.Manager.GlobalProfile.ApplicationPath, PathTB.Text)
                     +         "\nare valid paths.",
                                 "Path to Maxima",
                                 MessageBoxButtons.OK);
@@ -126,7 +84,7 @@ namespace MaximaPlugin.MForms
                 string fileInfo = ControlObjects.Translator.GetMaxima().SetNewPathToMaxima(path);
                 if (fileInfo != "CannotFind") // maxima.bat was found
                 {
-                    textBox2.Text = Path.GetDirectoryName(ControlObjects.Translator.GetMaxima().GetPathToMaximabat());
+                    PathTB.Text = Path.GetDirectoryName(ControlObjects.Translator.GetMaxima().GetPathToMaximabat());
                     DialogResult result1 = MessageBox.Show("Found \"" + fileInfo + "\".",
                     "Path to Maxima",
                     MessageBoxButtons.OK);
@@ -142,25 +100,12 @@ namespace MaximaPlugin.MForms
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Open a folder browser dialog to search for maxima.bat path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             // Define the start path for selection
@@ -168,14 +113,17 @@ namespace MaximaPlugin.MForms
             DialogResult result = fbd.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBox2.Text=fbd.SelectedPath;
-                //button3_Click(sender, e);
+                PathTB.Text=fbd.SelectedPath;
             }
 
         }
 
-        //install button
-        private void  button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Opens installer form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void  InstallButton_Click(object sender, EventArgs e)
         {
             DialogResult result2 = MessageBox.Show(
                 "Maxima installation require internet connection and admin right. Do you want to proceed?",
@@ -204,14 +152,24 @@ namespace MaximaPlugin.MForms
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Close the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        // get the latest version from internet 
-        // find the current version installed - if not in C then find the xml file. If no XML file then None
 
+        #region Helper functions
+
+        /// <summary>
+        /// Set the Maxima version information from the label
+        /// Get the latest Maxima version from internet 
+        /// Find the current version installed - if not in C then find the xml file. If no XML file then None
+        /// </summary>
         private async void SetMaximaVersionInformation()
         {
             string workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41\maxima.xml";
@@ -220,14 +178,14 @@ namespace MaximaPlugin.MForms
 
             if (xml != "")
             {
-                label6.Text = ExtractMaximaVersion(xml);
+                InstVerLabel.Text = ExtractMaximaVersion(xml);
 
             } else if (r != "")
             {
-                label6.Text = ExtractMaximaVersion(r);
+                InstVerLabel.Text = ExtractMaximaVersion(r);
             } else
             {
-                label6.Text = "None";
+                InstVerLabel.Text = "None";
             }
 
             // need to deal with error -> try block for the await line
@@ -235,11 +193,14 @@ namespace MaximaPlugin.MForms
             JsonDataFetcher dataFetcher = new JsonDataFetcher();
             string windowsUrl = await dataFetcher.GetWindowsReleaseUrl(url);
 
-            label7.Text = ExtractMaximaVersion(windowsUrl);
+            LocVerLabel.Text = ExtractMaximaVersion(windowsUrl);
         }
 
-        //check for maxima in C drive
-        static string CheckMaximaAvailable()
+        /// <summary>
+        /// check for maxima in C drive
+        /// </summary>
+        /// <returns></returns>
+        private static string CheckMaximaAvailable()
         {
             string EnvironPath = Path.GetPathRoot(Environment.SystemDirectory);
             List<string> files = MaximaSession.GetDirectories(EnvironPath);
@@ -261,14 +222,24 @@ namespace MaximaPlugin.MForms
             return foundMaximaPath;
         }
 
-        static string ExtractMaximaVersion(string input)
+        /// <summary>
+        /// Extract Maxima version from input string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static string ExtractMaximaVersion(string input)
         {
             string pattern = @"\d+\.\d+\.\d+"; // Matches 3 sets of numbers separated by dots
             Match match = Regex.Match(input, pattern);
             return match.Success ? match.Value : null;
         }
 
-        static string FindPathToMaximaInXML (string filePath)
+        /// <summary>
+        /// Check for Maxima path in config file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private static string FindPathToMaximaInXML (string filePath)
         {
             try
             {
@@ -289,37 +260,6 @@ namespace MaximaPlugin.MForms
             return string.Empty;
         }
 
-        /// <summary>
-        /// Convert integer code to flag array
-        /// </summary>
-        /// <param name="num">integer code</param>
-        /// <returns>boolean array</returns>
-        public static bool[] GetBooleFromInt(int num)
-        {
-            bool[] target = new bool[32];
-
-            for (int i = 0; i < 32; i++)
-            {
-                target[i] = ((num >> i) & 1) == 1;
-            }
-            return target;
-        }
-
-        /// <summary>
-        /// Convert boolean array to integer code
-        /// TODO MK 2017 08 01: Merge this with unique caller 
-        /// </summary>
-        /// <param name="array">boolean array</param>
-        /// <returns>Integer code</returns>
-        public static int GetIntFromBool(bool[] array)
-        {
-            int num = 0;
-
-            for (int i = 0; i < array.Length; ++i)
-            {
-                num = (num << 1) + (array[i] ? 1 : 0);
-            }
-            return num;
-        }
+        #endregion
     }
 }

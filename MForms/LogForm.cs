@@ -32,10 +32,16 @@ namespace MaximaPlugin.MForms
             toolTip1.SetToolTip(this.opMaLog, "Input and output strings of the Maxima session");
             toolTip1.SetToolTip(this.opFuLog, "Step by step translation and processing");
             toolTip1.SetToolTip(this.opWxm, "wxMaxima file with all input sent to Maxima");
-            toolTip1.SetToolTip(this.button1, "Update the contents");
-            toolTip1.SetToolTip(this.button2, "Clear the log");
-            toolTip1.SetToolTip(this.button3, "Save as .log file");
+            toolTip1.SetToolTip(this.RefreshButton, "Update the contents");
+            toolTip1.SetToolTip(this.ClearButton, "Clear the log");
+            toolTip1.SetToolTip(this.SaveButton, "Save as .log file");
         }
+
+        /// <summary>
+        /// Updates the tbLog textbox whenever something is changed from the log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbLog_TextChanged(object sender, EventArgs e)
         {
             if (IsHandleCreated)
@@ -74,20 +80,31 @@ namespace MaximaPlugin.MForms
         private void LogForm_Load(object sender, EventArgs e)
         {
             tbLog.ScrollBars = ScrollBars.Both;
-            //maximaform = new AutoMaxima();
             tbLog_TextChanged(sender, e);
         }
+
+        /// <summary>
+        /// Reset variable on close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogForm_Close(object sender, FormClosingEventArgs e)
         {
             MForms.FormControl.ThreadLogProState = false;
         }
-        private async void button3_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Write the log as file and open it using default application when save button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SaveButton_Click(object sender, EventArgs e)
         {
             if (opWxm.Checked)
             {
                 string pathToWxMaxima = ControlObjects.Translator.GetMaxima().GetPathToMaximaAbs().Replace("maxima.bat","wxmaxima.exe");
                 await OpenFileWithProgramAsync(pathToWxMaxima, MaximaSocket.WriteWXM());
-                button3.Enabled = false;
+                SaveButton.Enabled = false;
             }
             else
             {
@@ -95,38 +112,60 @@ namespace MaximaPlugin.MForms
                 System.Diagnostics.Process.Start(ControlObjects.Translator.GetMaxima().WorkingFolderPath() + "\\" + "Maxima.log");
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+
+        private void RefreshButton_Click(object sender, EventArgs e)
         {
             tbLog_TextChanged(sender, e);
         }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (AlwaysOnTopCB.Checked)
                 this.TopMost = true;
             else
                 this.TopMost = false;
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Clear the log and updates the tbLog textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearButton_Click(object sender, EventArgs e)
         {
             session.socket.ClearFullLog("Cleared by request from Log Viewer\n");
             MaximaPlugin.MaximaSocket.wxmLog = "";
             MaximaPlugin.ControlObjects.Translator.Log = "Cleared by request from Log Viewer\n";
             tbLog_TextChanged(sender, e);
         }
+
+        /// <summary>
+        /// Change the description of the controls when radio button is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void opWxm_CheckedChanged(object sender, EventArgs e)
         {
             if (opWxm.Checked)
             {
-                button3.Text = "Open in wxMaxima";
-                toolTip1.SetToolTip(this.button3, "Execute the complete session in wxMaxima");
+                SaveButton.Text = "Open in wxMaxima";
+                toolTip1.SetToolTip(this.SaveButton, "Execute the complete session in wxMaxima");
             }
             else
             { 
-                button3.Text = "Save";
-                toolTip1.SetToolTip(this.button3, "Save as .log file");
+                SaveButton.Text = "Save";
+                toolTip1.SetToolTip(this.SaveButton, "Save as .log file");
             }
         }
 
+        #region helper function
+
+        /// <summary>
+        /// Open wxm file using the defined programPath
+        /// </summary>
+        /// <param name="programPath"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         private Task OpenFileWithProgramAsync(string programPath, string filePath)
         {
             try
@@ -153,16 +192,24 @@ namespace MaximaPlugin.MForms
             return Task.CompletedTask;
         }
 
+
+        /// <summary>
+        /// Re-enable the Save button upon wxMaxima closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Process_Exited(object sender, EventArgs e)
         {
             // This code runs when the process exits
             Invoke(new Action(() => {
-                button3.Enabled = true;
+                SaveButton.Enabled = true;
             }));
 
             // Clean up event handler
             process.Exited -= Process_Exited;
             process.Dispose();
         }
+
+        #endregion
     }
 }

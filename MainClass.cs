@@ -13,28 +13,6 @@ using SMath.Math;
 
 namespace MaximaPlugin
 {
-    /// <summary>
-    /// Seems to be obsolete, no references
-    /// </summary>
-    public static class GlobalTools
-    {
-        public static void WriteFile(string data, string name)
-        {
-            StreamWriter myFileWrite = new StreamWriter(Path.Combine(ControlObjects.Translator.GetMaxima().gnuPlotImageFolder, name));
-            myFileWrite.Write(data);
-            myFileWrite.Close();
-        }
-    }
-    /// <summary>
-    /// Obsolete (no references), perhaps remainder from the editable image region 
-    /// </summary>
-    public enum imageTyp
-    {
-        editing,
-        fromFile,
-        plot2D,
-        plot3D
-    };
 
     public partial class MainClass : IPluginHandleEvaluation, IPluginLowLevelEvaluation, IPluginCustomRegion, IPluginToolboxGroups
     {
@@ -45,6 +23,11 @@ namespace MaximaPlugin
         #endregion
 
         #region IPluginHandleEvaluation Members
+        /// <summary>
+        /// Define functions that will be evaluated by the plugin
+        /// </summary>
+        /// <param name="sessionProfile">SessionProfile</param>
+        /// <returns></returns>
         TermInfo[] IPluginHandleEvaluation.GetTermsHandled(SessionProfile sessionProfile) {
             return new TermInfo[]
             {
@@ -97,17 +80,18 @@ namespace MaximaPlugin
 
         #region IPluginLowLevelEvaluation
         /// <summary>
-        /// Bereitstellung der Plugin-Funktionen
+        /// Redirect the plugin function to it's specific method
         /// </summary>
-        /// <param name="root">Name der Funktion</param>
-        /// <param name="args">Parameterliste (Liste von Ausdrücken)</param>
-        /// <param name="context"></param>
-        /// <param name="result"></param>
+        /// <param name="root">Name of the function</param>
+        /// <param name="args">List of arguments</param>
+        /// <param name="context">Store</param>
+        /// <param name="result">Result that will be shown on worksheet</param>
         /// <returns></returns>
         bool IPluginLowLevelEvaluation.ExpressionEvaluation(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             if (regularEnable || root.Text == "MaximaControl")
             {
+                // save the arguments in Shared function
                 SharedFunctions.rootHold = root;
                 SharedFunctions.argsHold = args;
                 SharedFunctions.contextHold = context;
@@ -127,7 +111,6 @@ namespace MaximaPlugin
                 }
                 else if (root.Type == TermType.Function && root.Text == "MaximaTakeover")
                 {
-                    //return MFunctions.MaximaAllround.MaximaTakeoverF(root, args, ref context, ref result);
                     return MFunctions.MaximaAllround.MaximaTakeoverF(args, ref context, ref result);
                 }
                 else if (root.Type == TermType.Function && root.Text == "MaximaLog")
@@ -226,6 +209,11 @@ namespace MaximaPlugin
         #endregion
 
         #region IPluginToolboxGroups
+        /// <summary>
+        /// Define members of toolbox
+        /// </summary>
+        /// <param name="sessionProfile">SessionProfile</param>
+        /// <returns></returns>
         public ToolboxGroup[] GetToolboxGroups(SessionProfile sessionProfile)
         {
             SvgPaths.Init();
@@ -254,7 +242,11 @@ namespace MaximaPlugin
 
             return groups;
         }
-
+        /// <summary>
+        /// Get the image of the toolbox member
+        /// </summary>
+        /// <param name="image">Image</param>
+        /// <returns></returns>
         private IBitmap GetPngImage(Bitmap image)
         {
             var ms = new MemoryStream();
@@ -262,6 +254,13 @@ namespace MaximaPlugin
             return SessionsManager.Current.Specifics.StreamToBitmap(ms);
         }
 
+        /// <summary>
+        /// Button action when toolbox member is clicked
+        /// </summary>
+        /// <param name="name">Name of the function</param>
+        /// <param name="argsCount">Number of arguments of the function</param>
+        /// <param name="sessionProfile">SessionProfile</param>
+        /// <returns></returns>
         private string GetButtonAction(string name, int argsCount, SessionProfile sessionProfile)
         {
             var term = new Term(name, TermType.Function, argsCount);
@@ -417,7 +416,11 @@ namespace MaximaPlugin
         void MHelp(MenuButtonArgs args) 
         {
             Translator.GetMaxima().StartSession();
+
+            // get absolute path of Maxima
             string maximaPath = Translator.GetMaxima().GetPathToMaximaAbs();
+
+            //Find and extract the maxima version
             Match match = Regex.Match(maximaPath, @"^(.*?\\maxima-\d+\.\d+\.\d+)");
 
             Match maximaVersion = Regex.Match(maximaPath, @"\d+\.\d+\.\d+");
@@ -427,6 +430,8 @@ namespace MaximaPlugin
                 maximaPath = match.Value.Replace("\\", "/");
                 string fileUrl = "file:///" + maximaPath +"/share/maxima/" + maximaVersion.Value + "/doc/html/maxima_toc.html";
 
+                // execute the URL using process
+                // the URL will be opened using default browser
                 string localFilePath = new Uri(fileUrl).LocalPath;
                 try
                 {

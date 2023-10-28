@@ -94,7 +94,7 @@ namespace MaximaPlugin.ControlObjects
         public static bool foundError = false;
         public static bool timereset = false;
         public static bool isPartAnswer = false;
-        public static int receiveTries = 14; 
+        public static int receiveTries = 14;
 
         //logging event handler
         public static event EventHandler LogChanged;
@@ -165,7 +165,6 @@ namespace MaximaPlugin.ControlObjects
 
                 if (i < receiveTries) i++;
 
-                //} while (i < receiveTries && !rxMxOut.IsMatch(tempstring, 0) && !foundError);
                 if (ControlObjects.TranslationModifiers.TimeOut != 0 && time.ElapsedMilliseconds > ControlObjects.TranslationModifiers.TimeOut) return receivedStrings;
             } while (!rxMxOut.IsMatch(tempstring, 0) && !foundError && i < receiveTries);
             foundError = false;
@@ -174,7 +173,10 @@ namespace MaximaPlugin.ControlObjects
         #endregion
 
         #region Filter
-        //Prefilter
+        /// <summary>
+        /// Filter input string
+        /// </summary>
+        /// <param name="stringToFilter"></param>
         public static void Filter(string stringToFilter)
         {
             Regex rxPosNegQuest = new Regex(@"(Is\s)", RegexOptions.None);
@@ -280,8 +282,11 @@ namespace MaximaPlugin.ControlObjects
         #region Converting
         public static int maximaOutNum = 0;
 
-        ////STRINGHANDLE FUNCTIONS
-
+        /// <summary>
+        /// Replace literal strings from input with "ReplaceForString" and save the replaced string into a list
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> GetStringsOutAndReplaceThem(List<string> answers)
         {
             List<string> replacement = new List<string>();
@@ -302,7 +307,7 @@ namespace MaximaPlugin.ControlObjects
                         tmp = tmp.Replace("\"" + match.Groups[1].Value + "\"", "PlaceForString");
                     }
                 }
-                if(matches.Count == 0)
+                if (matches.Count == 0)
                     replacement.Add(answers[i]);
                 else replacement.Add(tmp);
             }
@@ -310,28 +315,44 @@ namespace MaximaPlugin.ControlObjects
             return replacement;
         }
 
+        /// <summary>
+        /// Put back the original string 
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> PutOriginalStringsIn(List<string> answers)
         {
             //using regex replace to replace the "PlaceForString" with the original string one by one
             var regex = new Regex(@"PlaceForString");
             for (int i = 0; i < answers.Count; i++)
             {
-                for(int j = 0; j < originalStrings.Count; j++)
+                for (int j = 0; j < originalStrings.Count; j++)
                 {
-                    answers[i] = regex.Replace(answers[i],originalStrings[j],1);
+                    answers[i] = regex.Replace(answers[i], originalStrings[j], 1);
                 }
             }
 
             return answers;
         }
 
-        //TO SMATH
+        #region SMath Translation
+        /// <summary>
+        /// Calls the PrepareStringsForSMath() from ConvertToSMath class
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> PrepareStringsForSMath(List<string> answers)
         {
             for (int i = 0; i < answers.Count; i++)
                 answers[i] = Converter.ConvertToSMath.PrepareStringsForSMath(answers[i].Trim());
             return answers;
         }
+
+        /// <summary>
+        /// Calls the PrepareTermsForSMath() from ConvertToSMath class
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> PrepareTermsForSMath(List<string> answers)
         {
             for (int i = 0; i < answers.Count; i++)
@@ -350,15 +371,15 @@ namespace MaximaPlugin.ControlObjects
             string outputString = "";
             originalStrings = new List<string>();
 
+            //deal with conditional statement expression
             string booleanMaximatoSMathPattern = @"if\s+([^)]+)\s+then\s+([^)]+)\s+else\s+([^\\\n(]+)";
-            //deal with boolean expression
             for (int i = 0; i < answers.Count; i++)
             {
-
+                // write the conditional statement expression in a SMath formatted string
                 answers[i] = Regex.Replace(answers[i], booleanMaximatoSMathPattern, "if($1, $2, $3)");
             }
 
-            //check if this is a case where Maxima sends Cross results one by one and got appended by the filter
+            // check if this is a case where Maxima sends Cross results one by one and got appended by the filter
             // if case to handle multiple outputs but appended in a single line due to the Filter (only for cross case)
             if (answers.Count == 1 && answers[0].Contains("~"))
             {
@@ -413,13 +434,27 @@ namespace MaximaPlugin.ControlObjects
 
             return outputString.Trim();
         }
-        //TO MAXIMA
+        #endregion
+
+        #region Maxima translation
+
+        /// <summary>
+        /// Calls the PrepareStringsForMaxima() from ConvertToMaxima class
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> PrepareStringsForMaxima(List<string> answers)
         {
             for (int i = 0; i < answers.Count; i++)
                 answers[i] = Converter.ConvertToMaxima.PrepareStringsForMaxima(answers[i].Trim());
             return answers;
         }
+
+        /// <summary>
+        /// Calls the PrepareTermsForMaxima() from ConvertToMaxima class
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
         public static List<string> PrepareTermsForMaxima(List<string> answers)
         {
             for (int i = 0; i < answers.Count; i++)
@@ -440,8 +475,14 @@ namespace MaximaPlugin.ControlObjects
             //start session of not available - used in some forms which has no initial maxima session
             GetMaxima().StartSession();
 
-            //// SMath if(condition,true,false) maybe use regex to find it
-            //// in this case much easier than having to deal with 
+            // convert SMath matrix into list for cross product
+            if (termText.Contains("†"))
+            {
+                termText = Regex.Replace(termText, @"mat\(", "[");
+                termText = Regex.Replace(termText, @",\d+,\d+\)", "]");
+            }
+
+            //SMath syntax is ->  if(condition,true,false)
             string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
             Match match = Regex.Match(termText, pattern);
 
@@ -470,6 +511,7 @@ namespace MaximaPlugin.ControlObjects
             Log = Log + "\n    String given to Maxima (elapsed time [" + time.ElapsedMilliseconds + "ms]):\n" + termTextList[0];
             return termTextList[0];
         }
+        #endregion
         #endregion
     }
 }

@@ -32,11 +32,11 @@
             this.opWxm = new System.Windows.Forms.RadioButton();
             this.opFuLog = new System.Windows.Forms.RadioButton();
             this.opMaLog = new System.Windows.Forms.RadioButton();
-            this.button3 = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
+            this.AlwaysOnTopCB = new System.Windows.Forms.CheckBox();
+            this.ClearButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,16 +90,16 @@
             this.opMaLog.UseVisualStyleBackColor = true;
             this.opMaLog.CheckedChanged += new System.EventHandler(this.opMaLog_CheckedChanged);
             // 
-            // button3
+            // SaveButton
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(594, 21);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(74, 83);
-            this.button3.TabIndex = 36;
-            this.button3.Text = "Save as log";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.Location = new System.Drawing.Point(594, 21);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(74, 83);
+            this.SaveButton.TabIndex = 36;
+            this.SaveButton.Text = "Save as log";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // tbLog
             // 
@@ -114,44 +114,44 @@
             this.tbLog.TabIndex = 35;
             this.tbLog.TextChanged += new System.EventHandler(this.tbLog_TextChanged);
             // 
-            // button1
+            // RefreshButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(322, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(266, 38);
-            this.button1.TabIndex = 38;
-            this.button1.Text = "Refresh";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.RefreshButton.Location = new System.Drawing.Point(322, 21);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(266, 38);
+            this.RefreshButton.TabIndex = 38;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
-            // checkBox1
+            // AlwaysOnTopCB
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 21);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(92, 17);
-            this.checkBox1.TabIndex = 39;
-            this.checkBox1.Text = "Always on top";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.AlwaysOnTopCB.AutoSize = true;
+            this.AlwaysOnTopCB.Location = new System.Drawing.Point(6, 21);
+            this.AlwaysOnTopCB.Name = "AlwaysOnTopCB";
+            this.AlwaysOnTopCB.Size = new System.Drawing.Size(92, 17);
+            this.AlwaysOnTopCB.TabIndex = 39;
+            this.AlwaysOnTopCB.Text = "Always on top";
+            this.AlwaysOnTopCB.UseVisualStyleBackColor = true;
+            this.AlwaysOnTopCB.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // button2
+            // ClearButton
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(322, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(266, 38);
-            this.button2.TabIndex = 40;
-            this.button2.Text = "Clear";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.ClearButton.Location = new System.Drawing.Point(322, 66);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(266, 38);
+            this.ClearButton.TabIndex = 40;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBox1);
+            this.groupBox2.Controls.Add(this.AlwaysOnTopCB);
             this.groupBox2.Location = new System.Drawing.Point(166, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(150, 92);
@@ -165,11 +165,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 582);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ClearButton);
+            this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.SaveButton);
             this.Name = "LogForm";
             this.Text = "Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_Close);
@@ -190,11 +190,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton opFuLog;
         private System.Windows.Forms.RadioButton opMaLog;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.TextBox tbLog;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.CheckBox AlwaysOnTopCB;
+        private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton opWxm;
     }

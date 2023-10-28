@@ -15,6 +15,9 @@ namespace MaximaPlugin.PlotImage
         public const double logMinDefault = 0.001;
         public const double logMaxDfault = 10;
 
+        /// <summary>
+        /// Constructor. Set all plot options.
+        /// </summary>
         public PlotStore()
         {
             #region TITLE AND LOOK
@@ -165,6 +168,10 @@ namespace MaximaPlugin.PlotImage
             commandList = new List<string>();
             prambleList = new List<string>();
         }
+
+        /// <summary>
+        /// Create list of commands and preamble by populating the List based on the plot options
+        /// </summary>
         public void MakeLists()
         {
             commandList.Clear();
@@ -203,7 +210,6 @@ namespace MaximaPlugin.PlotImage
             }
 
             commandList.Add("file_name=\"" + filename + "\"");
-            //commandList.Add("dimensions=[" + width + GlobalProfile.ArgumentsSeparatorStandard + height + "]" );
             commandList.Add("font=\"" + textFont + "\"");
             if (termType == TermType.pdf && textSizeState != State.Custom)
             {
@@ -346,6 +352,11 @@ namespace MaximaPlugin.PlotImage
             if ((view == State.Interactive || view == State.Default || view == State.Custom) && plotType == PlotType.plot3D)
                 prambleList.Add("\"set view " + zenith.ToString(nfi) + ", " + azimuth.ToString(nfi) + ", " + scalZenith.ToString(nfi) + ", " + scalAzimuth.ToString(nfi) + Symbols.StringChar);
         }
+        
+        /// <summary>
+        /// Cloning event handler
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return this.MemberwiseClone();

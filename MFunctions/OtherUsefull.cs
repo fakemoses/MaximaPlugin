@@ -13,14 +13,14 @@ namespace MaximaPlugin.MFunctions
 
         /// <summary>
         /// Implements Assign(). 
-        /// TODO: Remove useless strings (Maxima messages) from the output, might be a good point to get used 
-        /// to Entry class.
         /// </summary>
         /// <param name="root"></param>
         /// <param name="args"></param>
         /// <param name="context"></param>
         /// <param name="result"></param>
-        /// <returns></returns>
+        /// <returns></returns> 
+
+        // TODO: Remove useless strings (Maxima messages) from the output, might be a good point to get used to Entry class.
         public static bool Assign(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
             string text = "";
@@ -40,6 +40,7 @@ namespace MaximaPlugin.MFunctions
                     text = text + "," + tempString;
                 i++;
             }
+            // replace equivalent sign with :
             text = text.Replace("≡", ":");
             result = TermsConverter.ToTerms(text);
             return true;

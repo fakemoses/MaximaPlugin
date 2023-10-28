@@ -12,15 +12,25 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MaximaPlugin.MInstaller
 {
+    /// <summary>
+    /// Responsible to download file from URL, create PowerShell script and install the downloaded file.
+    /// </summary>
     class Installer
     {
+        /// <summary>
+        /// Download installer and update the download progress bar in the installer form
+        /// </summary>
+        /// <param name="url">Installer URL</param>
+        /// <param name="path">Download path</param>
+        /// <param name="pb">Progress bar of installer form</param>
+        /// <returns></returns>
         public static async Task DownloadInstaller(string url, string path, System.Windows.Forms.ProgressBar pb)
         {
             using (var client = new WebClient())
             {
+                // Update the progress bar value based on the percentage downloaded
                 client.DownloadProgressChanged += (sender, e) =>
                 {
-                    // Update the progress bar value based on the percentage downloaded
                     pb.Value = e.ProgressPercentage;
                 };
 
@@ -36,6 +46,7 @@ namespace MaximaPlugin.MInstaller
                     }
                 };
 
+                // download file
                 try
                 {
                     await client.DownloadFileTaskAsync(new Uri(url), path);
@@ -47,6 +58,14 @@ namespace MaximaPlugin.MInstaller
             }
         }
 
+        /// <summary>
+        /// Check for admin privilege. 
+        /// Run installer directly when admin right is available.
+        /// Create powershell script and execute if no admin rights is available.
+        /// </summary>
+        /// <param name="installerPath"></param>
+        /// <param name="silentInstall"></param>
+        /// <returns></returns>
         public static int RequestAdminPrivileges(string installerPath, bool silentInstall)
         {
             int pid = 0; // process ID
@@ -66,6 +85,10 @@ namespace MaximaPlugin.MInstaller
             return pid;
         }
 
+        /// <summary>
+        /// Check if user is admin
+        /// </summary>
+        /// <returns></returns>
         static bool IsUserAdmin()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
@@ -73,6 +96,12 @@ namespace MaximaPlugin.MInstaller
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
+        /// <summary>
+        /// Create PowerShell script and run the installer via the script.
+        /// </summary>
+        /// <param name="installerPath"></param>
+        /// <param name="silentInstall"></param>
+        /// <returns></returns>
         static int RestartWithAdminPrivileges(string installerPath, bool silentInstall)
         {
             string scriptPath = Path.Combine(Path.GetTempPath(), "InstallScript.ps1");
@@ -115,6 +144,11 @@ namespace MaximaPlugin.MInstaller
             }
         }
 
+        /// <summary>
+        /// Execute directly the installer.
+        /// </summary>
+        /// <param name="installerPath"></param>
+        /// <returns></returns>
         static int InstallSilently(string installerPath)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();

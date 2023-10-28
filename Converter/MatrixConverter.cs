@@ -5,7 +5,9 @@ using SMath.Manager;
 
 namespace MaximaPlugin.Converter
 {
-   
+   /// <summary>
+   /// Store the information of the input element
+   /// </summary>
     public class ElementStore
     {
         public int rows = 0;
@@ -21,6 +23,11 @@ namespace MaximaPlugin.Converter
         //first list : List entry for any item; second list: entry for data in item e.g.(a,f(layerMsg),b) 
         public List<List<string>> itemData = new List<List<string>>();
     }
+
+    /// <summary>
+    /// Manage the storing of the information of the input element. 
+    /// Used in multiple other classes to record and convert the input to SMath and Maxima syntax
+    /// </summary>
     public class ElementStoreManager
     {
         public string layerMsg = "!NEW!+!ELEMENT!";
@@ -62,7 +69,7 @@ namespace MaximaPlugin.Converter
         }
 
         /// <summary>
-        /// 
+        /// Go back to previous entry
         /// </summary>
         /// <returns></returns>
         public bool prevElementStore()
@@ -77,7 +84,7 @@ namespace MaximaPlugin.Converter
         }
 
         /// <summary>
-        /// 
+        /// Go to the next entry
         /// </summary>
         public void nextElementStore()
         {
@@ -87,7 +94,7 @@ namespace MaximaPlugin.Converter
         }
 
         /// <summary>
-        /// 
+        /// Go to the first entry
         /// </summary>
         public void gotoFirstElementStore()
         {
@@ -102,7 +109,7 @@ namespace MaximaPlugin.Converter
         }
 
         /// <summary>
-        /// 
+        /// Add new item to the current entry
         /// </summary>
         public void addNewItemToCurrent()
         {
@@ -132,6 +139,9 @@ namespace MaximaPlugin.Converter
             currentStore.items = currentStore.items + deltaItems;
         }
 
+        /// <summary>
+        /// Flip the row and column
+        /// </summary>
         public void flipRowsCols()
         {
             int tmp = currentStore.rows;
@@ -141,7 +151,7 @@ namespace MaximaPlugin.Converter
     }
 
     /// <summary>
-    /// Data structure for array handling
+    /// Handles Matrix and List conversion from SMath to Maxima
     /// </summary>
     public static class MatrixAndListFromSMathToMaxima
     {
@@ -337,6 +347,13 @@ namespace MaximaPlugin.Converter
             store.gotoFirstElementStore();
             return store;
         }
+
+        /// <summary>
+        /// Converts an SMath list given as string to the internal storage structure
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ElementStoreManager SMathListDataCollection(ElementStoreManager store, string input)
         {
             bool inArray = true, foundArray = false;
@@ -421,17 +438,38 @@ namespace MaximaPlugin.Converter
 
     }
 
-	public static class MatrixAndListFromMaximaToSMath
+    /// <summary>
+    /// Handles Matrix and List conversion from Maxima to SMath
+    /// </summary>
+    public static class MatrixAndListFromMaximaToSMath
 	{
         public static bool solveFunction = false, firstCall=true;
 		public static int arrayStart = 0, arrayEnd = 0;
+
+
+        /// <summary>
+        /// Replaces the part arrayStart...arrayEnd in input by newArrayString 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="newArrayString"></param>
+        /// <param name="arrayStart"></param>
+        /// <param name="arrayEnd"></param>
+        /// <returns></returns>
         public static string MakeString(string input, string newArrayString, int arrayStart, int arrayEnd)
         {
             string tmp1 = input.Substring(0, arrayStart);
             string tmp2 = input.Substring(arrayEnd, input.Length - arrayEnd);
             return tmp1 + newArrayString + tmp2;
         }
-		public static string MakeTermString(ElementStoreManager store, string systemStart, string systemEnd)
+
+        /// <summary>
+        /// Writes the contents of store to a string between systemStart and systemEnd.
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="systemStart"></param>
+        /// <param name="systemEnd"></param>
+        /// <returns></returns>
+        public static string MakeTermString(ElementStoreManager store, string systemStart, string systemEnd)
         {
             string itemsString = "";
             string newSystemStart = "";
@@ -485,6 +523,13 @@ namespace MaximaPlugin.Converter
             }
             return newSystemStart + itemsString + systemEnd;
         }
+
+        /// <summary>
+        /// Translates an SMath matrix given as string to Maxima
+        /// Called by Converter.PrepareTermsForMaxima
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string MatrixConvert (string input)
 		{
 			bool doAgain;
@@ -502,6 +547,12 @@ namespace MaximaPlugin.Converter
 			}while(doAgain);
             return input;      
 		}
+
+        /// <summary>
+        /// Translates a nested SMath list given as string to Maxima
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string MultiListConvert(string input)
         {
             bool doAgain;
@@ -521,7 +572,13 @@ namespace MaximaPlugin.Converter
             } while (doAgain);
             return input;
         }
-		public static string ListConvert(string input)
+
+        /// <summary>
+        /// Translates an SMath list given as string to Maxima
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ListConvert(string input)
         {
 			bool doAgain;
 			do{
@@ -539,6 +596,13 @@ namespace MaximaPlugin.Converter
 			}while(doAgain);
 			return input;        
 		}
+
+        /// <summary>
+        /// Converts an SMath matrix given as string to the internal storage structure
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ElementStoreManager MaximaMatrixDataCollection(ElementStoreManager store, string input)
         {
             bool inArray = true, foundArray = false;
@@ -622,6 +686,13 @@ namespace MaximaPlugin.Converter
             store.gotoFirstElementStore();
             return store;
         }
+
+        /// <summary>
+        /// Converts an SMath nested lists given as string to the internal storage structure
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ElementStoreManager MaximaMultiListDataCollection(ElementStoreManager store, string input)
         {
             bool inArray = true, foundArray = false;
@@ -653,7 +724,6 @@ namespace MaximaPlugin.Converter
                 }
                 else if (foundArray && i < (input.Length - 1) && input[i] == '[' && input[i + 1] != '[' && (store.currentStore.bracketOpen - store.currentStore.bracketClose == 0))// && (store.currentStore.squareBracketOpen - store.currentStore.squareBracketClose > 0))
                 {
-                    //store.addNewItemToCurrent();
                     store.increaseCounter(1, 0, 0);
                     store.currentStore.squareBracketOpen++;
                 }
@@ -665,10 +735,7 @@ namespace MaximaPlugin.Converter
                         store.currentStore.charCounter = 0;
                     }
 
-
-
                     store.addNewItemToCurrent();
-                    //cahrcounter?
                 }
 
                 else if (foundArray && i < (input.Length - 1) && input[i] == ']' && input[i + 1] == ']' && (store.currentStore.bracketOpen - store.currentStore.bracketClose == 0)) //&& (store.currentStore.squareBracketOpen - store.currentStore.squareBracketClose > 0))
@@ -713,6 +780,13 @@ namespace MaximaPlugin.Converter
             store.gotoFirstElementStore();
             return store;
         }
+
+        /// <summary>
+        /// Converts an SMath list given as string to the internal storage structure
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ElementStoreManager MaximaListDataCollection(ElementStoreManager store, string input)
         {
             bool inArray = true, foundArray = false;

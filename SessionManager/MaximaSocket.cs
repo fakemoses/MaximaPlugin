@@ -15,8 +15,6 @@ namespace MaximaPlugin
         private Socket client = null;
         private int port = 4555;
         private bool connected = false;
-        //Encoding SocketEncoding = Encoding.ASCII;
-        //Encoding SocketEncoding = Encoding.GetEncoding("iso-8859-1");
         private Encoding encoding = new UTF8Encoding();
         //communication vars
         private int timeToWait=30;
@@ -141,7 +139,6 @@ namespace MaximaPlugin
                 wxmLog = wxmLog + wxmStartCmd + sendString + wxmEndCmd;
             }
             // Send command
-            //Byte[] sendBytes = Encoding.Default.GetBytes(sendString);
             Byte[] sendBytes = encoding.GetBytes(sendString);
             if (client.Connected) client.Send(sendBytes, sendBytes.Length, SocketFlags.None);
             else

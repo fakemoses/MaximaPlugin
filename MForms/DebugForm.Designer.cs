@@ -50,7 +50,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.bExpertMode = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.bactterm = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -66,7 +66,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSmIn.Location = new System.Drawing.Point(12, 63);
             this.tbSmIn.Name = "tbSmIn";
-            this.tbSmIn.Size = new System.Drawing.Size(486, 20);
+            this.tbSmIn.Size = new System.Drawing.Size(452, 20);
             this.tbSmIn.TabIndex = 0;
             this.tbSmIn.Text = "String from SMath";
             this.tbSmIn.TextChanged += new System.EventHandler(this.tbSmIn_TextChanged);
@@ -77,7 +77,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bCoToMa.Location = new System.Drawing.Point(12, 89);
             this.bCoToMa.Name = "bCoToMa";
-            this.bCoToMa.Size = new System.Drawing.Size(486, 22);
+            this.bCoToMa.Size = new System.Drawing.Size(452, 22);
             this.bCoToMa.TabIndex = 1;
             this.bCoToMa.Text = "↓ Convert to Maxima ↓";
             this.bCoToMa.UseVisualStyleBackColor = true;
@@ -89,7 +89,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbMaIn.Location = new System.Drawing.Point(12, 117);
             this.tbMaIn.Name = "tbMaIn";
-            this.tbMaIn.Size = new System.Drawing.Size(486, 20);
+            this.tbMaIn.Size = new System.Drawing.Size(452, 20);
             this.tbMaIn.TabIndex = 2;
             this.tbMaIn.Text = "String to Maxima";
             // 
@@ -99,7 +99,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bCalcInMa.Location = new System.Drawing.Point(12, 143);
             this.bCalcInMa.Name = "bCalcInMa";
-            this.bCalcInMa.Size = new System.Drawing.Size(486, 22);
+            this.bCalcInMa.Size = new System.Drawing.Size(452, 22);
             this.bCalcInMa.TabIndex = 3;
             this.bCalcInMa.Text = "↓ Calculate in Maxima ↓ ";
             this.bCalcInMa.UseVisualStyleBackColor = true;
@@ -111,7 +111,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bCoToSm.Location = new System.Drawing.Point(12, 200);
             this.bCoToSm.Name = "bCoToSm";
-            this.bCoToSm.Size = new System.Drawing.Size(486, 22);
+            this.bCoToSm.Size = new System.Drawing.Size(452, 22);
             this.bCoToSm.TabIndex = 4;
             this.bCoToSm.Text = "↓  Convert to SMath ↓ ";
             this.bCoToSm.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSmOut.Location = new System.Drawing.Point(12, 228);
             this.tbSmOut.Name = "tbSmOut";
-            this.tbSmOut.Size = new System.Drawing.Size(486, 20);
+            this.tbSmOut.Size = new System.Drawing.Size(452, 20);
             this.tbSmOut.TabIndex = 5;
             this.tbSmOut.Text = "String to SMath";
             // 
@@ -135,14 +135,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbMaOut.Location = new System.Drawing.Point(12, 174);
             this.tbMaOut.Name = "tbMaOut";
-            this.tbMaOut.Size = new System.Drawing.Size(486, 20);
+            this.tbMaOut.Size = new System.Drawing.Size(452, 20);
             this.tbMaOut.TabIndex = 6;
             this.tbMaOut.Text = "String from Maxima";
             // 
             // bDoAll
             // 
             this.bDoAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDoAll.Location = new System.Drawing.Point(504, 35);
+            this.bDoAll.Location = new System.Drawing.Point(470, 35);
             this.bDoAll.Name = "bDoAll";
             this.bDoAll.Size = new System.Drawing.Size(56, 241);
             this.bDoAll.TabIndex = 7;
@@ -156,7 +156,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbBu.Location = new System.Drawing.Point(12, 457);
             this.tbBu.Name = "tbBu";
-            this.tbBu.Size = new System.Drawing.Size(486, 20);
+            this.tbBu.Size = new System.Drawing.Size(452, 20);
             this.tbBu.TabIndex = 15;
             this.tbBu.Text = "String from Maxima";
             this.tbBu.Visible = false;
@@ -194,7 +194,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bMaRe.Location = new System.Drawing.Point(12, 429);
             this.bMaRe.Name = "bMaRe";
-            this.bMaRe.Size = new System.Drawing.Size(486, 22);
+            this.bMaRe.Size = new System.Drawing.Size(452, 22);
             this.bMaRe.TabIndex = 20;
             this.bMaRe.Text = "Receive only";
             this.bMaRe.UseVisualStyleBackColor = true;
@@ -207,7 +207,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSend.Location = new System.Drawing.Point(12, 403);
             this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(486, 20);
+            this.tbSend.Size = new System.Drawing.Size(452, 20);
             this.tbSend.TabIndex = 24;
             this.tbSend.Text = "String to Maxima";
             this.tbSend.Visible = false;
@@ -218,7 +218,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bMaSe.Location = new System.Drawing.Point(12, 377);
             this.bMaSe.Name = "bMaSe";
-            this.bMaSe.Size = new System.Drawing.Size(486, 22);
+            this.bMaSe.Size = new System.Drawing.Size(452, 22);
             this.bMaSe.TabIndex = 25;
             this.bMaSe.Text = "Send only";
             this.bMaSe.UseVisualStyleBackColor = true;
@@ -231,7 +231,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(12, 254);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(486, 22);
+            this.button1.Size = new System.Drawing.Size(452, 22);
             this.button1.TabIndex = 28;
             this.button1.Text = "Continue SMath calculation ";
             this.button1.UseVisualStyleBackColor = true;
@@ -240,7 +240,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(504, 377);
+            this.button2.Location = new System.Drawing.Point(470, 377);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(56, 100);
             this.button2.TabIndex = 29;
@@ -308,19 +308,18 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Automatic socket buffer check";
             this.groupBox3.Visible = false;
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
-            // button4
+            // bExpertMode
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.bExpertMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(12, 349);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(548, 22);
-            this.button4.TabIndex = 37;
-            this.button4.Text = "Expert mode";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.bExpertMode.Location = new System.Drawing.Point(12, 349);
+            this.bExpertMode.Name = "bExpertMode";
+            this.bExpertMode.Size = new System.Drawing.Size(514, 22);
+            this.bExpertMode.TabIndex = 37;
+            this.bExpertMode.Text = "Expert mode";
+            this.bExpertMode.UseVisualStyleBackColor = true;
+            this.bExpertMode.Click += new System.EventHandler(this.button4_Click);
             // 
             // checkBox1
             // 
@@ -339,7 +338,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bactterm.Location = new System.Drawing.Point(12, 35);
             this.bactterm.Name = "bactterm";
-            this.bactterm.Size = new System.Drawing.Size(486, 22);
+            this.bactterm.Size = new System.Drawing.Size(452, 22);
             this.bactterm.TabIndex = 40;
             this.bactterm.Text = "↓ Update SMath input string ↓";
             this.bactterm.UseVisualStyleBackColor = true;
@@ -373,12 +372,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(640, 331);
+            this.ClientSize = new System.Drawing.Size(657, 331);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.bactterm);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.bExpertMode);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
@@ -399,7 +398,7 @@
             this.Name = "DebugForm";
             this.Text = "Debugger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_Close);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.DebugForm_Load);
             this.Click += new System.EventHandler(this.Form1_Click);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -434,7 +433,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button bExpertMode;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button bactterm;
         private System.Windows.Forms.CheckBox checkBox2;

@@ -5,6 +5,9 @@ using SMath.Math;
 
 namespace MaximaPlugin.MFunctions
 {
+    /// <summary>
+    /// Contains methods that deals with utility functions such as Maxima, MaximaTakeover
+    /// </summary>
     class MaximaAllround
     {
 
@@ -37,9 +40,11 @@ namespace MaximaPlugin.MFunctions
             }
             else
             {
-                // don't use debugger
+                // debugger is not used
                 // produce the input for maxima
                 string stringToMaxima = SharedFunctions.Proprocessing(args[0]);
+
+                // check if input contains cross product
                 bool isCrossProd = false;
                 if(stringToMaxima.Contains("†"))
                 {
@@ -53,14 +58,11 @@ namespace MaximaPlugin.MFunctions
                         delim[i] = TermsConverter.ToString(Computation.SymbolicCalculation(TermsConverter.ToTerms(delim[i]), ref context));
                     }
 
+                    // append all input into a single strin
                     string tempString = "";
 
                     for (int i = 0; i < delim.Length; i++)
                     {
-                        delim[i] = Regex.Replace(delim[i], @"mat\(", "[");
-                        delim[i] = Regex.Replace(delim[i], @"\],\[", ",");
-                        delim[i] = Regex.Replace(delim[i], @",\d+,\d+\)", "]");
-
                         if (i < delim.Length-1)
                             tempString += "(" + delim[i] + ")" + "†";
                         else
@@ -72,8 +74,10 @@ namespace MaximaPlugin.MFunctions
                     stringToMaxima = tempString;
                 }
 
+                // check if the the input has if else statement
                 string pattern = @"if\(([^,\s]+)\s*,\s*([^,\s]+)\s*,\s*([^)]+)\)";
                 Match match = Regex.Match(stringToMaxima, pattern);
+
                 if(!match.Success && !isCrossProd)
                 // send input and get result
                     result = TermsConverter.ToTerms(ControlObjects.Translator.Ask(stringToMaxima));
@@ -194,9 +198,6 @@ namespace MaximaPlugin.MFunctions
         /// <summary>
         /// Implements MaximaTakeover(). If a function is to be taken over, an appropriate definition is added to the context, if it is released, the 
         /// the definition is removed.
-        /// TODO:
-        /// - return the unevaluated function call if the arguments aren't strings
-        /// - make the return message nice
         /// </summary>
         /// <param name="root">unused</param>
         /// <param name="args">arguments</param>
@@ -205,6 +206,9 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool MaximaTakeoverF(Term[][] args, ref Store context, ref Term[] result)
          {
+            // TODO:
+            // - return the unevaluated function call if the arguments aren't strings
+            // - make the return message nice
             // List of available definitions
             String[] Functions = new String[]
             {
@@ -241,12 +245,9 @@ namespace MaximaPlugin.MFunctions
 
                 if (ArgString.Contains(LhsString.Substring(0, 3)) || ArgString.Contains("all"))
                 {
-                        // add definition
-                        Entry rhs = Entry.Create(TermsConverter.ToTerms(Function));
-                        context.AddDefinition(lhs, rhs);
-                    // add description (doesn't work)
-                    //context[context.Count-1].Description =  "description of "+ LhsString ;
-                    // augment message if needed
+                    // add definition
+                    Entry rhs = Entry.Create(TermsConverter.ToTerms(Function));
+                    context.AddDefinition(lhs, rhs);
                     string MsgPart = LhsString.Split('(')[0] + "(), ";
                     if (!message.Contains(MsgPart)) message += MsgPart;             
                 } 
@@ -276,6 +277,8 @@ namespace MaximaPlugin.MFunctions
         /// <returns></returns>
         public static bool MaximaLog(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
+            // TODO: Remove obsolete command?
+
             string arg1 = TermsConverter.ToString(args[0]);
             string data = "";
             MaximaSession session = ControlObjects.Translator.GetMaxima();
@@ -289,6 +292,7 @@ namespace MaximaPlugin.MFunctions
             }
             else if (arg1 == "clear" || arg1 == Symbols.StringChar + "clear" + Symbols.StringChar)
             {
+                // clear log
                 session.socket.ClearFullLog("Cleared by MaximaLog(clear)");
                 MaximaSocket.wxmLog = "";
                 result = TermsConverter.ToTerms(Symbols.StringChar + "Logdata cleared" + Symbols.StringChar);
@@ -301,21 +305,22 @@ namespace MaximaPlugin.MFunctions
             }
             else if (arg1 == "big" || arg1 == Symbols.StringChar + "big" + Symbols.StringChar)
             {
+                // open log in Log form
                 MForms.FormControl.OpenForm("ThreadLogPro");
                 result = TermsConverter.ToTerms(Symbols.StringChar + "Log window opened" + Symbols.StringChar);
                 return true;
             }
             else if (arg1 == "saveWXM" || arg1 == Symbols.StringChar + "saveWXM" + Symbols.StringChar)
             {
+                // write log as WXM
                 MaximaSocket.WriteWXM();
                 result = TermsConverter.ToTerms("\"File saved as: commands.wxm\"");
                 return true;
             }
             else
             {
+                // get the last log
                 data = session.GetLastLog().Replace("\"", "$");
-                //data = data + "\nSMath get: " + SharedFunctions.lastSMathGet;
-                //data = data.Replace("\"", "$");
                 result = TermsConverter.ToTerms(Symbols.StringChar + data + Symbols.StringChar);
                 return true;
             }

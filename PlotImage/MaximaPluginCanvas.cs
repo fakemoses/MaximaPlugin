@@ -77,6 +77,10 @@ namespace MaximaPlugin.PlotImage
         {
             counter--;
         }
+
+        /// <summary>
+        /// Called in constructor for initilization of the class
+        /// </summary>
         public void Init()
         {
             counter++;
@@ -109,6 +113,7 @@ namespace MaximaPlugin.PlotImage
             else
                 fileExt = ".png";
 
+            // File path
             imageFilePath = System.IO.Path.ChangeExtension(System.IO.Path.GetRandomFileName(), fileExt);
             imageFilePath = Path.Combine(ControlObjects.Translator.GetMaxima().gnuPlotImageFolder, imageFilePath);
             plotStore.filename = System.IO.Path.ChangeExtension(imageFilePath, null).Replace("\\", "/");
@@ -116,8 +121,12 @@ namespace MaximaPlugin.PlotImage
             imageEo = new Bitmap(plotStore.width, plotStore.height);
             imageEo.Save(imageFilePath);
             lastInput = "";
-            //plotApproval = true;
         }
+
+        /// <summary>
+        /// Scale image to the size of the draw region canvas
+        /// </summary>
+        /// <param name="img"> Image</param>
         public void ScalImg(System.Drawing.Image img)
         {
 
@@ -140,6 +149,10 @@ namespace MaximaPlugin.PlotImage
                 g.DrawImage(img, new System.Drawing.Rectangle(0, 0, newWidth, newHeight));
             }
         }
+
+        /// <summary>
+        /// Calls Draw.RegionDraw() to request Maxima to generate plot 
+        /// </summary>
         public void Plot()
         {
             string returnV = MaximaPlugin.PlotImage.Draw.RegionDraw(this);
@@ -153,10 +166,14 @@ namespace MaximaPlugin.PlotImage
                 errorText = returnV;
             }
 
-            //plotApproval = false;
             redrawCanvas = false;
             LoadImage();
         }
+
+        /// <summary>
+        /// Load image from the file and saves it into the imageEO variable
+        /// </summary>
+        /// <returns></returns>
         public bool LoadImage()
         {
             System.Drawing.Image loadedImage = new Bitmap(Size.Width, Size.Height);
@@ -228,8 +245,6 @@ namespace MaximaPlugin.PlotImage
 
                         imageEo = loadedImage;
 
-                        //File.Delete(ImginPng);
-
                     }
                     catch
                     {
@@ -282,31 +297,24 @@ namespace MaximaPlugin.PlotImage
             else if (plotStore.plotType == PlotStore.PlotType.plot2D)
             {
                 tempState = plotStore.titleState;
-                //if (plotStore.title != "")
-                    plotStore.titleState = PlotStore.State.Custom;
-                //else
-                //    plotStore.titleState = PlotStore.State.Default;
-                //plotStore.xRangeS = PlotStore.State.Disable;
+                plotStore.titleState = PlotStore.State.Custom;
                 lastPlotRequest = "explicit(sin(x),x,-5,5)";
                 redrawCanvas = true;
             }
             else if (plotStore.plotType == PlotStore.PlotType.plot3D)
             {
                 tempState = plotStore.titleState;
-                //if (plotStore.title != "")
-                    plotStore.titleState = PlotStore.State.Custom;
-                //else
-                //    plotStore.titleState = PlotStore.State.Default;
-                //plotStore.xRangeS = PlotStore.State.Disable;
-                //plotStore.yRangeS = PlotStore.State.Disable;
+                plotStore.titleState = PlotStore.State.Custom;
                 lastPlotRequest = "explicit(2*sin(x)*cos(y),x,-5,5,y,-5,5)";
                 redrawCanvas = true;
             }
         }
-        public int GetInstanceNum()
-        {
-            return counter;
-        }
+
+
+        /// <summary>
+        /// Draw image on draw region canvas
+        /// </summary>
+        /// <param name="e">PaintEventOptions</param>
         public override void OnPaint(PaintEventOptions e)
         {
 

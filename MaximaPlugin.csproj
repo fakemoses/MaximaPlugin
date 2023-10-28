@@ -130,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MCustomGlyphs.cs" />
-    <Compile Include="MForms\PlotSettingsLogic.cs" />
     <Compile Include="MForms\InstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,7 +149,6 @@
     <Compile Include="ControlObjects\XmlInterface.cs" />
     <Compile Include="Converter\ConvertToMaxima.cs" />
     <Compile Include="Converter\ConvertToSMath.cs" />
-    <Compile Include="Converter\KeyValueList.cs" />
     <Compile Include="Converter\MatrixConverter.cs" />
     <Compile Include="MForms\DebugForm.cs">
       <SubType>Form</SubType>
@@ -256,8 +254,7 @@
   <ItemGroup>
     <None Include="Resources\maximaIco.png" />
     <None Include="Resources\maxima32.png" />
-	  
-	<!-- 
+    <!-- 
     Uncomment this section in the future if you want to use other library to render the pdf that require gsdll.dll
 	Include the gsdll.dll before building it!
 	-->
@@ -301,7 +298,6 @@
     </PropertyGroup>
     <ItemGroup>
       <BuildFiles Include="$(TargetDir)\*.*" />
-
       <!-- Uncomment the line below in the future if you want to use other library to render the pdf that require gsdll.dll -->
       <!--<BuildFiles Include="$(TargetDir)\lib\*.*" />-->
       <ConfigFileContent Include="%(AssemblyInfo.Version)" />

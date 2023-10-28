@@ -27,12 +27,8 @@ namespace MaximaPlugin.PlotImage
         public double dMouseW = 0;
         //Factors corressponding to the axis ranges
         // ToDo MK 2018 09 14: Rename and handle log plots
-        //public double factorX;
-        //public double factorY;
-        //public double factorZ;
         public double changeValue;
         System.Diagnostics.Stopwatch dblclicktimer = new System.Diagnostics.Stopwatch();
-
 
 
         //Control Vars
@@ -120,12 +116,9 @@ namespace MaximaPlugin.PlotImage
         /// Doubleclick: open/activate settings dialog
         /// Click: update canvas variables
         /// 
-        /// Doubleclick is identified with timer dblclicktimer.
-        /// It is reset upon OnMouseUp and evaluated at OnMouseDown.
-        /// If time between mouseup and next mousedown is less then whatever, 
-        /// we assume a doubleclick.
+        /// Set focus event handler for copying event
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">MouseEventOptions</param>
         public override void OnMouseDown(MouseEventOptions e)
         {
             base.OnMouseDown(e);
@@ -174,7 +167,7 @@ namespace MaximaPlugin.PlotImage
         /// <summary>
         /// Actions on mouse drag (pan, orbit)
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">MouseEventOptions</param>
         public override void OnMouseMove(MouseEventOptions e)
         {
             //rotation and panning
@@ -258,7 +251,8 @@ namespace MaximaPlugin.PlotImage
                         canv.plotStore.yMaxRange += changeValue;
                     }
                 } 
-                //canv.plotApproval = true;
+
+                // redraw if it not double click while moving
                 if (!mouseDoubleClick)
                 {
                     canv.SetLastRequest();
@@ -274,6 +268,10 @@ namespace MaximaPlugin.PlotImage
             base.OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Used to resize the draw region and to determine if mouse is released
+        /// </summary>
+        /// <param name="e"></param>
         public override void OnMouseUp(MouseEventOptions e)
         {
             canv.mouseD = false;
@@ -288,7 +286,13 @@ namespace MaximaPlugin.PlotImage
             dblclicktimer.Start();
 
         }
-        // Zoom
+        
+
+        /// <summary>
+        /// Use to perform normal zoom, plotscale and z-scale zoom on the draw region
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="delta"></param>
         protected override void OnMouseWheelAction(MouseEventOptions e, int delta)
         {
             double ddelta = delta;
@@ -369,7 +373,6 @@ namespace MaximaPlugin.PlotImage
                     canv.plotStore.scalZenith = 0;
                 }
             }
-            //canv.plotApproval = true;
             canv.SetLastRequest();
             callRedraw();
             canv.Invalidate();
@@ -383,8 +386,12 @@ namespace MaximaPlugin.PlotImage
 
         }
 
-        //handles focus changed event
-        public  void OnFocusChanged( RegionBase sender)
+        /// <summary>
+        /// Handles focus changed event.
+        /// Closes the plot setting form when draw region lost focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        public void OnFocusChanged( RegionBase sender)
         {
             if(!this.Focused && formOpen)
             {
@@ -392,6 +399,10 @@ namespace MaximaPlugin.PlotImage
             }
         }
 
+
+        /// <summary>
+        /// Called by OnFocusChange to close the plot settings form
+        /// </summary>
         private void CloseSettingForm()
         {
             if (psf != null)
@@ -413,7 +424,10 @@ namespace MaximaPlugin.PlotImage
             }
         }
 
-        // handle the modifier keys
+        /// <summary>
+        /// Set variables to true when Shift or Ctrl/Strg key is pressed
+        /// </summary>
+        /// <param name="e"></param>
         public override void OnKeyDown(KeyEventOptions e)
         {
             if (e.KeyCode == (int)InputKeys.ShiftKey)
@@ -423,6 +437,11 @@ namespace MaximaPlugin.PlotImage
             base.OnKeyDown(e);
 
         }
+
+        /// <summary>
+        /// Set variables to false when Shift or Ctrl/Strg key is released
+        /// </summary>
+        /// <param name="e"></param>
         public override void OnKeyUp(KeyEventOptions e)
         {
             if (e.KeyCode == (int)InputKeys.ShiftKey)
@@ -433,7 +452,12 @@ namespace MaximaPlugin.PlotImage
             base.OnKeyUp(e);
         }
 
-        //SMATH
+        /// <summary>
+        /// Cloning action. 
+        /// Close plot settings form. 
+        /// Clone MaximaPluginRegion and PlotStore.
+        /// </summary>
+        /// <returns></returns>
         public override RegionBase Clone()
         {
             // on clone close the settings dialog when open
@@ -450,7 +474,10 @@ namespace MaximaPlugin.PlotImage
             return clone;
         }
 
-        // handler for region size changes
+        /// <summary>
+        /// Rescale the image when the size of the draw region canvas is changed
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnSizeChanged(MouseEventOptions e)
         {
             
@@ -512,7 +539,11 @@ namespace MaximaPlugin.PlotImage
         }
 
 
-        // Serialize image and the contents of plotStore
+        /// <summary>
+        /// Serialize image and the contents of plotStore.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <param name="parsingContext"></param>
         public override void ToXml(StorageWriter storage, FileParsingContext parsingContext)
         {
             FileInfo fileInfo;
@@ -547,7 +578,11 @@ namespace MaximaPlugin.PlotImage
             base.ToXml(storage, parsingContext);
         }
 
-        // Deserialize image and plotStore content
+        /// <summary>
+        /// Deserialize image and plotStore content.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <param name="parsingContext"></param>
         public override void FromXml(StorageReader storage, FileParsingContext parsingContext)
         {
             var reader = storage.GetXmlReader();
@@ -599,6 +634,10 @@ namespace MaximaPlugin.PlotImage
             this.RequestEvaluation();
         }
 
+
+        /// <summary>
+        /// Redraw the draw region canvas
+        /// </summary>
         private void callRedraw()
         {
             canv.Plot();
@@ -622,7 +661,10 @@ namespace MaximaPlugin.PlotImage
             }
         }
 
-
+        /// <summary>
+        /// When evaluation is triggered, redraw the draw region canvas if the expression is changed
+        /// </summary>
+        /// <param name="store"></param>
         public override void OnEvaluation(SMath.Math.Store store)
         {
             //IncludeDefs(ref store);
@@ -668,14 +710,14 @@ namespace MaximaPlugin.PlotImage
 
 
             AddDefs(store);
-            //dMouseX = 0;
-            //dMouseY = 0;
-            //dMouseW = 0;
             base.OnEvaluation(store);
 
         }
 
-        // Redirection to context
+        /// <summary>
+        /// Add definition to SMath context
+        /// </summary>
+        /// <param name="store"></param>
         public void AddDefs(SMath.Math.Store store)
         {
             NumberFormatInfo nfi = new NumberFormatInfo

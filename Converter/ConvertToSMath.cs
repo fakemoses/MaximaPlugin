@@ -12,121 +12,9 @@ namespace MaximaPlugin.Converter
     static class ConvertToSMath
     {
         public static bool skipConverting = false;
-        #region KeyValueLists
-        // TODO MK 2017 07 24: Use a common set of lists for ConvertToSMath and ConvertToMaxima
-
-        // Function names which must be translated. 
-        // TODO MK 2017 07 24: Check if the normalized names still need translation
-        static KeyValueList<string, string> euro = new KeyValueList<string, string> 
-        {
-            { SMath.Manager.Functions.Arccosec, "acsc" },
-            { SMath.Manager.Functions.Arcctg, "acot" },
-            { SMath.Manager.Functions.Arctg, "atan" },
-            { SMath.Manager.Functions.Cosec, "csc" },
-            { SMath.Manager.Functions.Ctg, "cot" },
-            { SMath.Manager.Functions.Tg, "tan" },
-            { SMath.Manager.Functions.Arch, "acosh" },
-            { SMath.Manager.Functions.Arcth, "acoth" },
-            { SMath.Manager.Functions.Arsh, "asinh" },
-            { SMath.Manager.Functions.Arth, "atanh" },
-            { SMath.Manager.Functions.Ch, "cosh" },
-            { SMath.Manager.Functions.CosecH, "csch" },
-            { SMath.Manager.Functions.Cth, "coth" },
-            { SMath.Manager.Functions.Sh, "sinh" },
-            { SMath.Manager.Functions.Th, "tanh" }
-        };
-        static KeyValueList<string, string> world = new KeyValueList<string, string> 
-        {
-            { SMath.Manager.Functions.Arccos, "acos" },
-            { SMath.Manager.Functions.Arcctg, "acot" },
-            { SMath.Manager.Functions.Arccosec, "acsc" },
-            { SMath.Manager.Functions.Arcsec, "asec" },
-            { SMath.Manager.Functions.Arcsin, "asin" },
-            { SMath.Manager.Functions.Arctg, "atan" },
-            { SMath.Manager.Functions.Arch, "acosh" },
-            { SMath.Manager.Functions.Arcth, "acoth" },
-            { SMath.Manager.Functions.Arsh, "asinh" },
-            { SMath.Manager.Functions.Arth, "atanh" }
-        };
-        // Special characters to ASCII (required if socket uses ASCII encoding)
-        static KeyValueList<string, string> CharactersToAscii = new KeyValueList<string, string> 
-        {
-            //lowercase greek (except pi, it is in Constants)
-                { @"α", "%alpha" },
-                { @"β", "%beta" },
-                { @"γ", "%gamma" },
-                { @"δ", "%delta" },
-                { @"ε", "%epsilon" },
-                { @"ζ", "%zeta" },
-                { @"η", "%eta" },
-                { @"θ", "%theta" },
-                { @"ι", "%iota" },
-                { @"κ", "%kappa" },
-                { @"λ", "%lambda" },
-                { @"μ", "%mu" },
-                { @"ν", "%nu" },
-                { @"ξ", "%xi" },
-                { @"ο", "%omicron" },
-                { @"π", "%pi" },
-                { @"ρ", "%rho" },
-                { @"σ", "%sigma" },
-                { @"τ", "%tau" },
-                { @"υ", "%upsilon" },
-                { @"φ", "%varphi" },
-                { @"ϑ", "%vartheta" },
-                { @"χ", "%chi" },
-                { @"ψ", "%psi" },
-                { @"ω", "%omega" },
-           //uppercase greek
-                { @"Α", "%Alpha" },
-                { @"Β", "%Beta" },
-                { @"Γ", "%Gamma" },
-                { @"Δ", "%Delta" },
-                { @"Ε", "%Epsilon" },
-                { @"Ζ", "%Zeta" },
-                { @"Η", "%Eta" },
-                { @"Θ", "%Theta" },
-                { @"Ι", "%Iota" },
-                { @"Κ", "%Kappa" },
-                { @"Λ", "%Lambda" },
-                { @"Μ", "%Mu" },
-                { @"Ν", "%Nu" },
-                { @"Ξ", "%Xi" },
-                { @"Ο", "%Omicron" },
-                { @"Π", "%Pi" },
-                { @"Ρ", "%Rho" },
-                { @"Σ", "%Sigma" },
-                { @"Τ", "%Tau" },
-                { @"Υ", "%Upsilon" },
-                { @"Φ", "%Phi" },
-                { @"Χ", "%Chi" },
-                { @"Ψ", "%Psi" },
-                { @"Ω", "%Omega" },
-            // other characters
-                { @"ä", "%ae" },
-                { @"ö", "%oe" },
-                { @"ü", "%ue" },
-                { @"ß", "%ss" },
-                { @"Ä", "%Ae" },
-                { @"Ö", "%Oe" },
-                { @"Ü", "%Ue" },
-                { @"°", "%DegreeChar" },
-
-        };
-        //// Special characters for german language
-        //static KeyValueList<string, string> letters = new KeyValueList<string, string> 
-        //{
-        //        { @"ä", "%ae" },
-        //        { @"ö", "%oe" },
-        //        { @"ü", "%ue" },
-        //        { @"ß", "%ss" },
-        //        { @"Ä", "%Ae" },
-        //        { @"Ö", "%Oe" },
-        //        { @"Ü", "%Ue" },
-        //        { @"%DegreeChar", "°" },
-        //};
-        //// Euler e and imaginary unit i, pi (constants with special names in Maxima
-        static KeyValueList<string, string> constantsToSMath = new KeyValueList<string, string> 
+        #region Dictionary
+        // Euler e and imaginary unit i, pi (constants with special names in Maxima
+        static Dictionary<string, string> constantsToSMath = new Dictionary<string, string> 
         {
             { @"(^|\W)(%e)($|\W)", "$1e$3" },     // euler
             { @"(^|\W)(%i)($|\W)", "$1i$3" },     // complex
@@ -140,18 +28,16 @@ namespace MaximaPlugin.Converter
         };
 
         // further special symbols
-        static KeyValueList<string, string> symbolsToSMath = new KeyValueList<string, string> 
+        static Dictionary<string, string> symbolsToSMath = new Dictionary<string, string> 
         {
                 { @"(^|\W)(inf)($|\W)","$1∞$3" },               // positiv infinity
                 { @"(^|\W)(minf)($|\W)","$1-∞$3"  },            // negativ infinity
-                { @"(^|\W)(infinity)($|\W)","$1∞$3"  },                                                             // complex infinity
-              //  { @"(.*)(plusminus\()(\d*)(\))(.*)", "$1±$3$5" },                                                   // plusminus     
-               // { String.Format(@"(\d+{0}\d+)[bE](\+\d+|\-\d+|\d+)",'.'), "$1*10^$2" },// floats
+                { @"(^|\W)(infinity)($|\W)","$1∞$3"  },         // complex infinity
                 { @"(\d+\.\d+)[bBeE](\+\d+|\-\d+|\d+)", "$1*10^$2" },     // floats
         };
         // logical operators.
         // TODO MK 2017 07 24: Check what is with = (equal)
-        static KeyValueList<string, string> logicToSMath = new KeyValueList<string, string> 
+        static Dictionary<string, string> logicToSMath = new Dictionary<string, string> 
         {
                 { @"(\s)<=(\s)", "$1≤$2" },  
                 { @"(\s)>=(\s)", "$1≥$2" },
@@ -159,13 +45,12 @@ namespace MaximaPlugin.Converter
                 { @"(\s)not(\s)", "$1¬$2" },
                 { @"(\s)and(\s)", "$1&$2" },
                 { @"(\s)or(\s)", "$1|$2" },
-               // { @"not or", "¤" },
         };
 
         // Other conversions
-        static KeyValueList<string, string> seperatorsToSMath = new KeyValueList<string, string> 
+        static Dictionary<string, string> seperatorsToSMath = new Dictionary<string, string> 
         {
-            // What is this? Replace ?% by nothing?
+            // Replace ?% by nothing
             { @"\?\%", "" },
             // Suppression of leading '?        // request is equal to result
             { @"'([^\+\-*/])", "$1" },
@@ -185,7 +70,7 @@ namespace MaximaPlugin.Converter
 
         // TODO MK 2017 07 26: Check if that can be joined with the other functions lists.
         // MK 2018 09 03 \b marks the start of a word
-        static KeyValueList<string, string> functionNamesToSMath = new KeyValueList<string, string> 
+        static Dictionary<string, string> functionNamesToSMath = new Dictionary<string, string> 
         {
                 { @"\bintegrate\(", "int(" },
                 { @"\blog\(", "ln(" },
@@ -194,7 +79,6 @@ namespace MaximaPlugin.Converter
                 { @"\bdeterminant\(", "det(" },
                 { @"\brealpart\(", "Re(" },
                 { @"\bimagpart\(", "Im(" },
-          //      { String.Format(@"diff\(([^{0}]+|(\w+)\(([^{0}][{0}]*)+\))[{0}]([^{0}]+)[{0}]([^{0}]+)[{0}]([^{0}]+)[{0}]([^{0}]+)\)",GlobalProfile.ArgumentsSeparatorStandard), String.Format("diff(diff($1{0}$4{0}$5){0}$6{0}$7)",GlobalProfile.ArgumentsSeparatorStandard) }, // array indices   },
                 { @"\?at\(", "at(" },
                 { @"\bntewurzel\(", "nthroot(" },
                 { @"\bround\((.+)\)", "round($1,0)" },
@@ -212,10 +96,6 @@ namespace MaximaPlugin.Converter
         {
             // Remove "$ and $" 
             text = text.Replace("\"$", "").Replace("$\"", "");
-            // Translate greek and special symbols
-            //foreach (var pair in CharactersToAscii) text = (new Regex(pair.Value).Replace(text, pair.Key));
-            //foreach (var pair in symbolsToSMath) text = (new Regex(pair.Key)).Replace(text, pair.Value);
-            //foreach (var pair in letters) text = (new Regex(pair.Value)).Replace(text, pair.Key);
             text = text.Replace("\\\\", "\\"); // convert backslash
             return text;
         }
@@ -258,9 +138,11 @@ namespace MaximaPlugin.Converter
         {
             int charCounter = 0;
             int layer = 0;
-            //if(start!=0) bracketOpen =1;
             PowerDataContainer container = new PowerDataContainer(null);
             int i = 0;
+
+            // finds the ^ and wrap the expression after that with curly braces.
+            // The addition of curly braces is done by ConvertPowerStringBuilder() method.
             while (i < text.Length)
             {
                 if (text[i] == '^')
@@ -273,7 +155,6 @@ namespace MaximaPlugin.Converter
                     layer++;
                     container = container.getNewPowerDataContainer(container);
                 }
-//                else if (!(Char.IsLetter(text[i]) || Char.IsDigit(text[i]) || text[i] == GlobalParams.CurrentDecimalSymbol || text[i] == '(') && container.charcounter > 0)
                 else if (!(Char.IsLetter(text[i]) || Char.IsDigit(text[i]) || text[i] == '.' || text[i] == '(') && container.charcounter > 0)
                 {
                     if (container.bracketOpen - container.bracketClose == 0 && text[i] == ')')

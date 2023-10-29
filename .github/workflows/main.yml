@@ -24,7 +24,7 @@ jobs:
         uses: mattnotmitt/doxygen-action@v1.9.5
         with:
           # Path to Doxyfile
-          doxyfile-path: './documentations/Developer Guide/Doxyfile' # default is ./Doxyfile
+          doxyfile-path: './documentations/DevGuide/Doxyfile' # default is ./Doxyfile
           # Working directory
           working-directory: '.' # default is .
 
@@ -34,4 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # Default Doxyfile build documentation to html directory.
           # Change the directory if changes in Doxyfile
-          publish_dir: ./documentations/Developer Guide/html
+          publish_dir: ./documentations/DevGuide/html

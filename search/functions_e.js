@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['savebutton_5fclick_0',['SaveButton_Click',['../classMaximaPlugin_1_1MForms_1_1SettingsForm.html#a6085cd8464be1948705cc1237b908b9d',1,'MaximaPlugin.MForms.SettingsForm.SaveButton_Click()'],['../classMaximaPlugin_1_1MForms_1_1LogForm.html#ab5fd53157ae6049eb354ba4f45caec6e',1,'MaximaPlugin.MForms.LogForm.SaveButton_Click()']]],
+  ['saveconfig_1',['SaveConfig',['../classMaximaPlugin_1_1MaximaSession.html#a7174dc41f9ba87c61c3688bd9a73929b',1,'MaximaPlugin::MaximaSession']]],
+  ['scalimg_2',['ScalImg',['../classMaximaPlugin_1_1PlotImage_1_1MaximaPluginCanvas.html#a20b9daec5970a1ecadbe151bca7cc9d8',1,'MaximaPlugin::PlotImage::MaximaPluginCanvas']]],
+  ['searchbutton_5fclick_3',['SearchButton_Click',['../classMaximaPlugin_1_1MForms_1_1SettingsForm.html#a1559fa7f0836b2ce0d710bf8d36927ba',1,'MaximaPlugin::MForms::SettingsForm']]],
+  ['searchfile_4',['SearchFile',['../classMaximaPlugin_1_1MaximaSession.html#a305499640039db35db8180bdade2b2b5',1,'MaximaPlugin::MaximaSession']]],
+  ['sendandreceivefromsocket_5',['SendAndReceiveFromSocket',['../classMaximaPlugin_1_1MaximaSession.html#af192142adf8db3714153600fd8fbb3be',1,'MaximaPlugin::MaximaSession']]],
+  ['sendinitcmd_6',['SendInitCmd',['../classMaximaPlugin_1_1MaximaSession.html#ab1395442bf21374e6f78b004bc93802a',1,'MaximaPlugin::MaximaSession']]],
+  ['sendsinglecommand_7',['SendSingleCommand',['../classMaximaPlugin_1_1MaximaSocket.html#a4218b646700b6f38d0034072e564246b',1,'MaximaPlugin::MaximaSocket']]],
+  ['sendsinglecommandtosocket_8',['SendSingleCommandToSocket',['../classMaximaPlugin_1_1MaximaSession.html#a45f9cdac4225d50cba3c58e0d6c63501',1,'MaximaPlugin::MaximaSession']]],
+  ['setlastrequest_9',['SetLastRequest',['../classMaximaPlugin_1_1PlotImage_1_1MaximaPluginCanvas.html#ae252ba9cc0b27e1e91988b54ede5f4e6',1,'MaximaPlugin::PlotImage::MaximaPluginCanvas']]],
+  ['setmaximaversioninformation_10',['SetMaximaVersionInformation',['../classMaximaPlugin_1_1MForms_1_1SettingsForm.html#ae908672f0f872342c247ca7fe74c7385',1,'MaximaPlugin::MForms::SettingsForm']]],
+  ['setnewpathtomaxima_11',['SetNewPathToMaxima',['../classMaximaPlugin_1_1MaximaSession.html#afce0717304fd517f2c7a69282ed05273',1,'MaximaPlugin::MaximaSession']]],
+  ['settingsform_5fclose_12',['SettingsForm_Close',['../classMaximaPlugin_1_1MForms_1_1SettingsForm.html#a03d00c531e6737def9a8aef40fb33021',1,'MaximaPlugin::MForms::SettingsForm']]],
+  ['settingsform_5fload_13',['SettingsForm_Load',['../classMaximaPlugin_1_1MForms_1_1SettingsForm.html#a2753661ed3fbac42d5990da9f5dcee8e',1,'MaximaPlugin::MForms::SettingsForm']]],
+  ['showcommandlist_5fclick_14',['ShowCommandlist_Click',['../classMaximaPlugin_1_1PlotImage_1_1PlotSettings.html#a0dae4ee54ebf91392478c4c14b79e933',1,'MaximaPlugin::PlotImage::PlotSettings']]],
+  ['smathlistdatacollection_15',['SMathListDataCollection',['../classMaximaPlugin_1_1Converter_1_1MatrixAndListFromSMathToMaxima.html#ad46d8b8fd2f9e68d53c6984a10e1cf80',1,'MaximaPlugin::Converter::MatrixAndListFromSMathToMaxima']]],
+  ['smathmatrixdatacollection_16',['SMathMatrixDataCollection',['../classMaximaPlugin_1_1Converter_1_1MatrixAndListFromSMathToMaxima.html#a7794c641d434fa2c4182583a809e8c20',1,'MaximaPlugin::Converter::MatrixAndListFromSMathToMaxima']]],
+  ['startandconnectmaxima_17',['StartAndConnectMaxima',['../classMaximaPlugin_1_1MaximaSession.html#a85b4117860e679cfc8f9ad85a4991a7a',1,'MaximaPlugin::MaximaSession']]],
+  ['startsession_18',['StartSession',['../classMaximaPlugin_1_1MaximaSession.html#a111d9fc75a277721ea736bc299ddef12',1,'MaximaPlugin::MaximaSession']]],
+  ['store_19',['Store',['../classMaximaPlugin_1_1PlotImage_1_1PlotSettings.html#a810c755be31c39fad2ca9b043f4bb47a',1,'MaximaPlugin::PlotImage::PlotSettings']]],
+  ['sum_20',['Sum',['../classMaximaPlugin_1_1MFunctions_1_1InternOverwrite.html#a329537f6b5668563e4dac11a217d9ac2',1,'MaximaPlugin::MFunctions::InternOverwrite']]],
+  ['symbsolve_21',['SymbSolve',['../classMaximaPlugin_1_1MFunctions_1_1DirectMaximaFunctions.html#a7fce2fb49595b95f68411c9b6e456993',1,'MaximaPlugin::MFunctions::DirectMaximaFunctions']]]
+];

@@ -6,6 +6,9 @@ using SMath.Manager;
 
 namespace MaximaPlugin.PlotImage
 {
+    /// <summary>
+    /// Contain all the plot options, create preamble and command lists for draw region and draw functions
+    /// </summary>
     [Serializable]
     public class PlotStore
     {

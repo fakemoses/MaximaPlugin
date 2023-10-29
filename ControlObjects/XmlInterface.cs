@@ -30,6 +30,10 @@ namespace MaximaPlugin
 
 namespace MaximaPlugin.ControlObjects
 {
+
+    /// <summary>
+    /// Manage the read and write of plugin configuration file called Maxima.xml
+    /// </summary>
     static class XmlInterface
     {
         public static int counterS = 0;

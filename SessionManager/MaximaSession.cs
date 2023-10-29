@@ -14,6 +14,9 @@ using MaximaPlugin.ControlObjects;
 
 namespace MaximaPlugin
 {
+    /// <summary>
+    /// Manage the maxima session, connect maxima, manage configuration file, define all of the directories relevant to the plugin
+    /// </summary>
     class MaximaSession
     {
         public MaximaSocket socket = null;

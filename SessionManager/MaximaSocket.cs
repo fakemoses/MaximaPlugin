@@ -7,6 +7,9 @@ using System.Net.Sockets;
 
 namespace MaximaPlugin
 {   
+    /// <summary>
+    /// Create, delete and manage the socket communication
+    /// </summary>
     class MaximaSocket
     {
         #region VARS

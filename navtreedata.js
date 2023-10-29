@@ -63,7 +63,8 @@ var NAVTREE =
       [ "Releasing the Plugin", "md_documentations_DevGuide_Requirement___Setting_up_the_development.html#autotoc_md28", null ]
     ] ],
     [ "Maxima Plugin", "md_readme.html", [
-      [ "Usefull links", "md_readme.html#autotoc_md30", null ]
+      [ "Getting Started", "md_readme.html#autotoc_md30", null ],
+      [ "Other Usefull Links", "md_readme.html#autotoc_md31", null ]
     ] ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ]

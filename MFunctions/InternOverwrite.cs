@@ -40,9 +40,7 @@ namespace MaximaPlugin.MFunctions
         /// <returns>true</returns>
         public static bool IntegrateUnknown(Term root, Term[][] args, ref Store context, ref Term[] result)
         {
-            /*
-            var arg1 = TermsConverter.ToString(Computation.Preprocessing(args[0], ref context));
-            var arg2 = TermsConverter.ToString(args[1]);*/
+
             var arg1 = SharedFunctions.Proprocessing(args[0]);
             var arg2 = TermsConverter.ToString(Computation.Preprocessing(args[1], ref context));
             string stringToMaxima = "integrate(" + arg1 + GlobalProfile.ArgumentsSeparatorStandard + arg2 + ")";

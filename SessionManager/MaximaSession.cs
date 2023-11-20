@@ -759,7 +759,7 @@ namespace MaximaPlugin
                 "load(vect)$",
                 "load(abs_integrate)$",
                 "setup_autoload(mnewton, mnewton)$",
-                //"setup_autoload(draw, draw2d, draw3d)$",
+                "setup_autoload(draw, draw2d, draw3d)$",
                 "load(lsquares)$",
                 //"setup_autoload(lsquares, lsquares_mse, lsquares_estimates_approximate)$",  
                 "logb(x,y):=log(x)/log(y)$",

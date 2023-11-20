@@ -23,7 +23,8 @@ var searchData=
   ['getstringsoutandreplacethem_20',['GetStringsOutAndReplaceThem',['../classMaximaPlugin_1_1ControlObjects_1_1Translator.html#ac650f9bf089a3c13e00c9e75a9e52972',1,'MaximaPlugin::ControlObjects::Translator']]],
   ['gettermshandled_21',['GetTermsHandled',['../classMaximaPlugin_1_1MainClass.html#a283b5f8a5c1793adc6cfe8f7850df39e',1,'MaximaPlugin::MainClass']]],
   ['getting_20started_20_2d_20developer_20guide_22',['Getting Started - Developer Guide',['../md_documentations_DevGuide_Requirement___Setting_up_the_development.html',1,'']]],
-  ['gettoolboxgroups_23',['GetToolboxGroups',['../classMaximaPlugin_1_1MainClass.html#ab0524b2fdeadc5ff2deb1266f44a9353',1,'MaximaPlugin::MainClass']]],
-  ['getwindowsreleaseurl_24',['GetWindowsReleaseUrl',['../classMaximaPlugin_1_1MInstaller_1_1JsonDataFetcher.html#a4baa387e4f0c117c509b8629cc45e1a1',1,'MaximaPlugin::MInstaller::JsonDataFetcher']]],
-  ['gotofirstelementstore_25',['gotoFirstElementStore',['../classMaximaPlugin_1_1Converter_1_1ElementStoreManager.html#ab2c1ac87dbd4247645200bbbfe4ab962',1,'MaximaPlugin::Converter::ElementStoreManager']]]
+  ['getting_20started_20with_20development_20on_20linux_23',['Getting Started with Development on Linux',['../md_documentations_DevGuide_Getting_Started_with_Development_on_Linux.html',1,'']]],
+  ['gettoolboxgroups_24',['GetToolboxGroups',['../classMaximaPlugin_1_1MainClass.html#ab0524b2fdeadc5ff2deb1266f44a9353',1,'MaximaPlugin::MainClass']]],
+  ['getwindowsreleaseurl_25',['GetWindowsReleaseUrl',['../classMaximaPlugin_1_1MInstaller_1_1JsonDataFetcher.html#a4baa387e4f0c117c509b8629cc45e1a1',1,'MaximaPlugin::MInstaller::JsonDataFetcher']]],
+  ['gotofirstelementstore_26',['gotoFirstElementStore',['../classMaximaPlugin_1_1Converter_1_1ElementStoreManager.html#ab2c1ac87dbd4247645200bbbfe4ab962',1,'MaximaPlugin::Converter::ElementStoreManager']]]
 ];

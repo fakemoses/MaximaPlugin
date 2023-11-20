@@ -99,20 +99,20 @@ $(document).ready(function(){initNavTree('md_documentations_DevGuide_Requirement
 <li>Information about SMath Studio can be found in the <a href="https://smath.com/en-US">SMath website</a>.</li>
 <li>More information about the plugin can be found in the <a href="https://en.smath.com/forum/yaf_postst2078_Maxima-Plugin.aspx">SMath Forum Post</a>.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Requirements for development:</h1>
 <ul>
 <li>Visual Studio Community (any latest version of VS) <a href="https://visualstudio.microsoft.com/free-developer-offers/">Download Visual Studio Community</a></li>
 <li>SMath Studio <a href="https://smath.com/en-US/view/SMathStudio/download">Download SMath Studio</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Cloning the codebase</h1>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Cloning from GitHub</h2>
 <p >To clone the <a class="el" href="namespaceMaximaPlugin.html">MaximaPlugin</a> project from the GitHub repository, run the following command or you can download the project as a zip and extract it in any folder: </p><div class="fragment"><div class="line">git clone https://github.com/fakemoses/MaximaPlugin</div>
 </div><!-- fragment --><p> or using Github Desktop by clicking "File &gt; Clone Repository" and paste the following link:</p>
 <div class="fragment"><div class="line">https://github.com/fakemoses/MaximaPlugin</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md26"></a>
 Cloning from SMath SVN Server</h2>
 <ul>
 <li>To clone from the SMath SVN server, download the TortoiseSVN using the following link: <div class="fragment"><div class="line">https://tortoisesvn.net/downloads.html</div>
@@ -129,7 +129,7 @@ Context menu</div></div>
 </div><!-- fragment --></li>
 <li>Click the "OK" button and it will start downloading the repository.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Setting up working environment:</h1>
 <ul>
 <li>Download and install both of the required software into your computer. For Visual Studio, select the **.NET desktop development** under <b>Desktop &amp; Mobile option</b>.</li>
@@ -165,7 +165,7 @@ Debug</div></div>
     <ul>
 <li>It is good to always rebuild the solution when ever you pulled the latest code from github.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md26"></a>
+<h1><a class="anchor" id="autotoc_md28"></a>
 Commiting changes</h1>
 <ol type="1">
 <li>To GitHub Assuming that you have the access, you can either use the commit feature of GitHub Desktop or run the commands via CLI. <div class="fragment"><div class="line">https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository</div>
@@ -178,7 +178,7 @@ Commiting changes</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md27"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 NOTE WHEN COMMITTING CHANGES FOR PLUGIN RELEASE</h1>
 <p >In the project file (.csproj), some small change has to be made in order to release it using the release manager or else it will fail.</p>
 <p >For any packages from NuGet, the pathing in the project file has to be changed. "../" must be added at the beginning of the path of the packages. For example:</p>
@@ -187,7 +187,7 @@ NOTE WHEN COMMITTING CHANGES FOR PLUGIN RELEASE</h1>
 <div class="line">  &lt;<span class="keywordtype">HintPath</span>&gt;<span class="keyword">packages</span>\<span class="keyword">Freeware.Pdf2Png.1.0.1</span>\<span class="keyword">lib</span>\<span class="keyword">net45</span>\<span class="keyword">Freeware.Pdf2Png.dll</span>&lt;/<span class="keywordtype">HintPath</span>&gt;</div>
 </div><!-- fragment --><p >For release manager: </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">Reference</span> <span class="keyword">Include</span>=<span class="stringliteral">&quot;Freeware.Pdf2Png, Version=1.0.1.0, Culture=neutral, PublicKeyToken=0b93ff91d4be458d, processorArchitecture=MSIL&quot;</span>&gt;</div>
 <div class="line">  &lt;<span class="keywordtype">HintPath</span>&gt;../<span class="keyword">packages</span>\<span class="keyword">Freeware.Pdf2Png.1.0.1</span>\<span class="keyword">lib</span>\<span class="keyword">net45</span>\<span class="keyword">Freeware.Pdf2Png.dll</span>&lt;/<span class="keywordtype">HintPath</span>&gt;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md30"></a>
 Releasing the Plugin</h1>
 <p >The plugin can be released using the Release Manager. However, during the writing of the documentation, only the original author/product owner can perform this action. </p>
 </div></div><!-- contents -->

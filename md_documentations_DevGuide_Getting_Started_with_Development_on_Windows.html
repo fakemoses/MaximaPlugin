@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_documentations_DevGuide_Getting_Started_with_Development.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_documentations_DevGuide_Getting_Started_with_Development_on_Windows.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('md_documentations_DevGuide_Getting_Sta
   <div class="headertitle"><div class="title">Project Structure &amp; Examples </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md3"></a>
 Folder in root directory</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -117,7 +117,7 @@ Folder in root directory</h1>
 <td class="markdownTableBodyNone">lib   </td><td class="markdownTableBodyNone">Accommodates external libraries and dependencies required for the plugin.   </td></tr>
 </table>
 <p >In the root folder, there are also the following files:</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Files in root directory</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -129,23 +129,23 @@ Files in root directory</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">MCustomGlyphs.cs   </td><td class="markdownTableBodyNone">Manages the custom Glyphs for Maxima function and Cross product function   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Main component of the project</h1>
 <p >Here the core component of the project and their locations are elaborated. The term function refer to SMath functions and the term method refer to the method of a class.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 1. Entry point</h2>
 <p >The MainClass.cs is the entry point of this plugin. This file define many functionalities of the plugin such as the functions that is evaluated by the plugin, the menu bar items and many more.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 2. Utilities and Mathematical Functions</h2>
 <p >In this plugin, functions are categorized into three main types:</p>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md8"></a>
 Utility Functions</h3>
 <p >These functions perform additional tasks for the plugin. Examples include:</p><ul>
 <li><code>Maxima()</code></li>
 <li><code>MaximaTakeover()</code></li>
 <li><code>MaximaLog()</code></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md9"></a>
 Symbolic alternatives Functions</h3>
 <p >Symbolic alternatives functions are one of the many mathematical functions of the plugin. Examples are:</p><ul>
 <li><code>Int()</code></li>
@@ -153,7 +153,7 @@ Symbolic alternatives Functions</h3>
 <li><code>Sum()</code></li>
 <li>And many more.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Wrapper Functions</h3>
 <p >Wrapper functions include:</p><ul>
 <li><code>Solve()</code></li>
@@ -172,7 +172,7 @@ Wrapper Functions</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">InternOverwrite.cs   </td><td class="markdownTableBodyNone">Symbolic Alternative Functions   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 3. Translation Interface</h2>
 <p >The Translation Interface is responsible for the seamless translation of input and output between SMath and Maxima, ensuring smooth communication in both directions.</p>
 <p >In many classes throughout this plugin, the <code>Translator</code> class plays a vital role in handling this translation and communication process. You can locate the <code>Translator</code> class in the <code>CommunicationInterface.cs</code> file. Methods responsible for managing symbolic alternative functions and wrapper functions often make use of the <code>Ask()</code> method within the <code>Translator</code> class.</p>
@@ -181,7 +181,7 @@ Wrapper Functions</h3>
 <img src="classdiagramtranslation.png" alt=""/>
 <div class="caption">
 Class Diagram of Translation Interface</div></div>
-    <h2><a class="anchor" id="autotoc_md10"></a>
+    <h2><a class="anchor" id="autotoc_md12"></a>
 4. Communication Interface</h2>
 <p >Communication Interface's primary responsibilities are to create a socket connection, connect Maxima, initialize Maxima, manage the session by facilitating the communication of SMath and Maxima, provide logging functionalities, and even manage the configuration files. Mainly, the communication interface for most classes begins in the <code>Ask()</code> method of the <code>Translator</code> class, where after the translation to Maxima is done, the input will be sent to Maxima, and output from Maxima is received and sent for translation to SMath.</p>
 <p >The files responsible for the Session management and socket management can be found under the folder <code>SessionManager</code>.</p>
@@ -189,7 +189,7 @@ Class Diagram of Translation Interface</div></div>
 <img src="communication.png" alt=""/>
 <div class="caption">
 Class Diagram of Communication Interface</div></div>
-    <h2><a class="anchor" id="autotoc_md11"></a>
+    <h2><a class="anchor" id="autotoc_md13"></a>
 5. Draw Region and Draw Functions</h2>
 <ol type="1">
 <li><p class="startli">Draw region are custom region canvas that is added onto the worksheet via the menu bar <code>Insert &gt; Maxima &gt; Draw2D / Draw3D</code>. It shows the plot generated by Maxima onto the canvas and user can interact with it by performing various actions such as panning, zooming, and even save the image as a file.</p>
@@ -203,13 +203,13 @@ File dependencies of draw region</div></div>
     <ol type="1">
 <li>Draw functions is a bit different than the draw region. Just like mathematical functions, draw functions are functions that is callable by the user from the worksheet. Instead of showing image, the output of this function is the absolute path to the generated plot. The function itself is managed by <code>Draw()</code> method in the file <code>DirectMaximaFunction.cs</code>. However, the plot options are managed by the file <code>PlotStore.cs</code>.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 6. Maxima Automatic Installation</h2>
 <p >Within the folder <code>MInstaller</code> lies the classes that are responsible to perform HTTP request, extract the latest URL of Maxima from the JSON file, download the installer and execute the installer. This classes are used by the Settings Form which can be found in the folder <code>MForms</code>.</p>
 <p >In the following sections, examples will be elaborated.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Examples</h1>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 1. Create new SMath Function</h2>
 <p >In this creation we will use Cross product as an example.</p>
 <ol type="1">
@@ -240,16 +240,16 @@ Examples</h1>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 2. Add new Item in Toolbox</h2>
 <p >Current the toolbox only support function without pre-defined arguments. To add a new button in the toolbox, we add a new ButtonMetaData into the GetToolboxGroups() method in the MainClass.cs. Here the size, description and the action will be defined. For the action it is adviseable to use the GetButtonAction() method that can be found in the class. For example:</p>
 <div class="fragment"><div class="line"><span class="keyword">new</span> ButtonsMetaData(<span class="stringliteral">&quot;Control&quot;</span>)</div>
 <div class="line">    { Size = <span class="keyword">new</span> Size(54, 24), Description = <span class="stringliteral">&quot;Control Maxima process. E.g. Restarting the session by using MaximaControl(\&quot;restart\&quot;)&quot;</span>, Action = GetButtonAction(<span class="stringliteral">&quot;MaximaControl&quot;</span>, 1, sessionProfile) },</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
 3. Add new Item in Menu Bar</h2>
 <p >To add a new menu item in the menu bar, all you need is to add a new button in the IPluginCustomRegion.GetMenuItems() method in the MainClass.cs. The first argument is the name of the menu that will be visible to the user and the second argument is the function name. For example:</p>
 <div class="fragment"><div class="line">menubutton.AppendChild(<span class="stringliteral">&quot;Restart&quot;</span>, MRestart);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
 4. Adding new Plot Options</h2>
 <p >Plot options for both draw region and draw functions are managed by PlotStore class in the folder PlotImage. In this example, an existing plot option will be used. For example, we want to add command that enable the x-Axis by default.</p>
 <ol type="1">

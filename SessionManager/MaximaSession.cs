@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Security.Principal;
 using System.Linq;
-
+using System.Runtime.InteropServices;
 using SMath.Manager;
 using MaximaPlugin.ControlObjects;
 
@@ -109,49 +109,59 @@ namespace MaximaPlugin
             if (!maximaConnected)
             {
                 // first interaction in a given SMath session
-                firstCmd = true; 
+                firstCmd = true;
 
-                // Read Config and start Maxima if the config is uptodate and the maxima path is valid
-                if (File.Exists(ConfigFileName))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    ReadConfig();
-                    if (IsConfigFileFromCurrentPluginVersion() && File.Exists(pathToMAXIMA))
-                    {
-                        StartAndConnectMaxima(0);
-                        return;
-                    }
-                }
-                // if we are here, either
-                //    Config file does'nt exist or 
-                //    Config file is older or 
-                //    the path to maxima doesn't exist
-                // Try to delete the old config files
-                string oldCfgPath = assemblyFolder + "\\";
-                List<string> files = new List<string>(){
-                    oldCfgPath + "maxima.inf",
-                    oldCfgPath + "smath.mac",
-                    oldCfgPath + "smath.lisp",
-                    oldCfgPath + "Maxima.log",
-                    oldCfgPath + "load.mac",
-                    oldCfgPath + "maxima.xml"
-                };
-                if (DeleteFiles(files))
-                {
-                    // check if config file exists
-                    if (checkForXMLandMAXIMA())
+                    // Read Config and start Maxima if the config is uptodate and the maxima path is valid
+                    if (File.Exists(ConfigFileName))
                     {
                         ReadConfig();
-                        SaveConfig();
-                        StartAndConnectMaxima(1);
-                        MessageBox.Show("Found path: " + pathToMAXIMA + "\nYou can change this path under Insert->Maxima->Settings.\nMaxima Plugin is ready to use.",
-                        "Found path",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                        if (IsConfigFileFromCurrentPluginVersion() && File.Exists(pathToMAXIMA))
+                        {
+                            StartAndConnectMaxima(0);
+                            return;
+                        }
                     }
-                    else
+                    // if we are here, either
+                    //    Config file does'nt exist or 
+                    //    Config file is older or 
+                    //    the path to maxima doesn't exist
+                    // Try to delete the old config files
+                    string oldCfgPath = assemblyFolder + "\\";
+                    List<string> files = new List<string>(){
+                        oldCfgPath + "maxima.inf",
+                        oldCfgPath + "smath.mac",
+                        oldCfgPath + "smath.lisp",
+                        oldCfgPath + "Maxima.log",
+                        oldCfgPath + "load.mac",
+                        oldCfgPath + "maxima.xml"
+                    };
+                    if (DeleteFiles(files))
                     {
-                        FoundNoPath();
+                        // check if config file exists
+                        if (checkForXMLandMAXIMA())
+                        {
+                            ReadConfig();
+                            SaveConfig();
+                            StartAndConnectMaxima(1);
+                            MessageBox.Show("Found path: " + pathToMAXIMA + "\nYou can change this path under Insert->Maxima->Settings.\nMaxima Plugin is ready to use.",
+                                "Found path",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                        }
+                        else
+                        {
+                            FoundNoPath();
+                        }
+                        Properties.Settings.Default.firstStart = false;
                     }
-                    Properties.Settings.Default.firstStart = false;
+                }
+                else
+                {
+                    pathToMAXIMArel = "randomPathName/Placeholder/bin/maxima.bat";
+                    SaveConfig();
+                    ReadConfig();
+                    StartAndConnectMaxima(1);
                 }
 
             }
@@ -468,9 +478,20 @@ namespace MaximaPlugin
                 socket = new MaximaSocket();
                 System.Threading.Thread.Sleep(50);
                 maximaProcess = new Process();
-                maximaProcess.StartInfo.FileName = pathToMAXIMA;
-                // "-l sbcl" enforces Steel bank common lisp (because it is unicode-proof)
-                maximaProcess.StartInfo.Arguments = " -l sbcl -s " + Convert.ToString(socket.GetPort());
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    maximaProcess.StartInfo.FileName = pathToMAXIMA;
+                    // "-l sbcl" enforces Steel bank common lisp (because it is unicode-proof)
+                    maximaProcess.StartInfo.Arguments = " -l sbcl -s " + Convert.ToString(socket.GetPort());
+                }
+                else
+                {
+                    maximaProcess.StartInfo.FileName = "maxima";
+                    // "-l sbcl" enforces Steel bank common lisp (because it is unicode-proof)
+                    //sbcl does not work on version 5.45
+                    maximaProcess.StartInfo.Arguments = " -l sbcl -s " + Convert.ToString(socket.GetPort());
+                    //maximaProcess.StartInfo.Arguments = " -s " + Convert.ToString(socket.GetPort());
+                }
                 maximaProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 maximaProcess.Start();
                 System.Threading.Thread.Sleep(timeToWait);
@@ -499,31 +520,34 @@ namespace MaximaPlugin
                 maximaState = maximaStateRunning;
 
                 //Get the right maxima-process - the first process ("maximaProcess") is only the batch process which start maxima
-                processesAfterStart = GetProcesses();
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    processesAfterStart = GetProcesses();
 
-                if (processesAfterStart.Count == 1)
-                {
-                    //only one process is running
-                    newMaximaProcess = processesAfterStart[0];
-                }
-                else if (processesAfterStart.Count > 1)
-                {
-                    //more than 1 process is running    
-                    //the process which was not running before start, is the right one 
-                    for (int j = 0; j < processesAfterStart.Count; j++)
+                    if (processesAfterStart.Count == 1)
                     {
-                        if (!processesBeforeStart.Contains(processesAfterStart[j])) newMaximaProcess = processesAfterStart[j];
+                        //only one process is running
+                        newMaximaProcess = processesAfterStart[0];
                     }
-                }
-                else
-                {
-                    // No process found.
-                    newMaximaProcess = null;
+                    else if (processesAfterStart.Count > 1)
+                    {
+                        //more than 1 process is running    
+                        //the process which was not running before start, is the right one 
+                        for (int j = 0; j < processesAfterStart.Count; j++)
+                        {
+                            if (!processesBeforeStart.Contains(processesAfterStart[j])) newMaximaProcess = processesAfterStart[j];
+                        }
+                    }
+                    else
+                    {
+                        // No process found.
+                        newMaximaProcess = null;
 
-                    DialogResult result = MessageBox.Show("No Maxima process found when searching for\n " + String.Join(", ", ProcessNames) +
-                        "\nSMath won't be able to kill the process when shutting down or restarting.\n\nPlease identify the name of the Maxima process in your system \nand inform the developer in the SMath Forum.",
-                        "No Maxima process found",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                        DialogResult result = MessageBox.Show("No Maxima process found when searching for\n " + String.Join(", ", ProcessNames) +
+                                                              "\nSMath won't be able to kill the process when shutting down or restarting.\n\nPlease identify the name of the Maxima process in your system \nand inform the developer in the SMath Forum.",
+                            "No Maxima process found",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                    }
                 }
 
 
@@ -735,7 +759,7 @@ namespace MaximaPlugin
                 "load(vect)$",
                 "load(abs_integrate)$",
                 "setup_autoload(mnewton, mnewton)$",
-                "setup_autoload(draw, draw2d, draw3d)$",
+                //"setup_autoload(draw, draw2d, draw3d)$",
                 "load(lsquares)$",
                 //"setup_autoload(lsquares, lsquares_mse, lsquares_estimates_approximate)$",  
                 "logb(x,y):=log(x)/log(y)$",
@@ -780,7 +804,8 @@ namespace MaximaPlugin
                 // Read config file
                 XmlInterface.readXmlALL(ConfigFileName, settings, commands, customCommands, exprSMathToMaxima, exprMaximaToSMath);
                 // Postprocessing
-                if (settings.Count == 6)
+                List<string> y = settings;
+                if (settings.Count == 6 && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     pathToMAXIMArel = settings[0];
                     FoundConfigFormatID = Convert.ToInt32(settings[1]);
@@ -788,11 +813,19 @@ namespace MaximaPlugin
                     minorV = Convert.ToInt32(settings[3]);
                     buildV = Convert.ToInt32(settings[4]);
                     revisionV = Convert.ToInt32(settings[5]);
-                    try
-                    {
-                        pathToMAXIMA = Path.Combine(GlobalProfile.ApplicationPath, pathToMAXIMArel);
-                    }
-                    catch { }
+                        try
+                        {
+                            pathToMAXIMA = Path.Combine(GlobalProfile.ApplicationPath, pathToMAXIMArel);
+                        }
+                        catch { }
+                        
+                } else if (settings.Count == 5 && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    FoundConfigFormatID = Convert.ToInt32(settings[0]);
+                    majorV = Convert.ToInt32(settings[1]);
+                    minorV = Convert.ToInt32(settings[2]);
+                    buildV = Convert.ToInt32(settings[3]);
+                    revisionV = Convert.ToInt32(settings[4]);
                 }
                 else FoundNoPath();
             }
@@ -868,7 +901,7 @@ namespace MaximaPlugin
                 double value = (double)MaximaPlugin.ControlObjects.Translator.maximaStartStep * 100 / (double)maxsteps;
                 ProgressBar = new MForms.LoadingForm(maxsteps);
                 ProgressBar.Show();
-                while (value < 100)
+                while (value < 100 & value >= 0)
                 {
                     lock (am)
                     {

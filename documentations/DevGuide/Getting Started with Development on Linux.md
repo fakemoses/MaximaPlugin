@@ -1,6 +1,5 @@
 #Developer guide to setup working environment on Linux 
 
-
 The following method is tested on **Ubuntu 22.04 LTS**. 
 
 ## 1. Downloading SMath and setting up the application
@@ -77,3 +76,10 @@ The folder will contain the following structure and SMath executable can be foun
 
     ![Restore missing packages using Rider](media/riderrestoremissingitems.png)
 
+## 3. Install Maxima 
+
+- Install Maxima by running the following command: 
+
+```
+sudo apt install maxima
+```

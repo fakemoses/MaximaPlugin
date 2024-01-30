@@ -75,7 +75,12 @@ namespace MaximaPlugin
             exprSMathToMaxima = new List<ExpressionStore>();
             exprMaximaToSMath = new List<ExpressionStore>();
             assemblyFolder = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41";
+
+            workingFolder = "";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                workingFolder = GlobalProfile.SettingsDirectory + @"extensions\plugins\44011c1e-5d0d-4533-8e68-e32b5badce41";
+            else
+                workingFolder = GlobalProfile.SettingsDirectory + @"extensions/plugins/44011c1e-5d0d-4533-8e68-e32b5badce41";
             gnuPlotImageFolder = System.IO.Path.Combine(workingFolder, "GnuPlot");
             namedDrawImageFolder = System.IO.Path.Combine(workingFolder, "Images");
             ConfigFileName = System.IO.Path.Combine(workingFolder, XMLname);
@@ -116,6 +121,7 @@ namespace MaximaPlugin
                     // Read Config and start Maxima if the config is uptodate and the maxima path is valid
                     if (File.Exists(ConfigFileName))
                     {
+                        //do nothing
                         ReadConfig();
                         if (IsConfigFileFromCurrentPluginVersion() && File.Exists(pathToMAXIMA))
                         {
@@ -489,8 +495,8 @@ namespace MaximaPlugin
                     maximaProcess.StartInfo.FileName = "maxima";
                     // "-l sbcl" enforces Steel bank common lisp (because it is unicode-proof)
                     //sbcl does not work on version 5.45
-                    maximaProcess.StartInfo.Arguments = " -l sbcl -s " + Convert.ToString(socket.GetPort());
-                    //maximaProcess.StartInfo.Arguments = " -s " + Convert.ToString(socket.GetPort());
+                    //maximaProcess.StartInfo.Arguments = " -l sbcl -s " + Convert.ToString(socket.GetPort());
+                    maximaProcess.StartInfo.Arguments = " -s " + Convert.ToString(socket.GetPort());
                 }
                 maximaProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 maximaProcess.Start();
@@ -759,7 +765,7 @@ namespace MaximaPlugin
                 "load(vect)$",
                 "load(abs_integrate)$",
                 "setup_autoload(mnewton, mnewton)$",
-                "setup_autoload(draw, draw2d, draw3d)$",
+                //"setup_autoload(draw, draw2d, draw3d)$",
                 "load(lsquares)$",
                 //"setup_autoload(lsquares, lsquares_mse, lsquares_estimates_approximate)$",  
                 "logb(x,y):=log(x)/log(y)$",
@@ -805,7 +811,7 @@ namespace MaximaPlugin
                 XmlInterface.readXmlALL(ConfigFileName, settings, commands, customCommands, exprSMathToMaxima, exprMaximaToSMath);
                 // Postprocessing
                 List<string> y = settings;
-                if (settings.Count == 6 && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (settings.Count == 6)
                 {
                     pathToMAXIMArel = settings[0];
                     FoundConfigFormatID = Convert.ToInt32(settings[1]);
@@ -813,19 +819,12 @@ namespace MaximaPlugin
                     minorV = Convert.ToInt32(settings[3]);
                     buildV = Convert.ToInt32(settings[4]);
                     revisionV = Convert.ToInt32(settings[5]);
-                        try
-                        {
-                            pathToMAXIMA = Path.Combine(GlobalProfile.ApplicationPath, pathToMAXIMArel);
-                        }
-                        catch { }
-                        
-                } else if (settings.Count == 5 && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    FoundConfigFormatID = Convert.ToInt32(settings[0]);
-                    majorV = Convert.ToInt32(settings[1]);
-                    minorV = Convert.ToInt32(settings[2]);
-                    buildV = Convert.ToInt32(settings[3]);
-                    revisionV = Convert.ToInt32(settings[4]);
+                    try
+                    {
+                        pathToMAXIMA = Path.Combine(GlobalProfile.ApplicationPath, pathToMAXIMArel);
+                    }
+                    catch { }
+
                 }
                 else FoundNoPath();
             }

@@ -96,8 +96,8 @@ namespace MaximaPlugin.Converter
 
             text = DiffConverterToMaxima.DataCollection(text);
 
-            foreach (var pair in constantsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in primeToRandom) text = (new Regex(pair.Key)).Replace(text, pair.Value);
+            foreach (var pair in constantsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in seperatorsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in symbolsToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);
             foreach (var pair in functionNamesToMaxima) text = (new Regex(pair.Key)).Replace(text, pair.Value);

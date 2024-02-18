@@ -295,10 +295,11 @@ namespace MaximaPlugin.ControlObjects
             {
                 string tmp = answers[i];
 
-                // Regex searches for anything that is between two double quotes within the string
+                // Regex searches for anything that is between two double quotes within the string.
+                // [\s\S]* is used to find either a single line string or multi-line string
                 // and replaces it with "PlaceForString"
                 // MatchCollection is used because there are multiple matches in one string
-                MatchCollection matches = Regex.Matches(answers[i], @"""(.*?)""");
+                MatchCollection matches = Regex.Matches(answers[i], @"""([\s\S]*?)""");
                 foreach (Match match in matches)
                 {
                     if (match.Success)
